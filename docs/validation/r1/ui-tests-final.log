@@ -1,0 +1,9 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/presentation_test.dart
+00:00 +0: Start screen and world configuration remain usable at 320.0
+00:01 +1: Start screen and world configuration remain usable at 360.0
+00:01 +2: Start screen and world configuration remain usable at 412.0
+00:01 +3: Create, order, advance and reload a committed world at 320x640
+00:06 +4: Active navigation and sheets at 320.0 with enlarged text
+00:07 +5: Active navigation and sheets at 360.0 with enlarged text
+00:07 +6: Active navigation and sheets at 412.0 with enlarged text
+00:07 +7: All tests passed!

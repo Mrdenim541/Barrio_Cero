@@ -1,22 +1,24 @@
 # Referencias y primera sesión de BARRIO CERO: ERAS
 
-13 de noviembre de 2026. Dirección de diseño tras probar el APK y señalar el usuario que hay demasiadas opciones confusas. Este documento propone cambios; no afirma que ya estén implementados. Conserva PROJECT_SPEC.md, especialmente sus apartados 6–8 y 17–19.
+13 de noviembre de 2026. Dirección de diseño tras probar el APK y señalar el usuario que hay demasiadas opciones confusas. Dirección aprobada ampliada en [REDESIGN_SPEC.md](REDESIGN_SPEC.md); este documento no afirma que sus funciones ya estén implementadas. Conserva PROJECT_SPEC.md, especialmente sus apartados 6–8 y 17–19. R1 mejora primero el escenario actual; el origen prehistórico solo se ofrecerá con economía funcional en R4.
 
 ## Referencias seleccionadas
 
 | Juego | Qué aporta | Aplicación a BARRIO CERO |
 |---|---|---|
-| The Battle of Polytopia | Acciones táctiles ligadas a la selección, objetivos cercanos y lectura sencilla del mapa | Referencia principal de acceso a acciones: seleccionar algo, ver qué se puede hacer, conocer el coste y ver el resultado. No cambiar el calendario por turnos ni adoptar sus reglas de victoria. |
 | WorldBox | Observar sociedades y transformaciones en un mapa vivo | Entender el mundo visualmente, acercarse a una comunidad e inspeccionarla. Mantener la diferencia entre observar una sociedad y asumir su dirección; no añadir poderes divinos gratuitos. |
 | RimWorld | Necesidades de una comunidad, trabajo pendiente, personajes e historias emergentes | Comunicar por qué ocurre un problema, qué opciones tiene el jugador y qué consecuencia dejó su elección. Adaptar la presentación a móvil sin trasladar sus paneles de escritorio. |
+| BitLife | Acontecimientos personales breves, elecciones comprensibles y continuidad de una vida | Tarjetas con participantes reales, costes, riesgos y consecuencias en hogares y población; las vidas se enlazan mediante familias y generaciones. Una elección modifica el mundo, además del texto. |
 
-Sitios oficiales: https://polytopia.io/ · https://www.superworldbox.com/ · https://rimworldgame.com/
+WorldBox, RimWorld y BitLife son las referencias principales, con funciones distintas. Polytopia queda como referencia secundaria de claridad táctil; no determina el producto, el calendario o las condiciones de victoria.
+
+Sitios oficiales de las referencias inspeccionadas anteriormente: https://polytopia.io/ · https://www.superworldbox.com/ · https://rimworldgame.com/
 
 Son referencias de patrones conocidos, no una revisión de sus versiones actuales: el acceso web a esos sitios devolvió 403 en este entorno. No se han copiado recursos, textos ni código. No hay aquí una afirmación de que alguno reúna toda la especificación de BARRIO CERO.
 
-## Diagnóstico de la interfaz actual
+## Diagnóstico de la interfaz de partida (anterior a R1)
 
-Inspección de `lib/presentation/app.dart`:
+La inspección previa de `lib/presentation/app.dart` encontró estos problemas. Se conservan como objetivos de regresión; los cambios de R1 y su estado efectivo deben consultarse en las evidencias recientes:
 
 - `_selection` muestra ocho acciones con la misma jerarquía en una fila horizontal; varias quedan fuera de la vista.
 - `_world` mezcla tres escalas, cinco filtros, cuatro iconos de mapa y varios controles temporales. `Años` recibe mayor énfasis visual que las acciones iniciales.
@@ -30,7 +32,7 @@ Inspección de `lib/presentation/app.dart`:
 
 El ciclo principal será: observar una necesidad u oportunidad → elegir una acción → ver trabajo y costes → avanzar el tiempo → reconocer el resultado y su causa → decidir qué hacer después.
 
-1. **Entrada sencilla.** `Continuar` y `Nueva partida`. La configuración detallada del mundo va en un desplegable con un resumen de los valores efectivos. Conservar las reglas y probabilidades actuales; no cambiar silenciosamente la dificultad o los extraordinarios.
+1. **Entrada sencilla.** `Continuar` y `Nueva partida`. La configuración detallada del mundo va en un desplegable con un resumen de los valores efectivos. En el APK intermedio R1, conservar las reglas y probabilidades actuales. Después, ofrecer prehistoria por defecto y reconstrucción completa, familias destacadas y progresión por capacidades durante siglos; no cambiar silenciosamente dificultad o extraordinarios.
 2. **Empezar en el barrio.** Mostrar la comunidad controlada en la escala de asentamiento, con el tiempo pausado y su nombre visible. Mantener acceso inmediato al mundo. Observar otra sociedad no transfiere el control.
 3. **Tres destinos estables.** `Barrio`, `Mundo`, `Historia`. Las acciones concretas pertenecen a una selección o a una ficha; los ajustes, paquetes y archivo de partidas van en el menú. La escala regional y los filtros se encuentran dentro de Mundo.
 4. **Una sugerencia contextual.** Una tarjeta breve propone una tarea realizable y permite descartarla. No inventar hambre, obras ni sucesos para mantener activo el tutorial. La sugerencia se obtiene del estado y se recalcula si el jugador elige otra cosa.
@@ -41,7 +43,9 @@ El ciclo principal será: observar una necesidad u oportunidad → elegir una ac
 
 La guía puede omitirse y retomarse. Guardar su progreso como estado de presentación, sin consumir el PRNG del mundo, introducir recursos, alterar la autonomía o cambiar el resultado de la simulación.
 
-## Primera sesión propuesta
+## Primera sesión y decisiones significativas
+
+El recorrido definitivo de diez decisiones está en el apartado 8 de REDESIGN_SPEC.md: alimento, agua, refugios, trabajo/aprendizaje, exploración, intercambio, petición familiar, consecuencia aplazada, conocimiento y delegación/salto. El tutorial es opcional; no retiene funciones avanzadas ni fabrica recursos. La tabla siguiente resume sus propósitos, sin sustituir esas diez decisiones verificables.
 
 | Momento | Acción del jugador y respuesta necesaria |
 |---|---|
@@ -66,4 +70,4 @@ Durante las primeras diez decisiones significativas deben cumplirse los cuatro r
 
 Comprobar también texto ampliado, contraste, controles táctiles de al menos 48 puntos y ausencia de desbordamientos. La aceptación de comprensión necesita observar a una persona que no conozca la interfaz: debe localizar su comunidad, dar una orden, explicar su coste, ver su resultado y volver a la partida sin instrucciones externas. Las pruebas automatizadas apoyan esa comprobación, pero no prueban por sí solas que la experiencia sea clara.
 
-Adelantar UX1–UX3 no cierra H9 completo ni sustituye los sistemas pendientes. No se añaden dependencias ni se modifica el APK como parte de este documento.
+Adelantar UX1–UX3 no cierra H9 completo ni sustituye los sistemas pendientes. Este documento es una referencia de diseño; el estado de implementación y los APK se acreditan con resultados separados. UX1/UX2 se integran en R1; la guía completa y las diez decisiones se cierran en R11 después de los sistemas correspondientes.

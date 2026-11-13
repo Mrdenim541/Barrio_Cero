@@ -1,0 +1,17 @@
+{
+  "previewPreservesCheckpoint": true,
+  "construction": {
+    "day": 2,
+    "projectsBefore": 1,
+    "projectsAfter": 2,
+    "woodCost": 20,
+    "stoneCost": 5
+  },
+  "advance": {
+    "before": 2,
+    "after": 3
+  },
+  "navigationPreservesCheckpoint": true,
+  "nativeImportRestoresOriginalWorld": true,
+  "error": "No control Continuar historia; visible ['Año 1 · mes 1 · día 3', 'Diriges Barrio Cero', 'MENÚ', 'Acercar', 'Alejar', 'Centrar comunidad', 'Barrio Cero', 'Comunidad', '56 habitantes · Lidera Tito', 'Alimento 262 · Agua 249 · Salud 90%', 'Trabajo en marcha: Huerto. Termina en Año 1 · mes 1 · día 13.', 'Construir', 'Más acciones', 'Historia importada.', 'Cerrar mensaje', 'Reproducir un día por paso', '+ Día', 'Avanzar', 'Barrio\\nTab 1 of 3', 'Mundo\\nTab 2 of 3', 'Historia\\nTab 3 of 3']"
+}

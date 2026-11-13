@@ -1,0 +1,54 @@
+import subprocess,xml.etree.ElementTree as ET,re,json,hashlib,pathlib
+root=pathlib.Path('/workspace/Barrio_Cero'); out=root/'docs/validation/r1'; tmp=root/'build/validation/redesign'
+base=json.loads((tmp/'android-before.json').read_text())
+def adb(*args):return subprocess.check_output(['adb',*args],timeout=120)
+def dump():
+ adb('shell','uiautomator','dump','/sdcard/barrio-window.xml')
+ data=adb('exec-out','cat','/sdcard/barrio-window.xml')
+ (tmp/'window.xml').write_bytes(data)
+ return list(ET.fromstring(data).iter('node'))
+def tap(label):
+ nodes=dump()
+ for n in nodes:
+  text=n.get('text') or n.get('content-desc') or ''
+  if text==label or text.startswith(label+'\n'):
+   x1,y1,x2,y2=map(int,re.findall(r'\d+',n.get('bounds')))
+   adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));print('Tap: '+label,flush=True);return
+ raise RuntimeError('No control '+label+'; visible '+str([(n.get('text') or n.get('content-desc')) for n in nodes if n.get('text') or n.get('content-desc')]))
+def capture(name):
+ dump();(out/name).write_bytes(adb('exec-out','screencap','-p'))
+def saved(name):
+ raw=adb('exec-out','run-as','com.barriocero.eras','cat','app_flutter/barrio_cero/world_0.json')
+ (tmp/name).write_bytes(raw);return json.loads(raw)
+results={}
+try:
+ capture('01-barrio.png')
+ before=saved('native-before-order.json')
+ tap('Construir');tap('Huerto');capture('02-command-preview.png')
+ assert saved('native-after-preview.json')==before
+ results['previewPreservesCheckpoint']=True
+ tap('Confirmar orden');dump()
+ ordered=saved('native-after-order.json');a=before['payload']['world'];b=ordered['payload']['world'];sa=a['societies'][0];sb=b['societies'][0]
+ assert len(sb['projects'])==len(sa['projects'])+1
+ assert sb['resources']['wood']==sa['resources']['wood']-20
+ assert sb['resources']['stone']==sa['resources']['stone']-5
+ results['construction']={'day':b['day'],'projectsBefore':len(sa['projects']),'projectsAfter':len(sb['projects']),'woodCost':20,'stoneCost':5}
+ tap('+ Día');dump();advanced=saved('native-after-advance.json');assert advanced['payload']['world']['day']==b['day']+1
+ results['advance']={'before':b['day'],'after':advanced['payload']['world']['day']}
+ tap('Historia');capture('03-history.png');tap('Mundo');capture('04-world.png')
+ assert saved('native-after-navigation.json')==advanced
+ results['navigationPreservesCheckpoint']=True
+ tap('MENÚ');tap('Archivo de mundos');tap('Importar partida (JSON)');capture('05-import-picker.png')
+ tap('barrio-cero-0-dia-2.json');dump();imported=saved('native-imported.json')
+ assert imported['payload']['world']==base['payload']['world']
+ results['nativeImportRestoresOriginalWorld']=True
+ capture('06-imported.png')
+ adb('shell','am','force-stop','com.barriocero.eras');adb('shell','am','start','-n','com.barriocero.eras/.MainActivity')
+ tap('Continuar historia');capture('07-reopened.png')
+ assert saved('native-reopened.json')['payload']['world']==base['payload']['world']
+ results['forceStopReopenPreservesImportedWorld']=True
+ print(json.dumps(results,ensure_ascii=False),flush=True)
+except Exception as error:
+ results['error']=str(error);print(json.dumps(results,ensure_ascii=False),flush=True);raise
+finally:
+ (tmp/'native-results.json').write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n')

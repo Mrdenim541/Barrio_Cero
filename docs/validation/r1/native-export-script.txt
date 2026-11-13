@@ -1,0 +1,14 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+import shlex
+before=set(adb('shell','ls','/sdcard/Download').decode().splitlines())
+tap('MENÚ');tap('Archivo de mundos');tap('Exportar partida (JSON)');capture('08-export-picker.png')
+nodes=dump();save=next((n.get('text') or n.get('content-desc') for n in nodes if (n.get('text') or n.get('content-desc') or '').lower() in ['save','guardar']),None)
+if save is None:raise RuntimeError('No save button: '+str([(n.get('text') or n.get('content-desc')) for n in nodes]))
+tap(save);dump()
+after=set(adb('shell','ls','/sdcard/Download').decode().splitlines());created=after-before
+if len(created)!=1:raise RuntimeError('Expected one new export: '+str(created))
+name=created.pop();raw=adb('exec-out','cat',shlex.quote('/sdcard/Download/'+name));data=json.loads(raw)
+assert data['payload']['world']==base['payload']['world']
+results={'nativeExport':True,'fileName':name,'sha256':hashlib.sha256(raw).hexdigest(),'worldMatchesImportedReference':True}
+(tmp/'native-export-results.json').write_text(json.dumps(results,indent=2)+'\n');print(json.dumps(results),flush=True)
+capture('09-exported.png')

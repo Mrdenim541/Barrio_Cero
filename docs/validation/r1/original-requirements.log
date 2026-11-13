@@ -1,0 +1,2 @@
+Traceability PASS: 106 blocks,20 sections; coverage statuses: {'verified': 1, 'partial': 13, 'blocked': 0, 'absent': 0, 'unverified': 92}
+This check validates the register, not game behavior.

@@ -192,6 +192,36 @@ class CommandResult {
  const CommandResult(this.ok,this.message,{this.code='ok',this.replayed=false});
 }
 
+
+/// A quote for the current state only; submitting still revalidates the order.
+/// durationDays == 0 means an immediate rule effect; null means no finite estimate.
+class CommandPreview {
+ final bool allowed,replayed;
+ final String reason,code,outcome;
+ final Map<String,double> costs;
+ final int workers;
+ final int? durationDays;
+ final List<String> prerequisites;
+ CommandPreview({required this.allowed,required this.reason,required this.code,
+  required this.outcome,Map<String,double> costs=const {},this.workers=0,
+  this.durationDays,this.replayed=false,List<String> prerequisites=const []})
+  :costs=Map.unmodifiable(costs),prerequisites=List.unmodifiable(prerequisites);
+}
+class _CommandEvaluation {
+ final CommandResult result;
+ final WorldState? candidate;
+ final List<HistoryEntry> history;
+ const _CommandEvaluation(this.result,{this.candidate,this.history=const []});
+}
+const _repairCost=<String,double>{'wood':10,'stone':8,'tools':2};
+const _explorationCost=<String,double>{'food':12,'tools':2};
+const _facilityCosts=<String,Map<String,double>>{
+ 'seal':{'stone':15},'salvage':{'tools':4},
+ 'study':{'knowledge':20,'tools':5},'share':{'food':15},
+};
+int _constructionDays(BuildingDefinition building,Society society)=>
+ society.tech.contains('engineering')?(building.days*0.75).ceil():building.days;
+
 class Simulation {
  final WorldState world; Map<String,dynamic>? content;
  final void Function(HistoryEntry)? onHistory;
@@ -200,25 +230,31 @@ class Simulation {
  /// Player authority and atomicity live at this boundary, not in widgets.
  /// A rejected command does not change resources, RNG, history, or receipts.
  CommandResult submit(Command request) {
+  final evaluated=_evaluate(request);
+  if(evaluated.candidate!=null)world._adopt(evaluated.candidate!);
+  // Observers see only committed changes; preview never publishes this history.
+  for(final entry in evaluated.history){onHistory?.call(entry);}
+  return evaluated.result;
+ }
+ _CommandEvaluation _evaluate(Command request) {
   if(request.id.isEmpty||request.id.length>128){
-   return const CommandResult(false,'Identificador de orden inválido.',code:'invalid_id');
+   return const _CommandEvaluation(CommandResult(false,'Identificador de orden inválido.',code:'invalid_id'));
   }
   final previous=world.commandReceipts[request.id];
   if(previous!=null){
    if(previous['fingerprint']!=request.fingerprint){
-    return const CommandResult(false,'Ese identificador pertenece a otra orden.',code:'id_conflict');
+    return const _CommandEvaluation(CommandResult(false,'Ese identificador pertenece a otra orden.',code:'id_conflict'));
    }
-   return CommandResult(true,previous['message'] as String,replayed:true);
+   return _CommandEvaluation(CommandResult(true,previous['message'] as String,replayed:true));
   }
   if(request.issuedDay!=world.day){
-   return const CommandResult(false,'La fecha de la orden ya no coincide con el mundo.',code:'stale_day');
+   return const _CommandEvaluation(CommandResult(false,'La fecha de la orden ya no coincide con el mundo.',code:'stale_day'));
   }
   if(request.actorId!=world.controlledId ||
      (request.actorId==null&&request.action!='control'&&request.action!='delegate')){
-   return const CommandResult(false,'Asume la dirección de la comunidad antes de darle órdenes.',code:'not_controlled');
+   return const _CommandEvaluation(CommandResult(false,'Asume la dirección de la comunidad antes de darle órdenes.',code:'not_controlled'));
   }
   final emitted=<HistoryEntry>[];
-  late CommandResult committedResult;
   try {
    final candidate=WorldState.fromJson(world.toJson());
    final trial=Simulation(candidate,onHistory:emitted.add);
@@ -227,18 +263,104 @@ class Simulation {
     ? trial.resolveContentEvent(request.target??'',request.choice??'',societyId:request.actorId)
     : trial.command(request.action,societyId:request.actorId,
       target:request.target,choice:request.choice);
-   if(!result.ok)return CommandResult(false,result.message,code:'rejected');
+   if(!result.ok)return _CommandEvaluation(CommandResult(false,result.message,code:'rejected'));
    candidate.commandReceipts[request.id]={'fingerprint':request.fingerprint,
     'message':result.message,'day':candidate.day};
    candidate.validate();
-   world._adopt(candidate);
-   committedResult=result;
+   return _CommandEvaluation(result,candidate:candidate,history:emitted);
   } catch(error) {
-   return CommandResult(false,'La orden no pudo validarse: $error',code:'invalid_state');
+   return _CommandEvaluation(CommandResult(false,'La orden no pudo validarse: $error',code:'invalid_state'));
   }
-  // Observers see only committed changes; observer failure never reports a rejection.
-  for(final entry in emitted){onHistory?.call(entry);}
-  return committedResult;
+ }
+
+ /// Executes the same transaction evaluator as submit on a disposable candidate.
+ /// The live world, RNG, receipts and history observers remain untouched.
+ CommandPreview preview(Command request) {
+  final evaluated=_evaluate(request);
+  final result=evaluated.result;
+  if(result.replayed){
+   return CommandPreview(allowed:true,reason:result.message,
+    code:result.code,replayed:true,durationDays:0,
+    outcome:'Orden ya confirmada; no vuelve a consumir recursos ni trabajo.');
+  }
+  if(result.code!='ok'&&result.code!='rejected'){
+   return CommandPreview(allowed:false,reason:result.message,code:result.code,
+    outcome:'Revisa la disponibilidad antes de preparar esta orden.');
+  }
+  final society=world.society(request.actorId);
+  Map<String,double> costs={};
+  var workers=0;
+  int? duration;
+  var outcome='Consulta la respuesta de esta acción antes de confirmarla.';
+  final prerequisites=<String>[];
+  String technologyName(String id)=>technologies.where((t)=>t.id==id).firstOrNull?.name??id;
+  switch(request.action){
+   case 'build':
+    final building=buildings.where((b)=>b.id==request.target).firstOrNull;
+    if(building!=null){
+     costs=building.cost;workers=4;
+     duration=society==null?building.days:_constructionDays(building,society);
+     if(building.technology!=null)prerequisites.add('Conocimiento: ${technologyName(building.technology!)}');
+     prerequisites.addAll(['Cuatro trabajadores disponibles','Espacio local y capacidad de coordinación']);
+     outcome=building.description;
+    }
+    break;
+   case 'research':
+    final technology=technologies.where((t)=>t.id==request.target).firstOrNull;
+    if(technology!=null){
+     costs={'knowledge':technology.cost};duration=0;
+     prerequisites.addAll(technology.requires.map((id)=>'Conocimiento: ${technologyName(id)}'));
+     outcome=technology.effect;
+    }
+    break;
+   case 'explore':
+    costs=_explorationCost;workers=4;duration=8;
+    prerequisites.addAll(['Cuatro trabajadores disponibles','Sin otra expedición en marcha']);
+    outcome='Una expedición buscará vestigios. Su resultado se conocerá al regresar.';
+    break;
+   case 'repair':
+    costs=_repairCost;duration=0;
+    prerequisites.add('Daños en el territorio, viviendas o defensas');
+    outcome='Reduce daño territorial y repara capacidad de vivienda o defensa dañada.';
+    break;
+   case 'facility':
+    costs=_facilityCosts[request.choice]??{};
+    duration=request.choice=='study'?25:10;
+    prerequisites.add('Instalación descubierta y todavía sin resolver');
+    outcome='Compromete una respuesta; sus consecuencias se resolverán después.';
+    break;
+   case 'trade':
+    costs={'food':12,'textiles':5};
+    prerequisites.addAll(['Otra comunidad viva','Paso terrestre seguro','Relación que permita comerciar','Sin ruta previa entre ambas comunidades']);
+    outcome='Abre una ruta y retira su carga inicial de las reservas.';
+    break;
+   case 'diplomacy':
+    costs={'food':10};duration=0;
+    prerequisites.add('Otra comunidad viva');
+    outcome='Una delegación mejora la confianza entre ambas comunidades.';
+    break;
+   case 'resolve_event':
+    final event=contentEvents.where((e)=>e['id']==request.target).firstOrNull;
+    final option=((event?['options'] as List?)??[]).where((o)=>o['id']==request.choice).firstOrNull;
+    if(option!=null){
+     costs=(option['costs'] as Map).map((key,value)=>MapEntry(_resource(key as String),(value as num).toDouble()));
+     outcome=option['description'] as String? ?? 'Aplica la decisión y compromete sus consecuencias.';
+    }
+    duration=0;
+    break;
+   case 'policy':
+    duration=0;outcome='Actualiza las prioridades que seguirá el gobierno.';
+    break;
+   case 'control':
+    duration=0;outcome='Asume la dirección; las otras comunidades conservan su estado y compromisos.';
+    break;
+   case 'delegate':
+    duration=0;outcome='Los gobiernos siguen sus políticas mientras observas.';
+    break;
+  }
+  return CommandPreview(allowed:result.ok,reason:result.message,code:result.code,
+   costs:costs,workers:workers,durationDays:duration,
+   prerequisites:prerequisites,outcome:outcome);
  }
 
  String _id(String prefix)=>'$prefix${world.serial++}';
@@ -250,20 +372,20 @@ class Simulation {
  CommandResult command(String action,{String? societyId,String? target,String? choice}) {
  final s=world.society(societyId??world.controlledId);if(action=='delegate'){world.controlledId=null;return const CommandResult(true,'Todas las comunidades quedan delegadas.');}if(action=='control'){final t=world.society(target);if(t==null||!t.alive)return const CommandResult(false,'Comunidad no disponible.');world.controlledId=t.id;return CommandResult(true,'Ahora guías ${t.name}.');}if(s==null||!s.alive)return const CommandResult(false,'No hay una comunidad viva seleccionada.');
  if(action=='policy'){switch(target){case 'balanced':s.policy=Policy();break;case 'food':s.policy.reserve=240;s.policy.expansion=false;s.policy.research='agriculture';s.policy.risk=0.2;break;case 'science':s.policy.research='science';s.policy.risk=0.65;break;case 'trade':s.policy.trade=true;s.policy.diplomacy='cooperate';s.policy.risk=0.25;break;case 'defense':s.policy.diplomacy='defend';s.policy.risk=0.3;s.policy.expansion=false;break;case 'expansion':s.policy.expansion=true;s.policy.risk=0.6;break;case 'isolation':s.policy.trade=false;s.policy.diplomacy='isolate';s.policy.expansion=false;s.policy.risk=0.2;break;default:return const CommandResult(false,'Política desconocida.');}record(s,'Prioridades de gobierno', 'El consejo adopta $target; se conservan al cambiar de comunidad.','política');return const CommandResult(true,'Prioridades actualizadas.');}
- if(action=='repair'){if(world.tiles[s.y*world.size+s.x].damage<=0&&s.housingModifier>=0&&s.defenseModifier>=0)return const CommandResult(false,'No hay daños que reparar.');if(!_pay(s,{'wood':10,'stone':8,'tools':2}))return const CommandResult(false,'Reparar requiere 10 madera, 8 piedra y 2 herramientas.');final tile=world.tiles[s.y*world.size+s.x];tile.damage=math.max(0.0,tile.damage-0.5);if(s.housingModifier<0)s.housingModifier=math.min(0,s.housingModifier+18);if(s.defenseModifier<0)s.defenseModifier=math.min(0,s.defenseModifier+5);record(s,'Manos que reparan','Se recuperan viviendas dañadas y se limpia parte del territorio.','reparación');return const CommandResult(true,'Reparación completada.');}
- if(action=='build'){if(s.sites.length+s.projects.length>=196)return const CommandResult(false,'La cuadrícula local está ocupada. Funda otro asentamiento.');final matches=buildings.where((b)=>b.id==target);if(matches.isEmpty)return const CommandResult(false,'Edificio desconocido.');final b=matches.first;if(b.technology!=null&&!s.tech.contains(b.technology))return const CommandResult(false,'Falta la tecnología requerida.');if(s.workers<4||s.projects.length>=math.max(1,s.adults~/12))return const CommandResult(false,'No quedan cuatro trabajadores y capacidad de coordinación disponibles.');if(!_pay(s,b.cost))return const CommandResult(false,'Faltan materiales; no se reservó nada.');s.projects.add(Project(b.id,world.day+(s.tech.contains('engineering')?(b.days*0.75).ceil():b.days)));record(s,'Obra: ${b.name}','Materiales y cuatro trabajadores reservados.','construcción');return CommandResult(true,'${b.name}: ${b.days} días.');}
+ if(action=='repair'){if(world.tiles[s.y*world.size+s.x].damage<=0&&s.housingModifier>=0&&s.defenseModifier>=0)return const CommandResult(false,'No hay daños que reparar.');if(!_pay(s,_repairCost))return const CommandResult(false,'Reparar requiere 10 madera, 8 piedra y 2 herramientas.');final tile=world.tiles[s.y*world.size+s.x];tile.damage=math.max(0.0,tile.damage-0.5);if(s.housingModifier<0)s.housingModifier=math.min(0,s.housingModifier+18);if(s.defenseModifier<0)s.defenseModifier=math.min(0,s.defenseModifier+5);record(s,'Manos que reparan','Se recuperan viviendas dañadas y se limpia parte del territorio.','reparación');return const CommandResult(true,'Reparación completada.');}
+ if(action=='build'){if(s.sites.length+s.projects.length>=196)return const CommandResult(false,'La cuadrícula local está ocupada. Funda otro asentamiento.');final matches=buildings.where((b)=>b.id==target);if(matches.isEmpty)return const CommandResult(false,'Edificio desconocido.');final b=matches.first;if(b.technology!=null&&!s.tech.contains(b.technology))return const CommandResult(false,'Falta la tecnología requerida.');if(s.workers<4||s.projects.length>=math.max(1,s.adults~/12))return const CommandResult(false,'No quedan cuatro trabajadores y capacidad de coordinación disponibles.');if(!_pay(s,b.cost))return const CommandResult(false,'Faltan materiales; no se reservó nada.');s.projects.add(Project(b.id,world.day+_constructionDays(b,s)));record(s,'Obra: ${b.name}','Materiales y cuatro trabajadores reservados.','construcción');return CommandResult(true,'${b.name}: ${_constructionDays(b,s)} días.');}
  if(action=='research'){final t=technologies.where((t)=>t.id==target);if(t.isEmpty)return const CommandResult(false,'Tecnología desconocida.');final tech=t.first;if(s.tech.contains(tech.id))return const CommandResult(false,'Conocimiento ya adquirido.');if(!tech.requires.every(s.tech.contains))return const CommandResult(false,'Faltan conocimientos previos.');if(!_pay(s,{'knowledge':tech.cost}))return const CommandResult(false,'Conocimiento insuficiente.');s.tech.add(tech.id);record(s,'Avance: ${tech.name}',tech.effect,'tecnología');return CommandResult(true,'${tech.name} incorporada.');}
  if(action=='explore'){
   if(s.expeditionWorkers>0||world.pending.any((e)=>e.type=='discovery'&&e.societyId==s.id))return const CommandResult(false,'La expedición anterior todavía no ha regresado.');
   if(s.workers<4)return const CommandResult(false,'La expedición necesita cuatro adultos disponibles.');
   final explorer=s.people.where((p)=>p.alive&&p.role=='explorador').firstOrNull;
-  if(!_pay(s,{'food':12,'tools':2}))return const CommandResult(false,'Se necesitan 12 alimentos y 2 herramientas.');
+  if(!_pay(s,_explorationCost))return const CommandResult(false,'Se necesitan 12 alimentos y 2 herramientas.');
   s.expeditionWorkers=4;
   final h=record(s,explorer==null?'Parte un equipo de exploración':'${explorer.name} parte de expedición','Cuatro adultos buscarán rutas y vestigios durante ocho días.','exploración');
   world.pending.add(ScheduledEvent(_id('e'),'discovery',s.id,world.day+8,cause:h.id,data:{'workers':4,'explorerId':explorer?.id}));
   return const CommandResult(true,'Expedición en camino; cuatro trabajadores reservados.');
  }
- if(action=='facility'){if(!s.facilityFound||s.facilityChoice!=null)return const CommandResult(false,'No hay una instalación pendiente.');final options={'seal':{'stone':15.0},'salvage':{'tools':4.0},'study':{'knowledge':20.0,'tools':5.0},'share':{'food':15.0}};if(!options.containsKey(choice))return const CommandResult(false,'Respuesta desconocida.');if(!_pay(s,options[choice]!))return const CommandResult(false,'Faltan recursos para esa respuesta.');s.facilityChoice=choice;s.flags.add('facility_committed');final h=record(s,'El destino de la instalación',{'seal':'La entrada queda sellada. Se preserva el entorno.','salvage':'Se recuperan piezas, pero se pierde el archivo.','study':'El equipo técnico estudia el núcleo. El resultado depende de salud y conocimientos.','share':'Se invita a vecinos a compartir el hallazgo.'}[choice]!,'decisión');world.pending.add(ScheduledEvent(_id('e'),'facility_$choice',s.id,world.day+(choice=='study'?25:10),cause:h.id));return const CommandResult(true,'Decisión comprometida; sus consecuencias llegarán.');}
+ if(action=='facility'){if(!s.facilityFound||s.facilityChoice!=null)return const CommandResult(false,'No hay una instalación pendiente.');final options=_facilityCosts;if(!options.containsKey(choice))return const CommandResult(false,'Respuesta desconocida.');if(!_pay(s,options[choice]!))return const CommandResult(false,'Faltan recursos para esa respuesta.');s.facilityChoice=choice;s.flags.add('facility_committed');final h=record(s,'El destino de la instalación',{'seal':'La entrada queda sellada. Se preserva el entorno.','salvage':'Se recuperan piezas, pero se pierde el archivo.','study':'El equipo técnico estudia el núcleo. El resultado depende de salud y conocimientos.','share':'Se invita a vecinos a compartir el hallazgo.'}[choice]!,'decisión');world.pending.add(ScheduledEvent(_id('e'),'facility_$choice',s.id,world.day+(choice=='study'?25:10),cause:h.id));return const CommandResult(true,'Decisión comprometida; sus consecuencias llegarán.');}
  if(action=='trade'||action=='diplomacy'){final other=world.society(target);if(other==null||other.id==s.id||!other.alive)return const CommandResult(false,'Destino inválido.');if(action=='diplomacy'){if(!_pay(s,{'food':10}))return const CommandResult(false,'Faltan víveres para la delegación.');s.relations[other.id]=math.min(100,(s.relations[other.id]??0)+(s.leaderTrait=='conciliatory'?30:s.leaderTrait=='guarded'?10:20));other.relations[s.id]=math.min(100,(other.relations[s.id]??0)+15);record(s,'Una mesa compartida','El pacto con ${other.name} mejora la confianza.','diplomacia');return const CommandResult(true,'Relaciones mejoradas.');}return _openRoute(s,other);}
  return const CommandResult(false,'Orden desconocida.');
  }

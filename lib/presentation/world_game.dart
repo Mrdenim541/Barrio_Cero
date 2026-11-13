@@ -150,7 +150,8 @@ class WorldGame extends FlameGame {
     c.save();
     c.translate(center.dx+pan.dx,center.dy+pan.dy);
     c.scale(math.min(size.x,size.y)/1024*zoom);
-    c.translate(-512,-512);
+    // Frame the inhabited area on entry; panning still exposes the full local grid.
+    c.translate(-320,-192);
     for(var y=0;y<32;y++) { for(var x=0;x<32;x++) {
       paint.color=(x+y)%2==0?const Color(0xff8f9668):const Color(0xff92996a);
       c.drawRect(Rect.fromLTWH(x*tile,y*tile,tile,tile),paint);
@@ -189,7 +190,7 @@ class WorldGame extends FlameGame {
     }
     c.restore();
     _text(c,'${s['name']}  •  ${number(s['population'])} habitantes',const Offset(14,14),color:const Color(0xfff8edd7),fontSize:12);
-    _text(c,'32 × 32 · ${s['id']} · ${sites.length} edificios',Offset(14,size.y-24),color:const Color(0xffe4dfc5),fontSize:10);
+    _text(c,'${sites.length} edificios · Arrastra para explorar',Offset(14,size.y-24),color:const Color(0xffe4dfc5),fontSize:10);
   }
   void _tree(Canvas c,Offset p) {
     c.drawRect(Rect.fromLTWH(p.dx+6,p.dy+13,5,13),Paint()..color=const Color(0xff675645));

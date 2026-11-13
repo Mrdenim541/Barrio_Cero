@@ -1,0 +1,5 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+tap('Continuar historia');capture('07-reopened.png')
+assert saved('native-reopened.json')['payload']['world']==base['payload']['world']
+r={'forceStopReopenPreservesImportedWorld':True,'note':'Focused retry after UIAutomator returned null root and the first harness read a stale hierarchy.'}
+(tmp/'native-reopen-results.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r),flush=True)

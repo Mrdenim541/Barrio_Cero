@@ -1,0 +1,6 @@
+{
+  "nativeExport": true,
+  "sha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e",
+  "worldMatchesImportedReference": true,
+  "note": "Verified exported document in a focused read after the initial immediate-read harness failed."
+}

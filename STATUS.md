@@ -1,5 +1,17 @@
 # Estado de BARRIO CERO: ERAS
 
+## Rediseño actual — R0 registrado; R1 parcial
+
+Se conservaron los 106 requisitos originales y se añadieron 68 requisitos de la ampliación aprobada. La versión intermedia 0.2.0 incorpora Barrio/Mundo/Historia, fichas legibles, consulta y confirmación de costes, SessionController y confirmación durable de todos los lotes históricos.
+
+La línea base de 39 pruebas pasó antes de modificarla. La batería integrada pasó 62 pruebas; tras corregir el recorte visual se repitieron las siete de interfaz (320/360/412 y texto ampliado), con análisis final limpio. El APK profile se compiló y se instaló por actualización en Android 10; la partida anterior se conservó byte a byte. Evidencia y límites: [validación R1](docs/validation/r1/README.md).
+
+**R1 sigue parcial.** El usuario señaló que las capturas todavía parecen el prototipo rechazado. La navegación y la persistencia mejoraron, pero el arte, la distribución local y la presentación del asentamiento no alcanzan la lámina objetivo. Las capturas actuales son evidencia de una versión intermedia, no del aspecto final acordado. No se considera resuelta la objeción visual por aprobar pruebas técnicas.
+
+Próxima prioridad dentro del rediseño: una escena local legible con escala útil, composición del asentamiento e interacción contextual vinculadas al estado real; contrastarla con `docs/design/world-and-settlement-target.png` mediante capturas ejecutadas. Los caminos, puestos de trabajo, recorridos y edificios nuevos que requieran modelo local se integrarán con R2–R4; no se dibujarán como simulación funcional sin sus reglas. R2–R13 y la totalidad del alcance original siguen pendientes de sus criterios.
+
+## Línea base anterior y evidencias históricas
+
 Actualizado el 13 de noviembre de 2026. **H0 tiene una base Android compilada, instalada y comprobada. El juego completo todavía NO está terminado.**
 
 ## Evidencia ejecutada
@@ -41,4 +53,4 @@ También se corrigió una carrera observada en Android: al regresar del selector
 
 El ZIP del APK se subió con autorización explícita a la rama `downloads/android-test-0.1.0`; su descarga HTTPS se comprobó con HTTP 200 y hashes coincidentes. No se publicó el entorno ni se subió a tiendas.
 
-Tras probarlo, el usuario señaló confusión por la cantidad de opciones. `docs/PLAYABILITY_REFERENCES.md` registra las referencias Polytopia, WorldBox y RimWorld, el diagnóstico de la interfaz y el bloque UX1–UX4. Es diseño pendiente de implementación; el APK entregado aún no contiene esos cambios. Priorizar jerarquía, órdenes comprensibles y guía contextual junto con H1/H2, manteniendo la especificación y los hitos restantes.
+El rediseño aprobado sustituye la referencia principal anterior por WorldBox, RimWorld y BitLife. La implementación parcial actual y la objeción visual del usuario se describen al comienzo de este documento.

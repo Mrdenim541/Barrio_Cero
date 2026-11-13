@@ -1,0 +1,4 @@
+{
+  "forceStopReopenPreservesImportedWorld": true,
+  "note": "Focused retry after UIAutomator returned null root and the first harness read a stale hierarchy."
+}

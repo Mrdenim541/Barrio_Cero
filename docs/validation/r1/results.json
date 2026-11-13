@@ -1,0 +1,116 @@
+{
+  "recordedAt": "2026-11-13T20:20:02.099528+00:00",
+  "scope": "R0/R1 sobre el escenario existente de reconstrucción; no finalización de R2–R13",
+  "baselineCommit": "7ea4028",
+  "baselineTests": {
+    "count": 39,
+    "passed": true
+  },
+  "fullTests": {
+    "count": 62,
+    "passed": true,
+    "log": "tests.log"
+  },
+  "finalPresentationTests": {
+    "count": 7,
+    "passed": true,
+    "log": "ui-tests-final.log",
+    "reason": "Repetición focalizada tras la última corrección de recorte visual"
+  },
+  "analysis": {
+    "passed": true,
+    "log": "analyze-final.log"
+  },
+  "artifact": {
+    "path": "build/deliverables/barrio-cero-eras-0.2.0-test.apk",
+    "sha256": "7d18038490e29c8984179d30bf8d95cb6f02899db7a5f34382d788efce45fcea",
+    "bytes": 83708937,
+    "version": "0.2.0+2",
+    "mode": "profile",
+    "minSdk": 24,
+    "package": "com.barriocero.eras",
+    "signature": "development test key"
+  },
+  "installation": {
+    "passed": true,
+    "log": "android-install-final.log"
+  },
+  "launch": {
+    "passed": true,
+    "log": "android-launch-final.log"
+  },
+  "updatePreservesPreviousSave": {
+    "passed": true,
+    "beforeSha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e",
+    "afterSha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e"
+  },
+  "nativeBehavior": {
+    "initialRun": {
+      "previewPreservesCheckpoint": true,
+      "construction": {
+        "day": 2,
+        "projectsBefore": 1,
+        "projectsAfter": 2,
+        "woodCost": 20,
+        "stoneCost": 5
+      },
+      "advance": {
+        "before": 2,
+        "after": 3
+      },
+      "navigationPreservesCheckpoint": true,
+      "nativeImportRestoresOriginalWorld": true,
+      "error": "No control Continuar historia; visible ['Año 1 · mes 1 · día 3', 'Diriges Barrio Cero', 'MENÚ', 'Acercar', 'Alejar', 'Centrar comunidad', 'Barrio Cero', 'Comunidad', '56 habitantes · Lidera Tito', 'Alimento 262 · Agua 249 · Salud 90%', 'Trabajo en marcha: Huerto. Termina en Año 1 · mes 1 · día 13.', 'Construir', 'Más acciones', 'Historia importada.', 'Cerrar mensaje', 'Reproducir un día por paso', '+ Día', 'Avanzar', 'Barrio\\nTab 1 of 3', 'Mundo\\nTab 2 of 3', 'Historia\\nTab 3 of 3']"
+    },
+    "reopenFocusedRetry": {
+      "forceStopReopenPreservesImportedWorld": true,
+      "note": "Focused retry after UIAutomator returned null root and the first harness read a stale hierarchy."
+    },
+    "exportFocusedVerification": {
+      "nativeExport": true,
+      "sha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e",
+      "worldMatchesImportedReference": true,
+      "note": "Verified exported document in a focused read after the initial immediate-read harness failed."
+    },
+    "fullUninterruptedRunPassed": false,
+    "scope": "La ejecución inicial aprobó hasta importación; UIAutomator devolvió raíz nula al reiniciar. Reapertura y exportación se comprobaron por separado. La primera lectura inmediata del archivo exportado falló; el archivo terminado coincide byte a byte con la referencia."
+  },
+  "sourceSha256": {
+    "PROJECT_SPEC.md": "49017fe7d421e4261fde238b19386286962c6bf793497660b99eb1a59bed075e",
+    "assets/content/core.json": "a751baac02f9a32bbd2e5058e507e53c50d118d95c9dad527c66f5e3db40e568",
+    "docs/REDESIGN_SPEC.md": "891b3cf0a9a9401eedfd3a1dbf06e5337ca347a6a2db7cb530b31bd5209470a9",
+    "lib/content/content_pack.dart": "ebc12b23fb0aecfc0e0e66174af4e3664ac2e1cfdea993e8defea28c9c5d7267",
+    "lib/main.dart": "4cdc322ae6c86d4c30cfe44cf1c98c1cd8eed3a00e5b2e69307b561129605118",
+    "lib/persistence/checkpoint.dart": "3248228e58dc03655c33cb64e59fffe44dce1f71da9ba4021242c7b5deec801a",
+    "lib/platform/document_exchange.dart": "56c1dea6eef5d939bd32e67046cf3fe5e53efd90bb0fc4b805490ffd94e594b3",
+    "lib/presentation/app.dart": "6187fae27a585deb2e204c1a132e26a03a97153d436f61f760f41b7825016d14",
+    "lib/presentation/art_assets.dart": "12a8d01aac67e2c5fe346ed8e083088de187fafb258127e74517f20dc2586b41",
+    "lib/presentation/storage.dart": "81704a87eed29d7592ab42d250eb29b6026fce616be481d33e6176a2aae7db6f",
+    "lib/presentation/storage_memory.dart": "662ed8d3f9e195afe611b71753a990d1273a1984e85b494de2d73a9a233bcb45",
+    "lib/presentation/storage_native.dart": "53eb129357f6368b7bc7268cf6ea79fcb7b3c936e01fadda29306385e7fe837d",
+    "lib/presentation/world_game.dart": "10bc48959fcaba940939241dd1f9d21cda545b020cd8f53af75567c291a7057f",
+    "lib/session/history_worker.dart": "ddbfbc7f92a4e642ae8c8244b3c7119e1f1c3df63bd900205f0ea8f4868345eb",
+    "lib/session/session_controller.dart": "a796c24143261a04eb32b8e3198cd322c96de0893f6895e4536c5a2e2afbfdac",
+    "lib/simulation/engine.dart": "e0e64f497e698dc05a3e9a127ec806f181925ab96719abf30f8223f2e7d1ff20",
+    "pubspec.lock": "818d7d2d2c1087ca1ec91f14707ec4ff4496f70a7d1aedef4cac20a317b58185",
+    "pubspec.yaml": "be10e3a3e21a63887207cb60b5dbd5df3b1066b39f77bff9e46611942f36dff4",
+    "test/art_assets_test.dart": "6af37c49c77e506c5079fac86685bcee2d51affd0fbef7f857b624d00f83f683",
+    "test/checkpoint_test.dart": "b434e2af77830a8d82cc81643b023d1ecc10865425266ddb4dbe6ad52b1f3f83",
+    "test/command_preview_test.dart": "866b79212403d11e29dfb846497f97f9ade618f36892c7ce6a15fe253f971195",
+    "test/commands_test.dart": "5a2105df28270af3a38329a62822a17d29a37f070129cf0c28376e34c59fbd4a",
+    "test/content_test.dart": "697e397dc5396a46838dd9a4810ee9b467cf4d8833430800bc50ef523cb6de80",
+    "test/document_exchange_test.dart": "fabdb52ee6d192b159c769c1fe358743c2279f31f1e18d3749e102e58f741610",
+    "test/presentation_test.dart": "56d6a8861914106117ee677278b362ec2a9f2a9d9801501922c7a307aba8a4e6",
+    "test/session_controller_test.dart": "c8dbedf3a818f5690e0edd9d74fd2553a86b310f4dc4000320a6f6b69a48a8df",
+    "test/storage_native_test.dart": "c0c1ddd9069e4679578ecf5e681b209420fe1deae97eab22e3fd7216e7fc3e06"
+  },
+  "limits": [
+    "Emulador Android 10/API29 por software; no medición del teléfono de referencia.",
+    "No se repitieron baterías de 200/1000 años en R1.",
+    "No implementa prehistoria, eras, equinos ni familias persistentes."
+  ],
+  "productReview": {
+    "R1": "partial",
+    "reason": "El usuario reconoce todavía el prototipo rechazado; arte y escena local no alcanzan la lámina objetivo."
+  }
+}

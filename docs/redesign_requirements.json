@@ -1,0 +1,2272 @@
+{
+  "schemaVersion": 1,
+  "scopeVersion": "2.0",
+  "approvedDate": "2026-11-13",
+  "baseSpec": "PROJECT_SPEC.md",
+  "baseSpecSha256": "49017fe7d421e4261fde238b19386286962c6bf793497660b99eb1a59bed075e",
+  "extensionSpec": "docs/REDESIGN_SPEC.md",
+  "extensionSpecSha256": "891b3cf0a9a9401eedfd3a1dbf06e5337ca347a6a2db7cb530b31bd5209470a9",
+  "originalRegistry": "docs/requirements.json",
+  "originalRequirementCount": 106,
+  "completionRule": "All mandatory original and extension requirements need executed behavioral evidence. Static registry validation does not demonstrate game completion.",
+  "acceptedDecisions": {
+    "defaultOrigin": "prehistory",
+    "alternateOrigin": "reconstruction",
+    "personalAgency": "prominent_families_aggregate_population",
+    "eraPacing": "generations_and_centuries",
+    "minAndroidApi": 24,
+    "referenceAndroidApi": 29,
+    "referenceRamGiB": 4,
+    "intimacy": "adult_non_graphic_ellipsis_only"
+  },
+  "milestones": [
+    {
+      "id": "R0",
+      "name": "Contratos y trazabilidad",
+      "dependencies": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "path": "docs/validation/r1/README.md",
+          "kind": "manual",
+          "result": "passed",
+          "command": "Revisión de continuidad de requisitos, hashes y artefactos R0",
+          "scope": "106 IDs originales intactos, 68 requisitos nuevos, línea base y referencia de reconstrucción preservadas; distingue resultados parciales y limitaciones."
+        }
+      ]
+    },
+    {
+      "id": "R1",
+      "name": "Interfaz comprensible",
+      "dependencies": [
+        "R0"
+      ],
+      "state": "partial",
+      "evidence": [
+        {
+          "path": "docs/validation/r1/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
+          "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "Núcleo transaccional",
+      "dependencies": [
+        "R0",
+        "R1"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R3",
+      "name": "Modelo y migración",
+      "dependencies": [
+        "R2"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R4",
+      "name": "Prehistoria jugable",
+      "dependencies": [
+        "R3"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R5",
+      "name": "Familias y generaciones",
+      "dependencies": [
+        "R3",
+        "R4"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R6",
+      "name": "Sociedades conectadas",
+      "dependencies": [
+        "R4",
+        "R5"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R7",
+      "name": "Especies y eras",
+      "dependencies": [
+        "R4",
+        "R5",
+        "R6"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R8",
+      "name": "Narrativa instanciada",
+      "dependencies": [
+        "R5",
+        "R6",
+        "R7"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R9",
+      "name": "Extraordinarios",
+      "dependencies": [
+        "R6",
+        "R7",
+        "R8"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R10",
+      "name": "Historia y recuperación",
+      "dependencies": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R11",
+      "name": "Experiencia completa",
+      "dependencies": [
+        "R7",
+        "R8",
+        "R9",
+        "R10"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R12",
+      "name": "Estabilidad y rendimiento",
+      "dependencies": [
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11"
+      ],
+      "state": "pending",
+      "evidence": []
+    },
+    {
+      "id": "R13",
+      "name": "Entrega",
+      "dependencies": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "state": "pending",
+      "evidence": []
+    }
+  ],
+  "originalRequirements": [
+    {
+      "id": "S01-R01",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "S01-R02",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "S01-R03",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "S01-R04",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ]
+    },
+    {
+      "id": "S02-R01",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S02-R02",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S02-R03",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S03-R01",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ]
+    },
+    {
+      "id": "S03-R02",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ]
+    },
+    {
+      "id": "S03-R03",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ]
+    },
+    {
+      "id": "S03-R04",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ]
+    },
+    {
+      "id": "S04-R01",
+      "milestones": [
+        "R11"
+      ]
+    },
+    {
+      "id": "S04-R02",
+      "milestones": [
+        "R11"
+      ]
+    },
+    {
+      "id": "S04-R03",
+      "milestones": [
+        "R11"
+      ]
+    },
+    {
+      "id": "S04-R04",
+      "milestones": [
+        "R11"
+      ]
+    },
+    {
+      "id": "S04-R05",
+      "milestones": [
+        "R11"
+      ]
+    },
+    {
+      "id": "S04-R06",
+      "milestones": [
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R01",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R02",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R03",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R04",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R05",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R06",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R07",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S05-R08",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ]
+    },
+    {
+      "id": "S06-R01",
+      "milestones": [
+        "R3",
+        "R6"
+      ]
+    },
+    {
+      "id": "S06-R02",
+      "milestones": [
+        "R3",
+        "R6"
+      ]
+    },
+    {
+      "id": "S06-R03",
+      "milestones": [
+        "R3",
+        "R6"
+      ]
+    },
+    {
+      "id": "S06-R04",
+      "milestones": [
+        "R3",
+        "R6"
+      ]
+    },
+    {
+      "id": "S07-R01",
+      "milestones": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "S07-R02",
+      "milestones": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "S07-R03",
+      "milestones": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "S07-R04",
+      "milestones": [
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "id": "S08-R01",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R02",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R03",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R04",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R05",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R06",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R07",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R08",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S08-R09",
+      "milestones": [
+        "R10"
+      ]
+    },
+    {
+      "id": "S09-R01",
+      "milestones": [
+        "R5",
+        "R6"
+      ]
+    },
+    {
+      "id": "S09-R02",
+      "milestones": [
+        "R5",
+        "R6"
+      ]
+    },
+    {
+      "id": "S09-R03",
+      "milestones": [
+        "R5",
+        "R6"
+      ]
+    },
+    {
+      "id": "S09-R04",
+      "milestones": [
+        "R5",
+        "R6"
+      ]
+    },
+    {
+      "id": "S10-R01",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ]
+    },
+    {
+      "id": "S10-R02",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ]
+    },
+    {
+      "id": "S10-R03",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ]
+    },
+    {
+      "id": "S10-R04",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ]
+    },
+    {
+      "id": "S10-R05",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ]
+    },
+    {
+      "id": "S11-R01",
+      "milestones": [
+        "R8"
+      ]
+    },
+    {
+      "id": "S11-R02",
+      "milestones": [
+        "R8"
+      ]
+    },
+    {
+      "id": "S11-R03",
+      "milestones": [
+        "R8"
+      ]
+    },
+    {
+      "id": "S11-R04",
+      "milestones": [
+        "R8"
+      ]
+    },
+    {
+      "id": "S11-R05",
+      "milestones": [
+        "R8"
+      ]
+    },
+    {
+      "id": "S12-R01",
+      "milestones": [
+        "R9"
+      ]
+    },
+    {
+      "id": "S12-R02",
+      "milestones": [
+        "R9"
+      ]
+    },
+    {
+      "id": "S12-R03",
+      "milestones": [
+        "R9"
+      ]
+    },
+    {
+      "id": "S12-R04",
+      "milestones": [
+        "R9"
+      ]
+    },
+    {
+      "id": "S13-R01",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ]
+    },
+    {
+      "id": "S13-R02",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ]
+    },
+    {
+      "id": "S13-R03",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ]
+    },
+    {
+      "id": "S13-R04",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ]
+    },
+    {
+      "id": "S13-R05",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ]
+    },
+    {
+      "id": "S14-R01",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ]
+    },
+    {
+      "id": "S14-R02",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ]
+    },
+    {
+      "id": "S14-R03",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ]
+    },
+    {
+      "id": "S14-R04",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ]
+    },
+    {
+      "id": "S14-R05",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ]
+    },
+    {
+      "id": "S14-R06",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ]
+    },
+    {
+      "id": "S14-R07",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ]
+    },
+    {
+      "id": "S15-R01",
+      "milestones": [
+        "R8",
+        "R10"
+      ]
+    },
+    {
+      "id": "S15-R02",
+      "milestones": [
+        "R8",
+        "R10"
+      ]
+    },
+    {
+      "id": "S15-R03",
+      "milestones": [
+        "R8",
+        "R10"
+      ]
+    },
+    {
+      "id": "S15-R04",
+      "milestones": [
+        "R8",
+        "R10"
+      ]
+    },
+    {
+      "id": "S15-R05",
+      "milestones": [
+        "R8",
+        "R10"
+      ]
+    },
+    {
+      "id": "S16-R01",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ]
+    },
+    {
+      "id": "S16-R02",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ]
+    },
+    {
+      "id": "S16-R03",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ]
+    },
+    {
+      "id": "S16-R04",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ]
+    },
+    {
+      "id": "S16-R05",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ]
+    },
+    {
+      "id": "S16-R06",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ]
+    },
+    {
+      "id": "S17-R01",
+      "milestones": [
+        "R1",
+        "R11"
+      ]
+    },
+    {
+      "id": "S17-R02",
+      "milestones": [
+        "R1",
+        "R11"
+      ]
+    },
+    {
+      "id": "S17-R03",
+      "milestones": [
+        "R1",
+        "R11"
+      ]
+    },
+    {
+      "id": "S17-R04",
+      "milestones": [
+        "R1",
+        "R11"
+      ]
+    },
+    {
+      "id": "S18-R01",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S18-R02",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S18-R03",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S18-R04",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S18-R05",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S18-R06",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S18-R07",
+      "milestones": [
+        "R0",
+        "R13"
+      ]
+    },
+    {
+      "id": "S19-R01",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "S19-R02",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "S19-R03",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "S19-R04",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "S19-R05",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "S19-R06",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "S19-R07",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "S20-R01",
+      "milestones": [
+        "R13"
+      ]
+    },
+    {
+      "id": "S20-R02",
+      "milestones": [
+        "R13"
+      ]
+    },
+    {
+      "id": "S20-R03",
+      "milestones": [
+        "R13"
+      ]
+    },
+    {
+      "id": "S20-R04",
+      "milestones": [
+        "R13"
+      ]
+    },
+    {
+      "id": "S20-R05",
+      "milestones": [
+        "R13"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "BC2-GOV-01",
+      "milestone": "R0",
+      "sourceSection": 1,
+      "originalRefs": [
+        "S02-R01",
+        "S02-R02",
+        "S18-R07"
+      ],
+      "requirement": "Conservar la especificación original y trazar toda la ampliación aprobada.",
+      "state": "verified",
+      "owner": "integration",
+      "acceptance": [
+        "Los 106 identificadores originales aparecen exactamente una vez en el mapa de continuidad.",
+        "PROJECT_SPEC.md conserva el hash registrado; cada requisito nuevo tiene criterio y hito."
+      ],
+      "evidence": [
+        {
+          "path": "docs/validation/r1/README.md",
+          "kind": "manual",
+          "result": "passed",
+          "command": "Revisión de continuidad de requisitos, hashes y artefactos R0",
+          "scope": "106 IDs originales intactos, 68 requisitos nuevos, línea base y referencia de reconstrucción preservadas; distingue resultados parciales y limitaciones."
+        }
+      ]
+    },
+    {
+      "id": "BC2-GOV-02",
+      "milestone": "R0",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S02-R03",
+        "S19-R01",
+        "S20-R05"
+      ],
+      "requirement": "Distinguir propuesta, implementación y comportamiento comprobado.",
+      "state": "verified",
+      "owner": "integration",
+      "acceptance": [
+        "Las evidencias registran alcance, comando, resultado y artefacto.",
+        "Omisiones, cero casos o ejecución filtrada no se declaran como batería completa."
+      ],
+      "evidence": [
+        {
+          "path": "docs/validation/r1/README.md",
+          "kind": "manual",
+          "result": "passed",
+          "command": "Revisión de continuidad de requisitos, hashes y artefactos R0",
+          "scope": "106 IDs originales intactos, 68 requisitos nuevos, línea base y referencia de reconstrucción preservadas; distingue resultados parciales y limitaciones."
+        }
+      ]
+    },
+    {
+      "id": "BC2-SCN-01",
+      "milestone": "R4",
+      "sourceSection": 2,
+      "originalRefs": [
+        "S01-R01",
+        "S05-R01",
+        "S17-R03"
+      ],
+      "requirement": "Prehistoria predeterminada con reglas, economía y arte propios.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Nueva partida elegida por defecto comienza pausada con capacidades prehistóricas reales.",
+        "No se concede tecnología, edificio o suministro industrial por renombrar el escenario antiguo."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-SCN-02",
+      "milestone": "R4",
+      "sourceSection": 2,
+      "originalRefs": [
+        "S01-R01",
+        "S12-R01"
+      ],
+      "requirement": "Reconstrucción como segundo escenario completo y origen de partidas antiguas.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Se selecciona y completa el ciclo básico entre ruinas.",
+        "Vestigios permiten recuperación material sin desbloquear una era completa automáticamente."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-SCN-03",
+      "milestone": "R7",
+      "sourceSection": 1,
+      "originalRefs": [
+        "S01-R03",
+        "S08-R01"
+      ],
+      "requirement": "Progresión a lo largo de generaciones y siglos, sin ascenso garantizado.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Casos con desarrollo, estancamiento y colapso usan el mismo calendario diario.",
+        "No se concede progreso por superar un año fijo."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-ERA-01",
+      "milestone": "R7",
+      "sourceSection": 3,
+      "originalRefs": [
+        "S10-R01",
+        "S10-R03"
+      ],
+      "requirement": "Seis eras con producción, infraestructura, instituciones y riesgos diferentes.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Escenarios prehistórico, antiguo, medieval, industrial, moderno y futurista ejecutan capacidades específicas.",
+        "Cada efecto distintivo tiene prueba de comportamiento, no solo cambio de texto o sprite."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-ERA-02",
+      "milestone": "R7",
+      "sourceSection": 3,
+      "originalRefs": [
+        "S10-R03",
+        "S16-R01"
+      ],
+      "requirement": "Reconocer capacidades tras 180 días sostenidos y regresión tras 360 sin soporte.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "179 días no activan reconocimiento; el día 180 sostenido sí.",
+        "359 días sin soporte no regresan; al cumplirse 360 se aplica la pérdida correspondiente sin borrar historia."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-ERA-03",
+      "milestone": "R7",
+      "sourceSection": 3,
+      "originalRefs": [
+        "S10-R03",
+        "S09-R02"
+      ],
+      "requirement": "Separar conocimiento registrado, especialistas e infraestructura.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Una tecnología conocida sin soporte no produce por sí sola.",
+        "Pérdida y recuperación de soporte conservan conocimientos y causas válidas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-ERA-04",
+      "milestone": "R7",
+      "sourceSection": 3,
+      "originalRefs": [
+        "S06-R03",
+        "S10-R04"
+      ],
+      "requirement": "Permitir niveles distintos por asentamiento y rutas históricas alternativas.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Dos asentamientos de una sociedad pueden mantener capacidades diferentes.",
+        "Consejo, gobierno hereditario u otra institución no son puertas obligatorias universales de era."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-BIO-01",
+      "milestone": "R3",
+      "sourceSection": 4,
+      "originalRefs": [
+        "S05-R05",
+        "S06-R02",
+        "S09-R01"
+      ],
+      "requirement": "Separar especie, cultura, sociedad y asentamiento con identidades persistentes.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Una sociedad conserva varias ciudades y una cultura puede sobrevivir a caída política.",
+        "Los IDs y referencias son únicos y válidos al guardar, migrar o cambiar el control."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-BIO-02",
+      "milestone": "R7",
+      "sourceSection": 4,
+      "originalRefs": [
+        "S01-R02",
+        "S10-R01"
+      ],
+      "requirement": "Humanos como origen con anatomía y necesidades de referencia.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "La dieta, herramientas y capacidad de transporte condicionan acciones.",
+        "Variantes de era mantienen coherencia de trabajos, edificios y arte."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-BIO-03",
+      "milestone": "R7",
+      "sourceSection": 4,
+      "originalRefs": [
+        "S10-R01",
+        "S10-R04",
+        "S04-R04"
+      ],
+      "requirement": "Equinos sapientes con desarrollo independiente de humanos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Pruebas muestran herbivoría, demanda territorial, cuadrupedia y manipulación adaptada.",
+        "Una sociedad equina desarrolla tecnologías mediante su propia cadena de capacidades y recursos.",
+        "Arte, recorridos, talleres y transporte tienen representación anatómica correspondiente."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-BIO-04",
+      "milestone": "R9",
+      "sourceSection": 4,
+      "originalRefs": [
+        "S12-R03",
+        "S13-R02"
+      ],
+      "requirement": "Visitantes extraterrestres con metabolismo, soporte y expediciones finitas.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Llegada registra población, carga y origen externo explícito.",
+        "Una sociedad establecida puede observarse o dirigirse y mantiene restricciones materiales."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-BIO-05",
+      "milestone": "R7",
+      "sourceSection": 4,
+      "originalRefs": [
+        "S05-R01",
+        "S06-R03",
+        "S10-R01"
+      ],
+      "requirement": "Mundos humanos, equinos o mixtos y coexistencia ecológica.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Generador produce posiciones viables para cada dieta y movilidad.",
+        "Cooperación, competencia y desplazamiento entre especies conservan población y recursos."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-BIO-06",
+      "milestone": "R7",
+      "sourceSection": 4,
+      "originalRefs": [
+        "S13-R04",
+        "S09-R03"
+      ],
+      "requirement": "Premisas biológicas explícitas sin híbridos automáticos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "La inteligencia equina preexiste a la partida como ficción definida.",
+        "Reproducción incompatible no genera descendencia ni altera población por un vínculo afectivo."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-FAM-01",
+      "milestone": "R5",
+      "sourceSection": 5,
+      "originalRefs": [
+        "S09-R01",
+        "S09-R04"
+      ],
+      "requirement": "Personajes destacados pertenecen a cohortes; población común agregada.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Crear o destacar una identidad no aumenta la población.",
+        "Cohorte, ocupación, edad, estado y residencia se reconcilian tras bajas y migración."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-FAM-02",
+      "milestone": "R5",
+      "sourceSection": 5,
+      "originalRefs": [
+        "S09-R02",
+        "S09-R03",
+        "S15-R02"
+      ],
+      "requirement": "Hogares, parentescos y vínculos personales diferenciados.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Amistad, afecto, confianza, rivalidad, convivencia, separación y duelo persisten al reiniciar.",
+        "Los miembros y vínculos cambian como consecuencia de acontecimientos reales."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-FAM-03",
+      "milestone": "R5",
+      "sourceSection": 5,
+      "originalRefs": [
+        "S11-R01",
+        "S09-R02"
+      ],
+      "requirement": "Autonomía personal y relaciones adultas con intimidad mediante elipsis.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Una decisión política no establece por sí sola afecto mutuo o consentimiento.",
+        "El contenido no incluye escenas sexuales gráficas o poco censuradas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-FAM-04",
+      "milestone": "R5",
+      "sourceSection": 5,
+      "originalRefs": [
+        "S09-R02",
+        "S09-R04"
+      ],
+      "requirement": "Nacimiento, adopción, formación, migración y muerte idempotentes.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Una adopción cambia vínculos sin crear habitantes.",
+        "No hay migrantes duplicados ni fallecidos actuando; formación y nacimientos requieren soporte."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-FAM-05",
+      "milestone": "R6",
+      "sourceSection": 5,
+      "originalRefs": [
+        "S06-R03",
+        "S10-R01",
+        "S09-R02"
+      ],
+      "requirement": "Cinco instituciones iniciales y separación entre sucesión y herencia.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Consejo, clanes, gobierno hereditario, administración cívica y tecnocracia afectan reglas.",
+        "Cambiar dirigente conserva compromisos y no equivale automáticamente a transferir herencia familiar."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-FAM-06",
+      "milestone": "R6",
+      "sourceSection": 5,
+      "originalRefs": [
+        "S15-R02",
+        "S09-R03",
+        "S09-R04"
+      ],
+      "requirement": "Memoria de pactos, pérdidas, deudas y agravios independiente de líderes.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Caída de capital conserva cultura, familias, refugiados, colonias y obligaciones válidas.",
+        "Ocupación, destrucción, caída política y extinción producen estados distintos."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-01",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S14-R01",
+        "S14-R06",
+        "S11-R02"
+      ],
+      "requirement": "Catálogo declarativo como autoridad única, con semántica estricta.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Edificios y tecnologías se cargan del catálogo sin extraer definiciones Dart.",
+        "Un campo desconocido o admitido sin operación implementada se rechaza."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-02",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S11-R02",
+        "S11-R03"
+      ],
+      "requirement": "Instancias con participantes, lugar, causas, condiciones, plazos y resolución.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "No se muestra una definición libre como si fuera una decisión ya ocurrida.",
+        "Costes, vencimiento, exclusión y resultado se ejecutan sobre entidades concretas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-03",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S11-R03",
+        "S11-R04"
+      ],
+      "requirement": "Revalidar, adaptar o cancelar consecuencias al vencer.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Muerte, guerra, destrucción y acuerdos invalidados generan cancelación o alternativa explícita.",
+        "No se ejecutan efectos sobre entidades inexistentes ni se fabrican causas desconocidas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-04",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S15-R01",
+        "S07-R03",
+        "S11-R05"
+      ],
+      "requirement": "Director con decisiones, alertas, noticias, diversidad y presupuesto.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "La portada destaca hasta tres asuntos y permite consultar los demás.",
+        "Espera y presupuesto impiden repetición/cascadas sin alterar fechas ya comprometidas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-05",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S11-R05",
+        "S16-R02"
+      ],
+      "requirement": "Límite causal de seguridad sin confirmar un día parcial.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Una cascada que excede el límite detiene el tick y conserva el último estado confirmado.",
+        "Diagnóstico contiene semilla, versión, órdenes y cola para reproducirlo."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-06",
+      "milestone": "R9",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S13-R01",
+        "S13-R02",
+        "S11-R03"
+      ],
+      "requirement": "Desactivar familias impide nuevas cadenas y conserva las comprometidas.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Un invasor, víctima o daño existente no desaparece al cambiar opciones.",
+        "La UI explica qué seguirá activo y no inicia nuevos arcos de la familia desactivada."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-07",
+      "milestone": "R9",
+      "sourceSection": 7,
+      "originalRefs": [
+        "S12-R01",
+        "S12-R02",
+        "S12-R03",
+        "S12-R04"
+      ],
+      "requirement": "Una implementación de la instalación y sus herederos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Tres rutas completas tienen costes, causas y huellas mecánicas diferentes.",
+        "Una se demuestra a corto plazo y otra tras avance histórico.",
+        "La energía localizada no concede automáticamente la era futurista."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-08",
+      "milestone": "R8",
+      "sourceSection": 7,
+      "originalRefs": [
+        "S11-R01",
+        "S11-R03",
+        "S09-R03"
+      ],
+      "requirement": "Arco Una casa entre dos comunidades con viaje y continuidad reales.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "El hogar responde a vivienda, rutas, población y recursos.",
+        "Reunión, separación y duelo solo aparecen según hechos y participantes válidos.",
+        "Descendientes requieren demografía; un fallecido no se reemplaza por un homónimo."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-09",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S11-R02",
+        "S15-R04",
+        "S09-R04"
+      ],
+      "requirement": "Textos vinculados a participantes concretos y estados válidos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Ana, Leo o Tito no hablan como actores actuales después de su muerte.",
+        "Narración de pasado y duelo puede referirse a fallecidos con fecha y contexto correctos."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-NAR-10",
+      "milestone": "R9",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S13-R01",
+        "S13-R02",
+        "S13-R05"
+      ],
+      "requirement": "Ocho familias extraordinarias y escalas local, regional y planetaria.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Contactar no obliga a combatir; intercambio, influencia, infiltración, invasión, resistencia y convivencia son resultados reales.",
+        "Las pruebas forzadas no cambian probabilidades normales ni provocan repoblación automática."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CAT-01",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S14-R02",
+        "S14-R03",
+        "S14-R04"
+      ],
+      "requirement": "Conservar mínimos originales y sus identificadores compatibles.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Inventario acredita 12 recursos, 6 biomas, 6 perfiles, 12 rasgos y Ana/Leo/Tito.",
+        "Variantes de nombre no se contabilizan como mecanismos distintos."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CAT-02",
+      "milestone": "R7",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S14-R02",
+        "S10-R03"
+      ],
+      "requirement": "30 edificios/mejoras y 48 tecnologías con efectos diferentes.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Prueba de comportamiento de cada definición y de sus requisitos/costes.",
+        "No se usa un bono genérico universal como única distinción tecnológica."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CAT-03",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S14-R02",
+        "S14-R03",
+        "S14-R04"
+      ],
+      "requirement": "144 acontecimientos independientes: 96 adaptados y 48 nuevos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Ocho situaciones propias por cada una de las seis eras tienen condiciones compatibles.",
+        "La ejecución cubre las opciones de todos los identificadores del inventario."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CAT-04",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S14-R02",
+        "S19-R04"
+      ],
+      "requirement": "16 arcos de 4–7 nodos y dos desenlaces mecánicos distintos por arco.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Se conservan los doce arcos y se añaden hogar, herencia, convivencia de especies y reconstrucción.",
+        "Cada par de finales se alcanza desde el inicio, sin fixtures que salten a la última rama."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CAT-05",
+      "milestone": "R8",
+      "sourceSection": 6,
+      "originalRefs": [
+        "S14-R02",
+        "S14-R05",
+        "S14-R06",
+        "S14-R07"
+      ],
+      "requirement": "16 plantillas, ocho familias y paquete de ejemplo validado.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Una clasificación no cuenta como evento adicional.",
+        "Paquete importado contiene solo operaciones declarativas; referencias, tamaños y versiones se verifican."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-UX-01",
+      "milestone": "R1",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S17-R01",
+        "S17-R02",
+        "S05-R02"
+      ],
+      "requirement": "Navegación Barrio/Mundo/Historia y comienzo pausado en el asentamiento.",
+      "state": "verified",
+      "owner": "integration",
+      "acceptance": [
+        "Fecha, comunidad dirigida y controles temporales permanecen visibles.",
+        "Región y mundo son accesibles; paquetes/archivos/ajustes permanecen localizables."
+      ],
+      "evidence": [
+        {
+          "path": "docs/validation/r1/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
+          "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        }
+      ]
+    },
+    {
+      "id": "BC2-UX-02",
+      "milestone": "R1",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S07-R02",
+        "S07-R03",
+        "S10-R02"
+      ],
+      "requirement": "Costes, trabajo, duración y rechazo visibles antes de ordenar.",
+      "state": "verified",
+      "owner": "integration",
+      "acceptance": [
+        "Una acción indisponible explica requisitos y no consume material/azar.",
+        "La acción disponible confirma una sola reserva y muestra resultado esperado real."
+      ],
+      "evidence": [
+        {
+          "path": "docs/validation/r1/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
+          "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        }
+      ]
+    },
+    {
+      "id": "BC2-UX-03",
+      "milestone": "R1",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S05-R07",
+        "S17-R01"
+      ],
+      "requirement": "Fichas legibles y acciones contextuales en lugar de volcar propiedades.",
+      "state": "partial",
+      "owner": "integration",
+      "acceptance": [
+        "No se muestran IDs, claves o estructuras internas como contenido principal.",
+        "Una selección permite localizar entidad, leer información relevante y acceder a acciones compatibles."
+      ],
+      "evidence": [
+        {
+          "path": "docs/validation/r1/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
+          "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        }
+      ]
+    },
+    {
+      "id": "BC2-UX-04",
+      "milestone": "R11",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S17-R02",
+        "S17-R03",
+        "S16-R01"
+      ],
+      "requirement": "Guía opcional, progresiva y retomable sin efectos de simulación.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Omitir, retomar o desviarse no inmoviliza la partida ni concede recursos.",
+        "Misma semilla y órdenes dan el mismo mundo con guía activada o desactivada."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-UX-05",
+      "milestone": "R11",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S17-R03",
+        "S17-R04"
+      ],
+      "requirement": "Recorrido de diez decisiones significativas completo.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Registra elección alimentaria/agua/refugio/trabajo/exploración/acuerdo/familia/consecuencia/conocimiento/delegación.",
+        "Acredita cambio visual persistente, consecuencia aplazada, interacción exterior y opción desbloqueada.",
+        "Pulsaciones de paneles y avance no cuentan por sí solas como decisiones."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-UX-06",
+      "milestone": "R11",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S17-R01",
+        "S17-R02",
+        "S19-R07"
+      ],
+      "requirement": "Accesibilidad móvil y comprobación humana de comprensión.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "320/360/412 puntos con texto ampliado, contraste y controles táctiles de 48 puntos sin desbordamientos.",
+        "Una persona nueva localiza su comunidad, da una orden, explica coste, ve resultado y retoma sin instrucciones externas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-ART-01",
+      "milestone": "R11",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S04-R01",
+        "S04-R02",
+        "S04-R03",
+        "S04-R04",
+        "S04-R05"
+      ],
+      "requirement": "Arte original por anatomía y era, manifiestos y ocho actividades.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Reposo, caminar, trabajar, transportar, descansar, celebrar, peligro y pérdida muestran estado verdadero.",
+        "Atlas/manifiestos definen dimensiones y variantes sin índices rígidos incompatibles."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-ART-02",
+      "milestone": "R11",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S04-R06",
+        "S05-R08",
+        "S10-R05"
+      ],
+      "requirement": "Visualizar desplazamientos, daños y pérdidas que existan en el mundo.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Caravanas corresponden a carga/ruta; edificios a proyectos completados; cuerpos a fallecimientos confirmados.",
+        "No se conceden recursos o resultados por una animación."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-ART-03",
+      "milestone": "R11",
+      "sourceSection": 8,
+      "originalRefs": [
+        "S13-R03",
+        "S10-R05",
+        "S16-R01"
+      ],
+      "requirement": "Sangre, cuerpos y detalle textual configurables independientemente.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Cambiar cualquiera de los tres ajustes no cambia estado canónico, víctimas, causas ni PRNG.",
+        "Ataques, incendios, huidas, funerales y ruinas conservan consecuencias aunque su presentación se reduzca."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CORE-01",
+      "milestone": "R2",
+      "sourceSection": 9,
+      "originalRefs": [
+        "S03-R04",
+        "S16-R02"
+      ],
+      "requirement": "WorldSnapshot, preview, submit y advance como contratos separados.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Consulta no consume recursos/azar; submit valida autoridad/revisión y produce recibo idempotente.",
+        "Advance devuelve fecha alcanzada, pendientes y motivo de parada sin depender de UI."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CORE-02",
+      "milestone": "R2",
+      "sourceSection": 9,
+      "originalRefs": [
+        "S16-R01",
+        "S07-R01"
+      ],
+      "requirement": "Materiales enteros en milésimas y restos demográficos persistentes.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Pagos y transferencias conservan cantidades salvo fuentes/pérdidas explícitas.",
+        "Guardar/reanudar no pierde restos ni duplica producción o población."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CORE-03",
+      "milestone": "R2",
+      "sourceSection": 9,
+      "originalRefs": [
+        "S16-R01",
+        "S16-R04",
+        "S07-R04"
+      ],
+      "requirement": "Orden diario estable y azar visual separado.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Órdenes, trabajos/transporte, economía, demografía/instituciones, eventos y cierre tienen orden versionado.",
+        "Cámara, paneles, velocidad y lotes no alteran la secuencia causal."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CORE-04",
+      "milestone": "R6",
+      "sourceSection": 9,
+      "originalRefs": [
+        "S06-R03",
+        "S06-R04",
+        "S16-R02"
+      ],
+      "requirement": "Jugador e IA comparten comandos y restricciones materiales.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Autonomía paga costes y reserva trabajo igual que el jugador.",
+        "Observar/cambiar control/delegar conserva compromisos y no traslada recursos."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-CORE-05",
+      "milestone": "R1",
+      "sourceSection": 9,
+      "originalRefs": [
+        "S03-R04",
+        "S16-R02",
+        "S16-R03"
+      ],
+      "requirement": "SessionController propietario de sesión y única autoridad de escritura.",
+      "state": "verified",
+      "owner": "integration",
+      "acceptance": [
+        "Carga/importación/suspensión confirman mundo y destino conjuntamente.",
+        "Autoguardados anteriores no sobrescriben un mundo más reciente y un mensaje de otra sesión no se publica."
+      ],
+      "evidence": [
+        {
+          "path": "docs/validation/r1/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
+          "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        }
+      ]
+    },
+    {
+      "id": "BC2-SAVE-01",
+      "milestone": "R3",
+      "sourceSection": 10,
+      "originalRefs": [
+        "S16-R03",
+        "S14-R07"
+      ],
+      "requirement": "Conservar ejecutor antiguo y migrar explícitamente a mundo2/contenido2/checkpoint3.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Partida antigua continúa con sus reglas hasta conversión aceptada.",
+        "Nuevos mundos registran versiones nuevas y contenido exacto."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-SAVE-02",
+      "milestone": "R3",
+      "sourceSection": 10,
+      "originalRefs": [
+        "S16-R01",
+        "S16-R03",
+        "S06-R02"
+      ],
+      "requirement": "Migración preserva identidades, ubicación, recursos, compromisos y PRNG.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Sociedad antigua se convierte en sociedad con un asentamiento.",
+        "Se registra cambio de reglas; no se exige equivalencia futura entre versiones distintas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-SAVE-03",
+      "milestone": "R3",
+      "sourceSection": 10,
+      "originalRefs": [
+        "S09-R03",
+        "S09-R04",
+        "S16-R03"
+      ],
+      "requirement": "Migración no inventa parentescos ni destruye la partida original.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Se conserva copia byte a byte antes de sustituir destino.",
+        "Personaje irreconciliable, evento incompatible o contenido ausente rechaza conversión dejando antiguo válido."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-SAVE-04",
+      "milestone": "R10",
+      "sourceSection": 10,
+      "originalRefs": [
+        "S08-R05",
+        "S08-R06",
+        "S15-R05"
+      ],
+      "requirement": "Historia por bloques inmutables y manifiesto confirmado antes del ACK.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Proceso interrumpido recupera el último manifiesto completo.",
+        "Informes y fronteras coinciden con datos; resumen no se presenta como mundo rebobinable."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-SAVE-05",
+      "milestone": "R10",
+      "sourceSection": 10,
+      "originalRefs": [
+        "S16-R03",
+        "S14-R06"
+      ],
+      "requirement": "ZIP versionado nativo por streaming e importación de JSON antiguo.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Se aceptan límites de 64 MiB comprimidos/256 MiB descomprimidos sin lectura íntegra innecesaria en memoria.",
+        "Rutas inseguras, duplicados o referencias incompletas se rechazan sin alterar guardados válidos.",
+        "Alcanzar límites genera error explícito, no eliminación de historia."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-SAVE-06",
+      "milestone": "R1",
+      "sourceSection": 10,
+      "originalRefs": [
+        "S16-R03",
+        "S19-R07"
+      ],
+      "requirement": "Mantener protección de espacios, cola única y autoguardados antiguos.",
+      "state": "verified",
+      "owner": "integration",
+      "acceptance": [
+        "Elegir espacio no cambia destino activo antes de cargarlo.",
+        "Exportar/importar y pausar/cerrar/reabrir conserva exactamente el mundo confirmado."
+      ],
+      "evidence": [
+        {
+          "path": "docs/validation/r1/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
+          "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        },
+        {
+          "path": "docs/validation/r1/results.json",
+          "kind": "manual",
+          "result": "passed",
+          "command": "ADB native_smoke + focused reopen/export verification",
+          "scope": "Importación mediante selector Android, cierre forzado, continuación y documento exportado con SHA-256 idéntico a la referencia. Repeticiones focalizadas separadas de ejecución inicial."
+        }
+      ]
+    },
+    {
+      "id": "BC2-SAVE-07",
+      "milestone": "R10",
+      "sourceSection": 10,
+      "originalRefs": [
+        "S08-R06",
+        "S16-R03",
+        "S19-R07"
+      ],
+      "requirement": "Recuperar interrupciones y fallos reales durante saltos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Inyección antes/después de confirmación, disco lleno, copia dañada y cierre de proceso conservan último punto válido.",
+        "Cancelar/reanudar no duplica efectos ni avanza por reloj real."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-01",
+      "milestone": "R12",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S19-R02"
+      ],
+      "requirement": "Equivalencia temporal completa con catálogo ampliado.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "36.000 días, diez décadas y un siglo producen mismo estado y secuencia.",
+        "Repetir con guardado, lotes, guía, cámara y ajustes visuales."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-02",
+      "milestone": "R6",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S19-R03",
+        "S05-R08"
+      ],
+      "requirement": "Mundo vivo y transporte material de ida y retorno.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Dos comunidades crecen y una caravana completa el trayecto con intercambios conservados.",
+        "Escasez produce respuesta y una decisión cambia resultado; cortar ruta causa desvío/espera/cancelación explicable."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-03",
+      "milestone": "R7",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S10-R01",
+        "S10-R03",
+        "S10-R04"
+      ],
+      "requirement": "Validar diferencias de especies y de eras.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Alimentación incompatible, adaptación anatómica, cooperación y desigualdad tecnológica son escenarios ejecutados.",
+        "Capacidad perdida y recuperada respeta ventanas de 180/360 días."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-04",
+      "milestone": "R5",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S19-R05"
+      ],
+      "requirement": "Prueba generacional con continuidad institucional y familiar.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Cien años sin muertos actuando ni duplicación de habitantes.",
+        "Distingue destrucción local, pérdida política y extinción global."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-05",
+      "milestone": "R8",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S19-R04"
+      ],
+      "requirement": "Cobertura narrativa de opciones, plazos y arcos completos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Ejecutar cada operación admitida y cada opción aplicable del inventario.",
+        "Dos desenlaces por arco se alcanzan desde su inicio, con costes, condiciones y causas."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-06",
+      "milestone": "R12",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S19-R06"
+      ],
+      "requirement": "Treinta semillas por doscientos años o final válido.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Matriz incluye orígenes, especies, políticas e intensidades.",
+        "Comprobar invariantes durante ejecución y conservar reproducción de fallos."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-07",
+      "milestone": "R12",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S19-R06"
+      ],
+      "requirement": "Milenios activos y finales de extinción como escenarios distintos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Escenarios con y sin extraordinarios alcanzan mil años activos con memoria y tareas válidas.",
+        "Una extinción temprana legítima no se presenta como carga prolongada aprobada."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-08",
+      "milestone": "R12",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S16-R06"
+      ],
+      "requirement": "Rendimiento profile con 32 asentamientos sostenidos.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Mapas 64/96 y catálogo completo mantienen la carga poblada medida.",
+        "En referencia Android 10+ y 4 GB: ≥30 FPS, respuesta ≤200 ms, cancelación ≤1 s y memoria <512 MiB.",
+        "Registrar versiones, tiempos, memoria y tamaño; medir cien años sin promesa de instantaneidad."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-VAL-09",
+      "milestone": "R11",
+      "sourceSection": 11,
+      "originalRefs": [
+        "S19-R07",
+        "S03-R01"
+      ],
+      "requirement": "Aceptación Android funcional y primera sesión.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Instalación limpia y actualización, offline, órdenes, salto, guardado, exportación/importación y continuación.",
+        "Tamaños y accesibilidad comprobados en Android; compilación, instalación y funcionamiento se distinguen."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-DEL-01",
+      "milestone": "R13",
+      "sourceSection": 12,
+      "originalRefs": [
+        "S20-R01",
+        "S20-R02",
+        "S20-R03",
+        "S20-R04",
+        "S20-R05"
+      ],
+      "requirement": "Entrega completa reproducible y sin publicaciones implícitas.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "Fuente, arte/generadores, inventario, paquete ejemplo, lockfile, APK firmado de pruebas, checksum e instrucciones disponibles.",
+        "Capturas/vídeo proceden de app ejecutada; no hay publicación en tiendas o entorno como parte de la entrega."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "BC2-DEL-02",
+      "milestone": "R13",
+      "sourceSection": 12,
+      "originalRefs": [
+        "S20-R05",
+        "S18-R07"
+      ],
+      "requirement": "Cerrar únicamente con evidencia suficiente de requisitos originales y ampliados.",
+      "state": "pending",
+      "owner": "integration",
+      "acceptance": [
+        "No hay requisito obligatorio parcial/bloqueado tratado como completo.",
+        "Ambos orígenes, humanos/equinos, seis eras, familias y diez decisiones se acreditan junto con baterías técnicas."
+      ],
+      "evidence": []
+    }
+  ]
+}
