@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 import 'package:flame/game.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../simulation/engine.dart';
 import '../content/content_pack.dart';
 import 'storage.dart';
+import '../platform/document_exchange.dart';
+import '../persistence/checkpoint.dart';
 import 'world_game.dart';
 
 class BarrioApp extends StatelessWidget {
@@ -32,12 +33,12 @@ void historyWorker(Map<String,dynamic> args) async {
   Completer<void>? confirmation;
   controls.listen((m){if(m=='cancel'){cancel=true;}if((m=='ack'||m=='cancel') && confirmation!=null && !confirmation!.isCompleted)confirmation!.complete();});
   send.send({'control':controls.sendPort});
+  try {
   final world=WorldState.fromJson(Map<String,dynamic>.from(args['world'] as Map));
   final sim=Simulation(world);
   if(args['content'] is Map)sim.registerContent(Map<String,dynamic>.from(args['content'] as Map));
   final target=args['target'] as int;
   final stop=args['stop'] as bool;
-  try {
     while((world.toJson()['day'] as num).toInt()<target && !cancel) {
       final before=(world.toJson()['day'] as num).toInt();
       final days=(target-before).clamp(0,180).toInt();
@@ -63,6 +64,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   WorldState? world;
   late WorldGame game;
   final store=SaveStore();
+  final documents=DocumentExchange();
   Map<String,dynamic> state={};
   String? selected;
   int slot=0;
@@ -79,9 +81,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   ReceivePort? results;
   Future<void> commitQueue=Future.value();
   Future<void> saveQueue=Future.value();
+  late final Future<void> initialization;
   String note='';
   Map<String,dynamic>? core;
   String? coreHash;
+  String? activeCoreSource;
   ContentPack? basePack;
   List<String> availablePackSources=[];
   List<String> activePackSources=[];
@@ -94,7 +98,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   }
 
   Simulation _sim(){final value=Simulation(world!);if(core!=null)value.registerContent(core!);return value;}
-  Future<void> _content()async{try{final text=await rootBundle.loadString('assets/content/core.json');final pack=ContentPack.parse(text);basePack=pack;core=Map<String,dynamic>.from(pack.data);coreHash=pack.hash;}catch(e){_message('No se pudo cargar el catálogo narrativo: $e');}}
+  Future<void> _content()async{try{final text=await rootBundle.loadString('assets/content/core.json');final pack=ContentPack.parse(text);basePack=pack;activeCoreSource=text;core=Map<String,dynamic>.from(pack.data);coreHash=pack.hash;}catch(e){_message('No se pudo cargar el catálogo narrativo: $e');}}
   Offset gesturePan=Offset.zero;
   double gestureZoom=1;
   int get day=>number(state['day']);
@@ -106,7 +110,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   @override void initState(){
     super.initState();WidgetsBinding.instance.addObserver(this);
     game=WorldGame((id){setState(()=>selected=id);});
-    _loadRegistry();
+    initialization=_loadRegistry();
   }
   Future<void> _loadRegistry()async{
     await _content();
@@ -115,7 +119,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   }
 
   @override void dispose(){WidgetsBinding.instance.removeObserver(this);timer?.cancel();jumpControl?.send('cancel');results?.close();worker?.kill();super.dispose();}
-  @override void didChangeAppLifecycleState(AppLifecycleState value){if(value!=AppLifecycleState.resumed){timer?.cancel();timer=null;_save();}}
+  @override void didChangeAppLifecycleState(AppLifecycleState value){if(value!=AppLifecycleState.resumed){timer?.cancel();timer=null;if(busy){_cancelJump();}else if(!advancing){_save().catchError((Object error){_message('No se pudo guardar al pausar: $error');});}}}
   void refresh(){state=Map<String,dynamic>.from(world!.toJson());game.data=state;game.selected=selected;game.reduceMotion=reduceMotion;}
   Future<void> _save() async {
     if(world==null)return;
@@ -124,8 +128,17 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     saveQueue=saveQueue.catchError((Object _){}).then((_)=>store.write(destination,payload));
     await saveQueue;
   }
-  String _encode(Map<String,dynamic> value,{int? target})=>jsonEncode({'format':'barrio-cero-save','version':1,'sha256':sha256.convert(utf8.encode(jsonEncode(value))).toString(),'world':value,'target':target,'stopCrisis':stopCrisis,'packs':activePackSources,'settings':{'reduceMotion':reduceMotion,'sound':sound,'vibration':vibration}});
+  String _encode(Map<String,dynamic> value,{int? target}) {
+    final source=activeCoreSource;
+    if(source==null)throw const FormatException('No hay contenido base confirmado.');
+    return Checkpoint.create(world:WorldState.fromJson(value),coreSource:source,
+      additionalSources:activePackSources,target:target,stopCrisis:stopCrisis,
+      settings:{'reduceMotion':reduceMotion,'sound':sound,'vibration':vibration}).encode();
+  }
   Future<void> _load({bool backup=false}) async {
+    await initialization;
+    if(busy||advancing)return;
+    timer?.cancel();timer=null;
     try{
       final raw=await store.read('world_$slot',backup:backup);
       if(raw==null){_message('No hay una partida en este espacio.');return;}
@@ -133,31 +146,46 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     }catch(e){if(!backup){final recovery=await store.read('world_$slot',backup:true);if(recovery!=null){try{await _import(recovery,persist:false);_message('Copia anterior recuperada; el archivo principal no era válido.');return;}catch(_){}}}_message('No se pudo cargar. Prueba Recuperar copia: $e');}
   }
   Future<void> _import(String raw,{bool persist=true}) async {
-    if(raw.length>25000000)throw const FormatException('Archivo demasiado grande');
-    final parsed=jsonDecode(raw);
-    if(parsed is! Map || parsed['format']!='barrio-cero-save' || parsed['version']!=1 || parsed['world'] is! Map)throw const FormatException('Formato incompatible');
-    if(parsed['sha256']!=sha256.convert(utf8.encode(jsonEncode(parsed['world']))).toString())throw const FormatException('Integridad SHA-256 no válida');
-    final candidate=WorldState.fromJson(Map<String,dynamic>.from(parsed['world'] as Map));
-    if(basePack==null)await _content();
-    final incomingPacks=(parsed['packs'] as List? ?? []).cast<String>();
-    if(incomingPacks.length>8)throw const FormatException('Demasiados paquetes');
-    for(final source in incomingPacks){final pack=ContentPack.parse(source,base:basePack);if(candidate.contentVersions['${pack.id}.sha256']!=pack.hash)throw const FormatException('Paquete requerido incompatible');}
-    final incomingCore=_composePacks(incomingPacks);
-    final expected=candidate.contentVersions['barrio.core.sha256'];
-    if(expected==null || expected!=coreHash)throw const FormatException('La partida requiere otra versión exacta del contenido');
-    final requestedTarget=parsed['target'];
-    if(requestedTarget!=null && (requestedTarget is! int || requestedTarget<candidate.day || requestedTarget>candidate.day+360000))throw const FormatException('Objetivo temporal inválido');
-    final settings=parsed['settings'] is Map?parsed['settings'] as Map:{};
-    // Deserialize fully before replacing the current world.
-    final data=candidate.toJson();
-    if(data['day'] is! num || data['societies'] is! List)throw const FormatException('Estado incompleto');
-    if(persist){final payload=jsonEncode({'format':'barrio-cero-save','version':1,'world':candidate.toJson(),'sha256':sha256.convert(utf8.encode(jsonEncode(candidate.toJson()))).toString(),'target':requestedTarget,'packs':incomingPacks,'stopCrisis':parsed['stopCrisis']!=false,'settings':settings});await store.write('world_$slot',payload);}
+    await initialization;
+    if(busy||advancing)throw StateError('Espera a que termine el avance actual.');
+    timer?.cancel();timer=null;advancing=true;
+    try{
+    if(utf8.encode(raw).length>Checkpoint.maxBytes)throw const FormatException('Archivo demasiado grande');
+    final envelope=jsonDecode(raw);
+    final legacy=envelope is Map && envelope['version']==1;
+    late final Checkpoint checkpoint;
+    if(legacy){
+      final installed=await rootBundle.loadString('assets/content/core.json');
+      checkpoint=Checkpoint.migrateLegacy(raw,expectedCoreSource:installed);
+      if(!mounted)return;
+      final accept=await showDialog<bool>(context:context,builder:(context)=>AlertDialog(
+        title:const Text('Actualizar guardado del prototipo'),
+        content:const Text('Se conservará una copia del archivo original. El nuevo formato protege también el objetivo temporal, los ajustes y todo el contenido. Las reglas del mundo todavía conservan su versión actual.'),
+        actions:[TextButton(onPressed:()=>Navigator.pop(context,false),child:const Text('Cancelar')),
+          FilledButton(onPressed:()=>Navigator.pop(context,true),child:const Text('Conservar copia y actualizar'))]));
+      if(accept!=true)return;
+      await store.write('legacy_$slot',raw);
+    }else{checkpoint=Checkpoint.decode(raw);}
+    if(persist||legacy)await store.write('world_$slot',checkpoint.encode());
     timer?.cancel();timer=null;
-    setState((){world=candidate;core=incomingCore;activePackSources=incomingPacks;reduceMotion=settings['reduceMotion']==true;sound=settings['sound']==true;vibration=settings['vibration']==true;state=Map<String,dynamic>.from(data);selected=(state['controlledId'] ?? state['controlledSocietyId'] ?? societies.firstOrNull?['id'])?.toString();jumpTarget=parsed['target'] as int?;stopCrisis=parsed['stopCrisis']!=false;refresh();});
-    if(jumpTarget!=null && jumpTarget!>day && mounted){_message('Salto pendiente recuperado. Puedes continuar desde la fecha confirmada en el control de años.');}
+    if(!mounted)return;
+    setState((){
+      world=checkpoint.world;core=checkpoint.content;basePack=checkpoint.basePack;
+      coreHash=checkpoint.basePack.hash;activeCoreSource=checkpoint.coreSource;
+      activePackSources=checkpoint.additionalSources.toList();
+      reduceMotion=checkpoint.settings['reduceMotion']??false;
+      sound=checkpoint.settings['sound']??false;vibration=checkpoint.settings['vibration']??false;
+      selected=world!.controlledId??world!.societies.first.id;
+      jumpTarget=checkpoint.target;stopCrisis=checkpoint.stopCrisis;refresh();
+    });
+    if(jumpTarget!=null && jumpTarget!>day)_message('Salto recuperado desde la fecha confirmada. Puedes continuarlo desde Años.');
+    }finally{advancing=false;}
   }
   void _message(String text){if(!mounted)return;setState(()=>note=text);ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(text),duration:const Duration(seconds:4)));}
   Future<void> _newWorld() async {
+    await initialization;
+    if(busy||advancing)return;
+    timer?.cancel();timer=null;
     final seed=TextEditingController(text:'${DateTime.now().millisecondsSinceEpoch%100000}');
     String intensity='normal';int size=96;bool extraordinary=true;
     final create=await showDialog<bool>(context:context,builder:(context)=>StatefulBuilder(builder:(context,change)=>AlertDialog(title:const Text('Un mundo por escribir'),content:SingleChildScrollView(child:Column(mainAxisSize:MainAxisSize.min,crossAxisAlignment:CrossAxisAlignment.start,children:[
@@ -167,15 +195,21 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       const SizedBox(height:12),DropdownButtonFormField<int>(initialValue:size,decoration:const InputDecoration(labelText:'Mapa'),items:const [DropdownMenuItem(value:64,child:Text('Pequeño · 64 × 64')),DropdownMenuItem(value:96,child:Text('Normal · 96 × 96'))],onChanged:(v)=>change(()=>size=v!)),
       SwitchListTile(contentPadding:EdgeInsets.zero,title:const Text('Familias extraordinarias'),subtitle:const Text('Contacto, máquinas y transformaciones'),value:extraordinary,onChanged:(v)=>change(()=>extraordinary=v)),
     ])),actions:[TextButton(onPressed:()=>Navigator.pop(context,false),child:const Text('Volver')),FilledButton(onPressed:()=>Navigator.pop(context,true),child:const Text('Fundar Barrio Cero'))])));
-    if(create!=true)return;
-    timer?.cancel();timer=null;
-    await _content();
-    activePackSources=List.of(availablePackSources);core=_composePacks(activePackSources);
-    world=WorldState.generate(seed:int.tryParse(seed.text)??42,size:size,intensity:intensity,extraordinary:extraordinary);
-    if(coreHash!=null)world!.contentVersions['barrio.core.sha256']=coreHash!;
-    for(final source in activePackSources){final pack=ContentPack.parse(source,base:basePack);world!.contentVersions['${pack.id}.sha256']=pack.hash;}
-    setState((){refresh();selected=(state['controlledId']??state['controlledSocietyId']??societies.firstOrNull?['id'])?.toString();game.selected=selected;game.pan=Offset.zero;game.zoom=1;game.mode='Mundo';jumpTarget=null;note='Toca Barrio Cero, ordena una construcción y avanza un mes. Ana, Leo y Tito ya están trabajando.';});
-    await _save();
+    if(create!=true){seed.dispose();return;}
+    advancing=true;
+    try{
+      final source=await rootBundle.loadString('assets/content/core.json');
+      final candidate=WorldState.generate(seed:int.tryParse(seed.text)??42,size:size,intensity:intensity,extraordinary:extraordinary);
+      final checkpoint=Checkpoint.create(world:candidate,coreSource:source,
+        additionalSources:availablePackSources,settings:{'reduceMotion':reduceMotion,'sound':sound,'vibration':vibration});
+      await store.write('world_$slot',checkpoint.encode());
+      if(!mounted)return;
+      setState((){world=checkpoint.world;core=checkpoint.content;basePack=checkpoint.basePack;
+        activeCoreSource=checkpoint.coreSource;coreHash=checkpoint.basePack.hash;
+        activePackSources=checkpoint.additionalSources.toList();selected=world!.controlledId;
+        game.pan=Offset.zero;game.zoom=1;game.mode='Mundo';jumpTarget=null;
+        note='Toca Barrio Cero, ordena una construcción y avanza un mes.';refresh();});
+    }catch(e){_message('No se pudo crear el mundo: $e');}finally{advancing=false;seed.dispose();}
   }
   Future<void> _command(String action,{String? target,String? choice}) async {
     if(busy||world==null||advancing)return;
@@ -183,7 +217,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     advancing=true;
     try{
       final candidate=WorldState.fromJson(world!.toJson());final sim=Simulation(candidate);if(core!=null)sim.registerContent(core!);
-      final result=sim.command(action,societyId:selected,target:target,choice:choice);
+      final result=sim.submit(Command(id:'ui-${candidate.day}-${candidate.commandReceipts.length}',action:action,actorId:candidate.controlledId,issuedDay:candidate.day,target:target,choice:choice));
       if(!result.ok){_message(result.message);return;}
       await store.write('world_$slot',_encode(candidate.toJson(),target:jumpTarget));world=candidate;
       setState((){refresh();if(action=='control'){selected=controlled;game.selected=selected;}});
@@ -195,7 +229,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   Future<void> _advance(int days) async {
     if(busy||world==null||advancing)return;
     advancing=true;
-    try{final candidate=WorldState.fromJson(world!.toJson());final sim=Simulation(candidate);if(core!=null)sim.registerContent(core!);sim.advanceDays(days,stopOnCrisis:stopCrisis);await store.write('world_$slot',_encode(candidate.toJson(),target:jumpTarget));world=candidate;setState(refresh);}catch(e){timer?.cancel();timer=null;_message('Simulación detenida: $e');}finally{advancing=false;}
+    try{final candidate=WorldState.fromJson(world!.toJson());final sim=Simulation(candidate);if(core!=null)sim.registerContent(core!);sim.advanceDays(days,stopOnCrisis:stopCrisis);final nextTarget=jumpTarget!=null&&candidate.day>=jumpTarget!?null:jumpTarget;await store.write('world_$slot',_encode(candidate.toJson(),target:nextTarget));world=candidate;jumpTarget=nextTarget;setState(refresh);}catch(e){timer?.cancel();timer=null;_message('Simulación detenida: $e');}finally{advancing=false;}
   }
   void _play(){if(timer!=null){timer!.cancel();setState(()=>timer=null);}else{timer=Timer.periodic(Duration(milliseconds:1200~/speed),(t){_advance(1);});setState((){});}}
   Future<void> _jump(int years,{bool resume=false}) async {
@@ -204,17 +238,25 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     timer?.cancel();timer=null;
     jumpBefore=Map<String,dynamic>.from(state);
     jumpStart=day;
-    jumpTarget=resume?jumpTarget:day+years*360;
-    await _save();
-    if(!resume)await store.write('branch_$slot',_encode(world!.toJson()));
+    final requestedTarget=resume?jumpTarget:day+years*360;
+    if(requestedTarget==null||requestedTarget<=day){setState(()=>busy=false);return;}
+    try{
+      if(!resume)await store.write('branch_$slot',_encode(world!.toJson()));
+      await store.write('world_$slot',_encode(world!.toJson(),target:requestedTarget));
+      jumpTarget=requestedTarget;
+    }catch(error){
+      if(mounted)setState(()=>busy=false);
+      _message('No se pudo preparar el salto: $error. La historia no ha avanzado.');
+      return;
+    }
     if(!mounted)return;
-    setState(()=>busy=true);
+    if(webCancel){setState(()=>busy=false);return;}
     if(kIsWeb){await _jumpWeb();return;}
     results=ReceivePort();
     results!.listen((dynamic message){
       commitQueue=commitQueue.then((_)async{
         final m=Map<String,dynamic>.from(message as Map);
-        if(m['control']!=null){jumpControl=m['control'] as SendPort;return;}
+        if(m['control']!=null){jumpControl=m['control'] as SendPort;if(webCancel)jumpControl?.send('cancel');return;}
         if(m['error']!=null){results?.close();results=null;jumpControl=null;worker?.kill();setState(()=>busy=false);_message('Salto detenido: ${m['error']}');return;}
         if(m['world']!=null){
           final candidate=WorldState.fromJson(Map<String,dynamic>.from(m['world'] as Map));
@@ -268,7 +310,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     const SizedBox(height:22),const Text('Sin conexión · Sin cuentas · Tu historia',textAlign:TextAlign.center,style:TextStyle(fontSize:11,color:moss)),
   ])))) ;
   Widget _world()=>Column(children:[
-    Padding(padding:const EdgeInsets.fromLTRB(14,10,8,6),child:Row(children:[const Text('BARRIO CERO',style:TextStyle(color:gold,fontWeight:FontWeight.w900,letterSpacing:1.4,fontSize:16)),const Spacer(),TextButton(onPressed:_menu,child:const Text('MENÚ'))])),
+    Padding(padding:const EdgeInsets.fromLTRB(14,10,8,6),child:Row(children:[const Text('BARRIO CERO',style:TextStyle(color:gold,fontWeight:FontWeight.w900,letterSpacing:1.4,fontSize:16)),const Spacer(),TextButton(onPressed:busy||advancing?null:_menu,child:const Text('MENÚ'))])),
     Padding(padding:const EdgeInsets.symmetric(horizontal:14),child:Row(children:[Text(date(day),style:const TextStyle(fontSize:11,color:earth)),const Spacer(),Flexible(child:Text(controlled.isEmpty?'Observando el mundo':'Guías: ${societies.where((s)=>s['id']==controlled).firstOrNull?['name']??controlled}',overflow:TextOverflow.ellipsis,style:const TextStyle(fontSize:11,color:moss)))])),
     const SizedBox(height:8),
     Expanded(child:Stack(children:[
@@ -321,7 +363,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   Future<void> _resolveStory(String event,String option)async{
     if(advancing||busy||selected!=controlled)return;
     advancing=true;
-    try{final candidate=WorldState.fromJson(world!.toJson());final sim=Simulation(candidate);if(core!=null)sim.registerContent(core!);final result=sim.resolveContentEvent(event,option,societyId:selected);if(result.ok){await store.write('world_$slot',_encode(candidate.toJson(),target:jumpTarget));world=candidate;setState(refresh);}_message(result.message);}catch(e){_message('No se pudo confirmar la decisión: $e');}finally{advancing=false;}
+    try{final candidate=WorldState.fromJson(world!.toJson());final sim=Simulation(candidate);if(core!=null)sim.registerContent(core!);final result=sim.submit(Command(id:'ui-${candidate.day}-${candidate.commandReceipts.length}',action:'resolve_event',actorId:candidate.controlledId,issuedDay:candidate.day,target:event,choice:option));if(result.ok){await store.write('world_$slot',_encode(candidate.toJson(),target:jumpTarget));world=candidate;setState(refresh);}_message(result.message);}catch(e){_message('No se pudo confirmar la decisión: $e');}finally{advancing=false;}
   }
   void _stories(){
     if(selected!=controlled){_message('Asume la dirección desde la ficha antes de resolver sus decisiones.');return;}
@@ -363,7 +405,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ]);
   }
   void _menu(){if(busy||advancing){_message('Pausa el salto antes de cambiar de partida o configuración.');return;}_sheet('Tu mundo, tus reglas',[
-    ListTile(title:const Text('Guardar ahora'),onTap:(){Navigator.pop(context);_save();_message('Partida guardada.');}),
+    ListTile(title:const Text('Guardar ahora'),onTap:()async{Navigator.pop(context);if(advancing||busy)return;advancing=true;try{await _save();_message('Partida guardada.');}catch(error){_message('No se pudo guardar: $error');}finally{advancing=false;}}),
     ListTile(title:const Text('Paquetes de contenido'),onTap:(){Navigator.pop(context);_packages();}),
     ListTile(title:const Text('Archivo de mundos'),onTap:(){Navigator.pop(context);_archive();}),
     ListTile(title:const Text('Restaurar punto anterior al salto'),subtitle:const Text('Reemplaza este mundo por su rama anterior.'),onTap:()async{Navigator.pop(context);final raw=await store.read('branch_$slot');if(raw!=null)await _import(raw);else _message('No hay un punto anterior.');}),
@@ -396,8 +438,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     const SizedBox(height:8),OutlinedButton(onPressed:(){Navigator.pop(context);_importDialog();},child:const Text('Importar partida (JSON)')),
     if(kIsWeb)const Padding(padding:EdgeInsets.only(top:10),child:Text('En esta previsualización el almacenamiento es temporal. Android conserva archivos locales al cerrar.',style:TextStyle(color:earth,fontSize:11))),
   ]);
-  void _export(){
+  Future<void> _export() async {
+    if(advancing||busy){_message('Espera a que se confirme el avance actual.');return;}
     final data=_encode(world!.toJson(),target:jumpTarget);
+    if(documents.supported){try{final uri=await documents.exportDocument(text:data,suggestedName:'barrio-cero-$slot-dia-$day.json');if(uri!=null)_message('Partida exportada al documento elegido.');}catch(e){_message('No se pudo exportar: $e');}return;}
     _sheet('Exportar historia',[
       const Text('Copia el JSON y guárdalo en un archivo .json. Permite trasladar el mundo sin cuentas ni conexión.',style:TextStyle(color:earth)),const SizedBox(height:12),
       FilledButton(onPressed:(){Clipboard.setData(ClipboardData(text:data));_message('Partida copiada al portapapeles.');},child:const Text('Copiar partida completa')),
@@ -405,6 +449,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ]);
   }
   Future<void> _importDialog()async{
+    if(advancing||busy){_message('Pausa el avance antes de importar.');return;}
+    timer?.cancel();timer=null;
+    if(documents.supported){try{final raw=await documents.importDocument();if(raw!=null){await _import(raw);_message('Historia importada.');}}catch(e){_message('Importación rechazada; la partida actual se conserva. $e');}return;}
     final input=TextEditingController();
     final ok=await showDialog<bool>(context:context,builder:(context)=>AlertDialog(title:const Text('Importar historia'),content:TextField(controller:input,minLines:5,maxLines:10,decoration:const InputDecoration(labelText:'Pega el contenido del archivo JSON')),actions:[TextButton(onPressed:()=>Navigator.pop(context,false),child:const Text('Cancelar')),FilledButton(onPressed:()=>Navigator.pop(context,true),child:const Text('Validar e importar'))]));
     if(ok==true){try{await _import(input.text);_message('Historia importada.');}catch(e){_message('Importación rechazada; la partida actual se conserva. $e');}}

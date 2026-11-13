@@ -4,7 +4,7 @@ import 'package:path_provider/path_provider.dart';
 class SaveStore {
   Future<void> _queue = Future.value();
   void _check(String slot) {
-    if (!RegExp(r'^(packages|(world|branch)_[0-2])$').hasMatch(slot)) {
+    if (!RegExp(r'^(packages|(world|branch|legacy)_[0-2])$').hasMatch(slot)) {
       throw const FormatException('Espacio de guardado inválido');
     }
   }

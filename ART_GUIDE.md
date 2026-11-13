@@ -47,3 +47,7 @@ La presentación puede derivar trabajar de un proyecto reservado, transportar de
 La reducción de movimiento usa el fotograma cero de la acción que corresponde al estado; conserva herramientas, carga y señales relevantes. La fase de presentación no forma parte del generador aleatorio del motor, y el cambio de acción nunca altera costes, salud, calendario o resultados.
 
 Los 18 identificadores de edificio canónicos del motor coinciden directamente con el atlas: `farm, well, house, sawmill, quarry, workshop, clinic, school, market, wall, mine, laboratory, generator, loom, granary, recycler, observatory, habitat`. No hay alias que reemplacen telar, granero, recicladora o hábitat por otra construcción.
+
+## Diseño objetivo de la versión completa
+
+El usuario solicitó visualizar la versión final prevista para guiar la implementación. Las láminas `docs/design/world-and-settlement-target.png` y `docs/design/decisions-and-history-target.png` definen la dirección de composición, paleta, jerarquía de interfaz y densidad de pixel art. Son ilustraciones de diseño objetivo, no capturas ejecutadas ni evidencia de aceptación. Los números e historia representan una partida ilustrativa; el juego debe obtenerlos de la simulación real. Conservar controles táctiles legibles al trasladar cada panel a una pantalla vertical individual.

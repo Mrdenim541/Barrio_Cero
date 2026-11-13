@@ -1,10 +1,10 @@
-# Auditoría final de implementación
+# Auditoría de implementación en curso
 
-Revisión manual de los archivos finales, 13 de noviembre de 2026. **Presencia de código no equivale a comportamiento comprobado.** No se ejecutaron analizador Dart, pruebas Dart, compilación Flutter ni aplicación Android: la descarga oficial del SDK Dart sigue devolviendo 403 por la política del entorno. No hay APK entregable ni capturas de una aplicación ejecutada.
+Revisión manual del código en curso, 13 de noviembre de 2026. **Presencia de código no equivale a comportamiento comprobado.** No se ejecutaron analizador Dart, pruebas Dart, compilación Flutter ni aplicación Android: la descarga oficial del SDK Dart sigue devolviendo 403 por la política del entorno. No hay APK entregable ni capturas de una aplicación ejecutada.
 
 ## Comprobaciones realizadas
 
-- Validador Python del catálogo ejecutado: estructura de 158 eventos (96 independientes), doce arcos con desenlaces alcanzables distintos, dieciséis plantillas, grafo tecnológico, hashes de dos paquetes y cinco pruebas de rechazo aprobados. Su resultado no acredita ejecución de los eventos en Dart.
+- Validador Python del catálogo ejecutado: estructura de 158 eventos (96 independientes), doce arcos con desenlaces alcanzables distintos, dieciséis plantillas, grafo tecnológico, hashes de dos paquetes y diez pruebas de rechazo aprobados. Su resultado no acredita ejecución de los eventos en Dart.
 - Wrapper oficial Gradle 8.12 descargado y SHA256 contrastado con el publicado; checksum de distribución fijado.
 - `bash -n tool/setup_android.sh` aprobado. No demuestra ejecución completa del script.
 - Android SDK 36, Build Tools 35.0.0, Platform Tools 37 y NDK 27 instalados, según verificación del agente principal. Java 21 disponible. Flutter 3.35.7 descargado como código fuente; faltan los artefactos bloqueados.
@@ -29,9 +29,13 @@ Revisión manual de los archivos finales, 13 de noviembre de 2026. **Presencia d
 | Director y crónica | Condiciones, probabilidades base y condicionadas, cola temporal, decisiones delegadas, causas y lugares | Código no ejecutado. Pruner conserva referencias causales; podría superar su objetivo de tamaño si muchas entradas están referenciadas. No hay garantía medida de rendimiento de cascadas. |
 | Paquetes versionados | Parser Dart declarativo, registro, importación UI, ejemplo, hashes y versiones exactas por mundo | No ejecutado. Rechazo seguro y composición requieren pruebas. No hay migración completa entre versiones de esquema o contenido de una partida existente. |
 | Historia y saltos | Worker isolate Android, lotes confirmados por ACK después del guardado, cancelación, target persistente, punto anterior e informe | No ejecutado. Suspensión, cierre abrupto, errores de almacenamiento y recuperación necesitan pruebas reales. Informe y comparaciones históricas son métricas agregadas, no mundos rebobinables. |
-| Persistencia | Tres slots, cola global de escritura, temporal con flush/rename, copia anterior atómica, SHA256, importación/exportación textual | No probado en Android. Exportación usa texto/portapapeles, no selector nativo general de archivos. Esquemas incompatibles se rechazan; migraciones completas pendientes. |
+| Persistencia | Tres slots, cola de escritura, temporal con flush/rename, copia anterior, checkpoint v2 que protege mundo/contenido/objetivo/ajustes y selector Android SAF | No compilado ni probado en Android. Migración explícita v1 a checkpoint v2 con copia original implementada; futuras migraciones del modelo y pruebas de interrupción pendientes. |
 | Primera sesión y ajustes | Inicio, creación/carga, indicaciones breves, crónica, políticas, reducción de movimiento, sonido de sistema y vibración opcionales | No hay prueba de diez decisiones ni revisión móvil 320/360/412. Tutorial es orientación breve, no secuencia guiada completa. |
 | Estabilidad y rendimiento | Suite Dart con equivalencia, ramas, sucesión, importación, treinta semillas ×200 años y escenario de mil años | Escrita, no ejecutada. Sin mediciones de FPS, memoria, tiempos o mundo de 32 asentamientos. |
+
+## Avance tras aprobar el plan
+
+Emulador Android 10 arrancado y reconocido por ADB; el juego aún no está compilado. Se añadieron comandos transaccionales con recibos persistentes, reservas de expedición, checkpoint autocontenido, selector SAF y pruebas asociadas. El trabajador comunica errores de inicio y la interfaz confirma escrituras antes de publicar el nuevo mundo. La equivalencia temporal usa el catálogo real y un registro causal íntegro; las baterías largas siguen sin ejecutarse. Véanse STATUS.md y docs/requirements.json para estado y trazabilidad.
 
 ## Correcciones coordinadas durante la revisión
 

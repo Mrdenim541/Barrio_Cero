@@ -1,0 +1,148 @@
+{
+  "startedAt": "2026-11-13T17:20:53.050716+00:00",
+  "commit": "146184f43bae860aee4ee767b250d74c8830871e",
+  "gitStatus": "M ART_GUIDE.md\n M PLAN.md\n M STATUS.md\n M android/app/src/main/kotlin/com/barriocero/eras/MainActivity.kt\n M docs/IMPLEMENTATION_AUDIT.md\n M docs/SIMULATION_API.md\n M lib/presentation/app.dart\n M lib/presentation/storage_native.dart\n M lib/simulation/engine.dart\n M tool/benchmark.dart\n M tool/simulation_check.dart\n?? docs/design/\n?? docs/requirements.json\n?? docs/validation/environment-readiness.json\n?? lib/persistence/\n?? lib/platform/\n?? test/checkpoint_test.dart\n?? test/commands_test.dart\n?? test/document_exchange_test.dart\n?? tool/run_acceptance.sh\n?? tool/start_android_emulator.sh\n?? tool/verify_requirements.py",
+  "specSha256": "49017fe7d421e4261fde238b19386286962c6bf793497660b99eb1a59bed075e",
+  "sourceTreeSha256": "77e16815eb1c318d81f4763b1564c3277cec8d8829ddbb996e8496afcb4c85b7",
+  "sourceFiles": {
+    "lib/content/content_pack.dart": "ebc12b23fb0aecfc0e0e66174af4e3664ac2e1cfdea993e8defea28c9c5d7267",
+    "lib/main.dart": "4cdc322ae6c86d4c30cfe44cf1c98c1cd8eed3a00e5b2e69307b561129605118",
+    "lib/persistence/checkpoint.dart": "3248228e58dc03655c33cb64e59fffe44dce1f71da9ba4021242c7b5deec801a",
+    "lib/platform/document_exchange.dart": "56c1dea6eef5d939bd32e67046cf3fe5e53efd90bb0fc4b805490ffd94e594b3",
+    "lib/presentation/app.dart": "ced04ae86f881c944c655ac5d2f54424eb7861ca7e570a056bb8fa5b05d80810",
+    "lib/presentation/storage.dart": "81704a87eed29d7592ab42d250eb29b6026fce616be481d33e6176a2aae7db6f",
+    "lib/presentation/storage_memory.dart": "662ed8d3f9e195afe611b71753a990d1273a1984e85b494de2d73a9a233bcb45",
+    "lib/presentation/storage_native.dart": "53eb129357f6368b7bc7268cf6ea79fcb7b3c936e01fadda29306385e7fe837d",
+    "lib/presentation/world_game.dart": "f19ac9139e6340d68f289035786d4b94038a9222024bf364ca5b4b520834114c",
+    "lib/simulation/engine.dart": "ba687b9705086a5d555296992758015d3e2e3fa152c873e0ec9fdf4666ea69ee",
+    "assets/art/atlas.json": "07abd8b521e54a976a019ce5b924e35fab8f38b2f774f4e5d4abc88514fb4d10",
+    "assets/art/buildings.png": "b2bcfc68a5ab3f5d1bcf3d762aca4abb02009c339a9ee7623639cc32e50de0fd",
+    "assets/art/characters.png": "bdbcc42116cf50e390f7c10918efe38dc12fca0d3aa7fe4d16c3914932b7e574",
+    "assets/art/contact_sheet.png": "f5bf3c89d4ec1318c9d651d1d9b0a8c0160c3465fa49869232a00c21a9e10726",
+    "assets/art/icons.png": "9e4caa088117503c99395c996bdd634eb6cdb1ea71f1487b142eda997a8aae37",
+    "assets/art/terrain.png": "1e80828c2605a95ca0f4eef7ca75d3ee6a6a5a413016bf55aafd6420610ce778",
+    "assets/content/core.json": "a751baac02f9a32bbd2e5058e507e53c50d118d95c9dad527c66f5e3db40e568",
+    "assets/content/example_pack.json": "43c57a33d877aa380afbcf51a78e77a2b29b323c4e79b95a03192f08e272a2fb",
+    "assets/content/manifest.json": "b299b4f6dbe3b86df9a8e0aad70a451094b4b539012fb23ca7bd2562560bd604",
+    "test/checkpoint_test.dart": "deee465843ca77d8597a03ba9741eaef162f60d8785b083dbc62a246471b01df",
+    "test/commands_test.dart": "1b09db4f13b820661ac7c996373069888e54c42f773171348ce6ae879431d777",
+    "test/content_test.dart": "8a1b7e571f1b2ca1211561022f6f8d5d1e8ec930f1e722a655bdf1e357e24cad",
+    "test/document_exchange_test.dart": "4049f6b3de0db39aa63b382ff4432d9aaaa09bd1c7fe0f6f5ca5dadb87603660",
+    "test/presentation_test.dart": "5d3bbb448837ca07c61330c6937216ba1a2b3767873f788275678dc81ce00902",
+    "tool/benchmark.dart": "7b66b085c8a92a1b6367cdc062495c97d25a7207711c8599d607149a595fe99a",
+    "tool/build_content.py": "fe57cca8e580782396cace63033e8e79fb913f2424abc9707e2a4c32e164a9ad",
+    "tool/check_dart_syntax.py": "9771a1ffe06e64491314cf41342c421eb247e6321e0951faf6f85c532ea59b3b",
+    "tool/generate_art.py": "8d498f92c4ea1aa0920d58b43417ca71ff9db5e94d2dc5d83a07787356c9c838",
+    "tool/run_acceptance.sh": "eb765c7d5ba612791d247aad05353783b2bf6c425c493847e60741c65c32d4c9",
+    "tool/setup_android.sh": "7cf9b3acd99ec9580cf83931adc36221fff613d4a4781a2a1fbe0ec76ea2a42d",
+    "tool/simulation_check.dart": "9a777a6af643c488371ac958dd13809864f5645c2dfc6f89e00586c21cce5d81",
+    "tool/start_android_emulator.sh": "6098be517bbb8269aefe41fa20897297ce96cd3d3f7b1a2f24882e6e66361a32",
+    "tool/validate_content.py": "295061708d607750eecfeb56d3691d4640f10bcbe5ade180208d3827944de277",
+    "tool/verify_requirements.py": "fd129d267b386f7697413c8249a6cdc26305d2716f0fb7364c641abe36db7cf7",
+    "android/.gitignore": "80ed8b4fc4b12979d558e08fa71eab8878f72c4d9923cc56afe4118b0c2f12e1",
+    "android/app/build.gradle.kts": "7cc664c7c6a3e7a7fc65940640862a47f8164802a422eb6769b01aba706ed725",
+    "android/app/src/debug/AndroidManifest.xml": "30b0832ed8b92dfbd6ae2abfa939ccf26333d37600056b1572bd4a397a18a74b",
+    "android/app/src/main/AndroidManifest.xml": "a358c233b13c1980ba8b17d1fd60d8be2f33adad95424bbcdf6b8f73141081b1",
+    "android/app/src/main/kotlin/com/barriocero/eras/MainActivity.kt": "ba3353eebef787a77f233dedaef58349b41e8405dd82de68447ae5223a91fec9",
+    "android/app/src/main/res/drawable/launch_background.xml": "94433756fe10005ddd6fc55cc5c0b1e9f3c10b66a08ceac795ece6713d34e28a",
+    "android/app/src/main/res/drawable-v21/launch_background.xml": "7ca6d5cec2169c5a98661a119db23a6f3399c8fef2256ff04f3a642831282478",
+    "android/app/src/main/res/mipmap-hdpi/ic_launcher.png": "c43d4ade8a68221fe9e44b8f2afc95824f964778e8e0ac9911da5c02c7e5cd23",
+    "android/app/src/main/res/mipmap-mdpi/ic_launcher.png": "790ca618144c18f1e64decb6c5f2cd23da1c73f8d5e6540cf2260697f0289af2",
+    "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png": "18765a7fdbcf9a0d122761d18b601a654eeecbe02c1591b2f7fa5628b76ea7aa",
+    "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png": "db8f6a7720d89d5349c6bb2f47c638961e5829b7199bdc437741fb95149fdc32",
+    "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png": "4c0089c50e0edbe41707b236faa8adde22e4108fb4af51d9d5a29a3b18b07db4",
+    "android/app/src/main/res/values/styles.xml": "937d7c82f539c72eb94fd3a3773f29b3d3fef1997213c92cb632298cedf4bda9",
+    "android/app/src/main/res/values-night/styles.xml": "8c5bad5152f217e837519f9c15211d19f39bd45f5f67faf6dd81cb4b299e518f",
+    "android/app/src/profile/AndroidManifest.xml": "30b0832ed8b92dfbd6ae2abfa939ccf26333d37600056b1572bd4a397a18a74b",
+    "android/build.gradle.kts": "6a26dba2cb8dfba1e74f540b0d17a89d96c1301d3c3bfda14348bed257fddcba",
+    "android/gradle/wrapper/gradle-wrapper.jar": "2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046",
+    "android/gradle/wrapper/gradle-wrapper.properties": "f2d7590a69314eb7201d3508ed652c36f87dfb57c2a0095eef7e60571bf2c98b",
+    "android/gradle.properties": "4b486617e7fe0512a85af8100ac666be4e1004060b4f5daee0ec92d8b6015b85",
+    "android/gradlew": "6c8726ff768626b917e23a551e0eb794e1280c544d5362b991f50bae37b8c5f6",
+    "android/gradlew.bat": "0f3ed8f03b50934cb8c48b15a470d5c20a30a5385825e48b55bcc8ea3d8f8e18",
+    "android/settings.gradle.kts": "f822f8653a25b632ea3334473d8e9964e7d7da73e3ec33448f17e8600834b063",
+    "pubspec.yaml": "3a5664078b987779d78d6b6cb98cf96afec3926943ed4fd2ebbf3b5e8934ae91",
+    "PROJECT_SPEC.md": "49017fe7d421e4261fde238b19386286962c6bf793497660b99eb1a59bed075e"
+  },
+  "checks": [
+    {
+      "id": "content",
+      "command": [
+        "python3",
+        "tool/validate_content.py"
+      ],
+      "startedAt": "2026-11-13T17:20:53.069547+00:00",
+      "status": "passed",
+      "exitCode": 0,
+      "finishedAt": "2026-11-13T17:20:53.224548+00:00",
+      "output": "PASS: 158 events / 96 independent / 12 arcs and distinct reachable endings / 16 templates / technology DAG / 2 SHA-256 packages / 10 rejection tests\n"
+    },
+    {
+      "id": "analyze",
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "analyze"
+      ],
+      "startedAt": "2026-11-13T17:20:53.225070+00:00",
+      "status": "blocked",
+      "reason": "Flutter Dart SDK is unavailable",
+      "exitCode": null,
+      "finishedAt": "2026-11-13T17:20:53.225079+00:00"
+    },
+    {
+      "id": "simulation",
+      "command": [
+        "dart",
+        "run",
+        "tool/simulation_check.dart"
+      ],
+      "startedAt": "2026-11-13T17:20:53.225544+00:00",
+      "status": "blocked",
+      "reason": "Dart SDK is unavailable",
+      "exitCode": null,
+      "finishedAt": "2026-11-13T17:20:53.225552+00:00"
+    },
+    {
+      "id": "flutter_tests",
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "test"
+      ],
+      "startedAt": "2026-11-13T17:20:53.226130+00:00",
+      "status": "blocked",
+      "reason": "Flutter Dart SDK is unavailable",
+      "exitCode": null,
+      "finishedAt": "2026-11-13T17:20:53.226138+00:00"
+    },
+    {
+      "id": "benchmark",
+      "command": [
+        "dart",
+        "run",
+        "tool/benchmark.dart"
+      ],
+      "startedAt": "2026-11-13T17:20:53.226625+00:00",
+      "status": "blocked",
+      "reason": "Dart SDK is unavailable",
+      "exitCode": null,
+      "finishedAt": "2026-11-13T17:20:53.226631+00:00"
+    },
+    {
+      "id": "android_build",
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "apk",
+        "--debug"
+      ],
+      "startedAt": "2026-11-13T17:20:53.226873+00:00",
+      "status": "blocked",
+      "reason": "Flutter Dart SDK is unavailable",
+      "exitCode": null,
+      "finishedAt": "2026-11-13T17:20:53.226877+00:00"
+    }
+  ],
+  "finishedAt": "2026-11-13T17:20:53.227635+00:00",
+  "allPassed": false,
+  "scope": "Execution report before integration checkpoint commit; Dart/Flutter checks not executed. Syntax and traceability were verified separately and do not establish functional acceptance."
+}

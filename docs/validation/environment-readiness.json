@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-11-13T17:21:38.784854+00:00",
+  "emulatorBootCompleted": "1",
+  "androidVersion": "10",
+  "flutterDownload": "Blocked: HTTP CONNECT403; runtime network revision1 has no custom allowed hosts",
+  "gameCompiled": false,
+  "gameInstalled": false,
+  "networkDraftRevision": 5,
+  "runtimeRevision": "1",
+  "device": "emulator-5554"
+}
