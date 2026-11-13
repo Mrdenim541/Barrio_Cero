@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/tmp/barrio_scene_final.py", line 3, in <module>
+    tap('1');tap('3');tap('Continuar historia');capture('11-local-neighborhood-final.png')
+    ^^^^^^^^
+  File "<string>", line 20, in tap
+RuntimeError: No control 1; visible ['Apps list', 'Search', 'Email', 'Gallery', 'Phone', 'Messaging', 'WebView Browser Tester', 'Camera']

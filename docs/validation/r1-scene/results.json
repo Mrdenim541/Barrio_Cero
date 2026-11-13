@@ -1,0 +1,81 @@
+{
+  "recordedAt": "2026-11-13T20:54:53.023534+00:00",
+  "scope": "Escena local R1; no finalización del juego",
+  "tests": {
+    "fullPassed": 67,
+    "uiSceneFocusedPassed": 11,
+    "analysis": "clean",
+    "postCompatibilityFocusedPassed": 5,
+    "note": "67-test full suite before colony inheritance fix; five focused scene/legacy tests after fix."
+  },
+  "artifact": {
+    "path": "build/deliverables/barrio-cero-eras-0.2.1-test.apk",
+    "sha256": "c077d2f2945ff82615cc36a3290996b650fe37487a1b406cc1284ad3e66740cb",
+    "version": "0.2.1+3",
+    "mode": "profile"
+  },
+  "referenceSavePreserved": true,
+  "newWorld": {
+    "slot": 2,
+    "seed": 34381,
+    "day": 0,
+    "societies": 6,
+    "layoutVersion": 2
+  },
+  "native": {
+    "installed": true,
+    "newWorldCreated": true,
+    "sceneCaptured": true,
+    "buildingCaptured": true,
+    "personSelection": true,
+    "buildingSelection": true,
+    "inspectionPreservesCheckpoint": true,
+    "emulatorBackend": "GLES via --ez enable-impeller false",
+    "initialSelectionHarnessFailure": "text-only predicate did not match Flutter content-desc; focused retry succeeded",
+    "selectionCaptureApkSha256": "64407c38be2ae2ae094483a7f3fe5e515a11aff10c467322d5a07885045f2c51",
+    "compatibilityFix": "Final APK preserves placement version for new colonies founded by legacy societies; new-layout visual behavior unchanged.",
+    "finalApkSceneCapturedAfterCleanBoot": true,
+    "finalSceneApkSha256": "c077d2f2945ff82615cc36a3290996b650fe37487a1b406cc1284ad3e66740cb",
+    "cleanBootBackend": "Default Impeller/Vulkan; System UI ANR dismissed before loading the retained slot",
+    "startupCaveat": "Earlier renderer SIGSEGV and failed UI automation retained in logs; clean emulator boot subsequently rendered the final APK."
+  },
+  "temporal": {
+    "passed": true,
+    "groups": 1,
+    "filtered": true,
+    "seed": 17,
+    "days": 36000,
+    "catalogEvents": 158,
+    "totalRecordedEvents": 50518,
+    "scope": "Daily, decades, whole century and save/resume yield identical canonical state and full causal sequence; not full acceptance."
+  },
+  "sourceSha256": {
+    "lib/content/content_pack.dart": "ebc12b23fb0aecfc0e0e66174af4e3664ac2e1cfdea993e8defea28c9c5d7267",
+    "lib/main.dart": "4cdc322ae6c86d4c30cfe44cf1c98c1cd8eed3a00e5b2e69307b561129605118",
+    "lib/persistence/checkpoint.dart": "3248228e58dc03655c33cb64e59fffe44dce1f71da9ba4021242c7b5deec801a",
+    "lib/platform/document_exchange.dart": "56c1dea6eef5d939bd32e67046cf3fe5e53efd90bb0fc4b805490ffd94e594b3",
+    "lib/presentation/app.dart": "95679877e0f6968117a6ae4db3755bc99b74857f0545ab9791c2ad698e897f72",
+    "lib/presentation/art_assets.dart": "12a8d01aac67e2c5fe346ed8e083088de187fafb258127e74517f20dc2586b41",
+    "lib/presentation/settlement_scene.dart": "df776e8a3043190159653503c5bfd33ee2eab233908d9654846570f9e4ae01b9",
+    "lib/presentation/storage.dart": "81704a87eed29d7592ab42d250eb29b6026fce616be481d33e6176a2aae7db6f",
+    "lib/presentation/storage_memory.dart": "662ed8d3f9e195afe611b71753a990d1273a1984e85b494de2d73a9a233bcb45",
+    "lib/presentation/storage_native.dart": "53eb129357f6368b7bc7268cf6ea79fcb7b3c936e01fadda29306385e7fe837d",
+    "lib/presentation/world_game.dart": "9690416196473a8a8046553416537d7cfb4af92b2c7370d8936167241ab2b3e5",
+    "lib/session/history_worker.dart": "ddbfbc7f92a4e642ae8c8244b3c7119e1f1c3df63bd900205f0ea8f4868345eb",
+    "lib/session/session_controller.dart": "a796c24143261a04eb32b8e3198cd322c96de0893f6895e4536c5a2e2afbfdac",
+    "lib/simulation/engine.dart": "9b489ebd6c689b0ccaf87e72e16f135889058a958efe44cd0d44191fbcae6e1e",
+    "lib/simulation/v2/materials.dart": "495e860c7d4d8bcc1c575d705d8b71739e1ac98097b51f4e3772b0a2c31870f0",
+    "pubspec.yaml": "77ed307f2fbfb5fc8814d86e37aa1af0e4f5af52946153575c5a712571812f02",
+    "test/art_assets_test.dart": "6af37c49c77e506c5079fac86685bcee2d51affd0fbef7f857b624d00f83f683",
+    "test/checkpoint_test.dart": "b434e2af77830a8d82cc81643b023d1ecc10865425266ddb4dbe6ad52b1f3f83",
+    "test/command_preview_test.dart": "866b79212403d11e29dfb846497f97f9ade618f36892c7ce6a15fe253f971195",
+    "test/commands_test.dart": "5a2105df28270af3a38329a62822a17d29a37f070129cf0c28376e34c59fbd4a",
+    "test/content_test.dart": "697e397dc5396a46838dd9a4810ee9b467cf4d8833430800bc50ef523cb6de80",
+    "test/document_exchange_test.dart": "fabdb52ee6d192b159c769c1fe358743c2279f31f1e18d3749e102e58f741610",
+    "test/material_ledger_test.dart": "0538c9ea2f9fde743e44d0c0b223292cee79c10150153259a9d8854f2414335e",
+    "test/presentation_test.dart": "f9a5ef8b37e5534a579a8835dc422b4fead2c448a73271ef4ce33a1af1570efc",
+    "test/session_controller_test.dart": "c8dbedf3a818f5690e0edd9d74fd2553a86b310f4dc4000320a6f6b69a48a8df",
+    "test/settlement_scene_test.dart": "e2930f649fe4472ab1c5a41246bd5ae8d10b5fdcfa06668d79c55e7b7c2ab9a6",
+    "test/storage_native_test.dart": "c0c1ddd9069e4679578ecf5e681b209420fe1deae97eab22e3fd7216e7fc3e06"
+  }
+}

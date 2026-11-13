@@ -57,3 +57,9 @@ El usuario solicitó visualizar la versión final prevista para guiar la impleme
 Los atlas PNG originales se conservan. El generador produce también `characters.rgba`, `buildings.rgba` y `terrain.rgba`, con los mismos píxeles en RGBA8888 premultiplicado. El manifiesto indica dimensiones y formato. `loadArtPixels` comprueba el tamaño y carga esos datos sin depender del códec PNG de la plataforma; la prueba compara sus píxeles con los PNG originales (tolerancia de una unidad por redondeo alfa). Esto resolvió el fallo de descompresión observado en el emulador Android 10 con Flutter 3.35.7.
 
 Las capturas de `docs/validation/android/` proceden de la aplicación instalada; las láminas de `docs/design/` siguen siendo objetivos visuales. La escena local actual es una base inicial y aún debe alcanzar la legibilidad, distribución y actividades del plan completo.
+
+## Escena local 0.2.1
+
+`SettlementScene` obtiene geometría exclusivamente de los edificios y habitantes vivos confirmados. La cámara y la selección usan las mismas transformaciones. La textura del suelo, sombras y entradas son elementos visuales; no acreditan rutas ni trabajos simulados. Los nombres identifican personajes existentes. El renderizador muestra reposo cuando no puede deducir una tarea, sin recorridos aleatorios de transporte.
+
+Los planos nuevos usan `siteLayout: 2`, con sectores y huellas de 2×2 sin solapes. Los antiguos mantienen sus coordenadas y transmiten su versión de plano a sus colonias. No se regeneran para conseguir una imagen distinta. Las capturas de `docs/validation/r1-scene/` proceden del APK ejecutado; los atlas siguen siendo los recursos originales. La dirección artística completa de las láminas objetivo sigue pendiente.

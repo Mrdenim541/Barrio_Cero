@@ -1,0 +1,7 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/material_ledger_test.dart
+00:00 +0: Exact quantities and range checks
+00:00 +1: Multi-resource rejection is atomic and idempotent transfer charges once
+00:00 +2: Reservation, cancellation and consumption preserve every material
+00:00 +3: Corrupt material creation and reverse causal transfers rejected
+00:00 +4: Balanced forgery and fabricated receipts fail journal replay
+00:00 +5: All tests passed!

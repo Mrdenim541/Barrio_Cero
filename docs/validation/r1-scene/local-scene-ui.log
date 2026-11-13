@@ -1,0 +1,13 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/presentation_test.dart
+00:00 +0: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:00 +1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:00 +2: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:00 +3: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:01 +4: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 360.0
+00:01 +5: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 412.0
+00:01 +6: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:06 +7: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 320.0 with enlarged text
+00:06 +8: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 360.0 with enlarged text
+00:06 +9: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 412.0 with enlarged text
+00:07 +10: /workspace/Barrio_Cero/test/presentation_test.dart: Tap real local building and person without changing simulation
+00:07 +11: All tests passed!

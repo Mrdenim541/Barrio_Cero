@@ -1,0 +1,6 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+out=root/'docs/validation/r1-scene'
+tap('1');tap('3');tap('Continuar historia');capture('11-local-neighborhood-final.png')
+# Select the first real building, then one living person in the initial scene.
+# Capture hierarchy first; direct coordinates are taken from this runtime frame.
+print([(n.get('text')or n.get('content-desc')) for n in dump() if n.get('text')or n.get('content-desc')],flush=True)

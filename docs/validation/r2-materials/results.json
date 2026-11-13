@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-11-13T20:54:53.024498+00:00",
+  "scope": "R2 componente de contabilidad, aún no integrado con economía activa",
+  "testsPassed": 5,
+  "analysis": "clean",
+  "liveGameUsesThisLedger": false,
+  "sourceSha256": {
+    "lib/simulation/v2/materials.dart": "495e860c7d4d8bcc1c575d705d8b71739e1ac98097b51f4e3772b0a2c31870f0",
+    "test/material_ledger_test.dart": "0538c9ea2f9fde743e44d0c0b223292cee79c10150153259a9d8854f2414335e"
+  }
+}

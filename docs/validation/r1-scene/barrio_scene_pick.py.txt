@@ -1,0 +1,9 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+out=root/'docs/validation/r1-scene'
+adb('shell','input','tap','57','127');capture('12-building-selected.png')
+nodes=dump();assert any(n.get('text')=='Construir otro' for n in nodes)
+adb('shell','input','keyevent','4');dump()
+adb('shell','input','tap','57','159');capture('13-person-selected.png')
+nodes=dump();assert any(n.get('text')=='Ver comunidad' for n in nodes)
+print('Native building and person selection passed',flush=True)
+adb('shell','input','keyevent','4')

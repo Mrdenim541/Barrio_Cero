@@ -1,0 +1,6 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+out=root/'docs/validation/r1-scene';out.mkdir(exist_ok=True)
+# Keep the earlier tested reference in slot 0; use the third slot for this scenario.
+nodes=dump();print([(n.get('text')or n.get('content-desc')) for n in nodes if n.get('text')or n.get('content-desc')],flush=True)
+tap('1');tap('3');tap('CREAR UN MUNDO');tap('Fundar Barrio Cero');capture('10-local-neighborhood.png')
+print('Created and captured',flush=True)

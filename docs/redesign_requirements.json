@@ -59,7 +59,7 @@
         "R0",
         "R1"
       ],
-      "state": "pending",
+      "state": "in_progress",
       "evidence": []
     },
     {
@@ -1734,6 +1734,13 @@
           "result": "passed",
           "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
           "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        },
+        {
+          "path": "docs/validation/r1-scene/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; ADB native scene and selection",
+          "scope": "Plano ocupado, cámara, selección de edificios/habitantes y fichas; todavía no demuestra dirección artística final."
         }
       ]
     },
@@ -1873,13 +1880,21 @@
         "S07-R01"
       ],
       "requirement": "Materiales enteros en milésimas y restos demográficos persistentes.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Pagos y transferencias conservan cantidades salvo fuentes/pérdidas explícitas.",
         "Guardar/reanudar no pierde restos ni duplica producción o población."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/r2-materials/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test test/material_ledger_test.dart --no-pub",
+          "scope": "Componente de inventarios enteros y transferencias; todavía no integrado con economía ni restos demográficos."
+        }
+      ]
     },
     {
       "id": "BC2-CORE-03",

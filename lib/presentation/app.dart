@@ -11,6 +11,7 @@ import '../platform/document_exchange.dart';
 import '../session/session_controller.dart';
 import '../session/history_worker.dart';
 import 'world_game.dart';
+import 'settlement_scene.dart';
 
 class BarrioApp extends StatelessWidget {
   const BarrioApp({super.key});
@@ -125,7 +126,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           game.selected = id;
         });
       }
-    });
+    }, onLocalSelect: _inspectLocal);
     session = SessionController(
       read: store.read,
       write: store.write,
@@ -366,7 +367,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       _focusHome();
       setState(
         () => note =
-            'Tu comunidad empieza en pausa. Elige una mejora y observa sus consecuencias.',
+            '',
       );
     } catch (e) {
       _message('No se pudo crear el mundo: $e');
@@ -1104,7 +1105,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             style: const TextStyle(color: earth, fontSize: 12),
           ),
           const SizedBox(height: 4),
-          Text(suggestion, style: const TextStyle(fontSize: 12)),
+          if (!alive || !own || projects.isNotEmpty)
+            Text(suggestion, style: const TextStyle(fontSize: 12)),
           if (own && alive)
             Row(
               children: [
@@ -1293,6 +1295,70 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           ),
         ),
       );
+  void _inspectLocal(LocalSelection hit) {
+    timer?.cancel();
+    timer = null;
+    final s = society;
+    if (s == null) return;
+    if (hit.kind == 'person') {
+      final p = hit.entity;
+      _sheet('${p['name']}', [
+        Text(
+          '${p['role']} · ${(day - number(p['bornDay'])) ~/ 360} años',
+          style: const TextStyle(color: moss, fontSize: 18),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          p['id'] == s['leaderId']
+              ? 'Dirige esta comunidad.'
+              : 'Habitante destacado de ${s['name']}.',
+        ),
+        Text('Experiencia: ${((p['skill'] as num? ?? 1) * 100).round()}%'),
+        const SizedBox(height: 16),
+        OutlinedButton(
+          onPressed: () {
+            Navigator.pop(context);
+            _details(s);
+          },
+          child: const Text('Ver comunidad'),
+        ),
+      ]);
+      return;
+    }
+    final definition = buildings
+        .where((b) => b.id == hit.entity['building'])
+        .firstOrNull;
+    if (definition == null) return;
+    _sheet(definition.name, [
+      Text(definition.description, style: const TextStyle(fontSize: 18)),
+      const SizedBox(height: 12),
+      Text('Edificio terminado · ${s['name']}'),
+      Text(
+        'Hay ${(s['built'] as Map? ?? {})[definition.id] ?? 0} en la comunidad.',
+      ),
+      const SizedBox(height: 16),
+      if (s['id'] == controlled)
+        FilledButton(
+          onPressed: () {
+            Navigator.pop(context);
+            _confirmCommand(
+              'Construir ${definition.name}',
+              'build',
+              target: definition.id,
+            );
+          },
+          child: const Text('Construir otro'),
+        ),
+      OutlinedButton(
+        onPressed: () {
+          Navigator.pop(context);
+          _details(s);
+        },
+        child: const Text('Ver obras y reservas'),
+      ),
+    ]);
+  }
+
   void _details(Map<String, dynamic> s) {
     final people = (s['people'] as List? ?? []).where(
       (dynamic p) => p['diedDay'] == null,

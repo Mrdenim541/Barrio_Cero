@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flame/game.dart';
+import 'package:barrio_cero_eras/presentation/settlement_scene.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -291,4 +293,46 @@ void main() {
       await tester.pumpWidget(const SizedBox.shrink());
     });
   }
+  testWidgets(
+    'Tap real local building and person without changing simulation',
+    (tester) async {
+      tester.view.physicalSize = const Size(360, 720);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      late dynamic screen;
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const BarrioApp());
+        screen = tester.state(find.byType(ErasScreen));
+        await screen.initialization;
+        await screen.session.createWorld(seed: 42, size: 64);
+      });
+      await tester.pump();
+      await tester.tap(find.text('Barrio'));
+      await tester.pump(const Duration(milliseconds: 500));
+      final before = screen.world.toJson();
+      final map = tester.getRect(find.byWidgetPredicate((widget)=>widget is GameWidget));
+      final scene = SettlementScene(screen.world.societies.first.toJson());
+      for (final kind in ['site', 'person']) {
+        final entity = scene.entities.firstWhere((e) => e.kind == kind);
+        final point = scene.toScreen(
+          entity.bounds.center,
+          map.size,
+          screen.game.pan,
+          screen.game.zoom,
+        );
+        await tester.tapAt(map.topLeft + point);
+        await tester.pump(const Duration(milliseconds: 500));
+        expect(
+          find.text(kind == 'site' ? 'Construir otro' : 'Ver comunidad'),
+          findsOneWidget,
+        );
+        expect(screen.world.toJson(), before);
+        await tester.tapAt(const Offset(10, 80));
+        await tester.pump(const Duration(milliseconds: 500));
+      }
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 }

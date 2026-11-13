@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/barrio_scene_pick.py", line 4, in <module>
+    nodes=dump();assert any(n.get('text')=='Construir otro' for n in nodes)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

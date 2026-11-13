@@ -1,0 +1,6 @@
+Starting: Intent { cmp=com.barriocero.eras/.MainActivity }
+Status: timeout
+LaunchState: UNKNOWN (-1)
+Activity: com.barriocero.eras/.MainActivity
+WaitTime: 12644
+Complete
