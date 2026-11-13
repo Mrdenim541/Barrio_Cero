@@ -113,7 +113,7 @@ void main() {
       final w = WorldState.generate(size: 64);
       Simulation(w).advanceDays(360);
       final raw = jsonDecode(jsonEncode(w.toJson()));
-      expect(raw['rulesVersion'], 2);
+      expect(raw['rulesVersion'], WorldState.currentRules);
       expect(raw['randomAlgorithm'], 'lcg31-v1');
       expect(
         (raw['societies'][0]['demographicMicros'] as Map).values.every(

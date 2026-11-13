@@ -7,12 +7,14 @@ import '../simulation/engine.dart';
 import '../simulation/v2/materials.dart';
 import '../simulation/v2/world_entities.dart';
 import '../simulation/v2/inventory.dart';
+import '../simulation/v2/work_order.dart';
 
 /// Complete, self-contained committed state. The envelope version is separate
 /// from the world/engine schema. Hashes detect corruption, not authorship.
 class Checkpoint {
   static const maxBytes = 25000000;
   static const _settingKeys = {'reduceMotion', 'sound', 'vibration'};
+  final int version;
   final WorldState world;
   final int? target;
   final bool stopCrisis;
@@ -33,6 +35,7 @@ class Checkpoint {
     this.basePack,
     this.content,
     this._payload,
+    this.version,
   );
 
   /// Copies the supplied world; binding content cannot mutate the running world.
@@ -76,7 +79,7 @@ class Checkpoint {
     _keys(envelope, {'format', 'version', 'payload', 'sha256'});
     if (envelope['format'] != 'barrio-cero-save' ||
         envelope['version'] is! int ||
-        envelope['version'] != 2) {
+        ![2, 3].contains(envelope['version'])) {
       throw const FormatException(
         'Versión incompatible: requiere migración explícita',
       );
@@ -86,7 +89,7 @@ class Checkpoint {
         envelope['sha256'] != _digest(payload)) {
       throw const FormatException('Integridad del punto de guardado no válida');
     }
-    return _fromPayload(payload);
+    return _fromPayload(payload, envelopeVersion: envelope['version'] as int);
   }
 
   /// Caller must preserve the exact original before replacing a legacy file.
@@ -169,7 +172,8 @@ class Checkpoint {
   factory Checkpoint.upgradeRules(String source) {
     final previous = Checkpoint.decode(source);
     if (previous.world.societies.every((s) => s.materialRules == 2) &&
-        previous.world.entities != null) {
+        previous.world.entities != null &&
+        previous.world.rulesVersion >= WorldState.currentRules) {
       throw const FormatException('Estas reglas ya están activas');
     }
     final raw = _map(jsonDecode(jsonEncode(previous.world.toJson())));
@@ -222,12 +226,60 @@ class Checkpoint {
         }
         micros[e.key] = (e.value * 1000000).floor();
       }
+      if (actor['demographicMicros'] is Map) {
+        micros.clear();
+        micros.addAll(Map<String, int>.from(actor['demographicMicros']));
+      }
       actor['demographicMicros'] = micros;
       actor['demographicCarry'] = {
         for (final e in micros.entries) e.key: e.value / 1000000,
       };
     }
-    raw['rulesVersion'] = 2;
+    for (final actor in raw['societies'] as List) {
+      final projects = actor['projects'] as List;
+      for (var i = 0; i < projects.length; i++) {
+        final project = projects[i];
+        if (project['work'] != null) continue;
+        final days = ((project['finish'] as int) - previous.world.day)
+            .clamp(0, 100000000)
+            .toInt();
+        project['work'] = WorkOrder(
+          id: 'inherited:${actor['id']}:$i',
+          totalWork: days == 0 ? 1 : days * 4,
+          remaining: days * 4,
+          createdDay: previous.world.day,
+          sequence: i,
+        ).toJson();
+      }
+    }
+    final crew = <String, int>{};
+    for (final route in raw['routes'] as List) {
+      route['transportRules'] = 2;
+      route['foodMillis'] = Quantity.fromNumber(
+        double.parse((route['cargo'] as num).toStringAsFixed(3)),
+      ).millis;
+      route['cargo'] = route['foodMillis'] / 1000;
+      route['metalMillis'] ??= 0;
+      route['returning'] ??= false;
+      route['closing'] ??= false;
+      route['crewAssigned'] = 0;
+      crew[route['from']] = (crew[route['from']] ?? 0) + 2;
+    }
+    for (final actor in raw['societies'] as List) {
+      actor['transportWorkers'] = crew[actor['id']] ?? 0;
+    }
+    for (final event in raw['pending'] as List) {
+      if (event['type'] == 'discovery') {
+        final data = Map<String, dynamic>.from(event['data']);
+        data['remainingWork'] ??=
+            ((event['day'] as int) - previous.world.day).clamp(0, 100000000) *
+            4;
+        data['assigned'] = 0;
+        data['paused'] = false;
+        event['data'] = data;
+      }
+    }
+    raw['rulesVersion'] = WorldState.currentRules;
     raw['randomAlgorithm'] = RandomState.algorithm;
     final candidate = WorldState.fromJson(raw);
     candidate.entities ??= WorldEntities.fromSettlements(
@@ -236,7 +288,7 @@ class Checkpoint {
     candidate.ruleChanges.add({
       'day': candidate.day,
       'from': previous.world.toJson()['rulesVersion'] ?? 1,
-      'to': 2,
+      'to': WorldState.currentRules,
       'sourceSha256': sha256.convert(utf8.encode(source)).toString(),
       'amountAdjustments': adjustments,
     });
@@ -271,7 +323,7 @@ class Checkpoint {
   String encode() {
     final result = jsonEncode({
       'format': 'barrio-cero-save',
-      'version': 2,
+      'version': version,
       'payload': _payload,
       'sha256': _digest(_payload),
     });
@@ -281,7 +333,10 @@ class Checkpoint {
     return result;
   }
 
-  static Checkpoint _fromPayload(Map<String, dynamic> payload) {
+  static Checkpoint _fromPayload(
+    Map<String, dynamic> payload, {
+    int? envelopeVersion,
+  }) {
     if (utf8.encode(jsonEncode(payload)).length > maxBytes) {
       throw const FormatException('Partida demasiado grande');
     }
@@ -349,6 +404,11 @@ class Checkpoint {
         validateMaterialCosts(pack.data);
       }
     }
+    final version = envelopeVersion ?? (candidate.rulesVersion >= 3 ? 3 : 2);
+    if ((version == 2 && candidate.rulesVersion >= 3) ||
+        (version == 3 && candidate.rulesVersion < 3)) {
+      throw const FormatException('Formato y reglas no coinciden');
+    }
     return Checkpoint._(
       candidate,
       target as int?,
@@ -359,6 +419,7 @@ class Checkpoint {
       packs.first,
       content,
       _map(jsonDecode(jsonEncode(payload))),
+      version,
     );
   }
 

@@ -273,15 +273,17 @@ class WorldEntities {
         raw['species'][0] != 'human' ||
         (raw['cultures'] as List).length > 100 ||
         (raw['societies'] as List).length > 100 ||
-        (raw['settlements'] as List).length > 100)
+        (raw['settlements'] as List).length > 100) {
       throw const FormatException(
         'Especies o capacidad de entidades no compatibles',
       );
+    }
     void row(dynamic value, Set<String> fields) {
       if (value is! Map ||
           value.length != fields.length ||
-          value.keys.any((k) => !fields.contains(k)))
+          value.keys.any((k) => !fields.contains(k))) {
         throw const FormatException('Campos de entidad no compatibles');
+      }
     }
 
     final result = WorldEntities()..species.clear();

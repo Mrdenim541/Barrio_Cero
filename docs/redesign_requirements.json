@@ -67,6 +67,13 @@
           "result": "passed",
           "command": "flutter test; Android upgrade/union/capital/restore",
           "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        },
+        {
+          "path": "docs/validation/work-transport/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
+          "scope": "100 pruebas; trabajo real compartido, devolución de reservas, ida y vuelta material; equivalencia temporal. El hito completo sigue pendiente."
         }
       ]
     },
@@ -84,6 +91,13 @@
           "result": "passed",
           "command": "flutter test; Android upgrade/union/capital/restore",
           "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        },
+        {
+          "path": "docs/validation/work-transport/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
+          "scope": "100 pruebas; trabajo real compartido, devolución de reservas, ida y vuelta material; equivalencia temporal. El hito completo sigue pendiente."
         }
       ]
     },
@@ -114,7 +128,15 @@
         "R5"
       ],
       "state": "pending",
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/work-transport/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
+          "scope": "100 pruebas; trabajo real compartido, devolución de reservas, ida y vuelta material; equivalencia temporal. El hito completo sigue pendiente."
+        }
+      ]
     },
     {
       "id": "R7",

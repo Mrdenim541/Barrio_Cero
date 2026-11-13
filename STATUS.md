@@ -10,13 +10,23 @@ La línea base de 39 pruebas pasó antes de modificarla. La batería integrada p
 
 Próxima prioridad dentro del rediseño: una escena local legible con escala útil, composición del asentamiento e interacción contextual vinculadas al estado real; contrastarla con `docs/design/world-and-settlement-target.png` mediante capturas ejecutadas. Los caminos, puestos de trabajo, recorridos y edificios nuevos que requieran modelo local se integrarán con R2–R4; no se dibujarán como simulación funcional sin sus reglas. R2 está iniciado; R3–R13 y el alcance original continúan sujetos a sus criterios pendientes.
 
+## Integración 0.4 — trabajo y transporte
+
+Pasaron 100 pruebas Flutter y el análisis limpio. La equivalencia con catálogo real llegó a cien años mediante días, décadas, siglo y guardado irregular: estado y 41.293 entradas causales idénticos. Las obras requieren jornadas efectivas, comparten personal con expediciones y transporte, y permiten cancelar con devolución proporcional idempotente. Las caravanas conservan carga y recorren ida y vuelta; cerrar una ruta no teletransporta sus materiales. La conversión opcional usa checkpoint 3 y mantiene las partidas antiguas.
+
+Se eliminó la extracción del catálogo desde Dart: `content/catalog.json` alimenta las constantes generadas y el paquete. Regenerar conserva los bytes del paquete existente. Aún faltan los efectos diferenciados y la ejecución completa de extensiones.
+
+El APK 0.4 compila. La comprobación Android y sus incidencias se registran aparte; no se deducen de la compilación. Evidencia y límites: [trabajo y transporte](docs/validation/work-transport/README.md). R2/R3 siguen parciales y R4–R13 mantienen sus obligaciones.
+
+La matriz anterior 0.3 terminó: treinta semillas alcanzaron 200 años. Los dos escenarios de mil años terminaron por extinción a los días 222.120 y 215.250. Es evidencia histórica de esa versión; no acredita mil años activos ni las reglas 0.4.
+
 ## Iteración visual 0.2.1
 
 La escena local tiene cámara ajustada al área habitada, terreno texturado, nombres y selección directa de edificios/habitantes. Los mundos nuevos distribuyen edificios por sectores sin solaparse; los antiguos conservan la versión de plano y la serialización. Se compactó la ficha inicial para ampliar el mapa. Batería completa: 67 pruebas; cinco comprobaciones focalizadas después de corregir herencia de planos en colonias antiguas; análisis limpio; APK instalado. Equivalencia temporal focalizada aprobada para semilla 17: 36.000 días, décadas, siglo y guardado/reanudación conservan estado y 50.518 acontecimientos con el catálogo real. Esta ejecución de un grupo no sustituye la aceptación completa. Capturas ejecutadas y límites en [validación de escena](docs/validation/r1-scene/README.md). R1 permanece parcial y no se presenta este cambio como arte final ni como implementación de eras, familias o especies.
 
 ## R2 iniciado: materiales
 
-Se añadió un componente de cantidades enteras en milésimas y un libro de transferencias atómicas, reservas, devoluciones y consumos. La recuperación reproduce el historial y rechaza saldos y recibos falsos. Cinco pruebas focalizadas y análisis limpio. Todavía no está integrado con la economía activa ni con los restos demográficos; no se declara cerrado R2. Evidencia: `docs/validation/r2-materials/`.
+Se añadió un componente de cantidades enteras en milésimas y un libro de transferencias atómicas, reservas, devoluciones y consumos. La recuperación reproduce el historial y rechaza saldos y recibos falsos. Cinco pruebas focalizadas y análisis limpio. Esta fue la primera evidencia del componente aislado; la integración posterior se describe en las iteraciones 0.3 y 0.4. No se declara cerrado R2. Evidencia: `docs/validation/r2-materials/`.
 
 ## Integración 0.3.0 — materiales y sociedades
 

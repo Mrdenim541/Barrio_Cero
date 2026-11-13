@@ -999,6 +999,13 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ),
   );
   void _mapOptions() => _sheet('Leer el mundo', [
+    ListTile(
+      title: const Text('Rutas y caravanas'),
+      onTap: () {
+        Navigator.pop(context);
+        _routes();
+      },
+    ),
     ...['Territorios', 'Población', 'Recursos', 'Conflictos', 'Entorno'].map(
       (filter) => ListTile(
         title: Text(filter),
@@ -1103,7 +1110,13 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           ),
           const SizedBox(height: 4),
           if (!alive || !own || projects.isNotEmpty)
-            Text(suggestion, style: const TextStyle(fontSize: 12)),
+            Text(
+              projects.isNotEmpty &&
+                      (projects.first['work'] as Map?)?['paused'] == true
+                  ? 'Obra detenida: faltan trabajadores disponibles.'
+                  : suggestion,
+              style: const TextStyle(fontSize: 12),
+            ),
           if (own && alive)
             Row(
               children: [
@@ -1413,8 +1426,23 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           contentPadding: EdgeInsets.zero,
           title: Text(_buildingName(p['building'])),
           subtitle: Text(
-            'En construcción · termina ${date(number(p['finish']))}',
+            (p['work'] as Map?)?['paused'] == true
+                ? 'Sin trabajadores disponibles'
+                : 'En construcción · termina ${date(number(p['finish']))}',
           ),
+          trailing: p['work'] is Map && s['id'] == controlled
+              ? TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _confirmCommand(
+                      'Cancelar ${_buildingName(p['building'])}',
+                      'cancel_build',
+                      target: p['work']['id'],
+                    );
+                  },
+                  child: const Text('Cancelar'),
+                )
+              : null,
         ),
       ),
       ...built.entries.map((e) => Text('${_buildingName(e.key)}: ${e.value}')),
@@ -1491,7 +1519,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       : preview.costs.entries
             .map(
               (e) =>
-                  '${_label(e.key)} ${e.value.toStringAsFixed(e.value == e.value.roundToDouble() ? 0 : 1)}',
+                  '${_label(e.key)} ${e.value.toStringAsFixed(3).replaceFirst(RegExp(r'\.?0+$'), '')}',
             )
             .join(' · ');
   Future<void> _confirmCommand(
@@ -1857,6 +1885,52 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       );
     }),
   ]);
+  void _routes() => _sheet('Rutas y caravanas', [
+    if ((state['routes'] as List? ?? []).isEmpty)
+      const Text('Aún no hay rutas. Negocia y abre comercio desde Diplomacia.'),
+    ...((state['routes'] as List? ?? []).map((dynamic r) {
+      final from = societies.where((s) => s['id'] == r['from']).firstOrNull;
+      final to = societies.where((s) => s['id'] == r['to']).firstOrNull;
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${from?['name'] ?? 'Origen'} → ${to?['name'] ?? 'Destino'}',
+                style: const TextStyle(fontSize: 18),
+              ),
+              Text(
+                r['blocked'] == true
+                    ? 'Detenida: revisa personal, acceso o relaciones'
+                    : r['returning'] == true
+                    ? 'De regreso al origen'
+                    : 'Viajando al destino',
+              ),
+              Text(
+                'Alimento a bordo: ${r['cargo']} · Metal a bordo: ${number(r['metalMillis']) / 1000}',
+              ),
+              if (r['transportRules'] == 2 &&
+                  (r['from'] == controlled ||
+                      _ownerOf(r['from']) == _ownerOf(controlled)))
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _confirmCommand(
+                      'Cerrar ruta',
+                      'close_route',
+                      target: r['id'],
+                    );
+                  },
+                  child: const Text('Ordenar regreso y cierre'),
+                ),
+            ],
+          ),
+        ),
+      );
+    })),
+  ]);
   void _policies() {
     _sheet('Gobernar a largo plazo', [
       const Text(
@@ -2001,7 +2075,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               builder: (context) => AlertDialog(
                 title: const Text('Actualizar reglas de esta partida'),
                 content: const Text(
-                  'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Algunos decimales se redondearán. No se inventarán familias ni historia anterior. Puedes continuar con las reglas antiguas.',
+                  'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. No se inventarán familias ni historia anterior. Puedes continuar con las reglas antiguas.',
                 ),
                 actions: [
                   TextButton(
@@ -2044,7 +2118,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           }
         },
       ),
-      if (state['entities'] == null || state['rulesVersion'] != 2)
+      if (state['entities'] == null ||
+          state['rulesVersion'] != WorldState.currentRules)
         ListTile(
           title: const Text('Actualizar reglas de la partida'),
           subtitle: const Text(

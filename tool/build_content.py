@@ -186,22 +186,10 @@ def canonicalize(value):
  if isinstance(value,dict):return {({'fiber':'textiles','relics':'crystal'}.get(k,k)):canonicalize(v) for k,v in value.items()}
  if isinstance(value,list):return [canonicalize(v) for v in value]
  return {'fiber':'textiles','relics':'crystal'}.get(value,value) if isinstance(value,str) else value
-# The shipped catalog shares canonical definitions with the authoritative engine.
-# Parsing happens only in this authoring tool, never on user-imported data.
-import re, ast
-engine=(ROOT/'lib/simulation/engine.dart').read_text()
-tech_pattern=r"Technology\('([^']+)','([^']+)',(\[[^\]]*\]),([0-9.]+),'([^']+)'\)"
-canonical_tech=[]
-for id,name,req,cost,description in re.findall(tech_pattern,engine):
- canonical_tech.append({'id':id,'name':name,'requires':ast.literal_eval(req),'knowledgeCost':float(cost),'description':description,'effects':[{'type':'flag','value':'technology_'+id}]})
-assert len(canonical_tech)==30
-pack['technologies']=canonical_tech
-building_pattern=r"BuildingDefinition\('([^']+)','([^']+)','([^']+)',(\{[^}]*\}),(\{[^}]*\}),([0-9]+)(?:,'([^']+)')?\)"
-canonical_build=[]
-for id,name,description,cost,yields,days,tech in re.findall(building_pattern,engine):
- canonical_build.append({'id':id,'name':name,'description':description,'costs':ast.literal_eval(cost),'dailyYield':ast.literal_eval(yields),'days':int(days),'workers':2,'requires':[tech] if tech else [],'effect':{'type':'housing' if id in ['house','habitat'] else 'defense' if id=='wall' else 'production','value':18 if id=='house' else 50 if id=='habitat' else 1}})
-assert len(canonical_build)==18
-pack['buildings']=canonical_build
+# Declarative authoring source: runtime constants are generated from these same tables.
+catalog=json.loads((ROOT/'content/catalog.json').read_text())
+pack['technologies']=catalog['technologies']
+pack['buildings']=catalog['buildings']
 pack['biomes']=[{'id':id,'name':name,'movementCost':movement,'fertility':fertility,'resources':res} for id,name,movement,fertility,res in [('plain','Pradera',1,1.15,['food','fiber']),('forest','Bosque',2,1.0,['wood','medicine']),('desert','Desierto',3,.65,['stone','energy']),('mountain','Montaña',0,.6,['metal','stone']),('wetland','Humedal',3,1.1,['water','food']),('coast','Costa',0,.8,['water','relics'])]]
 tech_alias={'craft':'engineering','forestry':'ecology','barter':'trade','archives':'education','roads':'logistics','engines':'industry','scientific_method':'science','solar':'electricity','hydroponics':'adaptation','astronomy':'orbital','translation':'xenology','symbiosis':'synthesis','distributed_minds':'computing','fortification':'masonry'}
 for profile in pack['profiles']:

@@ -40,6 +40,7 @@ dart = str(sdk_dart) if sdk_dart.is_file() else shutil.which('dart')
 flutter_cache = pathlib.Path(flutter).resolve().parent / 'cache/dart-sdk/bin/dart'
 flutter_ready = pathlib.Path(flutter).is_file() and flutter_cache.is_file()
 checks = [
+ ('catalog-source', ['python3', 'tool/generate_catalog.py', '--check'], None),
  ('content', ['python3', 'tool/validate_content.py'], None),
  ('analyze', [flutter, 'analyze'], None if flutter_ready else 'Flutter Dart SDK is unavailable'),
  ('simulation', [dart or 'dart', 'run', 'tool/simulation_check.dart'], None if dart else 'Dart SDK is unavailable'),

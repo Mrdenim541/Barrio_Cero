@@ -16,17 +16,34 @@ void main() {
       var index = (i * 127) % (size * size);
       var attempts = 0;
       while (!world.tiles[index].passable ||
-          world.societies.any((s) => s.x == index % size && s.y == index ~/ size)) {
+          world.societies.any(
+            (s) => s.x == index % size && s.y == index ~/ size,
+          )) {
         index = (index + 1) % (size * size);
-        if (++attempts > size * size) throw StateError('No viable benchmark location');
+        if (++attempts > size * size) {
+          throw StateError('No viable benchmark location');
+        }
       }
-      final s = Society('bench$i', 'Puesto $i', 'cooperativa', index % size, index ~/ size);
-      final leader = Person('benchLeader$i', 'Vera $i', 'dirigente', -30 * 360, traitNames[i % 12]);
+      final s = Society(
+        'bench$i',
+        'Puesto $i',
+        'cooperativa',
+        index % size,
+        index ~/ size,
+        materialRules: world.societies.first.materialRules,
+      );
+      final leader = Person(
+        'benchLeader$i',
+        'Vera $i',
+        'dirigente',
+        -30 * 360,
+        traitNames[i % 12],
+      );
       s.people = [leader];
       s.leaderId = leader.id;
       s.ensureSites();
       world.societies.add(s);
-      world.entities?.reconcile(world.societies.map((s)=>s.identityView()));
+      world.entities?.reconcile(world.societies.map((s) => s.identityView()));
     }
     world.validate();
     final sim = Simulation(world)..registerContent(pack);
@@ -49,41 +66,50 @@ void main() {
       }
       year.stop();
       world.validate();
-      if (year.elapsedMicroseconds > largestYearMicros) largestYearMicros = year.elapsedMicroseconds;
-      if (advanced < 360 && !world.extinct) throw StateError('Unexpected benchmark interruption');
+      if (year.elapsedMicroseconds > largestYearMicros) {
+        largestYearMicros = year.elapsedMicroseconds;
+      }
+      if (advanced < 360 && !world.extinct) {
+        throw StateError('Unexpected benchmark interruption');
+      }
     }
     watch.stop();
     sustainedWorkload &= sustainedDays == 36000 && minLivingSettlements >= 32;
-    stdout.writeln(jsonEncode({
-      'platform': Platform.operatingSystem,
-      'osVersion': Platform.operatingSystemVersion,
-      'processors': Platform.numberOfProcessors,
-      'dart': Platform.version,
-      'map': size,
-      'seed': 73,
-      'initialSettlements': 32,
-      'minimumLivingSettlements': minLivingSettlements,
-      'requestedDays': 36000,
-      'simulatedDays': world.day,
-      'terminal': world.extinct ? 'global_extinction' : 'target_reached',
-      'daysWithAtLeast32LivingSettlements': sustainedDays,
-      'sustained32SettlementScenario': sustainedDays == 36000 && minLivingSettlements >= 32,
-      'populationSampleIntervalDays': 1,
-      'milliseconds': watch.elapsedMilliseconds,
-      'slowestYearMicroseconds': largestYearMicros,
-      'rssBytes': ProcessInfo.currentRss,
-      'peakProcessRssBytes': ProcessInfo.maxRss,
-      'saveBytes': utf8.encode(jsonEncode(world.toJson())).length,
-      'livingSettlements': world.societies.where((s) => s.alive).length,
-      'historyEntries': world.chronicle.length,
-      'pending': world.pending.length,
-      'measuresFps': false,
-    }));
+    stdout.writeln(
+      jsonEncode({
+        'platform': Platform.operatingSystem,
+        'osVersion': Platform.operatingSystemVersion,
+        'processors': Platform.numberOfProcessors,
+        'dart': Platform.version,
+        'map': size,
+        'seed': 73,
+        'initialSettlements': 32,
+        'minimumLivingSettlements': minLivingSettlements,
+        'requestedDays': 36000,
+        'simulatedDays': world.day,
+        'terminal': world.extinct ? 'global_extinction' : 'target_reached',
+        'daysWithAtLeast32LivingSettlements': sustainedDays,
+        'sustained32SettlementScenario':
+            sustainedDays == 36000 && minLivingSettlements >= 32,
+        'populationSampleIntervalDays': 1,
+        'milliseconds': watch.elapsedMilliseconds,
+        'slowestYearMicroseconds': largestYearMicros,
+        'rssBytes': ProcessInfo.currentRss,
+        'peakProcessRssBytes': ProcessInfo.maxRss,
+        'saveBytes': utf8.encode(jsonEncode(world.toJson())).length,
+        'livingSettlements': world.societies.where((s) => s.alive).length,
+        'historyEntries': world.chronicle.length,
+        'pending': world.pending.length,
+        'measuresFps': false,
+      }),
+    );
   }
   // Measurements are retained, but an underpopulated scenario cannot pass the
   // acceptance runner as proof of the required 32-settlement workload.
   if (!sustainedWorkload) {
-    stderr.writeln('FAIL: the full century did not sustain 32 living settlements.');
+    stderr.writeln(
+      'FAIL: the full century did not sustain 32 living settlements.',
+    );
     exitCode = 1;
   }
 }

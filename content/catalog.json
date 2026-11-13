@@ -1,0 +1,812 @@
+{
+  "schemaVersion": 1,
+  "buildings": [
+    {
+      "id": "farm",
+      "name": "Huerto",
+      "description": "Alimento cultivado; reduce el hambre.",
+      "costs": {
+        "wood": 20,
+        "stone": 5
+      },
+      "dailyYield": {
+        "food": 1.8
+      },
+      "days": 12,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "well",
+      "name": "Pozo",
+      "description": "Agua limpia y salud.",
+      "costs": {
+        "stone": 20,
+        "wood": 10
+      },
+      "dailyYield": {
+        "water": 2
+      },
+      "days": 15,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "house",
+      "name": "Viviendas",
+      "description": "Aloja a 18 personas.",
+      "costs": {
+        "wood": 30,
+        "stone": 15
+      },
+      "dailyYield": {},
+      "days": 20,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "housing",
+        "value": 18
+      }
+    },
+    {
+      "id": "sawmill",
+      "name": "Aserradero",
+      "description": "Trabaja madera.",
+      "costs": {
+        "wood": 25,
+        "tools": 3
+      },
+      "dailyYield": {
+        "wood": 1.4
+      },
+      "days": 18,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "quarry",
+      "name": "Cantera",
+      "description": "Extrae piedra.",
+      "costs": {
+        "wood": 20,
+        "tools": 4
+      },
+      "dailyYield": {
+        "stone": 1.2
+      },
+      "days": 20,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "workshop",
+      "name": "Taller",
+      "description": "Fabrica herramientas usando metal.",
+      "costs": {
+        "wood": 35,
+        "stone": 20
+      },
+      "dailyYield": {
+        "tools": 0.15
+      },
+      "days": 25,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "clinic",
+      "name": "Dispensario",
+      "description": "Cuidados y medicamentos.",
+      "costs": {
+        "wood": 30,
+        "textiles": 10
+      },
+      "dailyYield": {
+        "medicine": 0.12
+      },
+      "days": 24,
+      "workers": 2,
+      "requires": [
+        "sanitation"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "school",
+      "name": "Escuela",
+      "description": "Forma especialistas.",
+      "costs": {
+        "wood": 35,
+        "stone": 25
+      },
+      "dailyYield": {
+        "knowledge": 0.7
+      },
+      "days": 30,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "market",
+      "name": "Mercado",
+      "description": "Facilita rutas y comercio.",
+      "costs": {
+        "wood": 40,
+        "textiles": 10
+      },
+      "dailyYield": {},
+      "days": 25,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "wall",
+      "name": "Empalizada",
+      "description": "Protección territorial.",
+      "costs": {
+        "wood": 60,
+        "stone": 30
+      },
+      "dailyYield": {},
+      "days": 35,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "defense",
+        "value": 1
+      }
+    },
+    {
+      "id": "mine",
+      "name": "Mina",
+      "description": "Extrae mineral.",
+      "costs": {
+        "wood": 40,
+        "tools": 8
+      },
+      "dailyYield": {
+        "metal": 0.6
+      },
+      "days": 35,
+      "workers": 2,
+      "requires": [
+        "mining"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "laboratory",
+      "name": "Laboratorio",
+      "description": "Investiga tecnologías avanzadas.",
+      "costs": {
+        "metal": 35,
+        "tools": 10
+      },
+      "dailyYield": {
+        "knowledge": 1.5
+      },
+      "days": 45,
+      "workers": 2,
+      "requires": [
+        "science"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "generator",
+      "name": "Generador",
+      "description": "Produce energía consumiendo combustible.",
+      "costs": {
+        "metal": 35,
+        "tools": 8
+      },
+      "dailyYield": {
+        "energy": 1.5
+      },
+      "days": 40,
+      "workers": 2,
+      "requires": [
+        "electricity"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "loom",
+      "name": "Telar",
+      "description": "Tejidos para ropa y comercio.",
+      "costs": {
+        "wood": 30,
+        "tools": 4
+      },
+      "dailyYield": {
+        "textiles": 0.3
+      },
+      "days": 20,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "granary",
+      "name": "Granero",
+      "description": "Aumenta la reserva alimentaria útil.",
+      "costs": {
+        "wood": 35,
+        "stone": 15
+      },
+      "dailyYield": {},
+      "days": 20,
+      "workers": 2,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "recycler",
+      "name": "Reciclador",
+      "description": "Recupera materiales antiguos.",
+      "costs": {
+        "metal": 25,
+        "tools": 10
+      },
+      "dailyYield": {
+        "metal": 0.4,
+        "fuel": 0.15
+      },
+      "days": 40,
+      "workers": 2,
+      "requires": [
+        "recycling"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "observatory",
+      "name": "Observatorio",
+      "description": "Analiza señales y cristales.",
+      "costs": {
+        "metal": 45,
+        "crystal": 10
+      },
+      "dailyYield": {
+        "crystal": 0.1,
+        "knowledge": 0.7
+      },
+      "days": 50,
+      "workers": 2,
+      "requires": [
+        "radio"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      }
+    },
+    {
+      "id": "habitat",
+      "name": "Hábitat adaptativo",
+      "description": "Vivienda resiliente para 50 habitantes.",
+      "costs": {
+        "metal": 60,
+        "energy": 40
+      },
+      "dailyYield": {},
+      "days": 60,
+      "workers": 2,
+      "requires": [
+        "adaptation"
+      ],
+      "effect": {
+        "type": "housing",
+        "value": 50
+      }
+    }
+  ],
+  "technologies": [
+    {
+      "id": "agriculture",
+      "name": "Agricultura",
+      "requires": [],
+      "knowledgeCost": 30.0,
+      "description": "Aumenta cosechas",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_agriculture"
+        }
+      ]
+    },
+    {
+      "id": "sanitation",
+      "name": "Saneamiento",
+      "requires": [],
+      "knowledgeCost": 35.0,
+      "description": "Mejora salud",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_sanitation"
+        }
+      ]
+    },
+    {
+      "id": "masonry",
+      "name": "Albañilería",
+      "requires": [],
+      "knowledgeCost": 30.0,
+      "description": "Vivienda robusta",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_masonry"
+        }
+      ]
+    },
+    {
+      "id": "mining",
+      "name": "Minería",
+      "requires": [
+        "masonry"
+      ],
+      "knowledgeCost": 45.0,
+      "description": "Desbloquea minas",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_mining"
+        }
+      ]
+    },
+    {
+      "id": "metallurgy",
+      "name": "Metalurgia",
+      "requires": [
+        "mining"
+      ],
+      "knowledgeCost": 60.0,
+      "description": "Herramientas eficientes",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_metallurgy"
+        }
+      ]
+    },
+    {
+      "id": "trade",
+      "name": "Intercambio",
+      "requires": [
+        "agriculture"
+      ],
+      "knowledgeCost": 40.0,
+      "description": "Rutas comerciales",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_trade"
+        }
+      ]
+    },
+    {
+      "id": "writing",
+      "name": "Escritura",
+      "requires": [],
+      "knowledgeCost": 30.0,
+      "description": "Instituciones duraderas",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_writing"
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "name": "Enseñanza",
+      "requires": [
+        "writing"
+      ],
+      "knowledgeCost": 55.0,
+      "description": "Más conocimiento",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_education"
+        }
+      ]
+    },
+    {
+      "id": "science",
+      "name": "Método científico",
+      "requires": [
+        "education"
+      ],
+      "knowledgeCost": 80.0,
+      "description": "Laboratorios",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_science"
+        }
+      ]
+    },
+    {
+      "id": "medicine",
+      "name": "Medicina",
+      "requires": [
+        "sanitation",
+        "science"
+      ],
+      "knowledgeCost": 100.0,
+      "description": "Reduce mortalidad",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_medicine"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "name": "Ingeniería",
+      "requires": [
+        "metallurgy"
+      ],
+      "knowledgeCost": 80.0,
+      "description": "Acelera construcción",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_engineering"
+        }
+      ]
+    },
+    {
+      "id": "electricity",
+      "name": "Electricidad",
+      "requires": [
+        "engineering"
+      ],
+      "knowledgeCost": 100.0,
+      "description": "Generadores",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_electricity"
+        }
+      ]
+    },
+    {
+      "id": "radio",
+      "name": "Radio",
+      "requires": [
+        "electricity"
+      ],
+      "knowledgeCost": 90.0,
+      "description": "Contacto a distancia",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_radio"
+        }
+      ]
+    },
+    {
+      "id": "recycling",
+      "name": "Reciclaje",
+      "requires": [
+        "metallurgy"
+      ],
+      "knowledgeCost": 65.0,
+      "description": "Recicladores",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_recycling"
+        }
+      ]
+    },
+    {
+      "id": "chemistry",
+      "name": "Química",
+      "requires": [
+        "science"
+      ],
+      "knowledgeCost": 80.0,
+      "description": "Combustibles y salud",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_chemistry"
+        }
+      ]
+    },
+    {
+      "id": "irrigation",
+      "name": "Riego",
+      "requires": [
+        "agriculture",
+        "masonry"
+      ],
+      "knowledgeCost": 65.0,
+      "description": "Cosechas resistentes",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_irrigation"
+        }
+      ]
+    },
+    {
+      "id": "ecology",
+      "name": "Ecología",
+      "requires": [
+        "science"
+      ],
+      "knowledgeCost": 90.0,
+      "description": "Reduce daño ambiental",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_ecology"
+        }
+      ]
+    },
+    {
+      "id": "diplomacy",
+      "name": "Diplomacia",
+      "requires": [
+        "writing",
+        "trade"
+      ],
+      "knowledgeCost": 65.0,
+      "description": "Reduce guerras",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_diplomacy"
+        }
+      ]
+    },
+    {
+      "id": "logistics",
+      "name": "Logística",
+      "requires": [
+        "trade",
+        "engineering"
+      ],
+      "knowledgeCost": 85.0,
+      "description": "Transporte rápido",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_logistics"
+        }
+      ]
+    },
+    {
+      "id": "industry",
+      "name": "Industria",
+      "requires": [
+        "electricity",
+        "chemistry"
+      ],
+      "knowledgeCost": 130.0,
+      "description": "Producción intensiva",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_industry"
+        }
+      ]
+    },
+    {
+      "id": "automation",
+      "name": "Automatización",
+      "requires": [
+        "industry",
+        "radio"
+      ],
+      "knowledgeCost": 160.0,
+      "description": "Menos trabajo manual",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_automation"
+        }
+      ]
+    },
+    {
+      "id": "computing",
+      "name": "Computación",
+      "requires": [
+        "electricity",
+        "science"
+      ],
+      "knowledgeCost": 130.0,
+      "description": "Control de sistemas",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_computing"
+        }
+      ]
+    },
+    {
+      "id": "robotics",
+      "name": "Robótica",
+      "requires": [
+        "automation",
+        "computing"
+      ],
+      "knowledgeCost": 180.0,
+      "description": "Producción autónoma",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_robotics"
+        }
+      ]
+    },
+    {
+      "id": "biotech",
+      "name": "Biotecnología",
+      "requires": [
+        "medicine",
+        "chemistry"
+      ],
+      "knowledgeCost": 150.0,
+      "description": "Transformación dirigida",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_biotech"
+        }
+      ]
+    },
+    {
+      "id": "adaptation",
+      "name": "Adaptación",
+      "requires": [
+        "ecology",
+        "biotech"
+      ],
+      "knowledgeCost": 180.0,
+      "description": "Hábitats resistentes",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_adaptation"
+        }
+      ]
+    },
+    {
+      "id": "cybernetics",
+      "name": "Cibernética",
+      "requires": [
+        "biotech",
+        "computing"
+      ],
+      "knowledgeCost": 200.0,
+      "description": "Interfaces humanas",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_cybernetics"
+        }
+      ]
+    },
+    {
+      "id": "fusion",
+      "name": "Fusión",
+      "requires": [
+        "industry",
+        "science"
+      ],
+      "knowledgeCost": 220.0,
+      "description": "Energía avanzada",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_fusion"
+        }
+      ]
+    },
+    {
+      "id": "xenology",
+      "name": "Xenología",
+      "requires": [
+        "radio",
+        "biotech"
+      ],
+      "knowledgeCost": 200.0,
+      "description": "Comprende contacto",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_xenology"
+        }
+      ]
+    },
+    {
+      "id": "orbital",
+      "name": "Acceso orbital",
+      "requires": [
+        "fusion",
+        "computing"
+      ],
+      "knowledgeCost": 250.0,
+      "description": "Observación planetaria",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_orbital"
+        }
+      ]
+    },
+    {
+      "id": "synthesis",
+      "name": "Síntesis cultural",
+      "requires": [
+        "diplomacy",
+        "adaptation"
+      ],
+      "knowledgeCost": 240.0,
+      "description": "Cooperación transformada",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_synthesis"
+        }
+      ]
+    }
+  ]
+}
