@@ -1,20 +1,20 @@
 # Auditoría de implementación en curso
 
-Revisión manual del código en curso, 13 de noviembre de 2026. **Presencia de código no equivale a comportamiento comprobado.** No se ejecutaron analizador Dart, pruebas Dart, compilación Flutter ni aplicación Android: la descarga oficial del SDK Dart sigue devolviendo 403 por la política del entorno. No hay APK entregable ni capturas de una aplicación ejecutada.
+Actualizada tras H0, 13 de noviembre de 2026. **El APK profile se compiló, instaló y ejecutó en Android 10; esto no completa todos los sistemas del juego.** Análisis limpio y 35 pruebas Flutter aprobadas. Se comprobó creación/carga, orden, avance, mapa/asentamiento, guardado y recuperación tras cierre del proceso. Resultados y capturas en `docs/validation/h0/` y `docs/validation/android/`. La tabla siguiente conserva límites de implementación; «no ejecutado» en un subsistema significa que su alcance completo sigue sin probar, aunque exista una comprobación básica.
 
 ## Comprobaciones realizadas
 
 - Validador Python del catálogo ejecutado: estructura de 158 eventos (96 independientes), doce arcos con desenlaces alcanzables distintos, dieciséis plantillas, grafo tecnológico, hashes de dos paquetes y diez pruebas de rechazo aprobados. Su resultado no acredita ejecución de los eventos en Dart.
 - Wrapper oficial Gradle 8.12 descargado y SHA256 contrastado con el publicado; checksum de distribución fijado.
 - `bash -n tool/setup_android.sh` aprobado. No demuestra ejecución completa del script.
-- Android SDK 36, Build Tools 35.0.0, Platform Tools 37 y NDK 27 instalados, según verificación del agente principal. Java 21 disponible. Flutter 3.35.7 descargado como código fuente; faltan los artefactos bloqueados.
+- Android SDK 36, Build Tools 35.0.0, Platform Tools 37 y NDK 27 instalados, según verificación del agente principal. Java 21 disponible. Flutter 3.35.7 y Dart 3.9.2 instalados; JDK Temurin 21.0.9+10 completo y lockfile resuelto.
 - El agente principal dispone de comprobaciones sintácticas por parser. Estas no son análisis estático de tipos ni compilación.
 
 ## Trazabilidad de la solicitud
 
 | Área | Implementación encontrada | Validación pendiente o alcance limitado |
 |---|---|---|
-| Android individual offline y vertical | Scaffold Flutter/Flame, paquete `com.barriocero.eras`, API mínima 23, sin servicios de juego externos | No compilado ni instalado. Compatibilidad real pendiente. |
+| Android individual offline y vertical | Scaffold Flutter/Flame, paquete `com.barriocero.eras`, API mínima 24 acordada, sin servicios de juego externos | Compilado e instalado en Android 10; sesión básica offline comprobada. Cobertura de dispositivos pendiente. |
 | Mundo persistente y tres escalas | Semilla, mapas 64/96, seis biomas, seis sociedades, zoom, arrastre, minimapa y filtros | No ejecutado. Territorios son representaciones aproximadas; falta propiedad política detallada por celda. |
 | Asentamientos | Edificios con ID y posiciones persistentes sobre cuadrícula local 32×32; UI usa esos sitios | Recorridos internos son animación representativa; no existe pathfinding local completo de cada tarea. |
 | Pixel art original | PNG, atlas, paleta, fuente generadora e iconos Android originales | No comprobado visualmente en aplicación Android. Los estados de animación están conectados a trabajo/personajes del modelo de forma representativa, no a cada ciudadano. |
@@ -35,7 +35,7 @@ Revisión manual del código en curso, 13 de noviembre de 2026. **Presencia de c
 
 ## Avance tras aprobar el plan
 
-Emulador Android 10 arrancado y reconocido por ADB; el juego aún no está compilado. Se añadieron comandos transaccionales con recibos persistentes, reservas de expedición, checkpoint autocontenido, selector SAF y pruebas asociadas. El trabajador comunica errores de inicio y la interfaz confirma escrituras antes de publicar el nuevo mundo. La equivalencia temporal usa el catálogo real y un registro causal íntegro; las baterías largas siguen sin ejecutarse. Véanse STATUS.md y docs/requirements.json para estado y trazabilidad.
+Emulador Android 10 arrancado y reconocido por ADB; el juego ya compiló, se instaló y completó su ciclo básico. Se añadieron comandos transaccionales con recibos persistentes, reservas de expedición, checkpoint autocontenido, selector SAF y pruebas asociadas. El trabajador comunica errores de inicio y la interfaz confirma escrituras antes de publicar el nuevo mundo. La equivalencia temporal usa el catálogo real y un registro causal íntegro; las baterías largas siguen sin ejecutarse. Véanse STATUS.md y docs/requirements.json para estado y trazabilidad.
 
 ## Correcciones coordinadas durante la revisión
 
@@ -45,7 +45,7 @@ Estas correcciones deben someterse a pruebas una vez disponible Dart. No se afir
 
 ## Siguiente paso ejecutable
 
-1. Aplicar el dominio oficial pendiente en la configuración del entorno y ejecutar `tool/setup_android.sh`; resolver dependencias y conservar el lockfile real.
+1. Conservar la base compilada, lockfile y evidencia H0; continuar separación de sesión y contratos H1/H2.
 2. Ejecutar `flutter analyze`, la suite Dart y el validador Dart de contenido; corregir fallos de tipos e integración antes de afirmar que la aplicación funciona.
 3. Compilar el APK de depuración e instalarlo en emulador o dispositivo. Verificar nueva partida, decisiones, tres escalas, comercio, saltos, guardado y recuperación; capturar la aplicación real.
 4. Ejecutar y medir los escenarios de estabilidad y 32 asentamientos, además de las pruebas de tamaños móviles y suspensión.

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/content/content_pack.dart';
+import 'package:barrio_cero_eras/content/content_pack.dart';
 
 void main() {
   final source = File('assets/content/core.json').readAsStringSync();

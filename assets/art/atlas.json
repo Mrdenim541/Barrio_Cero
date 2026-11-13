@@ -50,7 +50,11 @@
       "loss"
     ],
     "rowFormula": "roleIndex * 8 + actionIndex",
-    "frameSeconds": 0.18
+    "frameSeconds": 0.18,
+    "pixelDataFile": "characters.rgba",
+    "pixelFormat": "premultipliedRGBA8888",
+    "pixelWidth": 128,
+    "pixelHeight": 2304
   },
   "buildings": {
     "file": "buildings.png",
@@ -76,7 +80,11 @@
       "recycler",
       "observatory",
       "habitat"
-    ]
+    ],
+    "pixelDataFile": "buildings.rgba",
+    "pixelFormat": "premultipliedRGBA8888",
+    "pixelWidth": 384,
+    "pixelHeight": 192
   },
   "terrain": {
     "file": "terrain.png",
@@ -90,7 +98,11 @@
       "mountain",
       "wetland",
       "water"
-    ]
+    ],
+    "pixelDataFile": "terrain.rgba",
+    "pixelFormat": "premultipliedRGBA8888",
+    "pixelWidth": 192,
+    "pixelHeight": 32
   },
   "icons": {
     "file": "icons.png",

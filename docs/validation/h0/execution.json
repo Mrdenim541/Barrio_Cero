@@ -1,0 +1,90 @@
+{
+  "recordedAt": "2026-11-13T18:15:39.763162+00:00",
+  "baseCommit": "587ccd0",
+  "environment": "ccarenv_b64_Y2NhcmVudl83NjE0NmFlZmUyNTg4MTkxYmZkYTUxNWI5YWJkOWI0OQ",
+  "tools": {
+    "flutter": "3.35.7",
+    "dart": "3.9.2",
+    "jdk": "Temurin 21.0.9+10",
+    "gradle": "8.12",
+    "androidApi": 29,
+    "minSdk": 24
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-h0-profile.apk",
+    "sha256": "808873631784f5f8305e010dc2bc85b3e769ea31800efce0edcd3f0c7e59e64e",
+    "bytes": 83004425,
+    "mode": "profile",
+    "signature": "Android Debug",
+    "compiled": true,
+    "installed": true
+  },
+  "android": {
+    "device": "emulator-5554",
+    "version": "10",
+    "hardwareAcceleration": false,
+    "finalRenderer": "Impeller Vulkan with host SwiftShader",
+    "wifiEnabled": false,
+    "mobileDataEnabled": false,
+    "airplaneSetting": 1,
+    "airplaneBroadcast": "Shell broadcast denied; actual offline claim relies on Wi-Fi and mobile data being disabled",
+    "seed": 42,
+    "map": 96,
+    "day": 2,
+    "acceptedBuildOrders": 1,
+    "forceStopAndReload": true,
+    "saveIdenticalAfterRestart": true,
+    "saveSha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e",
+    "capturedScreens": [
+      "docs/validation/android/03-world.png",
+      "docs/validation/android/04-settlement.png",
+      "docs/validation/android/06-recovered.png"
+    ]
+  },
+  "limitations": [
+    "Emulator software execution is not reference-phone performance evidence.",
+    "Initial System UI ANR and native PNG decode failures preserved in notes; runtime uses equivalent premultiplied RGBA atlases.",
+    "Long stability battery still running at this checkpoint.",
+    "32-settlement benchmark measured but failed sustained population criterion."
+  ],
+  "sourceHashes": {
+    "lib/content/content_pack.dart": "ebc12b23fb0aecfc0e0e66174af4e3664ac2e1cfdea993e8defea28c9c5d7267",
+    "lib/main.dart": "4cdc322ae6c86d4c30cfe44cf1c98c1cd8eed3a00e5b2e69307b561129605118",
+    "lib/persistence/checkpoint.dart": "3248228e58dc03655c33cb64e59fffe44dce1f71da9ba4021242c7b5deec801a",
+    "lib/platform/document_exchange.dart": "56c1dea6eef5d939bd32e67046cf3fe5e53efd90bb0fc4b805490ffd94e594b3",
+    "lib/presentation/app.dart": "bdc16c5fc71e91a856ccde4e058e7b6408e2308dcfebcd46112708bcfd57182c",
+    "lib/presentation/art_assets.dart": "de89c66c0c2b9378937103661a21c12308dd2055bf7cb1370268f7bc1bf9d433",
+    "lib/presentation/storage.dart": "81704a87eed29d7592ab42d250eb29b6026fce616be481d33e6176a2aae7db6f",
+    "lib/presentation/storage_memory.dart": "662ed8d3f9e195afe611b71753a990d1273a1984e85b494de2d73a9a233bcb45",
+    "lib/presentation/storage_native.dart": "53eb129357f6368b7bc7268cf6ea79fcb7b3c936e01fadda29306385e7fe837d",
+    "lib/presentation/world_game.dart": "6141d350d7aaa05f3120187afe09a80883e2ab8660ac7a562ab2101dffc7a50c",
+    "lib/simulation/engine.dart": "e6b2e791db807b9d344585c02181d7d6ae6f4120c9aac7c2568a38c6569bf379",
+    "test/art_assets_test.dart": "4a3212b2e1beafecb0c4727f16c7cbbf2219079c59d0f649cfa322f7e2d9d475",
+    "test/checkpoint_test.dart": "b434e2af77830a8d82cc81643b023d1ecc10865425266ddb4dbe6ad52b1f3f83",
+    "test/commands_test.dart": "5a2105df28270af3a38329a62822a17d29a37f070129cf0c28376e34c59fbd4a",
+    "test/content_test.dart": "697e397dc5396a46838dd9a4810ee9b467cf4d8833430800bc50ef523cb6de80",
+    "test/document_exchange_test.dart": "fabdb52ee6d192b159c769c1fe358743c2279f31f1e18d3749e102e58f741610",
+    "test/presentation_test.dart": "0e21810615349dede4537789379a9655072454f039cbab6e847d3820352c8d66",
+    "assets/art/atlas.json": "45f946b7ebd30aed7c0af1072cc11f182115a94a67c2e9ee8309e55492c60130",
+    "assets/art/buildings.png": "b2bcfc68a5ab3f5d1bcf3d762aca4abb02009c339a9ee7623639cc32e50de0fd",
+    "assets/art/buildings.rgba": "9327996c63e02eb3cf5a02ae8f2ba3af34796054d15bb0da49336b458621b3b7",
+    "assets/art/characters.png": "bdbcc42116cf50e390f7c10918efe38dc12fca0d3aa7fe4d16c3914932b7e574",
+    "assets/art/characters.rgba": "dd7c8a6b690565b92dcd4f9bc9db8b2c26a4899dac3f2ee482cd0f49de8eeb83",
+    "assets/art/contact_sheet.png": "f5bf3c89d4ec1318c9d651d1d9b0a8c0160c3465fa49869232a00c21a9e10726",
+    "assets/art/icons.png": "9e4caa088117503c99395c996bdd634eb6cdb1ea71f1487b142eda997a8aae37",
+    "assets/art/terrain.png": "1e80828c2605a95ca0f4eef7ca75d3ee6a6a5a413016bf55aafd6420610ce778",
+    "assets/art/terrain.rgba": "9da98c6e237f48c3f5e599b4930459ba19ee7685f47706f6abec68d4e6f9ed20",
+    "assets/content/core.json": "a751baac02f9a32bbd2e5058e507e53c50d118d95c9dad527c66f5e3db40e568",
+    "assets/content/example_pack.json": "43c57a33d877aa380afbcf51a78e77a2b29b323c4e79b95a03192f08e272a2fb",
+    "assets/content/manifest.json": "b299b4f6dbe3b86df9a8e0aad70a451094b4b539012fb23ca7bd2562560bd604"
+  },
+  "checks": {
+    "analysis": "passed",
+    "flutterTests": {
+      "passed": 35,
+      "failed": 0
+    },
+    "content": "passed",
+    "nativeCheckpointDecode": "passed"
+  }
+}

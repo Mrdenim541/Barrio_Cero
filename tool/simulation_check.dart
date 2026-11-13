@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-import '../lib/simulation/engine.dart';
+import 'package:barrio_cero_eras/simulation/engine.dart';
 
 void check(bool ok,String message){if(!ok)throw StateError(message);}
 void main(){
  final watch=Stopwatch()..start();
  var count=0;
- void test(String name,void Function() fn){fn();count++;print('PASS $name');}
+ void test(String name,void Function() fn){stdout.writeln('RUN $name');final groupWatch=Stopwatch()..start();fn();groupWatch.stop();count++;stdout.writeln('PASS $name (${groupWatch.elapsedMilliseconds} ms)');}
  test('full-content 100-year daily/decade/whole/save equivalence',(){
   WorldState initial(List<String> trace){
    final w=WorldState.generate(seed:17,size:64);
@@ -22,17 +22,22 @@ void main(){
   for(int i=0;i<36000 && !a.extinct;i++){
    daily.advanceDays(1,delegateDecisions:true);
    if(a.day%360==0)a.validate();
+   if(a.day%3600==0)stdout.writeln('PROGRESS daily ${a.day}/36000 days');
   }
   for(int i=0;i<10 && !b.extinct;i++){
    decades.advanceDays(3600,delegateDecisions:true);b.validate();
+   stdout.writeln('PROGRESS decades ${b.day}/36000 days');
   }
+  stdout.writeln('PROGRESS whole-century start');
   whole.advanceDays(36000,delegateDecisions:true);c.validate();
+  stdout.writeln('PROGRESS whole-century ${c.day}/36000 days');
   var resumed=initial(traceD);
   while(resumed.day<36000 && !resumed.extinct){
    final remaining=36000-resumed.day;
    final n=remaining<137?remaining:137;
    withContent(resumed,trace:traceD).advanceDays(n,delegateDecisions:true);
    resumed=WorldState.fromJson(jsonDecode(jsonEncode(resumed.toJson())));
+   if(resumed.day%3600<137)stdout.writeln('PROGRESS save-resume ${resumed.day}/36000 days');
   }
   check(a.canonical()==b.canonical(),'decade boundaries changed full-content history');
   check(a.canonical()==c.canonical(),'single hundred-year jump changed full-content history');
@@ -41,7 +46,7 @@ void main(){
   check(sequence==jsonEncode(traceB)&&sequence==jsonEncode(traceC)&&sequence==jsonEncode(traceD),'complete event sequence differs (including pruned entries)');
   // A terminal run is reported explicitly; it does not establish century coverage.
   check(a.day==36000,'equivalence scenario became extinct before a century; choose an additional viable fixture, do not count as century coverage');
-  print(jsonEncode({'check':'temporal_equivalence','seed':17,'days':a.day,'catalogEvents':(catalog['events'] as List).length,'retainedChronicleEntries':a.chronicle.length,'totalRecordedEvents':traceA.length}));
+  stdout.writeln(jsonEncode({'check':'temporal_equivalence','seed':17,'days':a.day,'catalogEvents':(catalog['events'] as List).length,'retainedChronicleEntries':a.chronicle.length,'totalRecordedEvents':traceA.length}));
  });
  test('dated orders and observation do not depend on batching',(){
   Map<String,dynamic> run(int batch,{bool save=false,bool observe=false}){
@@ -106,13 +111,21 @@ void main(){
   final w=WorldState.generate(seed:42,size:64);final s=w.controlled;final e=Simulation(w)..registerContent(pack);
   // Fixture meets every declared precondition while testing actual effects.
   final c=Map<String,dynamic>.from(event['conditions']??{});if(c['facilityFound']!=null)s.facilityFound=c['facilityFound'];w.day=(c['minDay']??1) as int;
-  for(final r in resourceIds)s.resources[r]=1000;
-  for(final entry in ((c['resource_max']??{}) as Map).entries)s.resources[entry.key]=(entry.value as num).toDouble();
-  for(final entry in ((c['resource_min']??{}) as Map).entries)s.resources[entry.key]=(entry.value as num).toDouble()+100;
+  for(final r in resourceIds) {
+    s.resources[r]=1000;
+  }
+  for(final entry in ((c['resource_max']??{}) as Map).entries) {
+    s.resources[entry.key]=(entry.value as num).toDouble();
+  }
+  for(final entry in ((c['resource_min']??{}) as Map).entries) {
+    s.resources[entry.key]=(entry.value as num).toDouble()+100;
+  }
   if(c['maxHealth']!=null)s.health=(c['maxHealth'] as num).toDouble();
   if(c['minHealth']!=null)s.health=(c['minHealth'] as num).toDouble();
   if(c['maxMorale']!=null)s.morale=(c['maxMorale'] as num).toDouble();
-  if(c['maxRelation']!=null)for(final id in s.relations.keys.toList())s.relations[id]=(c['maxRelation'] as num).toInt();
+  if(c['maxRelation']!=null){for(final id in s.relations.keys.toList()) {
+    s.relations[id]=(c['maxRelation'] as num).toInt();
+  }}
   if(c['minPopulation']!=null)s.adults=mathMax(s.adults,(c['minPopulation'] as num).toInt());
   if(c['maxPopulation']!=null){s.children=0;s.elders=0;s.adults=(c['maxPopulation'] as num).toInt();}
   if(c['minHousing']!=null)s.housingModifier+=(c['minHousing'] as num).toInt();
@@ -120,14 +133,14 @@ void main(){
   final result=e.resolveContentEvent(event['id'],option['id'],scheduled:true);check(result.ok,'${event['id']} ${option['id']}: ${result.message}');
   w.validate();branches++;
  }}
- check(branches>=300,'catalog did not execute');print('Executed $branches real content options');
+ check(branches>=300,'catalog did not execute');stdout.writeln('Executed $branches real content options');
  });
  test('procedural templates instantiate costs, local buildings and repairs',(){
  final pack=Map<String,dynamic>.from(jsonDecode(File('assets/content/core.json').readAsStringSync()));final w=WorldState.generate(size:64);final e=Simulation(w)..registerContent(pack);
  final templates=e.contentEvents.where((event)=>(event['id'] as String).startsWith('template_')).toList();check(templates.length==16,'template coverage');for(final template in templates){check(template['body'].contains('alcance'),'missing concrete instance');check((template['options'] as List).every((o)=>(o['costs'] as Map).values.every((n)=>n is num)),'uninstantiated parameter');}
  check(w.controlled.sites.length==w.controlled.built.values.fold(0,(int a,b)=>a+b),'initial sites mismatch');final old=w.controlled.sites.length;e.command('build',target:'house');e.advanceDays(20);check(w.controlled.sites.length==old+1,'new building has no position');final cell=w.tiles[w.controlled.y*w.size+w.controlled.x];cell.damage=1;w.controlled.housingModifier=-12;check(e.command('repair').ok,'repair rejected');check(cell.damage==0.5&&w.controlled.housingModifier==0,'repair had no effect');
  });
- watch.stop();print('$count groups passed in ${watch.elapsedMilliseconds} ms');
+ watch.stop();stdout.writeln('$count groups passed in ${watch.elapsedMilliseconds} ms');
 }
 
 int mathMax(int a,int b)=>a>b?a:b;
@@ -157,5 +170,5 @@ void runLong(Simulation sim,int target,Map<String,Object> configuration){
  }
  check(w.day==target||w.extinct,'run did not reach target or valid terminal state');
  watch.stop();
- print(jsonEncode({...configuration,'requestedDays':target,'actualDays':w.day,'terminal':w.extinct?'global_extinction':'target_reached','annualChecks':yearsChecked,'peakPending':peakPending,'peakHistory':peakHistory,'milliseconds':watch.elapsedMilliseconds,'peakRssBytes':ProcessInfo.maxRss}));
+ stdout.writeln(jsonEncode({...configuration,'requestedDays':target,'actualDays':w.day,'terminal':w.extinct?'global_extinction':'target_reached','annualChecks':yearsChecked,'peakPending':peakPending,'peakHistory':peakHistory,'milliseconds':watch.elapsedMilliseconds,'peakRssBytes':ProcessInfo.maxRss}));
 }

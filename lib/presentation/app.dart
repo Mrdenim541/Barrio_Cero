@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Simulation;
 import 'package:flutter/services.dart';
 import '../simulation/engine.dart';
 import '../content/content_pack.dart';
@@ -31,7 +31,7 @@ void historyWorker(Map<String,dynamic> args) async {
   final controls=ReceivePort();
   var cancel=false;
   Completer<void>? confirmation;
-  controls.listen((m){if(m=='cancel'){cancel=true;}if((m=='ack'||m=='cancel') && confirmation!=null && !confirmation!.isCompleted)confirmation!.complete();});
+  controls.listen((m){if(m=='cancel'){cancel=true;}if((m=='ack'||m=='cancel') && confirmation!=null && !confirmation.isCompleted)confirmation.complete();});
   send.send({'control':controls.sendPort});
   try {
   final world=WorldState.fromJson(Map<String,dynamic>.from(args['world'] as Map));
@@ -47,7 +47,7 @@ void historyWorker(Map<String,dynamic> args) async {
       confirmation=Completer<void>();
       send.send({'world':state,'done':(state['day'] as num).toInt()>=target,'target':target});
       if((state['day'] as num).toInt()>=target){controls.close();return;}
-      await confirmation!.future;
+      await confirmation.future;
       if((state['day'] as num).toInt()<before+days) break;
       await Future<void>.delayed(Duration.zero);
     }
@@ -89,14 +89,6 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   ContentPack? basePack;
   List<String> availablePackSources=[];
   List<String> activePackSources=[];
-  Map<String,dynamic> _composePacks(List<String> sources){
-    if(basePack==null)throw const FormatException('Catálogo base no disponible');
-    final registry=ContentRegistry()..importPack(basePack!);
-    final pins=<Map<String,String>>[basePack!.pin];
-    for(final source in sources){final pack=ContentPack.parse(source,base:basePack);registry.importPack(pack);pins.add(pack.pin);}
-    return registry.compose(pins);
-  }
-
   Simulation _sim(){final value=Simulation(world!);if(core!=null)value.registerContent(core!);return value;}
   Future<void> _content()async{try{final text=await rootBundle.loadString('assets/content/core.json');final pack=ContentPack.parse(text);basePack=pack;activeCoreSource=text;core=Map<String,dynamic>.from(pack.data);coreHash=pack.hash;}catch(e){_message('No se pudo cargar el catálogo narrativo: $e');}}
   Offset gesturePan=Offset.zero;
@@ -181,25 +173,25 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     if(jumpTarget!=null && jumpTarget!>day)_message('Salto recuperado desde la fecha confirmada. Puedes continuarlo desde Años.');
     }finally{advancing=false;}
   }
-  void _message(String text){if(!mounted)return;setState(()=>note=text);ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(text),duration:const Duration(seconds:4)));}
+  void _message(String text){if(!mounted)return;setState(()=>note=text);ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(text),behavior:SnackBarBehavior.floating,margin:const EdgeInsets.fromLTRB(12,0,12,80),duration:const Duration(seconds:4)));}
   Future<void> _newWorld() async {
     await initialization;
-    if(busy||advancing)return;
+    if(busy||advancing||!mounted)return;
     timer?.cancel();timer=null;
-    final seed=TextEditingController(text:'${DateTime.now().millisecondsSinceEpoch%100000}');
+    var seed='${DateTime.now().millisecondsSinceEpoch%100000}';
     String intensity='normal';int size=96;bool extraordinary=true;
     final create=await showDialog<bool>(context:context,builder:(context)=>StatefulBuilder(builder:(context,change)=>AlertDialog(title:const Text('Un mundo por escribir'),content:SingleChildScrollView(child:Column(mainAxisSize:MainAxisSize.min,crossAxisAlignment:CrossAxisAlignment.start,children:[
       const Text('Cada decisión deja memoria. El tiempo se detiene cuando cierras el juego.',style:TextStyle(color:earth)),const SizedBox(height:20),
-      TextField(controller:seed,keyboardType:TextInputType.number,decoration:const InputDecoration(labelText:'Semilla reproducible')),
-      const SizedBox(height:12),DropdownButtonFormField<String>(initialValue:intensity,decoration:const InputDecoration(labelText:'Intensidad'),items:const [DropdownMenuItem(value:'normal',child:Text('Normal')),DropdownMenuItem(value:'caótica',child:Text('Caótica')),DropdownMenuItem(value:'extrema',child:Text('Extrema'))],onChanged:(v)=>change(()=>intensity=v!)),
-      const SizedBox(height:12),DropdownButtonFormField<int>(initialValue:size,decoration:const InputDecoration(labelText:'Mapa'),items:const [DropdownMenuItem(value:64,child:Text('Pequeño · 64 × 64')),DropdownMenuItem(value:96,child:Text('Normal · 96 × 96'))],onChanged:(v)=>change(()=>size=v!)),
+      TextFormField(initialValue:seed,onChanged:(value)=>seed=value,keyboardType:TextInputType.number,decoration:const InputDecoration(labelText:'Semilla reproducible')),
+      const SizedBox(height:12),DropdownButtonFormField<String>(isExpanded:true,initialValue:intensity,decoration:const InputDecoration(labelText:'Intensidad'),items:const [DropdownMenuItem(value:'normal',child:Text('Normal')),DropdownMenuItem(value:'caótica',child:Text('Caótica')),DropdownMenuItem(value:'extrema',child:Text('Extrema'))],onChanged:(v)=>change(()=>intensity=v!)),
+      const SizedBox(height:12),DropdownButtonFormField<int>(isExpanded:true,initialValue:size,decoration:const InputDecoration(labelText:'Mapa'),items:const [DropdownMenuItem(value:64,child:Text('Pequeño · 64 × 64')),DropdownMenuItem(value:96,child:Text('Normal · 96 × 96'))],onChanged:(v)=>change(()=>size=v!)),
       SwitchListTile(contentPadding:EdgeInsets.zero,title:const Text('Familias extraordinarias'),subtitle:const Text('Contacto, máquinas y transformaciones'),value:extraordinary,onChanged:(v)=>change(()=>extraordinary=v)),
     ])),actions:[TextButton(onPressed:()=>Navigator.pop(context,false),child:const Text('Volver')),FilledButton(onPressed:()=>Navigator.pop(context,true),child:const Text('Fundar Barrio Cero'))])));
-    if(create!=true){seed.dispose();return;}
+    if(create!=true)return;
     advancing=true;
     try{
       final source=await rootBundle.loadString('assets/content/core.json');
-      final candidate=WorldState.generate(seed:int.tryParse(seed.text)??42,size:size,intensity:intensity,extraordinary:extraordinary);
+      final candidate=WorldState.generate(seed:int.tryParse(seed)??42,size:size,intensity:intensity,extraordinary:extraordinary);
       final checkpoint=Checkpoint.create(world:candidate,coreSource:source,
         additionalSources:availablePackSources,settings:{'reduceMotion':reduceMotion,'sound':sound,'vibration':vibration});
       await store.write('world_$slot',checkpoint.encode());
@@ -209,7 +201,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         activePackSources=checkpoint.additionalSources.toList();selected=world!.controlledId;
         game.pan=Offset.zero;game.zoom=1;game.mode='Mundo';jumpTarget=null;
         note='Toca Barrio Cero, ordena una construcción y avanza un mes.';refresh();});
-    }catch(e){_message('No se pudo crear el mundo: $e');}finally{advancing=false;seed.dispose();}
+    }catch(e){_message('No se pudo crear el mundo: $e');}finally{advancing=false;}
   }
   Future<void> _command(String action,{String? target,String? choice}) async {
     if(busy||world==null||advancing)return;
@@ -298,17 +290,17 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   double _environment(Map<String,dynamic> data){final list=data['societies'] as List? ?? [];return list.isEmpty?0:list.fold<double>(0,(n,s)=>n+(s['environment'] as num? ?? 0).toDouble())/list.length;}
   String _relations(Map<String,dynamic> data){var good=0,bad=0;for(final s in data['societies'] as List? ?? []){for(final value in (s['relations'] as Map? ?? {}).values){if(number(value)>30)good++;if(number(value)<-30)bad++;}}return '${good~/2} amistades / ${bad~/2} rivalidades';}
   @override Widget build(BuildContext context)=>Scaffold(body:SafeArea(child:world==null?_welcome():_world()));
-  Widget _welcome()=>Center(child:ConstrainedBox(constraints:const BoxConstraints(maxWidth:440),child:Padding(padding:const EdgeInsets.all(28),child:Column(mainAxisAlignment:MainAxisAlignment.center,crossAxisAlignment:CrossAxisAlignment.stretch,children:[
+  Widget _welcome()=>Center(child:SingleChildScrollView(child:ConstrainedBox(constraints:const BoxConstraints(maxWidth:440),child:Padding(padding:const EdgeInsets.all(28),child:Column(mainAxisAlignment:MainAxisAlignment.center,crossAxisAlignment:CrossAxisAlignment.stretch,children:[
     const Text('CRÓNICAS DE UN PLANETA',textAlign:TextAlign.center,style:TextStyle(color:earth,fontSize:11,letterSpacing:3)),const SizedBox(height:12),
     const Text('BARRIO\nCERO',textAlign:TextAlign.center,style:TextStyle(color:gold,fontWeight:FontWeight.w900,fontSize:64,height:.95,letterSpacing:2)),
     const Text('E R A S',textAlign:TextAlign.center,style:TextStyle(color:moss,fontWeight:FontWeight.w600,fontSize:22,height:2)),const SizedBox(height:28),
     const Text('De un pequeño barrio al legado de siglos.\nConstruye. Decide. Observa lo que permanece.',textAlign:TextAlign.center,style:TextStyle(color:earth,height:1.6)),const SizedBox(height:32),
     FilledButton(onPressed:_newWorld,child:const Text('CREAR UN MUNDO')),const SizedBox(height:10),OutlinedButton(onPressed:_load,child:const Text('Continuar historia')),
-    const SizedBox(height:12),Row(mainAxisAlignment:MainAxisAlignment.center,children:[const Text('Espacio de guardado  '),DropdownButton<int>(value:slot,items:List.generate(3,(i)=>DropdownMenuItem(value:i,child:Text('${i+1}'))),onChanged:(v)=>setState(()=>slot=v!))]),
+    const SizedBox(height:12),Wrap(alignment:WrapAlignment.center,crossAxisAlignment:WrapCrossAlignment.center,children:[const Text('Espacio de guardado  '),DropdownButton<int>(value:slot,items:List.generate(3,(i)=>DropdownMenuItem(value:i,child:Text('${i+1}'))),onChanged:(v)=>setState(()=>slot=v!))]),
     TextButton(onPressed:_archive,child:const Text('Importar / recuperar partida')),
     if(kIsWeb)const Text('Vista web: guardado temporal. Exporta tu partida antes de cerrar.',textAlign:TextAlign.center,style:TextStyle(fontSize:11,color:earth)),
     const SizedBox(height:22),const Text('Sin conexión · Sin cuentas · Tu historia',textAlign:TextAlign.center,style:TextStyle(fontSize:11,color:moss)),
-  ])))) ;
+  ]))))) ;
   Widget _world()=>Column(children:[
     Padding(padding:const EdgeInsets.fromLTRB(14,10,8,6),child:Row(children:[const Text('BARRIO CERO',style:TextStyle(color:gold,fontWeight:FontWeight.w900,letterSpacing:1.4,fontSize:16)),const Spacer(),TextButton(onPressed:busy||advancing?null:_menu,child:const Text('MENÚ'))])),
     Padding(padding:const EdgeInsets.symmetric(horizontal:14),child:Row(children:[Text(date(day),style:const TextStyle(fontSize:11,color:earth)),const Spacer(),Flexible(child:Text(controlled.isEmpty?'Observando el mundo':'Guías: ${societies.where((s)=>s['id']==controlled).firstOrNull?['name']??controlled}',overflow:TextOverflow.ellipsis,style:const TextStyle(fontSize:11,color:moss)))])),
@@ -324,11 +316,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     if(world!.extinct)Padding(padding:const EdgeInsets.all(10),child:Text('No queda población capaz de actuar. Inspecciona el legado o crea otro mundo desde el menú.',style:const TextStyle(color:gold,fontSize:12))),
     if(note.isNotEmpty)Padding(padding:const EdgeInsets.fromLTRB(14,0,14,4),child:Text(note,maxLines:2,overflow:TextOverflow.ellipsis,style:const TextStyle(fontSize:10,color:earth))),
     Container(color:const Color(0xff253235),padding:const EdgeInsets.fromLTRB(8,5,8,8),child:Row(children:[
-      Expanded(child:TextButton(onPressed:busy?null:_play,child:Text(timer==null?'▶':'Ⅱ',style:const TextStyle(fontSize:20)))),
-      Expanded(child:TextButton(onPressed:busy?null:()=>_advance(1),child:const Text('+ Día',style:TextStyle(fontSize:12)))),
-      Expanded(child:TextButton(onPressed:busy?null:()=>_advance(30),child:const Text('+ Mes',style:TextStyle(fontSize:12)))),
-      Expanded(child:FilledButton(onPressed:busy?null:_years,child:const Text('Años',style:TextStyle(fontSize:12)))),
-      Expanded(child:TextButton(onPressed:_chronicle,child:const Text('Crónica',style:TextStyle(fontSize:12)))),
+      Expanded(child:TextButton(style:TextButton.styleFrom(padding:EdgeInsets.zero,minimumSize:const Size(44,48)),onPressed:busy?null:_play,child:Icon(timer==null?Icons.play_arrow:Icons.pause))),
+      Expanded(child:TextButton(style:TextButton.styleFrom(padding:const EdgeInsets.symmetric(horizontal:4),minimumSize:const Size(44,48)),onPressed:busy?null:()=>_advance(1),child:const Text('+ Día',style:TextStyle(fontSize:12)))),
+      Expanded(child:TextButton(style:TextButton.styleFrom(padding:const EdgeInsets.symmetric(horizontal:4),minimumSize:const Size(44,48)),onPressed:busy?null:()=>_advance(30),child:const Text('+ Mes',style:TextStyle(fontSize:12)))),
+      Expanded(child:FilledButton(style:FilledButton.styleFrom(padding:const EdgeInsets.symmetric(horizontal:4),minimumSize:const Size(44,48)),onPressed:busy?null:_years,child:const Text('Años',maxLines:1,style:TextStyle(fontSize:12)))),
+      Expanded(child:TextButton(style:TextButton.styleFrom(padding:const EdgeInsets.symmetric(horizontal:4),minimumSize:const Size(44,48)),onPressed:_chronicle,child:const Text('Crónica',maxLines:1,style:TextStyle(fontSize:12)))),
     ])),
   ]);
   Widget _mapButton(String label,VoidCallback tap)=>SizedBox(width:40,height:40,child:TextButton(style:TextButton.styleFrom(backgroundColor:ink.withValues(alpha:.85),padding:EdgeInsets.zero),onPressed:tap,child:Text(label)));
@@ -408,7 +400,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ListTile(title:const Text('Guardar ahora'),onTap:()async{Navigator.pop(context);if(advancing||busy)return;advancing=true;try{await _save();_message('Partida guardada.');}catch(error){_message('No se pudo guardar: $error');}finally{advancing=false;}}),
     ListTile(title:const Text('Paquetes de contenido'),onTap:(){Navigator.pop(context);_packages();}),
     ListTile(title:const Text('Archivo de mundos'),onTap:(){Navigator.pop(context);_archive();}),
-    ListTile(title:const Text('Restaurar punto anterior al salto'),subtitle:const Text('Reemplaza este mundo por su rama anterior.'),onTap:()async{Navigator.pop(context);final raw=await store.read('branch_$slot');if(raw!=null)await _import(raw);else _message('No hay un punto anterior.');}),
+    ListTile(title:const Text('Restaurar punto anterior al salto'),subtitle:const Text('Reemplaza este mundo por su rama anterior.'),onTap:()async{Navigator.pop(context);final raw=await store.read('branch_$slot');if(raw!=null) {
+      await _import(raw);
+    } else {
+      _message('No hay un punto anterior.');
+    }}),
     SwitchListTile(contentPadding:EdgeInsets.zero,title:const Text('Reducir movimiento'),value:reduceMotion,onChanged:(v){setState(()=>reduceMotion=v);game.reduceMotion=v;Navigator.pop(context);}),
     SwitchListTile(contentPadding:EdgeInsets.zero,title:const Text('Sonido de decisiones'),value:sound,onChanged:(v){setState(()=>sound=v);Navigator.pop(context);}),
     SwitchListTile(contentPadding:EdgeInsets.zero,title:const Text('Respuesta táctil'),value:vibration,onChanged:(v){setState(()=>vibration=v);Navigator.pop(context);}),

@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../lib/content/content_pack.dart';
-import '../lib/persistence/checkpoint.dart';
-import '../lib/simulation/engine.dart';
+import 'package:barrio_cero_eras/content/content_pack.dart';
+import 'package:barrio_cero_eras/persistence/checkpoint.dart';
+import 'package:barrio_cero_eras/simulation/engine.dart';
 
 String digest(dynamic input) {
   dynamic sort(dynamic value) {

@@ -51,3 +51,9 @@ Los 18 identificadores de edificio canónicos del motor coinciden directamente c
 ## Diseño objetivo de la versión completa
 
 El usuario solicitó visualizar la versión final prevista para guiar la implementación. Las láminas `docs/design/world-and-settlement-target.png` y `docs/design/decisions-and-history-target.png` definen la dirección de composición, paleta, jerarquía de interfaz y densidad de pixel art. Son ilustraciones de diseño objetivo, no capturas ejecutadas ni evidencia de aceptación. Los números e historia representan una partida ilustrativa; el juego debe obtenerlos de la simulación real. Conservar controles táctiles legibles al trasladar cada panel a una pantalla vertical individual.
+
+## Carga Android comprobada
+
+Los atlas PNG originales se conservan. El generador produce también `characters.rgba`, `buildings.rgba` y `terrain.rgba`, con los mismos píxeles en RGBA8888 premultiplicado. El manifiesto indica dimensiones y formato. `loadArtPixels` comprueba el tamaño y carga esos datos sin depender del códec PNG de la plataforma; la prueba compara sus píxeles con los PNG originales (tolerancia de una unidad por redondeo alfa). Esto resolvió el fallo de descompresión observado en el emulador Android 10 con Flutter 3.35.7.
+
+Las capturas de `docs/validation/android/` proceden de la aplicación instalada; las láminas de `docs/design/` siguen siendo objetivos visuales. La escena local actual es una base inicial y aún debe alcanzar la legibilidad, distribución y actividades del plan completo.

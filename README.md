@@ -4,14 +4,11 @@ Juego individual para Android, escrito en Flutter/Dart con Flame y una simulaci�
 
 ## Entorno y compilación
 
-Requisitos del equipo: Linux x64, Git, curl, unzip, Python 3 y Java 21. La instalación utiliza Flutter **3.35.7** (commit `adc901062556672b4138e18a4dc62a4be8f4b3c2`), Android SDK 36, Build Tools 35.0.0, Gradle 8.12, Android Gradle Plugin 8.9.1 y Kotlin 2.1.0. Android mínimo: API 23. El script conserva la comprobación TLS y verifica el archivo de herramientas Android contra el manifiesto oficial. Las versiones Dart/Flutter y las dependencias efectivamente resueltas deben contrastarse con los registros de validación y `pubspec.lock`.
+Requisitos del equipo: Linux x64, Git, curl, unzip, Python 3 y un JDK 21 completo (`javac`, no solo JRE). El script instala Temurin 21.0.9+10 verificado si falta el compilador. La instalación utiliza Flutter **3.35.7** (commit `adc901062556672b4138e18a4dc62a4be8f4b3c2`), Android SDK 36, Build Tools 35.0.0, Gradle 8.12, Android Gradle Plugin 8.9.1 y Kotlin 2.1.0. Android mínimo: Android 7 / API 24 (acordado el 13 de noviembre de 2026, por el mínimo soportado de Flutter 3.35.7). El script conserva la comprobación TLS y verifica el archivo de herramientas Android contra el manifiesto oficial. Las versiones Dart/Flutter y las dependencias efectivamente resueltas deben contrastarse con los registros de validación y `pubspec.lock`.
 
 ```bash
 ./tool/setup_android.sh
-export PATH=/workspace/toolchains/flutter/bin:$PATH
-export ANDROID_HOME=/workspace/toolchains/android
-export PUB_CACHE=/workspace/toolchains/pub-cache
-export GRADLE_USER_HOME=/workspace/toolchains/gradle-cache
+source tool/development_env.sh
 flutter analyze
 flutter build apk --debug
 ```

@@ -1,40 +1,35 @@
 # Estado de BARRIO CERO: ERAS
 
-Actualizado el 13 de noviembre de 2026. La especificación completa sigue pendiente. **No existe APK compilado ni juego instalado. H0 no está cerrado.**
+Actualizado el 13 de noviembre de 2026. **H0 tiene una base Android compilada, instalada y comprobada. El juego completo todavía NO está terminado.**
 
-## Evidencia disponible
+## Evidencia ejecutada
 
-- Emulador Android 10 arrancado por software: ADB reconoce `emulator-5554` y `sys.boot_completed=1`. Registro: `docs/validation/environment-readiness.json`. Esto comprueba el dispositivo de pruebas, no la aplicación.
-- Validador Python: estructura, referencias, grafo tecnológico, mínimos, hashes de dos paquetes y diez casos de rechazo aprobados. Catálogo: 96 eventos independientes y 62 nodos de 12 arcos; 16 plantillas, 18 edificios, 30 tecnologías, 12 recursos, 6 biomas, 12 rasgos, 6 perfiles y 8 familias.
-- Parser Dart sin errores sintácticos. No comprueba tipos ni comportamiento.
-- Registro `docs/requirements.json`: 106 bloques de los 20 apartados, vinculados al hash de PROJECT_SPEC.md. El verificador comprueba trazabilidad; ningún bloque se declara funcionalmente aprobado.
-- Base original preservada en commit local `146184f`. No se ha publicado el repositorio.
+- Flutter 3.35.7 / Dart 3.9.2 instalados, dependencias resueltas y `pubspec.lock` incorporado. Acceso oficial a Dart verificado con HTTP 200; el antiguo bloqueo 403 está resuelto en la instancia publicada. No se modificó ni publicó el nuevo borrador.
+- Análisis Flutter limpio. 35 pruebas aprobadas: órdenes transaccionales, contenido, checkpoints, contrato de documentos, atlas originales y presentación móvil.
+- Interfaz comprobada a 320/360/412 × 640; la prueba crea una partida, construye, avanza, lee el guardado real y reconstruye la sesión.
+- APK debug compilado inicialmente y APK profile actualizado compilado, firmado para pruebas e instalado en `emulator-5554`, Android 10/API 29. Mínimo Android 7/API 24 aceptado por el usuario, por el mínimo de Flutter 3.35.7.
+- Prueba nativa: semilla 42, mapa 96×96, orden de huerto, dos avances diarios, mapa/asentamiento visibles y recuperación tras `am force-stop`. El checkpoint antes y después del reinicio es idéntico y pasa el parser de la aplicación. Wi-Fi y datos móviles desactivados; el ajuste de modo avión está activo, pero el shell no pudo emitir su broadcast protegido.
+- Capturas reales en `docs/validation/android/`; resultados, comandos, hashes y límites en `docs/validation/h0/`. APK conservado: `build/deliverables/barrio-cero-h0-profile.apk`.
+- Catálogo Python: 158 eventos (96 independientes + 62 nodos de 12 arcos), referencias, grafo, mínimos, hashes y diez rechazos aprobados.
 
-## Cambios implementados pendientes de ejecución
+## Pruebas largas
 
-- Órdenes tipadas, transaccionales e idempotentes; validación del actor; corrección de Equilibrio, reparaciones y reservas de expediciones. La autonomía aún utiliza la API anterior: no está completada la unificación de comandos del plan.
-- Envoltura de guardado versión 2: mundo, objetivo del salto, ajustes y contenido exacto protegidos conjuntamente. Migración explícita del formato anterior, conservando copia original. Esto no completa la futura migración del modelo de sociedades y asentamientos.
-- Selector Android de documentos mediante SAF, importación validada y cancelación; sin permisos generales de almacenamiento.
-- Integración: nueva partida e importación se guardan antes de reemplazar el mundo; arranque asíncrono conserva el contenido importado; fallos al preparar saltos liberan la interfaz; cancelación anticipada se conserva; Guardar ahora confirma después de completar disco; errores de inicio del trabajador se notifican.
-- Pruebas ampliadas de órdenes, checkpoints y documentos. Baterías largas con catálogo real, secuencia causal íntegra, treinta semillas por doscientos años y escenarios de mil años; benchmark de 32 asentamientos con cobertura poblada explícita.
+La equivalencia temporal con catálogo real aprobó 36.000 pasos diarios, diez décadas, un siglo y guardado/reanudación en lotes de 137 días: mismo estado y secuencia íntegra de 50.518 acontecimientos. También aprobaron órdenes fechadas/observación, construcción, tres rutas de instalación, estudio histórico y sucesión.
 
-Estas pruebas están escritas, **no aprobadas**. El runner `tool/run_acceptance.sh` registra comandos, hashes, resultados y bloqueos en `build/acceptance/`. Una comprobación omitida nunca cuenta como aprobada. El resultado de este bloque se conserva en `docs/validation/implementation-block-results.json`, con hashes de fuente y salidas.
+Las treinta semillas completaron 200 años con invariantes anuales. Los dos escenarios de mil años y los grupos finales siguen ejecutándose; no se declara aprobada aún la batería completa. Log activo: `build/validation/simulation-check.log`.
 
-## Herramientas y bloqueo externo
+El benchmark midió cien años en mapas 64/96, pero terminó con 23/21 comunidades vivas. **No aprueba el requisito de carga sostenida de 32 asentamientos.** Las mediciones se conservan en `docs/validation/h0/benchmark-initial.json`; se corrigió el runner para que ese resultado no pueda aparecer como aprobado solo por terminar el proceso. No hay mediciones válidas de FPS o latencia en el teléfono de referencia.
 
-Flutter fuente 3.35.7, Java 21.0.13, plataforma Android 36 r2, Build Tools 35.0.0, Platform Tools 37.0.1, NDK 27.0.12077973, emulador 37.2.13 e imagen API 29 x86_64 presentes. Wrapper Gradle 8.12 verificado; AGP 8.9.1 y Kotlin 2.1.0 configurados.
+## Correcciones demostradas en este bloque
 
-La descarga oficial de Dart devuelve `CONNECT tunnel failed, response 403` para `storage.googleapis.com`. El borrador de configuración revisión 5 incluye ese dominio, `download.flutter.io` y `maven.google.com`; la instancia observada conserva revisión 1 sin dominios adicionales. Guardar el borrador mediante herramientas no aplica la política de la instancia.
+Se corrigieron errores de tipos, el conflicto de nombre Simulation con Flutter, desbordamientos de interfaz, controles inferiores y la eliminación prematura del controlador del diálogo de semilla. El JRE disponible carecía de javac: se añadió JDK Temurin 21.0.9+10 verificado. Gradle usa el proxy heredado y mantiene TLS.
 
-**Acción externa necesaria:** guardar/aplicar el cambio de red preparado en Environment settings. Después se comprobará una conexión nueva. No se han ejecutado resolución de dependencias, análisis Dart/Flutter, pruebas Dart/Flutter, benchmark ni compilación Android. Tampoco existe lockfile resuelto, instalación del juego, captura real ni medición de rendimiento del producto.
+El emulador sufrió un ANR inicial de System UI y falló al descomprimir los PNG. La carga actual usa copias de los mismos píxeles en RGBA premultiplicado; los PNG originales siguen intactos y las pruebas comparan equivalencia visual. El arranque final usa Impeller/Vulkan con SwiftShader y las capturas muestran atlas reales. La ejecución por software sin KVM no acredita rendimiento de un teléfono.
 
-## Continuación
+## Continuidad y alcance pendiente
 
-1. Tras aplicar la red, ejecutar `bash tool/setup_android.sh`, resolver dependencias y conservar `pubspec.lock`.
-2. Ejecutar análisis y pruebas; corregir los errores que revelen y generar el primer APK debug.
-3. Usar `bash tool/start_android_emulator.sh`, instalar el APK y verificar nueva partida, mapa, orden, avance y guardado/carga.
-4. Registrar compilación, instalación y funcionamiento por separado. Continuar H1–H11 manteniendo Android ejecutable.
+H1/H2 tienen comandos tipados, idempotencia, reservas y checkpoint autocontenido, pero faltan contratos y separación completa de sesión, unificación de órdenes autónomas, precisión material y migración del futuro modelo. H3–H11 conservan el alcance de PROJECT_SPEC.md: sociedades/asentamientos separados, territorio, instituciones, conflictos, generaciones coherentes, narrativa completa, historia, tutorial, recuperación y balance.
 
-Persisten las limitaciones del modelo descritas en `docs/IMPLEMENTATION_AUDIT.md`: sociedades y asentamientos unidos, territorio político incompleto, instituciones y secesión pendientes, generaciones y migraciones parcialmente reconciliadas, tecnologías poco diferenciadas y narrativa incompleta. Habilitar Flutter no completa esos sistemas.
+El registro `docs/requirements.json` mantiene 106 bloques de los 20 apartados y su hash original. Una prueba parcial no cierra todo un bloque. Las láminas de `docs/design/` son objetivos visuales, no evidencia.
 
-Las imágenes de `docs/design/` son referencias del diseño final solicitado; no son capturas ni evidencia de ejecución.
+Continuación: caracterizar y corregir integridad de selección de espacios de guardado; completar resultados de estabilidad; seguir los hitos de PLAN.md manteniendo el APK ejecutable. No hay publicación en tiendas ni push del repositorio.

@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import '../lib/simulation/engine.dart';
+import 'package:barrio_cero_eras/simulation/engine.dart';
 
 /// Actual measurements only. A run losing its initial population is explicitly
 /// not evidence of sustained 32-settlement performance.
 void main() {
+  var sustainedWorkload = true;
   final pack = Map<String, dynamic>.from(
     jsonDecode(File('assets/content/core.json').readAsStringSync()),
   );
@@ -34,17 +35,25 @@ void main() {
     var minLivingSettlements = 32;
     while (world.day < 36000 && !world.extinct) {
       final year = Stopwatch()..start();
-      final advanced = sim.advanceDays(360, delegateDecisions: true);
+      // Count the populated workload daily: annual samples could miss a
+      // collapse and later recolonization within the same year.
+      var advanced = 0;
+      for (var day = 0; day < 360 && !world.extinct; day++) {
+        final actual = sim.advanceDays(1, delegateDecisions: true);
+        if (actual != 1) throw StateError('Unexpected benchmark interruption');
+        advanced += actual;
+        final living = world.societies.where((s) => s.alive).length;
+        if (living < minLivingSettlements) minLivingSettlements = living;
+        if (living >= 32) sustainedDays += actual;
+      }
       year.stop();
       world.validate();
       if (year.elapsedMicroseconds > largestYearMicros) largestYearMicros = year.elapsedMicroseconds;
-      final living = world.societies.where((s) => s.alive).length;
-      if (living < minLivingSettlements) minLivingSettlements = living;
-      if (minLivingSettlements >= 32) sustainedDays += advanced;
       if (advanced < 360 && !world.extinct) throw StateError('Unexpected benchmark interruption');
     }
     watch.stop();
-    print(jsonEncode({
+    sustainedWorkload &= sustainedDays == 36000 && minLivingSettlements >= 32;
+    stdout.writeln(jsonEncode({
       'platform': Platform.operatingSystem,
       'osVersion': Platform.operatingSystemVersion,
       'processors': Platform.numberOfProcessors,
@@ -57,7 +66,8 @@ void main() {
       'simulatedDays': world.day,
       'terminal': world.extinct ? 'global_extinction' : 'target_reached',
       'daysWithAtLeast32LivingSettlements': sustainedDays,
-      'sustained32SettlementScenario': sustainedDays == 36000,
+      'sustained32SettlementScenario': sustainedDays == 36000 && minLivingSettlements >= 32,
+      'populationSampleIntervalDays': 1,
       'milliseconds': watch.elapsedMilliseconds,
       'slowestYearMicroseconds': largestYearMicros,
       'rssBytes': ProcessInfo.currentRss,
@@ -68,5 +78,11 @@ void main() {
       'pending': world.pending.length,
       'measuresFps': false,
     }));
+  }
+  // Measurements are retained, but an underpopulated scenario cannot pass the
+  // acceptance runner as proof of the required 32-settlement workload.
+  if (!sustainedWorkload) {
+    stderr.writeln('FAIL: the full century did not sustain 32 living settlements.');
+    exitCode = 1;
   }
 }

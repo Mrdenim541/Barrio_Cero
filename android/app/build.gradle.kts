@@ -21,7 +21,8 @@ android {
 
     defaultConfig {
         applicationId = "com.barriocero.eras"
-        minSdk = 23
+        // Android 7 minimum approved on 2026-11-13 for Flutter 3.35.7.
+        minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

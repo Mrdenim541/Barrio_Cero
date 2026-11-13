@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/platform/document_exchange.dart';
+import 'package:barrio_cero_eras/platform/document_exchange.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

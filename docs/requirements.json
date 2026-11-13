@@ -87,10 +87,15 @@
       "sectionTitle": "Plataforma y base técnica",
       "requirement": "Android es la plataforma principal, con interfaz vertical y uso táctil. Juego individual, funcional sin conexión, sin cuentas, servidor obligatorio, anuncios, pagos ni claves de API para jugar. Las otras personas y sociedades son habitantes simulados dentro de la partida; esta versión no requiere multijugador por internet.",
       "milestone": "H0",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S03-R02",
@@ -98,10 +103,15 @@
       "sectionTitle": "Plataforma y base técnica",
       "requirement": "Si no existe una base tecnológica previa adecuada, utiliza Flutter y Dart para la aplicación, Flame para mapa, cámara y animaciones 2D, y un núcleo de simulación independiente en Dart. Verifica versiones compatibles, fija las dependencias y documenta el entorno reproducible. Mantén pocas dependencias.",
       "milestone": "H0",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S03-R03",
@@ -109,10 +119,19 @@
       "sectionTitle": "Plataforma y base técnica",
       "requirement": "Comprueba pronto Flutter, Java, Android SDK, Gradle, permisos, red y posibilidad de emulación. Compila un APK temprano para detectar bloqueos. Una previsualización web puede complementar el trabajo, pero no sustituye el entregable Android.",
       "milestone": "H0",
-      "status": "unverified",
+      "status": "verified",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        },
+        {
+          "path": "docs/validation/h0/build-profile.log",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "Mantener compilación e instalación durante los siguientes hitos."
     },
     {
       "id": "S03-R04",
@@ -120,10 +139,15 @@
       "sectionTitle": "Plataforma y base técnica",
       "requirement": "La simulación debe poder ejecutarse sin interfaz para probar siglos de evolución. Separa reglas del mundo, contenido, persistencia, presentación y entradas del jugador. El motor mantiene la autoridad sobre el estado; las animaciones muestran lo que realmente sucede.",
       "milestone": "H0",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S04-R01",
@@ -967,10 +991,15 @@
       "sectionTitle": "Hitos de implementación",
       "requirement": "**Hito 1:** proyecto Android que compila, mapa navegable, definición del calendario y una muestra real del pixel art en ejecución.",
       "milestone": "H11",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S18-R02",
@@ -1044,10 +1073,15 @@
       "sectionTitle": "Comprobaciones de aceptación",
       "requirement": "Ejecuta análisis estático, pruebas del núcleo, validación del contenido y compilación Android. No inventes resultados ni captures pantallas generadas artificialmente como prueba del juego.",
       "milestone": "H10",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S19-R02",
@@ -1055,10 +1089,15 @@
       "sectionTitle": "Comprobaciones de aceptación",
       "requirement": "**Prueba de equivalencia temporal:** con igual semilla, versión, políticas y órdenes en las mismas fechas, avanzar cien años paso a paso, mediante diez saltos de diez años y mediante un salto de cien debe producir el mismo estado relevante y secuencia de acontecimientos. Pausar, guardar y reanudar o cambiar la cámara tampoco debe alterarlo.",
       "milestone": "H10",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S19-R03",
@@ -1099,10 +1138,15 @@
       "sectionTitle": "Comprobaciones de aceptación",
       "requirement": "**Prueba de estabilidad:** simula al menos treinta semillas durante doscientos años o hasta un final válido, repartidas entre varias políticas e intensidades. Añade escenarios largos de mil años para detectar acumulación de tareas e historial. Revisa población, recursos, referencias, eventos atascados y bucles. Una catástrofe prevista por las reglas no es un fallo del motor; un estado imposible sí.",
       "milestone": "H10",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S19-R07",
@@ -1110,10 +1154,15 @@
       "sectionTitle": "Comprobaciones de aceptación",
       "requirement": "**Prueba de persistencia e interfaz:** verifica cierre durante una animación y durante un salto, recuperación de copia, importación corrupta, cancelación y continuación. Revisa tamaños móviles de 320, 360 y 412 puntos lógicos, gestos, paneles, texto y controles. Usa dispositivo o emulador si está disponible; identifica exactamente lo no probado si no lo está.",
       "milestone": "H10",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S20-R01",
@@ -1121,10 +1170,15 @@
       "sectionTitle": "Entregables y definición de terminado",
       "requirement": "Entrega código fuente completo, recursos gráficos originales utilizables, APK de prueba realmente compilado, instrucciones de instalación y ejecución, versiones y comandos de compilación, guía de contenido y arte, inventario validado, paquete de ejemplo y resultados de las comprobaciones.",
       "milestone": "H11",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S20-R02",
@@ -1132,10 +1186,15 @@
       "sectionTitle": "Entregables y definición de terminado",
       "requirement": "Incluye capturas o vídeo de la aplicación ejecutándose cuando el entorno lo permita, además de limitaciones conocidas. Distingue una compilación verificada de una instalación probada. No presentes comandos que podrían generar un APK como si ya lo hubieras generado.",
       "milestone": "H11",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S20-R03",
@@ -1143,10 +1202,15 @@
       "sectionTitle": "Entregables y definición de terminado",
       "requirement": "El APK de prueba puede usar firma de depuración. Deja documentada la preparación de una versión de distribución sin inventar credenciales ni publicar en tiendas como parte de esta tarea.",
       "milestone": "H11",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h0/execution.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
     },
     {
       "id": "S20-R04",

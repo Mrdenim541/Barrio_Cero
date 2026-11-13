@@ -3,6 +3,7 @@
 # No dependency installation, formatting, or content regeneration is performed.
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+source tool/development_env.sh
 python3 - "$@" <<'PY'
 import datetime, hashlib, json, os, pathlib, shutil, subprocess, sys
 root = pathlib.Path.cwd()

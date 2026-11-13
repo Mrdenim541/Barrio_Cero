@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/simulation/engine.dart';
+import 'package:barrio_cero_eras/simulation/engine.dart';
 
 Command order(WorldState world, String id, String action,
         {String? actor, String? target, String? choice, int? day}) =>

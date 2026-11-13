@@ -2,15 +2,19 @@
 # Reproducible developer bootstrap. Run from the repository or any directory.
 set -euo pipefail
 PROJECT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-BARRIO_TOOLCHAINS="${BARRIO_TOOLCHAINS:-/workspace/toolchains}"
-export ANDROID_HOME="$BARRIO_TOOLCHAINS/android"
-export ANDROID_SDK_ROOT="$ANDROID_HOME"
-export ANDROID_USER_HOME="$BARRIO_TOOLCHAINS/android-user"
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$BARRIO_TOOLCHAINS/config}"
-export PUB_CACHE="${PUB_CACHE:-$BARRIO_TOOLCHAINS/pub-cache}"
-export GRADLE_USER_HOME="${GRADLE_USER_HOME:-$BARRIO_TOOLCHAINS/gradle-cache}"
-export PATH="$BARRIO_TOOLCHAINS/flutter/bin:$ANDROID_HOME/platform-tools:$PATH"
-mkdir -p "$BARRIO_TOOLCHAINS" "$PUB_CACHE" "$GRADLE_USER_HOME" "$ANDROID_USER_HOME" "$XDG_CONFIG_HOME"
+source "$PROJECT_DIR/tool/development_env.sh"
+if ! command -v javac >/dev/null; then
+  # A JRE alone runs Java but cannot compile Android. Pin the complete JDK.
+  mkdir -p "$BARRIO_TOOLCHAINS/downloads"
+  BARRIO_JDK_ARCHIVE="$BARRIO_TOOLCHAINS/downloads/OpenJDK21U-jdk_x64_linux_hotspot_21.0.9_10.tar.gz"
+  curl --fail --location --retry 2 'https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.9%2B10/OpenJDK21U-jdk_x64_linux_hotspot_21.0.9_10.tar.gz' -o "$BARRIO_JDK_ARCHIVE"
+  echo "810d3773df7e0d6c4394e4e244b264c8b30e0b05a0acf542d065fd78a6b65c2f  $BARRIO_JDK_ARCHIVE" | sha256sum --check --status
+  tar -xzf "$BARRIO_JDK_ARCHIVE" -C "$BARRIO_TOOLCHAINS"
+  if [[ -r /etc/ssl/certs/java/cacerts ]]; then
+    cp -L /etc/ssl/certs/java/cacerts "$BARRIO_TOOLCHAINS/jdk-21.0.9+10/lib/security/cacerts"
+  fi
+  source "$PROJECT_DIR/tool/development_env.sh"
+fi
 if [[ ! -d "$BARRIO_TOOLCHAINS/flutter/.git" ]]; then
   git clone --depth 1 --branch 3.35.7 https://github.com/flutter/flutter.git "$BARRIO_TOOLCHAINS/flutter"
 fi
@@ -39,7 +43,7 @@ PY
 fi
 # Feed finite answers so pipefail preserves sdkmanager's actual outcome.
 printf 'y\ny\ny\ny\ny\ny\ny\ny\ny\ny\n' | "${SDKMANAGER[@]}" --licenses
-"${SDKMANAGER[@]}" 'platform-tools' 'platforms;android-36' 'build-tools;35.0.0' 'ndk;27.0.12077973'
+"${SDKMANAGER[@]}" 'platform-tools' 'platforms;android-35' 'platforms;android-36' 'build-tools;35.0.0' 'ndk;27.0.12077973' 'cmake;3.22.1'
 echo "2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046  $PROJECT_DIR/android/gradle/wrapper/gradle-wrapper.jar" | sha256sum --check --status
 flutter --version
 flutter config --android-sdk "$ANDROID_HOME" --no-analytics

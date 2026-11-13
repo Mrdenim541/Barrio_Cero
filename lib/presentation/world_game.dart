@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'art_assets.dart';
 
 const earth = Color(0xffbda576);
 const ink = Color(0xff1d282b);
@@ -26,11 +28,12 @@ class WorldGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     images.prefix = 'assets/';
-    try {
-      people = await images.load('art/characters.png');
-      buildings = await images.load('art/buildings.png');
-      terrain = await images.load('art/terrain.png');
-    } catch (_) { /* Geometric pixel fallback while assets are loading. */ }
+    people = await loadArtPixels(rootBundle, 'assets/art/characters.rgba', 128, 2304);
+    buildings = await loadArtPixels(rootBundle, 'assets/art/buildings.rgba', 384, 192);
+    terrain = await loadArtPixels(rootBundle, 'assets/art/terrain.rgba', 192, 32);
+    images.add('art/characters.png', people!);
+    images.add('art/buildings.png', buildings!);
+    images.add('art/terrain.png', terrain!);
   }
   @override
   void update(double dt) { super.update(dt); if (!reduceMotion) phase += dt; }
@@ -97,7 +100,11 @@ class WorldGame extends FlameGame {
       final path=Path();
       for(var i=0;i<cells.length;i++){
         final index=number(cells[i]);final p=Offset((index%extent)+.5,(index~/extent)+.5);
-        if(i==0)path.moveTo(p.dx,p.dy);else path.lineTo(p.dx,p.dy);
+        if(i==0) {
+          path.moveTo(p.dx,p.dy);
+        } else {
+          path.lineTo(p.dx,p.dy);
+        }
       }
       canvas.drawPath(path,Paint()..color=route['blocked']==true?const Color(0xffbb715d):const Color(0xffc7b38b)..style=PaintingStyle.stroke..strokeWidth=.32..isAntiAlias=false);
       final cursor=number(route['progress'])%cells.length;final index=number(cells[cursor]);
@@ -173,7 +180,7 @@ class WorldGame extends FlameGame {
       final person=i<leaders.length?leaders[i] as Map:null;
       final role=person==null?3:person['name']=='Ana'?0:person['name']=='Leo'?1:person['name']=='Tito'?2:person['role']=='técnica'?0:person['role']=='explorador'?1:3;
       final action=number(s['health'],100)<35?6:role==2&&route?3:projects.isNotEmpty&&(role==0||i>=leaders.length)?2:role==3?2:0;
-      final stride=reduceMotion||action!=3?0:(phase*9+i*19)%40;
+      final stride=reduceMotion||action!=3?0.0:(phase*9+i*19)%40;
       final p=Offset(80+(i%6)*75+stride,180+(i~/6)*70);
       if(people!=null) {
         final frame=reduceMotion?0:(phase*4).floor()%4;

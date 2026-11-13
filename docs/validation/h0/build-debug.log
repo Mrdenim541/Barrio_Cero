@@ -1,0 +1,17 @@
+Running Gradle task 'assembleDebug'...                          
+Checking the license for package Android SDK Platform 35 in /workspace/toolchains/android/licenses
+License for package Android SDK Platform 35 accepted.
+Preparing "Install Android SDK Platform 35 (revision 2)".
+"Install Android SDK Platform 35 (revision 2)" ready.
+Installing Android SDK Platform 35 in /workspace/toolchains/android/platforms/android-35
+"Install Android SDK Platform 35 (revision 2)" complete.
+"Install Android SDK Platform 35 (revision 2)" finished.
+Checking the license for package CMake 3.22.1 in /workspace/toolchains/android/licenses
+License for package CMake 3.22.1 accepted.
+Preparing "Install CMake 3.22.1 v.3.22.1".
+"Install CMake 3.22.1 v.3.22.1" ready.
+Installing CMake 3.22.1 in /workspace/toolchains/android/cmake/3.22.1
+"Install CMake 3.22.1 v.3.22.1" complete.
+"Install CMake 3.22.1 v.3.22.1" finished.
+Running Gradle task 'assembleDebug'...                            150.7s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk

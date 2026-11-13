@@ -288,11 +288,25 @@ for i,name in enumerate(ICONS):
     icons.paste(im,(i*16,0))
 icons.save(OUT/'icons.png')
 
+# Runtime companions preserve exactly the artwork, with premultiplied RGBA.
+# This bypasses platform PNG decompression and makes the upload deterministic.
+for image_name in ('characters', 'buildings', 'terrain'):
+    source = Image.open(OUT / f'{image_name}.png').convert('RGBA')
+    pixels = bytearray(source.tobytes())
+    for offset in range(0, len(pixels), 4):
+        alpha = pixels[offset + 3]
+        for channel in range(3):
+            pixels[offset + channel] = (pixels[offset + channel] * alpha + 127) // 255
+    (OUT / f'{image_name}.rgba').write_bytes(pixels)
+
 manifest={'version':1,'license':'Original project artwork; see ART_GUIDE.md','palette':P,
  'characters':{'file':'characters.png','tileWidth':32,'tileHeight':48,'columns':4,'roles':ROLES,'actions':ACTIONS,'rowFormula':'roleIndex * 8 + actionIndex','frameSeconds':0.18},
  'buildings':{'file':'buildings.png','tileWidth':64,'tileHeight':64,'columns':6,'ids':BUILDINGS},
  'terrain':{'file':'terrain.png','tileWidth':32,'tileHeight':32,'columns':6,'ids':BIOMES},
  'icons':{'file':'icons.png','tileWidth':16,'tileHeight':16,'columns':len(ICONS),'ids':ICONS}}
+for image_name in ('characters', 'buildings', 'terrain'):
+    size = Image.open(OUT / f'{image_name}.png').size
+    manifest[image_name].update(pixelDataFile=f'{image_name}.rgba', pixelFormat='premultipliedRGBA8888', pixelWidth=size[0], pixelHeight=size[1])
 (OUT/'atlas.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 # Inspectable nearest-neighbor production contact sheet, not an application capture.
 preview=Image.new('RGBA',(576,520),P['soil'])
