@@ -4,15 +4,21 @@ import 'package:path_provider/path_provider.dart';
 class SaveStore {
   Future<void> _queue = Future.value();
   void _check(String slot) {
-    if (!RegExp(r'^(packages|(world|branch|legacy)_[0-2])$').hasMatch(slot)) {
+    if (!RegExp(
+      r'^(packages|(world|branch|legacy)_[0-2]|rules_[0-2]_[a-f0-9]{64})$',
+    ).hasMatch(slot)) {
       throw const FormatException('Espacio de guardado inválido');
     }
   }
+
   Future<Directory> get _root async {
-    final root = Directory('${(await getApplicationDocumentsDirectory()).path}/barrio_cero');
+    final root = Directory(
+      '${(await getApplicationDocumentsDirectory()).path}/barrio_cero',
+    );
     await root.create(recursive: true);
     return root;
   }
+
   Future<void> write(String slot, String value) {
     _check(slot);
     final result = _queue.catchError((Object _) {}).then((_) async {
@@ -30,6 +36,7 @@ class SaveStore {
     _queue = result;
     return result;
   }
+
   Future<String?> read(String slot, {bool backup = false}) async {
     _check(slot);
     await _queue.catchError((Object _) {});

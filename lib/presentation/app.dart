@@ -365,10 +365,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       );
       if (!mounted) return;
       _focusHome();
-      setState(
-        () => note =
-            '',
-      );
+      setState(() => note = '');
     } catch (e) {
       _message('No se pudo crear el mundo: $e');
     }
@@ -1184,6 +1181,15 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         _diplomacy();
       },
     ),
+    if (state['entities'] != null)
+      ListTile(
+        title: const Text('Sociedad y capital'),
+        subtitle: const Text('Ciudades, reservas locales y gobierno'),
+        onTap: () {
+          Navigator.pop(context);
+          _politicalSheet();
+        },
+      ),
     ListTile(
       title: const Text('Políticas y delegación'),
       subtitle: const Text('Prioridades para el gobierno autónomo'),
@@ -1370,6 +1376,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       Text(
         '${number(s['population'])} habitantes · Salud ${number(s['health'])}% · Ánimo ${number(s['morale'])}%',
       ),
+      if (_polity(s['id']) != null)
+        Text(
+          'Sociedad: ${_polity(s['id'])?['name']}',
+          style: const TextStyle(color: gold),
+        ),
       Text(
         s['id'] == controlled
             ? 'Diriges esta comunidad.'
@@ -1687,55 +1698,164 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       ),
     ),
   ]);
-  void _diplomacy() => _sheet('Más allá del barrio', [
-    ...societies
-        .where((s) => s['id'] != selected)
-        .map(
-          (s) => Card(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${s['name']}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${number(s['population'])} habitantes · ${s['profile'] ?? 'Comunidad autónoma'}',
-                    style: const TextStyle(color: earth, fontSize: 11),
-                  ),
-                  Row(
-                    children: [
+  String? _ownerOf(String actor) {
+    final cities = (state['entities'] as Map?)?['settlements'] as List? ?? [];
+    return cities.where((c) => c['actorId'] == actor).firstOrNull?['societyId']
+        as String?;
+  }
+
+  Map? _polity(String actor) {
+    final id = _ownerOf(actor);
+    return ((state['entities'] as Map?)?['societies'] as List? ?? [])
+            .where((s) => s['id'] == id)
+            .firstOrNull
+        as Map?;
+  }
+
+  void _politicalSheet() {
+    final owner = _polity(controlled);
+    if (owner == null) return;
+    final cities = societies
+        .where((s) => _ownerOf(s['id']) == owner['id'])
+        .toList();
+    final graphCities = (state['entities'] as Map)['settlements'] as List;
+    final capitalActor = graphCities
+        .where((c) => c['id'] == owner['capitalId'])
+        .firstOrNull?['actorId'];
+    _sheet('${owner['name']}', [
+      Text(
+        '${cities.length} asentamientos · ${cities.fold<int>(0, (n, c) => n + number(c['population']))} habitantes',
+        style: const TextStyle(color: moss, fontSize: 18),
+      ),
+      const Text(
+        'Cada asentamiento conserva sus reservas, obras y habitantes. La capital representa a la sociedad.',
+      ),
+      ...cities.map(
+        (c) => Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${c['name']}${c['id'] == capitalActor ? ' · Capital' : ''}',
+                  style: const TextStyle(fontSize: 18),
+                ),
+                Text(
+                  '${number(c['population'])} habitantes · Alimento ${number((c['resources'] as Map)['food'])}',
+                ),
+                Wrap(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _confirmCommand(
+                          'Dirigir ${c['name']}',
+                          'control',
+                          target: c['id'],
+                        );
+                      },
+                      child: const Text('Dirigir asentamiento'),
+                    ),
+                    if (c['id'] != capitalActor)
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                           _confirmCommand(
-                            'Abrir comercio',
-                            'trade',
-                            target: s['id'].toString(),
+                            'Trasladar capital',
+                            'capital',
+                            target: c['id'],
                           );
                         },
-                        child: const Text('Abrir comercio'),
+                        child: const Text('Capital aquí'),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _confirmCommand(
-                            'Negociar',
-                            'diplomacy',
-                            target: s['id'].toString(),
-                          );
-                        },
-                        child: const Text('Negociar'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
+      ),
+    ]);
+  }
+
+  void _diplomacy() => _sheet('Más allá del barrio', [
+    ...societies.where((s) => s['id'] != selected).map((s) {
+      final own = _ownerOf(controlled), other = _ownerOf(s['id']);
+      final internal = own != null && own == other;
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${s['name']}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                '${number(s['population'])} habitantes${other == null ? '' : ' · Sociedad ${_polity(s['id'])?['name']}'}',
+                style: const TextStyle(color: earth),
+              ),
+              if (!internal)
+                Text(
+                  'Confianza: ${number((society?['relations'] as Map?)?[s['id']])} / ${number((s['relations'] as Map?)?[controlled])}',
+                ),
+              Wrap(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      _confirmCommand(
+                        'Abrir comercio',
+                        'trade',
+                        target: s['id'],
+                      );
+                    },
+                    child: const Text('Abrir comercio'),
+                  ),
+                  if (!internal)
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _confirmCommand(
+                          'Negociar',
+                          'diplomacy',
+                          target: s['id'],
+                        );
+                      },
+                      child: const Text('Negociar'),
+                    ),
+                  if (own != null && other != null && !internal)
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _confirmCommand(
+                          'Proponer unión',
+                          'federate',
+                          target: s['id'],
+                        );
+                      },
+                      child: const Text('Proponer unión'),
+                    ),
+                  if (internal)
+                    const Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Text(
+                        'Misma sociedad',
+                        style: TextStyle(color: moss),
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }),
   ]);
   void _policies() {
     _sheet('Gobernar a largo plazo', [
@@ -1872,6 +1992,40 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _upgradeRules() async {
+    try {
+      final result = await session.upgradeRules(
+        confirm: () async =>
+            await showDialog<bool>(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Actualizar reglas de esta partida'),
+                content: const Text(
+                  'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Algunos decimales se redondearán. No se inventarán familias ni historia anterior. Puedes continuar con las reglas antiguas.',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text('Conservar reglas actuales'),
+                  ),
+                  FilledButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text('Copiar y actualizar'),
+                  ),
+                ],
+              ),
+            ) ??
+            false,
+      );
+      if (result.accepted) {
+        _focusHome();
+        _message('Reglas actualizadas; se conserva la copia original.');
+      }
+    } catch (e) {
+      _message('La partida se conserva con sus reglas actuales. $e');
+    }
+  }
+
   void _menu() {
     if (busy || advancing) {
       _message('Pausa el salto antes de cambiar de partida o configuración.');
@@ -1890,6 +2044,52 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           }
         },
       ),
+      if (state['entities'] == null || state['rulesVersion'] != 2)
+        ListTile(
+          title: const Text('Actualizar reglas de la partida'),
+          subtitle: const Text(
+            'Conservar copia y habilitar sociedades y materiales nuevos',
+          ),
+          onTap: () {
+            Navigator.pop(context);
+            _upgradeRules();
+          },
+        ),
+      if ((state['ruleChanges'] as List? ?? []).isNotEmpty)
+        ListTile(
+          title: const Text('Restaurar reglas anteriores'),
+          subtitle: const Text('Carga la copia anterior a la actualización'),
+          onTap: () async {
+            Navigator.pop(context);
+            final ok = await showDialog<bool>(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Volver a la copia anterior'),
+                content: const Text(
+                  'Se recuperará la fecha anterior a actualizar las reglas. El guardado actual pasará a la copia de recuperación.',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text('Cancelar'),
+                  ),
+                  FilledButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text('Restaurar copia'),
+                  ),
+                ],
+              ),
+            );
+            if (ok == true) {
+              try {
+                await session.restoreRulesBackup();
+                _focusHome();
+              } catch (e) {
+                _message('No se pudo restaurar: $e');
+              }
+            }
+          },
+        ),
       ListTile(
         title: const Text('Paquetes de contenido'),
         onTap: () {

@@ -1,0 +1,16 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+out=root/'docs/validation/rules3'
+def readworld():return adb('exec-out','run-as','com.barriocero.eras','cat','app_flutter/barrio_cero/world_0.json')
+original=(tmp/'rules3-original.json').read_bytes();prior=json.loads((root/'build/validation/rules3-before-union-check.json').read_text())['payload']['world'];merged=json.loads(readworld())['payload']['world']
+assert sum(c['societyId']=='s0' for c in merged['entities']['settlements'])==2
+for field in ['resources','resourceMillis','people','population','built','projects']:
+ assert merged['societies'][1][field]==prior['societies'][1][field]
+assert merged['societies'][0]['resourceMillis']['food']==prior['societies'][0]['resourceMillis']['food']-20000
+assert merged['societies'][0]['resourceMillis']['knowledge']==prior['societies'][0]['resourceMillis']['knowledge']-10000
+print('Union preserves local inventories and people; exact cost verified',flush=True)
+tap('Más acciones');tap('Sociedad y capital');capture('03-society-cities.png');tap('Capital aquí');tap('Confirmar orden');dump()
+capital=json.loads(readworld())['payload']['world'];polity=next(s for s in capital['entities']['societies'] if s['id']=='s0');assert polity['capitalId']=='settlement:s1'
+print('Native capital relocation verified',flush=True)
+tap('MENÚ');tap('Restaurar reglas anteriores');tap('Restaurar copia');dump();assert readworld()==original
+capture('04-original-restored.png');print('Exact original restored after upgrade, union and capital change',flush=True)
+(tmp/'rules3-native-result.json').write_text(json.dumps({'upgrade':True,'exactBackup':True,'union':True,'capitalChange':True,'exactOriginalRestored':True,'note':'Initial harness compared diplomatic relations against their values before negotiations; corrected scoped validation used a snapshot after negotiation.'},indent=2)+'\n')

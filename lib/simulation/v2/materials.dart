@@ -22,6 +22,17 @@ class Quantity {
         : int.parse(parts.last.padRight(3, '0'));
     return Quantity((whole * 1000 + fraction) * (negative ? -1 : 1));
   }
+  factory Quantity.fromNumber(num value) {
+    if (!value.isFinite || value.abs() > maxMillis / 1000) {
+      throw const FormatException('Cantidad fuera de rango');
+    }
+    final scaled = value * 1000;
+    final rounded = scaled.round();
+    if ((scaled - rounded).abs() > 0.000001 || (value != 0 && rounded == 0)) {
+      throw const FormatException('Cantidad no representable en milésimas');
+    }
+    return Quantity(rounded);
+  }
   @override
   String toString() {
     final value = millis.abs();
@@ -210,5 +221,37 @@ class MaterialLedger {
       }
     }
     return replay;
+  }
+}
+
+/// Validate declared costs before binding a package to fixed-material rules.
+void validateMaterialCosts(dynamic node) {
+  if (node is List) {
+    for (final value in node) {
+      validateMaterialCosts(value);
+    }
+  }
+  if (node is Map) {
+    for (final entry in node.entries) {
+      if (entry.key == 'cost' || entry.key == 'costs') {
+        final raw = entry.value;
+        if (raw is num) {
+          Quantity.fromNumber(raw);
+        }
+        if (raw is Map) {
+          for (final amount in raw.values) {
+            if (amount is num) {
+              Quantity.fromNumber(amount);
+            }
+            if (amount is Map) {
+              for (final key in ['base', 'perUnit']) {
+                if (amount[key] is num) Quantity.fromNumber(amount[key]);
+              }
+            }
+          }
+        }
+      }
+      validateMaterialCosts(entry.value);
+    }
   }
 }

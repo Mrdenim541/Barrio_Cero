@@ -311,7 +311,9 @@ void main() {
       await tester.tap(find.text('Barrio'));
       await tester.pump(const Duration(milliseconds: 500));
       final before = screen.world.toJson();
-      final map = tester.getRect(find.byWidgetPredicate((widget)=>widget is GameWidget));
+      final map = tester.getRect(
+        find.byWidgetPredicate((widget) => widget is GameWidget),
+      );
       final scene = SettlementScene(screen.world.societies.first.toJson());
       for (final kind in ['site', 'person']) {
         final entity = scene.entities.firstWhere((e) => e.kind == kind);
@@ -331,6 +333,80 @@ void main() {
         await tester.tapAt(const Offset(10, 80));
         await tester.pump(const Duration(milliseconds: 500));
       }
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
+  testWidgets(
+    'Legacy game upgrade is reachable, optional and preserves a rules backup',
+    (tester) async {
+      tester.view.physicalSize = const Size(360, 720);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      late dynamic screen;
+      late String original;
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const BarrioApp());
+        screen = tester.state(find.byType(ErasScreen));
+        await screen.initialization;
+        original = Checkpoint.create(
+          world: WorldState.generate(size: 64, fixedMaterials: false),
+          coreSource: File('assets/content/core.json').readAsStringSync(),
+        ).encode();
+        await screen.store.write('world_0', original);
+        await screen.session.loadSlot(0);
+      });
+      await tester.pump();
+      await tester.tap(find.text('Barrio'));
+      await tester.pump(const Duration(milliseconds: 500));
+      Future<void> openUpgrade() async {
+        await tester.tap(find.text('MENÚ'));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.ensureVisible(
+          find.text('Actualizar reglas de la partida'),
+        );
+        await tester.runAsync(() async {
+          await tester.tap(find.text('Actualizar reglas de la partida'));
+          final deadline = DateTime.now().add(const Duration(seconds: 5));
+          while (find.text('Copiar y actualizar').evaluate().isEmpty) {
+            if (DateTime.now().isAfter(deadline)) break;
+            await Future<void>.delayed(const Duration(milliseconds: 20));
+            await tester.pump();
+          }
+        });
+        await tester.pump(const Duration(milliseconds: 500));
+      }
+
+      await openUpgrade();
+      expect(
+        find.text('Copiar y actualizar'),
+        findsOneWidget,
+        reason: screen.note,
+      );
+      await tester.runAsync(() async {
+        await tester.tap(find.text('Conservar reglas actuales'));
+        await screen.session.idle;
+      });
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(screen.world.controlled.materialRules, 1);
+      await tester.runAsync(() async {
+        expect(await screen.store.read('world_0'), original);
+      });
+      await openUpgrade();
+      await tester.runAsync(() async {
+        await tester.tap(find.text('Copiar y actualizar'));
+        await screen.session.idle;
+      });
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(screen.world.controlled.materialRules, 2);
+      expect(screen.world.entities, isNotNull);
+      expect(screen.world.ruleChanges.length, 1);
+      await tester.runAsync(() async {
+        final hash = screen.world.ruleChanges.last['sourceSha256'];
+        expect(await screen.store.read('rules_0_$hash'), original);
+      });
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox.shrink());
     },

@@ -18,6 +18,14 @@ La escena local tiene cámara ajustada al área habitada, terreno texturado, nom
 
 Se añadió un componente de cantidades enteras en milésimas y un libro de transferencias atómicas, reservas, devoluciones y consumos. La recuperación reproduce el historial y rechaza saldos y recibos falsos. Cinco pruebas focalizadas y análisis limpio. Todavía no está integrado con la economía activa ni con los restos demográficos; no se declara cerrado R2. Evidencia: `docs/validation/r2-materials/`.
 
+## Integración 0.3.0 — materiales y sociedades
+
+Los inventarios en milésimas ya se usan en mundos nuevos, los pagos reales tienen recibos verificables y los restos demográficos se guardan como enteros. Sesión y trabajador usan avance tipado. Las partidas antiguas mantienen sus reglas hasta aceptar una conversión con copia exacta por SHA-256 y restauración. La pertenencia política se separó del estado local: unión de sociedades con condiciones/costes, varias ciudades y cambio de capital sin trasladar reservas.
+
+Batería completa: 93 pruebas; análisis limpio. Android verificó conversión, copia exacta, negociación/unión, cambio de capital y restauración byte a byte. Se conservan fallos de automatización y sus repeticiones. Hay una batería larga nueva en curso; todavía no acredita las treinta semillas ni mil años activos. Evidencia y limitaciones: `docs/validation/rules3/`.
+
+R2 y R3 siguen parciales: faltan reservas laborales completas, conservación material de todos los flujos, esquema final y conciliación poblacional completa. R4–R13 conservan sus obligaciones; una unión y un registro político no acreditan territorio, instituciones, eras o familias. El catálogo aún depende del motor anterior. No se declara terminado el juego.
+
 ## Línea base anterior y evidencias históricas
 
 Actualizado el 13 de noviembre de 2026. **H0 tiene una base Android compilada, instalada y comprobada. El juego completo todavía NO está terminado.**

@@ -219,7 +219,15 @@ class WorldGame extends FlameGame {
     for (var i = 0; i < societies.length; i++) {
       final s = societies[i];
       final p = position(s);
-      final color = colorsSoc[i % colorsSoc.length];
+      final owner = ((data['entities'] as Map?)?['settlements'] as List? ?? [])
+          .where((c) => c['actorId'] == s['id'])
+          .firstOrNull?['societyId']
+          ?.toString();
+      final color =
+          colorsSoc[owner == null
+              ? i % colorsSoc.length
+              : owner.codeUnits.fold<int>(0, (n, c) => n * 17 + c) %
+                    colorsSoc.length];
       if (filter == 'Población') {
         canvas.drawCircle(
           p,

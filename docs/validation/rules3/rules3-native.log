@@ -1,0 +1,28 @@
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Tap: MENÚ
+Tap: Actualizar reglas de la partida
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Copiar y actualizar
+Native upgrade and exact original backup verified
+Tap: Más acciones
+Tap: Diplomacia
+Tap: Negociar
+Tap: Confirmar orden
+Tap: Más acciones
+Tap: Diplomacia
+Tap: Negociar
+Tap: Confirmar orden
+Tap: Más acciones
+Tap: Diplomacia
+Tap: Negociar
+Tap: Confirmar orden
+Tap: Más acciones
+Tap: Diplomacia
+Tap: Proponer unión
+Tap: Confirmar orden
+Traceback (most recent call last):
+  File "/tmp/barrio_rules3_native.py", line 14, in <module>
+    assert merged['societies'][1]==initialOther;assert sum(s['population'] for s in merged['societies'])==initialTotal
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

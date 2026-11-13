@@ -1,0 +1,17 @@
+# Reglas integradas y sociedades — APK 0.3.0
+
+Esta integración no termina R2/R3 ni el juego. Los mundos nuevos usan inventarios enteros en milésimas y restos demográficos enteros en millonésimas; los anteriores conservan su ejecución hasta optar por la actualización. `AdvanceRequest` devuelve días realmente avanzados, fecha y motivo de parada; sesión y trabajador usan el contrato. El algoritmo de azar queda identificado como `lcg31-v1` en las reglas nuevas.
+
+Los pagos usan `MaterialLedger` en el motor real. Los recibos de órdenes conservan el libro del pago y se validan al cargar. Los inventarios diarios se cuantifican al escribir. Esto no demuestra todavía conservación completa de producción, transporte y pérdidas: el origen de apertura del libro de pago representa el inventario existente, no su historia productiva. Tampoco cierra reservas de trabajo bajo bajas, que todavía dependen del motor de proyectos anterior.
+
+`WorldEntities` distingue especies de referencia, culturas, sociedades políticas y asentamientos. Las ciudades conservan sus estados locales mediante el adaptador del motor anterior; la pertenencia política es independiente. Una unión exige confianza 40/30 y 20 alimentos/10 conocimientos, conserva reservas, población, culturas e identidades. Trasladar capital conserva el dirigente político si vive y puede mantener una sociedad tras perder una ciudad. Los registros retirados y culturas no se eliminan. Solo está admitida la especie humana; no se aceptan especies de otra apariencia sin reglas biológicas.
+
+La actualización es opcional. Prepara un candidato, rechaza reconciliaciones imposibles, conserva exactamente el archivo original bajo `rules_<espacio>_<SHA256>`, valida el candidato y luego lo confirma. Conserva PRNG, fecha, identidades, paquetes exactos y compromisos existentes. Registra redondeos y cambio de reglas sin inventar parentescos anteriores. Restaurar vuelve a la copia previa. Se probaron cancelación, escritura fallida y copia exacta con espacios y saltos de línea. La interfaz permite decidir y cancelar antes de escribir.
+
+La separación todavía es una ampliación compatible del esquema de mundo 1/checkpoint 2; no se presenta como el futuro world2/content2/checkpoint3. El nombre `Society` del ejecutor anterior sigue siendo la fachada del estado local. Población, instituciones y relaciones familiares completas siguen pendientes; la identidad política nueva no sustituye sus mecanismos.
+
+Pasaron 93 pruebas de la batería completa, once focalizadas después de indexar identidades y una de interfaz para la actualización opcional. Análisis limpio. La prueba Android ejecutó actualización, negoció, unió dos ciudades, trasladó la capital y restauró el archivo original byte a byte. La primera automatización comparó también relaciones anteriores a negociar; se conservan el fallo y la repetición corregida. `results.json` distingue el APK del recorrido de la compilación final si se vuelve a compilar.
+
+La primera batería larga encontró una validación intermedia con dirigente político muerto antes de conciliar su sucesión. Se corrigieron los límites de actualización; ese fallo está registrado. Se redujo el coste de conciliar identidades usando vistas mínimas e índices. La batería larga posterior sigue pendiente de su resultado completo; salidas de semillas individuales no cuentan como aceptación de las treinta semillas o de mil años activos.
+
+No se publicaron archivos ni el entorno. El APK está en `build/deliverables/` y conserva la firma de pruebas y API mínima 24.

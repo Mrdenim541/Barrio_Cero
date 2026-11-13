@@ -1,0 +1,69 @@
+{
+  "recordedAt": "2026-11-13T22:02:32.765970+00:00",
+  "scope": "Inventarios integrados, restos demográficos, avance tipado, identidades políticas y actualización opcional; R2/R3 parciales",
+  "fullTests": {
+    "passed": true,
+    "count": 93
+  },
+  "indexFocusedTests": 11,
+  "upgradeUiFocusedTests": 1,
+  "analysis": "clean",
+  "native": {
+    "upgrade": true,
+    "exactBackup": true,
+    "union": true,
+    "capitalChange": true,
+    "exactOriginalRestored": true,
+    "note": "Initial harness compared diplomatic relations against their values before negotiations; corrected scoped validation used a snapshot after negotiation."
+  },
+  "nativeBehaviorApkSha256": "698a6895981c6a7e2803400cced02fa5019918baf385f4bd60506f028a36453f",
+  "knownNativeHarnessFailure": "First script compared relations against their values before negotiations. Corrected check compares inventories and population to a snapshot after negotiation.",
+  "sourceSha256": {
+    "lib/content/content_pack.dart": "ebc12b23fb0aecfc0e0e66174af4e3664ac2e1cfdea993e8defea28c9c5d7267",
+    "lib/main.dart": "4cdc322ae6c86d4c30cfe44cf1c98c1cd8eed3a00e5b2e69307b561129605118",
+    "lib/persistence/checkpoint.dart": "d88606889de67d90bd90f5fd5fb6fb5dfed13e78423b43e2ff2503e93e9fcf73",
+    "lib/platform/document_exchange.dart": "56c1dea6eef5d939bd32e67046cf3fe5e53efd90bb0fc4b805490ffd94e594b3",
+    "lib/presentation/app.dart": "8d65b6844e7718d0775bc7a0d7d372fa8fcf9fbc6afe813297ddb0afad0c4e2f",
+    "lib/presentation/art_assets.dart": "12a8d01aac67e2c5fe346ed8e083088de187fafb258127e74517f20dc2586b41",
+    "lib/presentation/settlement_scene.dart": "df776e8a3043190159653503c5bfd33ee2eab233908d9654846570f9e4ae01b9",
+    "lib/presentation/storage.dart": "81704a87eed29d7592ab42d250eb29b6026fce616be481d33e6176a2aae7db6f",
+    "lib/presentation/storage_memory.dart": "662ed8d3f9e195afe611b71753a990d1273a1984e85b494de2d73a9a233bcb45",
+    "lib/presentation/storage_native.dart": "280330ef349efb0bf79bfee09dbf5b617d58ccbc85bf745b5c5113d2e80479e0",
+    "lib/presentation/world_game.dart": "7e9214aa378f43e1301b28427dcf3338279c00ce68d1678cd537d8e50d5de7b5",
+    "lib/session/history_worker.dart": "ac148e9955eaf57a678a2d7a4e004141d04787e23f1904c1c2b8c9525b942928",
+    "lib/session/session_controller.dart": "5586bf8ab291d1635e05fbf8fb3cfe946d8182621b0ef9c6303979e249f15e8a",
+    "lib/simulation/advance.dart": "f53fa31e37a7d5d0e77f01a4fe5a43fe58c6a73f005caed2405daa40e2738644",
+    "lib/simulation/engine.dart": "3aa5963571e9f646cfc037800439d93b0c7dfb20759c7fdd570e8a4ece00dbe6",
+    "lib/simulation/v2/inventory.dart": "ead0ce9fbe0f839a9fa52431275b62e852cb7aa2dce1e3de50a275a816127e0e",
+    "lib/simulation/v2/materials.dart": "e36d1420cb3f3cee06bb2eea0b3e93eddabffc58aa99d1bb22da0406ca89c441",
+    "lib/simulation/v2/world_entities.dart": "02f9a33579a33c4b04c87405b7ba98e1ae38b2cbbea7c2ecb11d05eef82d6c10",
+    "pubspec.yaml": "33d4bd3e06b3ee7d9d72fe616dafe73f322975ea9d7ea0a1c3f7eca79b4a0c1d",
+    "test/art_assets_test.dart": "6af37c49c77e506c5079fac86685bcee2d51affd0fbef7f857b624d00f83f683",
+    "test/checkpoint_test.dart": "b434e2af77830a8d82cc81643b023d1ecc10865425266ddb4dbe6ad52b1f3f83",
+    "test/command_preview_test.dart": "7d5772f7122a4002e425d1a3083c1cc7ee387a3fb25159b23b81683a8d0dfd3c",
+    "test/commands_test.dart": "5a2105df28270af3a38329a62822a17d29a37f070129cf0c28376e34c59fbd4a",
+    "test/content_test.dart": "697e397dc5396a46838dd9a4810ee9b467cf4d8833430800bc50ef523cb6de80",
+    "test/document_exchange_test.dart": "fabdb52ee6d192b159c769c1fe358743c2279f31f1e18d3749e102e58f741610",
+    "test/integrated_materials_test.dart": "3b652a43a296e17dcde6c73c37788fc48b336575b4d5d0743111cce8ac1c168b",
+    "test/material_ledger_test.dart": "52df7dd44c74fe5b8e36bf56f2fd721e9794b24dbeaecbdbb1bd878c3e131833",
+    "test/presentation_test.dart": "3c3776823e2432101ef9e6367cc39e977f07324e1173393e59f9bb851adbeb5e",
+    "test/rules_upgrade_test.dart": "0c445c4f42df4a1ad2d2c94b85a72f0e5389332d5c7017c84d430de878696c73",
+    "test/session_controller_test.dart": "c8dbedf3a818f5690e0edd9d74fd2553a86b310f4dc4000320a6f6b69a48a8df",
+    "test/settlement_scene_test.dart": "e2930f649fe4472ab1c5a41246bd5ae8d10b5fdcfa06668d79c55e7b7c2ab9a6",
+    "test/storage_native_test.dart": "c0c1ddd9069e4679578ecf5e681b209420fe1deae97eab22e3fd7216e7fc3e06",
+    "test/world_entities_test.dart": "e1362e78af7b18d93ad0cdf4b5fad4e3d3af12f387a0d04e903a1af361a773a5"
+  },
+  "longStability": {
+    "status": "running",
+    "scope": "30 seeds/200 years and two millennial targets; no complete result yet",
+    "log": "build/validation/rules2-stability-optimized.log"
+  },
+  "artifact": {
+    "path": "build/deliverables/barrio-cero-eras-0.3.0-test.apk",
+    "sha256": "45f76d6728d14dd9a0457bdddd1e0a172747476e74a723b7347e8ced97094bc8",
+    "bytes": 84626441,
+    "version": "0.3.0+4",
+    "mode": "profile",
+    "minSdk": 24
+  }
+}

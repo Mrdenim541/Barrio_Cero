@@ -226,7 +226,11 @@ void main() {
         sim.preview(request(world, 'resolve_event', id: '')).code,
         'invalid_id',
       );
-      world.controlled.resources['wood'] = -1;
+      expect(
+        () => world.controlled.resources['wood'] = -1,
+        throwsFormatException,
+      );
+      world.controlled.health = -1;
       final invalid = world.canonical();
       expect(
         sim.preview(request(world, 'build', target: 'farm')).code,

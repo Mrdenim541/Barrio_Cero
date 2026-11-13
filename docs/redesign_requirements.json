@@ -59,8 +59,16 @@
         "R0",
         "R1"
       ],
-      "state": "in_progress",
-      "evidence": []
+      "state": "partial",
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "R3",
@@ -68,8 +76,16 @@
       "dependencies": [
         "R2"
       ],
-      "state": "pending",
-      "evidence": []
+      "state": "partial",
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "R4",
@@ -1190,13 +1206,21 @@
         "S09-R01"
       ],
       "requirement": "Separar especie, cultura, sociedad y asentamiento con identidades persistentes.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Una sociedad conserva varias ciudades y una cultura puede sobrevivir a caída política.",
         "Los IDs y referencias son únicos y válidos al guardar, migrar o cambiar el control."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "BC2-BIO-02",
@@ -1863,13 +1887,21 @@
         "S16-R02"
       ],
       "requirement": "WorldSnapshot, preview, submit y advance como contratos separados.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Consulta no consume recursos/azar; submit valida autoridad/revisión y produce recibo idempotente.",
         "Advance devuelve fecha alcanzada, pendientes y motivo de parada sin depender de UI."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "BC2-CORE-02",
@@ -1888,11 +1920,11 @@
       ],
       "evidence": [
         {
-          "path": "docs/validation/r2-materials/results.json",
+          "path": "docs/validation/rules3/results.json",
           "kind": "behavioral",
           "result": "passed",
-          "command": "flutter test test/material_ledger_test.dart --no-pub",
-          "scope": "Componente de inventarios enteros y transferencias; todavía no integrado con economía ni restos demográficos."
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
         }
       ]
     },
@@ -1906,13 +1938,21 @@
         "S07-R04"
       ],
       "requirement": "Orden diario estable y azar visual separado.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Órdenes, trabajos/transporte, economía, demografía/instituciones, eventos y cierre tienen orden versionado.",
         "Cámara, paneles, velocidad y lotes no alteran la secuencia causal."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "BC2-CORE-04",
@@ -1967,13 +2007,21 @@
         "S14-R07"
       ],
       "requirement": "Conservar ejecutor antiguo y migrar explícitamente a mundo2/contenido2/checkpoint3.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Partida antigua continúa con sus reglas hasta conversión aceptada.",
         "Nuevos mundos registran versiones nuevas y contenido exacto."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "BC2-SAVE-02",
@@ -1985,13 +2033,21 @@
         "S06-R02"
       ],
       "requirement": "Migración preserva identidades, ubicación, recursos, compromisos y PRNG.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Sociedad antigua se convierte en sociedad con un asentamiento.",
         "Se registra cambio de reglas; no se exige equivalencia futura entre versiones distintas."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "BC2-SAVE-03",
@@ -2003,13 +2059,21 @@
         "S16-R03"
       ],
       "requirement": "Migración no inventa parentescos ni destruye la partida original.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Se conserva copia byte a byte antes de sustituir destino.",
         "Personaje irreconciliable, evento incompatible o contenido ausente rechaza conversión dejando antiguo válido."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/rules3/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; Android upgrade/union/capital/restore",
+          "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        }
+      ]
     },
     {
       "id": "BC2-SAVE-04",

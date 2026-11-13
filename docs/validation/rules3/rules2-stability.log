@@ -1,0 +1,16 @@
+PARTIAL RUN: group filter "full-content 30 seeds"; not full acceptance
+RUN full-content 30 seeds x 200 years and two millennia
+Unhandled exception:
+FormatException: Dirigente político inválido
+#0      WorldEntities.validate (package:barrio_cero_eras/simulation/v2/world_entities.dart:191:9)
+#1      WorldState.validate (package:barrio_cero_eras/simulation/engine.dart:166:12)
+#2      ContentSimulation.resolveContentEvent (package:barrio_cero_eras/simulation/engine.dart:561:8)
+#3      ContentSimulation._directContent (package:barrio_cero_eras/simulation/engine.dart:552:739)
+#4      Simulation._tick (package:barrio_cero_eras/simulation/engine.dart:476:157)
+#5      Simulation.advanceDays (package:barrio_cero_eras/simulation/engine.dart:475:188)
+#6      runLong (file:///workspace/Barrio_Cero/tool/simulation_check.dart:165:20)
+#7      main.<anonymous closure> (file:///workspace/Barrio_Cero/tool/simulation_check.dart:102:4)
+#8      main.test (file:///workspace/Barrio_Cero/tool/simulation_check.dart:13:159)
+#9      main (file:///workspace/Barrio_Cero/tool/simulation_check.dart:92:2)
+#10     _delayEntrypointInvocation.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:312:33)
+#11     _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193:12)

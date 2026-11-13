@@ -1,0 +1,6 @@
+Analyzing Barrio_Cero...                                        
+
+   info • Statements in an if should be enclosed in a block • lib/simulation/v2/world_entities.dart:277:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block • lib/simulation/v2/world_entities.dart:284:9 • curly_braces_in_flow_control_structures
+
+2 issues found. (ran in 3.8s)

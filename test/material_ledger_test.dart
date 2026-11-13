@@ -125,4 +125,21 @@ void main() {
     duplicate['operations'].add(duplicate['operations'].first);
     expect(() => MaterialLedger.fromJson(duplicate), throwsFormatException);
   });
+  test(
+    'Calculated decimal costs tolerate floating noise but never charge zero for positive fractions',
+    () {
+      expect(Quantity.fromNumber(0.1 + 0.2).millis, 300);
+      expect(() => Quantity.fromNumber(0.0001), throwsFormatException);
+      expect(
+        () => validateMaterialCosts({
+          'events': [
+            {
+              'costs': {'wood': 0.0001},
+            },
+          ],
+        }),
+        throwsFormatException,
+      );
+    },
+  );
 }

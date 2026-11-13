@@ -30,7 +30,13 @@ void historyWorker(Map<String, dynamic> args) async {
     while (world.day < target && !cancel) {
       final before = world.day;
       final days = (target - before).clamp(0, 30).toInt();
-      sim.advanceDays(days, stopOnCrisis: stop, delegateDecisions: !stop);
+      sim.advance(
+        AdvanceRequest(
+          days: days,
+          stopOnCrisis: stop,
+          delegateDecisions: !stop,
+        ),
+      );
       final done = world.day >= target || world.day < before + days;
       confirmation = Completer<void>();
       send.send({'world': world.toJson(), 'done': done, 'target': target});

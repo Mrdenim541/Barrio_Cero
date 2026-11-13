@@ -1,0 +1,21 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+out=root/'docs/validation/rules3';out.mkdir(exist_ok=True)
+def readworld():return adb('exec-out','run-as','com.barriocero.eras','cat','app_flutter/barrio_cero/world_0.json')
+def actions():tap('Más acciones');tap('Diplomacia')
+before=readworld();(tmp/'rules3-original.json').write_bytes(before)
+tap('Continuar historia');tap('MENÚ');tap('Actualizar reglas de la partida');capture('01-upgrade-confirmation.png');tap('Copiar y actualizar');dump()
+upgraded=json.loads(readworld());w=upgraded['payload']['world'];assert w['rulesVersion']==2 and 'entities' in w
+key='rules_0_'+w['ruleChanges'][-1]['sourceSha256'];backup=adb('exec-out','run-as','com.barriocero.eras','cat','app_flutter/barrio_cero/'+key+'.json');assert backup==before
+print('Native upgrade and exact original backup verified',flush=True)
+initialOther=w['societies'][1];initialTotal=sum(s['population'] for s in w['societies'])
+for i in range(3):actions();tap('Negociar');tap('Confirmar orden');dump()
+actions();tap('Proponer unión');capture('02-union-preview.png');tap('Confirmar orden');dump()
+merged=json.loads(readworld())['payload']['world'];cities=merged['entities']['settlements'];assert sum(c['societyId']=='s0' for c in cities)==2
+assert merged['societies'][1]==initialOther;assert sum(s['population'] for s in merged['societies'])==initialTotal
+print('Native political union with distinct local inventories verified',flush=True)
+tap('Más acciones');tap('Sociedad y capital');capture('03-society-cities.png');tap('Capital aquí');tap('Confirmar orden');dump()
+capital=json.loads(readworld())['payload']['world'];polity=next(s for s in capital['entities']['societies'] if s['id']=='s0');assert polity['capitalId']=='settlement:s1'
+print('Native capital relocation verified',flush=True)
+tap('MENÚ');tap('Restaurar reglas anteriores');tap('Restaurar copia');dump();assert readworld()==before
+capture('04-original-restored.png');print('Exact original restored after upgrade, union and capital change',flush=True)
+(tmp/'rules3-native-result.json').write_text(json.dumps({'upgrade':True,'exactBackup':True,'union':True,'capitalChange':True,'exactOriginalRestored':True},indent=2)+'\n')

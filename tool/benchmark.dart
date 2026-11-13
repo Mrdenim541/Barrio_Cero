@@ -26,6 +26,7 @@ void main() {
       s.leaderId = leader.id;
       s.ensureSites();
       world.societies.add(s);
+      world.entities?.reconcile(world.societies.map((s)=>s.identityView()));
     }
     world.validate();
     final sim = Simulation(world)..registerContent(pack);

@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 import '../content/content_pack.dart';
 import '../persistence/checkpoint.dart';
 import '../simulation/engine.dart';
+import '../simulation/v2/materials.dart';
 
 typedef SessionRead = Future<String?> Function(String slot, {bool backup});
 typedef SessionWrite = Future<void> Function(String slot, String value);
@@ -365,6 +367,46 @@ class SessionController {
     );
   });
 
+  Future<SessionLoadResult> upgradeRules({required LegacyConsent confirm}) =>
+      _enqueue(() async {
+        _requireNoWorker();
+        final source = await read('world_$_slot');
+        if (source == null) {
+          throw const FormatException('No hay archivo original que conservar');
+        }
+        final disk = Checkpoint.decode(source);
+        if (disk.encode() != _current().encode()) {
+          throw StateError('El archivo cambió fuera de la sesión');
+        }
+        final candidate = Checkpoint.upgradeRules(source);
+        if (!await confirm()) return const SessionLoadResult(accepted: false);
+        final hash = sha256.convert(utf8.encode(source)).toString();
+        final key = 'rules_${_slot}_$hash';
+        final existing = await read(key);
+        if (existing != null && existing != source) {
+          throw const FormatException('Conflicto en copia original');
+        }
+        if (existing == null) await write(key, source);
+        await _commit(candidate, replace: true);
+        return const SessionLoadResult(migrated: true);
+      });
+  Future<SessionLoadResult> restoreRulesBackup() => _enqueue(() async {
+    _requireNoWorker();
+    final changes = _current().world.ruleChanges;
+    if (changes.isEmpty) {
+      return const SessionLoadResult(found: false, accepted: false);
+    }
+    final hash = changes.last['sourceSha256'];
+    final raw = await read('rules_${_slot}_$hash');
+    if (raw == null) {
+      throw const FormatException('La copia original no está disponible');
+    }
+    if (sha256.convert(utf8.encode(raw)).toString() != hash) {
+      throw const FormatException('La copia original está dañada');
+    }
+    return _import(raw, destination: _slot, persist: true);
+  });
+
   Future<CommandResult> _submit(Command request) async {
     _requireNoWorker();
     final world =
@@ -404,7 +446,9 @@ class SessionController {
     final world =
         worldCopy() ?? (throw StateError('No hay una partida activa'));
     final sim = Simulation(world)..registerContent(_current().content);
-    final advanced = sim.advanceDays(days, stopOnCrisis: _stopCrisis);
+    final advanced = sim
+        .advance(AdvanceRequest(days: days, stopOnCrisis: _stopCrisis))
+        .advancedDays;
     final target = _current().target;
     await _commit(
       _candidate(
@@ -446,6 +490,7 @@ class SessionController {
   Future<void> importPackage(String raw) => _enqueue(() async {
     final candidate = [..._available, raw];
     _validatePackages(candidate);
+    validateMaterialCosts(ContentPack.parse(raw, base: basePack).data);
     await write('packages', jsonEncode(candidate));
     _available = List.unmodifiable(candidate);
     registryWarning = null;
