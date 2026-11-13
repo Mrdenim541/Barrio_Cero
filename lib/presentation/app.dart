@@ -117,7 +117,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     if(world==null)return;
     final payload=_encode(world!.toJson(), target:jumpTarget);
     final destination='world_$slot';
-    saveQueue=saveQueue.catchError((Object _){}).then((_)=>store.write(destination,payload));
+    // SaveStore owns the single write queue. Delaying enqueue in a second
+    // lifecycle-only queue lets an older autosave run after a newer import.
+    saveQueue=store.write(destination,payload);
     await saveQueue;
   }
   String _encode(Map<String,dynamic> value,{int? target}) {
@@ -127,17 +129,20 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       additionalSources:activePackSources,target:target,stopCrisis:stopCrisis,
       settings:{'reduceMotion':reduceMotion,'sound':sound,'vibration':vibration}).encode();
   }
-  Future<void> _load({bool backup=false}) async {
+  Future<void> _load({bool backup=false,int? fromSlot}) async {
+    final sourceSlot=fromSlot??slot;
     await initialization;
     if(busy||advancing)return;
     timer?.cancel();timer=null;
     try{
-      final raw=await store.read('world_$slot',backup:backup);
+      final raw=await store.read('world_$sourceSlot',backup:backup);
       if(raw==null){_message('No hay una partida en este espacio.');return;}
-      await _import(raw,persist:false);
-    }catch(e){if(!backup){final recovery=await store.read('world_$slot',backup:true);if(recovery!=null){try{await _import(recovery,persist:false);_message('Copia anterior recuperada; el archivo principal no era válido.');return;}catch(_){}}}_message('No se pudo cargar. Prueba Recuperar copia: $e');}
+      await _import(raw,persist:false,destinationSlot:sourceSlot);
+    }catch(e){if(!backup){final recovery=await store.read('world_$sourceSlot',backup:true);if(recovery!=null){try{await _import(recovery,persist:false,destinationSlot:sourceSlot);_message('Copia anterior recuperada; el archivo principal no era válido.');return;}catch(_){}}}_message('No se pudo cargar. Prueba Recuperar copia: $e');}
   }
-  Future<void> _import(String raw,{bool persist=true}) async {
+  Future<void> _import(String raw,{bool persist=true,int? destinationSlot}) async {
+    final targetSlot=destinationSlot??slot;
+    if(targetSlot<0||targetSlot>2)throw const FormatException('Espacio de guardado inválido');
     await initialization;
     if(busy||advancing)throw StateError('Espera a que termine el avance actual.');
     timer?.cancel();timer=null;advancing=true;
@@ -156,13 +161,13 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         actions:[TextButton(onPressed:()=>Navigator.pop(context,false),child:const Text('Cancelar')),
           FilledButton(onPressed:()=>Navigator.pop(context,true),child:const Text('Conservar copia y actualizar'))]));
       if(accept!=true)return;
-      await store.write('legacy_$slot',raw);
+      await store.write('legacy_$targetSlot',raw);
     }else{checkpoint=Checkpoint.decode(raw);}
-    if(persist||legacy)await store.write('world_$slot',checkpoint.encode());
+    if(persist||legacy)await store.write('world_$targetSlot',checkpoint.encode());
     timer?.cancel();timer=null;
     if(!mounted)return;
     setState((){
-      world=checkpoint.world;core=checkpoint.content;basePack=checkpoint.basePack;
+      slot=targetSlot;world=checkpoint.world;core=checkpoint.content;basePack=checkpoint.basePack;
       coreHash=checkpoint.basePack.hash;activeCoreSource=checkpoint.coreSource;
       activePackSources=checkpoint.additionalSources.toList();
       reduceMotion=checkpoint.settings['reduceMotion']??false;
@@ -423,17 +428,20 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       if(accept==true){try{final pack=ContentPack.parse(input.text,base:basePack);if(availablePackSources.length>=8)throw const FormatException('Límite de 8 paquetes');if(availablePackSources.any((text)=>ContentPack.parse(text,base:basePack).id==pack.id))throw const FormatException('Identidad ya importada');availablePackSources.add(input.text);await store.write('packages',jsonEncode(availablePackSources));_message('Paquete validado. Se aplicará al crear un nuevo mundo.');}catch(e){_message('Paquete rechazado: $e');}}
     },child:const Text('Importar paquete JSON')),
   ]);
-  void _archive()=>_sheet('Archivo de mundos',[
-    Row(children:[const Text('Espacio activo: '),DropdownButton<int>(value:slot,items:List.generate(3,(i)=>DropdownMenuItem(value:i,child:Text('${i+1}'))),onChanged:(v){setState(()=>slot=v!);Navigator.pop(context);_archive();})]),
-    FilledButton(onPressed:(){Navigator.pop(context);_load();},child:const Text('Cargar este espacio')),const SizedBox(height:8),
-    OutlinedButton(onPressed:(){Navigator.pop(context);_load(backup:true);},child:const Text('Recuperar copia anterior')),const SizedBox(height:8),
+  void _archive({int? chosenSlot}){
+    final selectedSlot=chosenSlot??slot;
+    final duplicateSlot=selectedSlot==slot?(slot+1)%3:selectedSlot;
+    _sheet('Archivo de mundos',[
+    Wrap(crossAxisAlignment:WrapCrossAlignment.center,children:[const Text('Espacio elegido: '),DropdownButton<int>(value:selectedSlot,items:List.generate(3,(i)=>DropdownMenuItem(value:i,child:Text('${i+1}'))),onChanged:(v){Navigator.pop(context);_archive(chosenSlot:v);})]),
+    FilledButton(onPressed:(){Navigator.pop(context);_load(fromSlot:selectedSlot);},child:const Text('Cargar este espacio')),const SizedBox(height:8),
+    OutlinedButton(onPressed:(){Navigator.pop(context);_load(backup:true,fromSlot:selectedSlot);},child:const Text('Recuperar copia anterior')),const SizedBox(height:8),
     if(world!=null)...[
-      OutlinedButton(onPressed:()async{final destination=(slot+1)%3;await store.write('world_$destination',_encode(world!.toJson()));if(mounted){Navigator.pop(context);_message('Mundo duplicado en espacio ${destination+1}.');}},child:Text('Duplicar en espacio ${(slot+1)%3+1}')),
+      OutlinedButton(onPressed:()async{final destination=duplicateSlot;await store.write('world_$destination',_encode(world!.toJson()));if(mounted){Navigator.pop(context);_message('Mundo duplicado en espacio ${destination+1}.');}},child:Text('Duplicar en espacio ${duplicateSlot+1}')),
       const SizedBox(height:8),OutlinedButton(onPressed:(){Navigator.pop(context);_export();},child:const Text('Exportar partida (JSON)')),
     ],
-    const SizedBox(height:8),OutlinedButton(onPressed:(){Navigator.pop(context);_importDialog();},child:const Text('Importar partida (JSON)')),
+    const SizedBox(height:8),OutlinedButton(onPressed:(){Navigator.pop(context);_importDialog(destinationSlot:selectedSlot);},child:const Text('Importar partida (JSON)')),
     if(kIsWeb)const Padding(padding:EdgeInsets.only(top:10),child:Text('En esta previsualización el almacenamiento es temporal. Android conserva archivos locales al cerrar.',style:TextStyle(color:earth,fontSize:11))),
-  ]);
+  ]);}
   Future<void> _export() async {
     if(advancing||busy){_message('Espera a que se confirme el avance actual.');return;}
     final data=_encode(world!.toJson(),target:jumpTarget);
@@ -444,12 +452,12 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       const SizedBox(height:12),SelectableText('${data.substring(0,data.length.clamp(0,800).toInt())}…',style:const TextStyle(fontSize:10)),
     ]);
   }
-  Future<void> _importDialog()async{
+  Future<void> _importDialog({int? destinationSlot})async{
     if(advancing||busy){_message('Pausa el avance antes de importar.');return;}
     timer?.cancel();timer=null;
-    if(documents.supported){try{final raw=await documents.importDocument();if(raw!=null){await _import(raw);_message('Historia importada.');}}catch(e){_message('Importación rechazada; la partida actual se conserva. $e');}return;}
+    if(documents.supported){try{final raw=await documents.importDocument();if(raw!=null){await _import(raw,destinationSlot:destinationSlot);_message('Historia importada.');}}catch(e){_message('Importación rechazada; la partida actual se conserva. $e');}return;}
     final input=TextEditingController();
     final ok=await showDialog<bool>(context:context,builder:(context)=>AlertDialog(title:const Text('Importar historia'),content:TextField(controller:input,minLines:5,maxLines:10,decoration:const InputDecoration(labelText:'Pega el contenido del archivo JSON')),actions:[TextButton(onPressed:()=>Navigator.pop(context,false),child:const Text('Cancelar')),FilledButton(onPressed:()=>Navigator.pop(context,true),child:const Text('Validar e importar'))]));
-    if(ok==true){try{await _import(input.text);_message('Historia importada.');}catch(e){_message('Importación rechazada; la partida actual se conserva. $e');}}
+    if(ok==true){try{await _import(input.text,destinationSlot:destinationSlot);_message('Historia importada.');}catch(e){_message('Importación rechazada; la partida actual se conserva. $e');}}
   }
 }

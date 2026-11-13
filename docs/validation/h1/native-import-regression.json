@@ -1,0 +1,19 @@
+{
+  "exported": {
+    "day": 2,
+    "sha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e"
+  },
+  "beforeImport": {
+    "day": 3,
+    "sha256": "93110f1203737a8dd93979352fc60a7533737650cc5dd149072a9531021995d0"
+  },
+  "afterImport": {
+    "day": 3,
+    "sha256": "93110f1203737a8dd93979352fc60a7533737650cc5dd149072a9531021995d0"
+  },
+  "backupAfterImport": {
+    "day": 2,
+    "sha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e"
+  },
+  "observed": "UI confirmed day 2; primary reverted to day 3 while backup contained day 2. Earlier lifecycle save overwrote imported checkpoint."
+}

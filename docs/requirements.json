@@ -1095,9 +1095,13 @@
         {
           "path": "docs/validation/h0/execution.json",
           "result": "passed"
+        },
+        {
+          "path": "docs/validation/h1/results.json",
+          "result": "partial"
         }
       ],
-      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
+      "nextCheck": "Equivalencia headless aprobada con catálogo real y guardado; completar equivalencia mediante controles Android y worker."
     },
     {
       "id": "S19-R03",
@@ -1116,10 +1120,15 @@
       "sectionTitle": "Comprobaciones de aceptación",
       "requirement": "**Prueba de consecuencias:** verifica al menos tres rutas de la instalación antigua y dos desenlaces de cada arco narrativo. Comprueba costes, condiciones, efectos diferidos y explicación causal. Fuerza escenarios extraordinarios mediante herramientas de prueba para verificar sus resultados, conservando su probabilidad normal en partidas comunes.",
       "milestone": "H10",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h1/results.json",
+          "result": "partial"
+        }
+      ],
+      "nextCheck": "292 opciones probadas en fixtures y ramas de instalación en runner; recorrer dos finales por arco desde su inicio y verificar semántica causal completa."
     },
     {
       "id": "S19-R05",
@@ -1127,10 +1136,15 @@
       "sectionTitle": "Comprobaciones de aceptación",
       "requirement": "**Prueba generacional:** comprueba envejecimiento, sucesión y continuidad de instituciones durante cien años, sin personajes fallecidos actuando ni duplicación de habitantes. Reconoce correctamente destrucción local, caída política y extinción global.",
       "milestone": "H10",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/h1/results.json",
+          "result": "partial"
+        }
+      ],
+      "nextCheck": "Sucesión/extinción probadas en runner; faltan instituciones persistentes y reconciliación completa de personajes/cohortes."
     },
     {
       "id": "S19-R06",
@@ -1144,9 +1158,13 @@
         {
           "path": "docs/validation/h0/execution.json",
           "result": "passed"
+        },
+        {
+          "path": "docs/validation/h1/results.json",
+          "result": "partial"
         }
       ],
-      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
+      "nextCheck": "30 semillas completaron 200 años; escenarios con objetivo de mil años terminaron por extinción en día 215.910. Añadir mil años activos para medir acumulación."
     },
     {
       "id": "S19-R07",
@@ -1160,9 +1178,13 @@
         {
           "path": "docs/validation/h0/execution.json",
           "result": "passed"
+        },
+        {
+          "path": "docs/validation/h1/results.json",
+          "result": "partial"
         }
       ],
-      "nextCheck": "H0 y pruebas parciales documentados en STATUS.md; completar todas las cláusulas de este bloque antes de aprobarlo."
+      "nextCheck": "Regresión de espacios y autoguardado aprobada, ciclo nativo básico y configuración 320/360/412 comprobados. Faltan interrupciones durante salto, fallos de disco y cobertura móvil completa."
     },
     {
       "id": "S20-R01",

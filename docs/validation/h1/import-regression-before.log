@@ -1,0 +1,1194 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/presentation_test.dart
+00:00 +0: Start screen and world configuration remain usable at 320.0
+00:01 +1: Start screen and world configuration remain usable at 360.0
+00:01 +2: Start screen and world configuration remain usable at 412.0
+00:02 +3: Create, order, advance and reload a committed world at 320x640
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: TestFailure:<Expected: {
+                      'schema': 1,
+                      'seed': 42,
+                      'size': 96,
+                      'day': 1,
+                      'serial': 2,
+                      'intensity': 'normal',
+                      'extraordinary': true,
+                      'rng': 878238508,
+                      'controlledId': 's0',
+                      'tiles': [
+                        {'x': 0, 'y': 0, 'biome': 5, 'richness': 3, 'ruin': false, 'damage': 0.0},
+                        {'x': 1, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 2, 'y': 0, 'biome': 5, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 3, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 4, 'y': 0, 'biome': 5, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 5, 'y': 0, 'biome': 5, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 6, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 7, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 8, 'y': 0, 'biome': 5, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 9, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 10, 'y': 0, 'biome': 5, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 11, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 12, 'y': 0, 'biome': 5, 'richness': 2, 'ruin': true, 'damage': 0.0},
+                        {'x': 13, 'y': 0, 'biome': 4, 'richness': 3, 'ruin': false, 'damage': 0.0},
+                        {'x': 14, 'y': 0, 'biome': 4, 'richness': 3, 'ruin': false, 'damage': 0.0},
+                        {'x': 15, 'y': 0, 'biome': 4, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 16, 'y': 0, 'biome': 4, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 17, 'y': 0, 'biome': 4, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 18, 'y': 0, 'biome': 4, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 19, 'y': 0, 'biome': 4, 'richness': 2, 'ruin': false, 'damage': 0.0},
+                        {'x': 20, 'y': 0, 'biome': 3, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 21, 'y': 0, 'biome': 3, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 22, 'y': 0, 'biome': 3, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 23, 'y': 0, 'biome': 3, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        ...
+                      ],
+                      'societies': [
+                        {
+                          'id': 's0',
+                          'name': 'Barrio Cero',
+                          'profile': 'cooperativa',
+                          'culture': 'Barrio Cero',
+                          'leaderId': 'p0c',
+                          'x': 19,
+                          'y': 24,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.06,
+                          'morale': 70.025,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 261.04400000000004,
+                            'wood': 80.51,
+                            'stone': 70.0,
+                            'metal': 25.0,
+                            'water': 249.84,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.204,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [{'building': 'farm', 'finish': 12}],
+                          'tech': [],
+                          'relations': {'s1': 3, 's2': 7, 's3': 12, 's4': 28, 's5': 28},
+                          'sites': [
+                            {'id': 's0:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's0:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's0:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's0:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's0:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's0:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's0:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p0a',
+                              'name': 'Ana',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p0b',
+                              'name': 'Leo',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p0c',
+                              'name': 'Tito',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'agriculture',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's1',
+                          'name': 'Liga del Junco',
+                          'profile': 'ecologista',
+                          'culture': 'Liga del Junco',
+                          'leaderId': 'p1c',
+                          'x': 46,
+                          'y': 24,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.06,
+                          'morale': 70.025,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 260.72,
+                            'wood': 100.57,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.84,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.228,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': 13, 's2': 15, 's3': 23, 's4': -6, 's5': 5},
+                          'sites': [
+                            {'id': 's1:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's1:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's1:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's1:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's1:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's1:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's1:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p1a',
+                              'name': 'Iria 1',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p1b',
+                              'name': 'Nilo 1',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p1c',
+                              'name': 'Sol 1',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'sanitation',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's2',
+                          'name': 'Forja Gris',
+                          'profile': 'industrial',
+                          'culture': 'Forja Gris',
+                          'leaderId': 'p2c',
+                          'x': 73,
+                          'y': 24,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.06,
+                          'morale': 70.025,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 259.586,
+                            'wood': 100.57,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.84,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.228,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': 28, 's1': -10, 's3': 18, 's4': 17, 's5': 12},
+                          'sites': [
+                            {'id': 's2:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's2:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's2:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's2:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's2:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's2:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's2:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p2a',
+                              'name': 'Iria 2',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p2b',
+                              'name': 'Nilo 2',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p2c',
+                              'name': 'Sol 2',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.7,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'mining',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's3',
+                          'name': 'Archivo del Alba',
+                          'profile': 'científica',
+                          'culture': 'Archivo del Alba',
+                          'leaderId': 'p3c',
+                          'x': 20,
+                          'y': 67,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.06,
+                          'morale': 70.025,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 261.04400000000004,
+                            'wood': 100.57,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.84,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.228,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': 20, 's1': -5, 's2': 14, 's4': 20, 's5': 7},
+                          'sites': [
+                            {'id': 's3:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's3:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's3:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's3:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's3:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's3:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's3:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p3a',
+                              'name': 'Iria 3',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p3b',
+                              'name': 'Nilo 3',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p3c',
+                              'name': 'Sol 3',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'writing',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's4',
+                          'name': 'Vigías del Sur',
+                          'profile': 'defensiva',
+                          'culture': 'Vigías del Sur',
+                          'leaderId': 'p4c',
+                          'x': 46,
+                          'y': 67,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.06,
+                          'morale': 70.025,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 261.04400000000004,
+                            'wood': 100.57,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.84,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.228,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': -5, 's1': 14, 's2': -10, 's3': 14, 's5': -7},
+                          'sites': [
+                            {'id': 's4:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's4:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's4:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's4:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's4:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's4:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's4:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p4a',
+                              'name': 'Iria 4',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p4b',
+                              'name': 'Nilo 4',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p4c',
+                              'name': 'Sol 4',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'masonry',
+                            'diplomacy': 'defend'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's5',
+                          'name': 'Nómadas de Sal',
+                          'profile': 'mercantil',
+                          'culture': 'Nómadas de Sal',
+                          'leaderId': 'p5c',
+                          'x': 73,
+                          'y': 67,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.06,
+                          'morale': 70.025,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 261.04400000000004,
+                            'wood': 100.57,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.84,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.228,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': -3, 's1': 12, 's2': 3, 's3': -1, 's4': 7},
+                          'sites': [
+                            {'id': 's5:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's5:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's5:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's5:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's5:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's5:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's5:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p5a',
+                              'name': 'Iria 5',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p5b',
+                              'name': 'Nilo 5',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p5c',
+                              'name': 'Sol 5',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'trade',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        }
+                      ],
+                      'chronicle': [
+                        {
+                          'id': 'h0',
+                          'day': 0,
+                          'title': 'Un mundo vuelve a respirar',
+                          'text': 'Ana, Leo y Tito reúnen a 56 habitantes junto a las ruinas. Cada
+decisión tendrá memoria.',
+                          'category': 'inicio',
+                          'societyId': 's0',
+                          'x': 19,
+                          'y': 24,
+                          'cause': null
+                        },
+                        {
+                          'id': 'h1',
+                          'day': 0,
+                          'title': 'Obra: Huerto',
+                          'text': 'Materiales y cuatro trabajadores reservados.',
+                          'category': 'construcción',
+                          'societyId': 's0',
+                          'x': 19,
+                          'y': 24,
+                          'cause': null
+                        }
+                      ],
+                      'pending': [],
+                      'routes': [],
+                      'annualSnapshots': {},
+                      'contentVersions': {
+                        'core': '1.0.0',
+                        'barrio.core.version': '1.0.0',
+                        'barrio.core.sha256':
+'a751baac02f9a32bbd2e5058e507e53c50d118d95c9dad527c66f5e3db40e568'
+                      },
+                      'contentHistory': {},
+                      'commandReceipts': {
+                        'ui-0-0': {
+                          'fingerprint':
+'{"id":"ui-0-0","action":"build","actorId":"s0","issuedDay":0,"target":"farm","choice":null}',
+                          'message': 'Huerto: 12 días.',
+                          'day': 0
+                        }
+                      }
+                    }
+            Actual: {
+                      'schema': 1,
+                      'seed': 42,
+                      'size': 96,
+                      'day': 2,
+                      'serial': 2,
+                      'intensity': 'normal',
+                      'extraordinary': true,
+                      'rng': 878238508,
+                      'controlledId': 's0',
+                      'tiles': [
+                        {'x': 0, 'y': 0, 'biome': 5, 'richness': 3, 'ruin': false, 'damage': 0.0},
+                        {'x': 1, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 2, 'y': 0, 'biome': 5, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 3, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 4, 'y': 0, 'biome': 5, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 5, 'y': 0, 'biome': 5, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 6, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 7, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 8, 'y': 0, 'biome': 5, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 9, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 10, 'y': 0, 'biome': 5, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 11, 'y': 0, 'biome': 5, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 12, 'y': 0, 'biome': 5, 'richness': 2, 'ruin': true, 'damage': 0.0},
+                        {'x': 13, 'y': 0, 'biome': 4, 'richness': 3, 'ruin': false, 'damage': 0.0},
+                        {'x': 14, 'y': 0, 'biome': 4, 'richness': 3, 'ruin': false, 'damage': 0.0},
+                        {'x': 15, 'y': 0, 'biome': 4, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 16, 'y': 0, 'biome': 4, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 17, 'y': 0, 'biome': 4, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 18, 'y': 0, 'biome': 4, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        {'x': 19, 'y': 0, 'biome': 4, 'richness': 2, 'ruin': false, 'damage': 0.0},
+                        {'x': 20, 'y': 0, 'biome': 3, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 21, 'y': 0, 'biome': 3, 'richness': 5, 'ruin': false, 'damage': 0.0},
+                        {'x': 22, 'y': 0, 'biome': 3, 'richness': 4, 'ruin': false, 'damage': 0.0},
+                        {'x': 23, 'y': 0, 'biome': 3, 'richness': 1, 'ruin': false, 'damage': 0.0},
+                        ...
+                      ],
+                      'societies': [
+                        {
+                          'id': 's0',
+                          'name': 'Barrio Cero',
+                          'profile': 'cooperativa',
+                          'culture': 'Barrio Cero',
+                          'leaderId': 'p0c',
+                          'x': 19,
+                          'y': 24,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.12,
+                          'morale': 70.05000000000001,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 262.09037600000005,
+                            'wood': 81.02000000000001,
+                            'stone': 70.0,
+                            'metal': 25.0,
+                            'water': 249.6812,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.408,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [{'building': 'farm', 'finish': 12}],
+                          'tech': [],
+                          'relations': {'s1': 3, 's2': 7, 's3': 12, 's4': 28, 's5': 28},
+                          'sites': [
+                            {'id': 's0:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's0:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's0:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's0:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's0:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's0:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's0:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p0a',
+                              'name': 'Ana',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p0b',
+                              'name': 'Leo',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p0c',
+                              'name': 'Tito',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'agriculture',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's1',
+                          'name': 'Liga del Junco',
+                          'profile': 'ecologista',
+                          'culture': 'Liga del Junco',
+                          'leaderId': 'p1c',
+                          'x': 46,
+                          'y': 24,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.12,
+                          'morale': 70.05000000000001,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 261.44216000000006,
+                            'wood': 101.13999999999999,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.6812,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.456,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': 13, 's2': 15, 's3': 23, 's4': -6, 's5': 5},
+                          'sites': [
+                            {'id': 's1:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's1:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's1:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's1:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's1:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's1:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's1:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p1a',
+                              'name': 'Iria 1',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p1b',
+                              'name': 'Nilo 1',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p1c',
+                              'name': 'Sol 1',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'sanitation',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's2',
+                          'name': 'Forja Gris',
+                          'profile': 'industrial',
+                          'culture': 'Forja Gris',
+                          'leaderId': 'p2c',
+                          'x': 73,
+                          'y': 24,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.12,
+                          'morale': 70.05000000000001,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 259.173404,
+                            'wood': 101.13999999999999,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.6812,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.456,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': 28, 's1': -10, 's3': 18, 's4': 17, 's5': 12},
+                          'sites': [
+                            {'id': 's2:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's2:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's2:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's2:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's2:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's2:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's2:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p2a',
+                              'name': 'Iria 2',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p2b',
+                              'name': 'Nilo 2',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p2c',
+                              'name': 'Sol 2',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.7,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'mining',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's3',
+                          'name': 'Archivo del Alba',
+                          'profile': 'científica',
+                          'culture': 'Archivo del Alba',
+                          'leaderId': 'p3c',
+                          'x': 20,
+                          'y': 67,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.12,
+                          'morale': 70.05000000000001,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 262.09037600000005,
+                            'wood': 101.13999999999999,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.6812,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.456,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': 20, 's1': -5, 's2': 14, 's4': 20, 's5': 7},
+                          'sites': [
+                            {'id': 's3:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's3:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's3:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's3:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's3:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's3:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's3:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p3a',
+                              'name': 'Iria 3',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p3b',
+                              'name': 'Nilo 3',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p3c',
+                              'name': 'Sol 3',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'writing',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's4',
+                          'name': 'Vigías del Sur',
+                          'profile': 'defensiva',
+                          'culture': 'Vigías del Sur',
+                          'leaderId': 'p4c',
+                          'x': 46,
+                          'y': 67,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.12,
+                          'morale': 70.05000000000001,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 262.09037600000005,
+                            'wood': 101.13999999999999,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.6812,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.456,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': -5, 's1': 14, 's2': -10, 's3': 14, 's5': -7},
+                          'sites': [
+                            {'id': 's4:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's4:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's4:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's4:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's4:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's4:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's4:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p4a',
+                              'name': 'Iria 4',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p4b',
+                              'name': 'Nilo 4',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p4c',
+                              'name': 'Sol 4',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'masonry',
+                            'diplomacy': 'defend'
+                          },
+                          'facilityFound': false,
+                          ...
+                        },
+                        {
+                          'id': 's5',
+                          'name': 'Nómadas de Sal',
+                          'profile': 'mercantil',
+                          'culture': 'Nómadas de Sal',
+                          'leaderId': 'p5c',
+                          'x': 73,
+                          'y': 67,
+                          'founded': 0,
+                          'population': 56,
+                          'children': 12,
+                          'adults': 38,
+                          'elders': 6,
+                          'health': 90.12,
+                          'morale': 70.05000000000001,
+                          'environment': 0.0,
+                          'resources': {
+                            'food': 262.09037600000005,
+                            'wood': 101.13999999999999,
+                            'stone': 75.0,
+                            'metal': 25.0,
+                            'water': 249.6812,
+                            'medicine': 12.0,
+                            'tools': 20.0,
+                            'energy': 5.0,
+                            'knowledge': 35.456,
+                            'textiles': 20.0,
+                            'crystal': 5.0,
+                            'fuel': 30.0
+                          },
+                          'built': {'farm': 2, 'well': 1, 'house': 4},
+                          'projects': [],
+                          'tech': [],
+                          'relations': {'s0': -3, 's1': 12, 's2': 3, 's3': -1, 's4': 7},
+                          'sites': [
+                            {'id': 's5:b0', 'building': 'farm', 'x': 2, 'y': 2},
+                            {'id': 's5:b1', 'building': 'farm', 'x': 4, 'y': 2},
+                            {'id': 's5:b2', 'building': 'well', 'x': 6, 'y': 2},
+                            {'id': 's5:b3', 'building': 'house', 'x': 8, 'y': 2},
+                            {'id': 's5:b4', 'building': 'house', 'x': 10, 'y': 2},
+                            {'id': 's5:b5', 'building': 'house', 'x': 12, 'y': 2},
+                            {'id': 's5:b6', 'building': 'house', 'x': 14, 'y': 2}
+                          ],
+                          'people': [
+                            {
+                              'id': 'p5a',
+                              'name': 'Iria 5',
+                              'role': 'técnica',
+                              'bornDay': -10080,
+                              'trait': 'inventive',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p5b',
+                              'name': 'Nilo 5',
+                              'role': 'explorador',
+                              'bornDay': -8640,
+                              'trait': 'bold',
+                              'diedDay': null,
+                              'skill': 1.0
+                            },
+                            {
+                              'id': 'p5c',
+                              'name': 'Sol 5',
+                              'role': 'suministros',
+                              'bornDay': -15120,
+                              'trait': 'prudent',
+                              'diedDay': null,
+                              'skill': 1.0
+                            }
+                          ],
+                          'policy': {
+                            'reserve': 120.0,
+                            'risk': 0.35,
+                            'expansion': true,
+                            'trade': true,
+                            'research': 'trade',
+                            'diplomacy': 'cooperate'
+                          },
+                          'facilityFound': false,
+                          ...
+                        }
+                      ],
+                      'chronicle': [
+                        {
+                          'id': 'h0',
+                          'day': 0,
+                          'title': 'Un mundo vuelve a respirar',
+                          'text': 'Ana, Leo y Tito reúnen a 56 habitantes junto a las ruinas. Cada
+decisión tendrá memoria.',
+                          'category': 'inicio',
+                          'societyId': 's0',
+                          'x': 19,
+                          'y': 24,
+                          'cause': null
+                        },
+                        {
+                          'id': 'h1',
+                          'day': 0,
+                          'title': 'Obra: Huerto',
+                          'text': 'Materiales y cuatro trabajadores reservados.',
+                          'category': 'construcción',
+                          'societyId': 's0',
+                          'x': 19,
+                          'y': 24,
+                          'cause': null
+                        }
+                      ],
+                      'pending': [],
+                      'routes': [],
+                      'annualSnapshots': {},
+                      'contentVersions': {
+                        'core': '1.0.0',
+                        'barrio.core.version': '1.0.0',
+                        'barrio.core.sha256':
+'a751baac02f9a32bbd2e5058e507e53c50d118d95c9dad527c66f5e3db40e568'
+                      },
+                      'contentHistory': {},
+                      'commandReceipts': {
+                        'ui-0-0': {
+                          'fingerprint':
+'{"id":"ui-0-0","action":"build","actorId":"s0","issuedDay":0,"target":"farm","choice":null}',
+                          'message': 'Huerto: 12 días.',
+                          'day': 0
+                        }
+                      }
+                    }
+             Which: at location ['day'] is <2> instead of <1>
+          Earlier lifecycle saves must not overwrite the imported checkpoint
+          >
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/Barrio_Cero/test/presentation_test.dart:168:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/Barrio_Cero/test/presentation_test.dart line 168
+The test description was:
+  Create, order, advance and reload a committed world at 320x640
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:08 +3 -1: Create, order, advance and reload a committed world at 320x640 [E]
+  Test failed. See exception logs above.
+  The test description was: Create, order, advance and reload a committed world at 320x640
+  
+00:08 +3 -1: Some tests failed.

@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:barrio_cero_eras/simulation/engine.dart';
 
 void check(bool ok,String message){if(!ok)throw StateError(message);}
-void main(){
+void main(List<String> arguments){
+ final filters=arguments.where((a)=>a.startsWith('--filter=')).toList();
+ if(arguments.length!=filters.length||filters.length>1)throw ArgumentError('Only --filter=<group substring> is supported');
+ final filter=filters.isEmpty?null:filters.single.substring(9);
+ if(filter!=null)stdout.writeln('PARTIAL RUN: group filter "$filter"; not full acceptance');
  final watch=Stopwatch()..start();
  var count=0;
- void test(String name,void Function() fn){stdout.writeln('RUN $name');final groupWatch=Stopwatch()..start();fn();groupWatch.stop();count++;stdout.writeln('PASS $name (${groupWatch.elapsedMilliseconds} ms)');}
+ void test(String name,void Function() fn){if(filter!=null&&!name.contains(filter))return;stdout.writeln('RUN $name');final groupWatch=Stopwatch()..start();fn();groupWatch.stop();count++;stdout.writeln('PASS $name (${groupWatch.elapsedMilliseconds} ms)');}
  test('full-content 100-year daily/decade/whole/save equivalence',(){
   WorldState initial(List<String> trace){
    final w=WorldState.generate(seed:17,size:64);
@@ -107,6 +111,8 @@ void main(){
  test('actual content every arc option, declarative flags and scheduled nodes',(){
  final pack=Map<String,dynamic>.from(jsonDecode(File('assets/content/core.json').readAsStringSync()));
  final events=(pack['events'] as List);int branches=0;
+ final expectedOptions={for(final event in events)for(final option in event['options'] as List)'${event['id']}:${option['id']}'};
+ final executedOptions=<String>{};
  for(final event in events){for(final option in event['options'] as List){
   final w=WorldState.generate(seed:42,size:64);final s=w.controlled;final e=Simulation(w)..registerContent(pack);
   // Fixture meets every declared precondition while testing actual effects.
@@ -131,15 +137,18 @@ void main(){
   if(c['minHousing']!=null)s.housingModifier+=(c['minHousing'] as num).toInt();
   s.flags.addAll(List<String>.from(c['flags']??[]));s.tech.addAll(List<String>.from(c['technologies']??[]));
   final result=e.resolveContentEvent(event['id'],option['id'],scheduled:true);check(result.ok,'${event['id']} ${option['id']}: ${result.message}');
-  w.validate();branches++;
+  w.validate();branches++;executedOptions.add('${event['id']}:${option['id']}');
  }}
- check(branches>=300,'catalog did not execute');stdout.writeln('Executed $branches real content options');
+ check(branches>0&&branches==expectedOptions.length&&executedOptions.containsAll(expectedOptions),'catalog option coverage incomplete');
+ stdout.writeln(jsonEncode({'catalogEvents':events.length,'executedOptions':branches,'optionIds':executedOptions.toList()..sort()}));
+ stdout.writeln('Executed $branches real content options');
  });
  test('procedural templates instantiate costs, local buildings and repairs',(){
  final pack=Map<String,dynamic>.from(jsonDecode(File('assets/content/core.json').readAsStringSync()));final w=WorldState.generate(size:64);final e=Simulation(w)..registerContent(pack);
  final templates=e.contentEvents.where((event)=>(event['id'] as String).startsWith('template_')).toList();check(templates.length==16,'template coverage');for(final template in templates){check(template['body'].contains('alcance'),'missing concrete instance');check((template['options'] as List).every((o)=>(o['costs'] as Map).values.every((n)=>n is num)),'uninstantiated parameter');}
  check(w.controlled.sites.length==w.controlled.built.values.fold(0,(int a,b)=>a+b),'initial sites mismatch');final old=w.controlled.sites.length;e.command('build',target:'house');e.advanceDays(20);check(w.controlled.sites.length==old+1,'new building has no position');final cell=w.tiles[w.controlled.y*w.size+w.controlled.x];cell.damage=1;w.controlled.housingModifier=-12;check(e.command('repair').ok,'repair rejected');check(cell.damage==0.5&&w.controlled.housingModifier==0,'repair had no effect');
  });
+ if(count==0)throw StateError('No test groups selected');
  watch.stop();stdout.writeln('$count groups passed in ${watch.elapsedMilliseconds} ms');
 }
 

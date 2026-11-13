@@ -2,7 +2,7 @@
 
 `lib/simulation/engine.dart` usa únicamente Dart. Unidad: un día; mes de 30 días y año de 360. No existe avance por reloj real ni por render. `WorldState.generate(seed:42,size:96)` genera seis sociedades y terreno persistente. El tamaño pequeño es 64.
 
-La presentación utiliza `Simulation(world).submit(Command(id:..., action:..., actorId:..., issuedDay:..., target:..., choice:...))`. Una orden rechazada conserva el estado; una orden aceptada registra su recibo. Repetir el mismo identificador y carga devuelve el recibo sin repetir efectos; reutilizarlo con otra carga se rechaza. El actor debe coincidir con la comunidad controlada y la fecha con el día actual. `resolve_event` usa `target` como evento y `choice` como opción. Estos contratos tienen pruebas escritas, pendientes de ejecución.
+La presentación utiliza `Simulation(world).submit(Command(id:..., action:..., actorId:..., issuedDay:..., target:..., choice:...))`. Una orden rechazada conserva el estado; una orden aceptada registra su recibo. Repetir el mismo identificador y carga devuelve el recibo sin repetir efectos; reutilizarlo con otra carga se rechaza. El actor debe coincidir con la comunidad controlada y la fecha con el día actual. `resolve_event` usa `target` como evento y `choice` como opción. Estos contratos tienen pruebas ejecutadas en la suite Flutter; véase docs/validation/h1/flutter-tests.log.
 
 La API anterior `Simulation(world).command(action, societyId:..., target:..., choice:...)` devuelve `CommandResult(ok,message)`. Acciones: `build` (id edificio), `research` (id tecnología), `explore`, `facility` (choice: seal/salvage/study/share), `trade` y `diplomacy` (id sociedad), `control` (id sociedad), `delegate`, `repair`, `policy` (balanced/food/science/trade/defense/expansion/isolation). La presentación debe exigir asumir control antes de enviar órdenes a una sociedad ajena; el motor permite societyId explícito para IA y herramientas de prueba.
 
@@ -20,11 +20,13 @@ Operaciones permitidas: recurso, población, salud, moral, ambiente, vivienda, d
 
 Los doce rasgos modifican reglas: prudencia/audacia (riesgo); generosidad (carga); reserva/conciliación (diplomacia); inventiva/tradición (conocimiento); paciencia (reservas); inquietud (umbral de expansión); severidad (defensa); custodia (ambiente); pragmatismo (producción). Todas las tecnologías aportan 1% de productividad institucional y algunas añaden sus efectos específicos y desbloqueos. No existen treinta subsistemas científicos independientes.
 
-## Comprobaciones pendientes de ejecución
+## Comprobaciones ejecutadas y límites
 
-`dart tool/simulation_check.dart`: equivalencia de cien años con lotes y guardado; gasto/obras; tres rutas de instalación y señal histórica; sucesión/extinción; treinta semillas ×200 años y mil años; corrupción; todas las opciones del catálogo real; instancias procedurales, sitios y reparación.
+`dart tool/simulation_check.dart`: la ejecución original aprobó los primeros ocho grupos, incluida equivalencia de cien años con catálogo real y 50.518 acontecimientos, órdenes, instalación, sucesión, treinta semillas ×200 años y rechazo de guardados corruptos. Los objetivos de mil años terminaron por extinción en el día 215.910; no acreditan mil años activos.
 
-`dart tool/benchmark.dart`: mapas 64/96, 32 asentamientos iniciales, cien años con catálogo, tiempo y RSS del proceso. No mide FPS ni sustituye pruebas Android. Estos scripts están escritos; consultar STATUS y resultados antes de afirmar ejecución.
+La ejecución falló después por un contador obsoleto que exigía 300 opciones cuando el inventario contiene 292. El runner corregido compara identificadores exactos; las 292 opciones y el grupo de plantillas/sitios/reparación aprobaron en repeticiones separadas. `--filter=<texto>` permite esas ejecuciones focalizadas, las marca parciales y rechaza selecciones vacías. Los fixtures no sustituyen recorrer cada arco desde su inicio. Logs y resultados: `docs/validation/h1/`.
+
+`dart tool/benchmark.dart`: se midieron mapas 64/96 con 32 asentamientos iniciales durante cien años. No mantuvieron 32 vivos; aceptación fallida. El runner ahora devuelve error ante esa condición. Los tiempos y RSS de Linux no acreditan FPS, latencia ni memoria del teléfono Android de referencia. Resultados: `docs/validation/h0/benchmark-initial.json`.
 
 ## Límites del modelo
 

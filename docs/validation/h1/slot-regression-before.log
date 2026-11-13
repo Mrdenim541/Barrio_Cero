@@ -1,0 +1,31 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/presentation_test.dart
+00:00 +0: Start screen and world configuration remain usable at 320.0
+00:01 +1: Start screen and world configuration remain usable at 360.0
+00:01 +2: Start screen and world configuration remain usable at 412.0
+00:01 +3: Create, order, advance and reload a committed world at 320x640
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: <0>
+  Actual: <1>
+Choosing a slot must not replace the active save destination
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/Barrio_Cero/test/presentation_test.dart:118:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/Barrio_Cero/test/presentation_test.dart line 118
+The test description was:
+  Create, order, advance and reload a committed world at 320x640
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +3 -1: Create, order, advance and reload a committed world at 320x640 [E]
+  Test failed. See exception logs above.
+  The test description was: Create, order, advance and reload a committed world at 320x640
+  
+00:05 +3 -1: Some tests failed.

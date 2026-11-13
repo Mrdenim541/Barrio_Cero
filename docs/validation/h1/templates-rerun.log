@@ -1,0 +1,4 @@
+PARTIAL RUN: group filter "procedural templates"; not full acceptance
+RUN procedural templates instantiate costs, local buildings and repairs
+PASS procedural templates instantiate costs, local buildings and repairs (45 ms)
+1 groups passed in 45 ms

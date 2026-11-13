@@ -5,7 +5,7 @@ Referencia: PROJECT_SPEC.md completa, registro granular docs/requirements.json (
 | Hito | Resultado | Dependencia | Estado de cierre |
 |---|---|---|---|
 | H0 | Base Android ejecutable y lockfile | Acceso oficial Flutter y dispositivo | Cerrado para la base actual: APK, instalación, orden, avance y recuperación nativa; evidencia docs/validation/h0 |
-| H1 | Contratos tipados y caracterización | H0 | Parcial, interfaz Command y pruebas nuevas |
+| H1 | Contratos tipados y caracterización | H0 | Parcial, interfaz Command; regresión de espacios corregida y comprobada |
 | H2 | Transacciones, determinismo y migración | H1 | Parcial, submit idempotente y envoltura checkpoint2 |
 | H3 | Sociedades/ciudades/territorios y rutas | H2 | Pendiente |
 | H4 | Economía y30tecnologías diferenciadas | H3 | Pendiente |
@@ -13,8 +13,8 @@ Referencia: PROJECT_SPEC.md completa, registro granular docs/requirements.json (
 | H6 | Autonomía, instituciones y conflictos | H3–H5 | Pendiente |
 | H7 | Director, arcos y extraordinarios completos | H2,H6 | Pendiente |
 | H8 | Saltos, informes y recuperación | H2–H7 | Parcial, guardado completo y pausa del trabajador |
-| H9 | Sesión Android,arte y documentos | H0,H8 | Parcial, SAF nativo integrado sin compilar |
-| H10 | Estabilidad,balance,rendimiento | H6–H9 | Batería larga en ejecución; benchmark no mantiene 32 comunidades |
+| H9 | Sesión Android,arte y documentos | H0,H8 | Parcial, SAF compilado; exportación/importación nativas comprobadas; primera sesión completa pendiente |
+| H10 | Estabilidad,balance,rendimiento | H6–H9 | 30 semillas ×200 años aprobadas; objetivos de mil años terminaron por extinción; benchmark no mantiene 32 comunidades |
 | H11 | Entrega verificable | Todos | Pendiente; APK inicial disponible, alcance completo sin cerrar |
 
 Cada cierre requiere pruebas pertinentes ejecutadas, documentación y APK que siga arrancando. Las tareas independientes adelantan trabajo pero no cierran hitos dependientes bloqueados. No se reemplaza evidencia de ejecución por parser sintáctico.
@@ -25,4 +25,4 @@ Integración mantiene app,build,contratos y registro. Agentes separados implemen
 
 ## Continuación inmediata
 
-H0 compiló y ejecutó una base Android. Continuar H1/H2 con integridad del controlador de sesión y espacios de guardado, resultados largos y contratos tipados; después H3–H11. La especificación completa permanece vigente. Mantener lockfile y pruebas de regresión; no publicar el entorno, hacer push ni subir a tiendas.
+H0 compiló y ejecutó una base Android. Continuar H1/H2 con separación del controlador de sesión y contratos tipados; selección de espacios ya protegida con prueba de regresión; después H3–H11. La especificación completa permanece vigente. Mantener lockfile y pruebas de regresión; no publicar el entorno, hacer push ni subir a tiendas.

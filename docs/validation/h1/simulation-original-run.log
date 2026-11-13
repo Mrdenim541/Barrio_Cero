@@ -1,0 +1,49 @@
+{"check":"temporal_equivalence","seed":17,"days":36000,"catalogEvents":158,"retainedChronicleEntries":2119,"totalRecordedEvents":50518}
+PASS full-content 100-year daily/decade/whole/save equivalence
+PASS dated orders and observation do not depend on batching
+PASS paused construction reserves resources and prevents double spend
+PASS facility routes seal/salvage/share have real distinct effects
+PASS study provides short and historical consequences
+PASS leadership succession and extinct populations
+{"seed":1,"strategy":"food","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2400,"milliseconds":6947,"peakRssBytes":308531200}
+{"seed":2,"strategy":"science","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":9,"peakHistory":2400,"milliseconds":151067,"peakRssBytes":308531200}
+{"seed":3,"strategy":"trade","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":7,"peakHistory":2400,"milliseconds":105261,"peakRssBytes":308531200}
+{"seed":4,"strategy":"defense","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":7,"peakHistory":2397,"milliseconds":13171,"peakRssBytes":308531200}
+{"seed":5,"strategy":"expansion","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":7,"peakHistory":2399,"milliseconds":129271,"peakRssBytes":308531200}
+{"seed":6,"strategy":"isolation","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":10,"peakHistory":2400,"milliseconds":14436,"peakRssBytes":308531200}
+{"seed":7,"strategy":"food","intensity":"caótica","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2398,"milliseconds":14008,"peakRssBytes":308531200}
+{"seed":8,"strategy":"science","intensity":"caótica","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":10,"peakHistory":2400,"milliseconds":153213,"peakRssBytes":308531200}
+{"seed":9,"strategy":"trade","intensity":"caótica","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":8,"peakHistory":2400,"milliseconds":143868,"peakRssBytes":308531200}
+{"seed":10,"strategy":"defense","intensity":"caótica","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2399,"milliseconds":10663,"peakRssBytes":308531200}
+{"seed":11,"strategy":"expansion","intensity":"caótica","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2399,"milliseconds":135240,"peakRssBytes":308531200}
+{"seed":12,"strategy":"isolation","intensity":"caótica","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":8,"peakHistory":2400,"milliseconds":11900,"peakRssBytes":308531200}
+{"seed":13,"strategy":"food","intensity":"extrema","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2400,"milliseconds":9185,"peakRssBytes":308531200}
+{"seed":14,"strategy":"science","intensity":"extrema","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":11,"peakHistory":2400,"milliseconds":124952,"peakRssBytes":308531200}
+{"seed":15,"strategy":"trade","intensity":"extrema","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":5,"peakHistory":2400,"milliseconds":127991,"peakRssBytes":308531200}
+{"seed":16,"strategy":"defense","intensity":"extrema","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2400,"milliseconds":16136,"peakRssBytes":308531200}
+{"seed":17,"strategy":"expansion","intensity":"extrema","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":7,"peakHistory":2400,"milliseconds":146484,"peakRssBytes":308531200}
+{"seed":18,"strategy":"isolation","intensity":"extrema","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2398,"milliseconds":14035,"peakRssBytes":308531200}
+{"seed":19,"strategy":"food","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2394,"milliseconds":8047,"peakRssBytes":308531200}
+{"seed":20,"strategy":"science","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":8,"peakHistory":2399,"milliseconds":139120,"peakRssBytes":308531200}
+{"seed":21,"strategy":"trade","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2399,"milliseconds":128542,"peakRssBytes":308531200}
+{"seed":22,"strategy":"defense","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":9,"peakHistory":2400,"milliseconds":9426,"peakRssBytes":308531200}
+{"seed":23,"strategy":"expansion","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2400,"milliseconds":117099,"peakRssBytes":308531200}
+{"seed":24,"strategy":"isolation","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":9,"peakHistory":2398,"milliseconds":12485,"peakRssBytes":308531200}
+{"seed":25,"strategy":"food","intensity":"caótica","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":5,"peakHistory":2400,"milliseconds":11439,"peakRssBytes":308531200}
+{"seed":26,"strategy":"science","intensity":"caótica","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":10,"peakHistory":2400,"milliseconds":130873,"peakRssBytes":308531200}
+{"seed":27,"strategy":"trade","intensity":"caótica","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":7,"peakHistory":2399,"milliseconds":110618,"peakRssBytes":308531200}
+{"seed":28,"strategy":"defense","intensity":"caótica","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":7,"peakHistory":2398,"milliseconds":10240,"peakRssBytes":308531200}
+{"seed":29,"strategy":"expansion","intensity":"caótica","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2400,"milliseconds":103711,"peakRssBytes":308531200}
+{"seed":30,"strategy":"isolation","intensity":"caótica","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2390,"milliseconds":10610,"peakRssBytes":308531200}
+{"seed":74,"strategy":"default autonomous","intensity":"normal","extraordinary":false,"requestedDays":360000,"actualDays":215910,"terminal":"global_extinction","annualChecks":600,"peakPending":7,"peakHistory":2399,"milliseconds":271475,"peakRssBytes":308531200}
+{"seed":73,"strategy":"default autonomous","intensity":"normal","extraordinary":true,"requestedDays":360000,"actualDays":215910,"terminal":"global_extinction","annualChecks":600,"peakPending":10,"peakHistory":2400,"milliseconds":295719,"peakRssBytes":308531200}
+PASS full-content 30 seeds x 200 years and two millennia
+PASS corrupt saves rejected
+Unhandled exception:
+Bad state: catalog did not execute
+#0      check (file:///workspace/Barrio_Cero/tool/simulation_check.dart:5:43)
+#1      main.<anonymous closure> (file:///workspace/Barrio_Cero/tool/simulation_check.dart:123:2)
+#2      main.test (file:///workspace/Barrio_Cero/tool/simulation_check.dart:9:46)
+#3      main (file:///workspace/Barrio_Cero/tool/simulation_check.dart:102:2)
+#4      _delayEntrypointInvocation.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:314:19)
+#5      _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193:12)
