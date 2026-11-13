@@ -1,0 +1,58 @@
+{
+  "recordedAt": "2026-11-13T15:49:48.457500+00:00",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "tool/build_content.py"
+      ],
+      "exitCode": 0,
+      "output": "Wrote 158 events (96 independent), 12 arcs, 16 templates\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tool/generate_art.py"
+      ],
+      "exitCode": 0,
+      "output": "Generated characters, buildings, terrain, icons, atlas and production contact sheet.\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tool/validate_content.py"
+      ],
+      "exitCode": 0,
+      "output": "PASS: 158 events / 96 independent / 12 arcs and distinct reachable endings / 16 templates / technology DAG / 2 SHA-256 packages / 10 rejection tests\n"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/verify-venv/bin/python",
+        "tool/check_dart_syntax.py"
+      ],
+      "exitCode": 0,
+      "output": "Dart syntax parsed successfully (no type checking or execution).\n"
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "tool/setup_android.sh"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "check": "generators reproduce exact asset bytes",
+      "passed": true
+    }
+  ],
+  "notExecuted": [
+    "flutter analyze",
+    "dart run tool/simulation_check.dart",
+    "flutter test",
+    "dart run tool/benchmark.dart",
+    "flutter build apk --debug",
+    "Android installation and gameplay"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "packages": [
+    {
+      "id": "barrio.core",
+      "version": "1.0.0",
+      "file": "core.json",
+      "sha256": "a751baac02f9a32bbd2e5058e507e53c50d118d95c9dad527c66f5e3db40e568"
+    },
+    {
+      "id": "barrio.senderos",
+      "version": "1.0.0",
+      "file": "example_pack.json",
+      "sha256": "43c57a33d877aa380afbcf51a78e77a2b29b323c4e79b95a03192f08e272a2fb"
+    }
+  ]
+}

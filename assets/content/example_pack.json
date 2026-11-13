@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "barrio.senderos",
+  "version": "1.0.0",
+  "language": "es",
+  "requires": {
+    "barrio.core": "1.0.0"
+  },
+  "events": [
+    {
+      "id": "senderos_waystone",
+      "category": "exploration",
+      "title": "La piedra de los viajeros",
+      "body": "Un camino olvidado conserva señales. Restaurarlas puede reducir el aislamiento sin reclamar el territorio.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {
+        "minDay": 60,
+        "resource_min": {
+          "stone": 10
+        }
+      },
+      "baseProbability": 0.08,
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "senderos_waystone",
+      "deadlineDays": 30,
+      "options": [
+        {
+          "id": "restore",
+          "label": "Restaurar las marcas",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "stone": 10
+          },
+          "effects": [
+            {
+              "type": "relation",
+              "value": 8
+            },
+            {
+              "type": "resource",
+              "value": 6,
+              "resource": "knowledge"
+            }
+          ],
+          "followUps": []
+        },
+        {
+          "id": "ignore",
+          "label": "Anotar y seguir",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "resource",
+              "value": 2,
+              "resource": "knowledge"
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    }
+  ]
+}
