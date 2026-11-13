@@ -74,6 +74,13 @@
           "result": "passed",
           "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
           "scope": "100 pruebas; trabajo real compartido, devolución de reservas, ida y vuelta material; equivalencia temporal. El hito completo sigue pendiente."
+        },
+        {
+          "path": "docs/validation/catalog/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
+          "scope": "108 pruebas; definiciones ejecutables fijadas, producción con entradas, legado exacto; cien años equivalentes. El hito completo sigue pendiente."
         }
       ]
     },
@@ -98,6 +105,13 @@
           "result": "passed",
           "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
           "scope": "100 pruebas; trabajo real compartido, devolución de reservas, ida y vuelta material; equivalencia temporal. El hito completo sigue pendiente."
+        },
+        {
+          "path": "docs/validation/catalog/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
+          "scope": "108 pruebas; definiciones ejecutables fijadas, producción con entradas, legado exacto; cien años equivalentes. El hito completo sigue pendiente."
         }
       ]
     },

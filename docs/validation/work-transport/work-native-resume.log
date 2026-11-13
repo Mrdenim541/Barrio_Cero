@@ -1,0 +1,15 @@
+Tap: Comunidad
+Tap: Cancelar
+Tap: Confirmar orden
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+{'upgrade': True, 'laborCommitmentSaved': True, 'actualWorkSaved': True, 'harnessCorrection': 'The first cancellation selected an inherited project sharing the same title; resumed with the remaining recorded project.', 'nativeCancellation': True, 'error': "RuntimeError('Android UI automation could not obtain a fresh hierarchy')"}
+Traceback (most recent call last):
+  File "/tmp/barrio_work_resume.py", line 16, in <module>
+    adb('shell','am','force-stop','com.barriocero.eras');adb('shell','am','start','-n','com.barriocero.eras/.MainActivity');tap('Continuar historia');dump();assert readworld()==cancelled
+                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 14, in tap
+  File "<string>", line 12, in dump
+RuntimeError: Android UI automation could not obtain a fresh hierarchy

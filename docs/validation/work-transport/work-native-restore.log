@@ -1,0 +1,6 @@
+Tap: Continuar historia
+Tap: MENÚ
+Tap: Restaurar reglas anteriores
+Tap: Restaurar copia
+ERROR: null root node returned by UiTestAutomationBridge.
+{'upgrade': True, 'laborCommitmentSaved': True, 'actualWorkSaved': True, 'nativeCancellation': True, 'harnessCorrection': 'Initial cancellation chose an inherited work with the same name. Recovery continued after a Flutter accessibility timeout; software emulator restarted activity with Impeller disabled.', 'forceStopReopen': True, 'exactOriginalRestored': True}

@@ -57,7 +57,7 @@ def compile_catalog(raw):
             raise ValueError('Missing technology prerequisite')
         args = [t['id'], t['name'], t['requires'], t['knowledgeCost'], t['description']]
         text.append('  Technology(' + ', '.join(map(literal, args)) + '),')
-    text += ['];', '']
+    text += ['];', '', 'const baseCatalogData = ' + literal(raw) + ';', '']
     return '\n'.join(text)
 
 

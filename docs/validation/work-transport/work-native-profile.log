@@ -1,0 +1,19 @@
+Initial labels ['', '', '', '', '', '', '', '', '', 'CRÓNICAS DE UN PLANETA', 'BARRIO\nCERO', 'E R A S', 'De un pequeño barrio al legado de siglos.\nConstruye. Decide. Observa lo que permanece.', 'CREAR UN MUNDO', 'Continuar historia', 'Espacio de guardado  ', '1', 'Importar / recuperar partida', 'Sin conexión · Sin cuentas · Tu historia', '']
+Tap: Continuar historia
+Tap: MENÚ
+Tap: Actualizar reglas de la partida
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Copiar y actualizar
+Tap: Construir
+Tap: Huerto
+Tap: Confirmar orden
+Tap: + Día
+Tap: Comunidad
+Tap: Cancelar
+Tap: Confirmar orden
+{'upgrade': True, 'laborCommitmentSaved': True, 'actualWorkSaved': True, 'error': ''}
+Traceback (most recent call last):
+  File "/tmp/barrio_work_native.py", line 24, in <module>
+    cancelled=json.loads(readworld());assert not any(p.get('work',{}).get('id')==project['work']['id'] for p in cancelled['payload']['world']['societies'][0]['projects'])
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

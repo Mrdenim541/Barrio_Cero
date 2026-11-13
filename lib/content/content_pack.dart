@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'rule_catalog.dart';
 
 /// Immutable declarative package. Bytes are hashed before parsing so worlds pin
 /// exactly the shipped/imported content, including its original serialization.
@@ -261,6 +262,18 @@ class ContentPack {
         for (final fx in option['effects']) { validateEffect(fx, template: true); }
       }
     }
+    // Validate executable definitions at import, before persisting a package
+    // that the simulation would otherwise accept and then silently ignore.
+    RuleCatalog.fromContent({
+      'buildings': [
+        ...((base?.data['buildings'] as List?) ?? []),
+        ...((pack['buildings'] as List?) ?? []),
+      ],
+      'technologies': [
+        ...((base?.data['technologies'] as List?) ?? []),
+        ...((pack['technologies'] as List?) ?? []),
+      ],
+    });
     dynamic freeze(dynamic value) {
       if (value is Map) {
         return Map<String, dynamic>.unmodifiable(value.map((key, item) => MapEntry(key as String, freeze(item))));

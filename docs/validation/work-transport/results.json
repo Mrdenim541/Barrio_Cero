@@ -22,7 +22,15 @@
     ]
   },
   "apkSha256": "74662ce53c88431292fe58320d50dbdab76345b502029b82c0ce1d4ac7ac5066",
-  "native": "pending emulator restart",
+  "native": {
+    "upgrade": true,
+    "laborCommitmentSaved": true,
+    "actualWorkSaved": true,
+    "nativeCancellation": true,
+    "harnessCorrection": "Initial cancellation chose an inherited work with the same name. Recovery continued after a Flutter accessibility timeout; software emulator restarted activity with Impeller disabled.",
+    "forceStopReopen": true,
+    "exactOriginalRestored": true
+  },
   "sourceSha256": {
     "lib/main.dart": "4cdc322ae6c86d4c30cfe44cf1c98c1cd8eed3a00e5b2e69307b561129605118",
     "lib/content/content_pack.dart": "ebc12b23fb0aecfc0e0e66174af4e3664ac2e1cfdea993e8defea28c9c5d7267",
@@ -82,5 +90,8 @@
     "No full generational reconciliation or families yet",
     "No full redesigned species, eras or artistic acceptance",
     "No performance acceptance on reference phone"
-  ]
+  ],
+  "nativeMode": "profile on software API29 emulator; restart with Impeller disabled",
+  "nativeApkSha256": "e71a980a3cc5b3b0ff4d1dfb8b8543331d6fe710ec2ab574886a20c089f020e0",
+  "nativeOriginalSha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e"
 }

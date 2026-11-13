@@ -68,6 +68,7 @@ class SessionController {
   final SessionRead read;
   final SessionWrite write;
   final Future<String> Function() loadCore;
+  final Future<String?> Function(String hash)? resolveLegacyCore;
   final Set<void Function()> _listeners = {};
   Future<void> _tail = Future.value();
   Future<void>? _initialization;
@@ -89,6 +90,7 @@ class SessionController {
     required this.read,
     required this.write,
     required this.loadCore,
+    this.resolveLegacyCore,
   });
 
   SessionSnapshot? get snapshot => _snapshot;
@@ -267,8 +269,22 @@ class SessionController {
     }
     final envelope = jsonDecode(raw);
     final legacy = envelope is Map && envelope['version'] == 1;
+    var coreSource = _installedCore!;
+    if (legacy && envelope['world'] is Map) {
+      final versions = envelope['world']['contentVersions'];
+      final hash = versions is Map ? versions['barrio.core.sha256'] : null;
+      if (hash is String && hash != ContentPack.parse(coreSource).hash) {
+        final archived = await resolveLegacyCore?.call(hash);
+        if (archived == null || ContentPack.parse(archived).hash != hash) {
+          throw const FormatException(
+            'Falta el contenido original exacto; la partida se conserva',
+          );
+        }
+        coreSource = archived;
+      }
+    }
     final candidate = legacy
-        ? Checkpoint.migrateLegacy(raw, expectedCoreSource: _installedCore!)
+        ? Checkpoint.migrateLegacy(raw, expectedCoreSource: coreSource)
         : Checkpoint.decode(raw);
     if (legacy) {
       if (acceptLegacy == null || !await acceptLegacy()) {

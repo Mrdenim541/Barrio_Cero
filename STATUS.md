@@ -10,6 +10,14 @@ La línea base de 39 pruebas pasó antes de modificarla. La batería integrada p
 
 Próxima prioridad dentro del rediseño: una escena local legible con escala útil, composición del asentamiento e interacción contextual vinculadas al estado real; contrastarla con `docs/design/world-and-settlement-target.png` mediante capturas ejecutadas. Los caminos, puestos de trabajo, recorridos y edificios nuevos que requieran modelo local se integrarán con R2–R4; no se dibujarán como simulación funcional sin sus reglas. R2 está iniciado; R3–R13 y el alcance original continúan sujetos a sus criterios pendientes.
 
+## Integración 0.5 — catálogo ejecutable por mundo
+
+Las definiciones declarativas ya gobiernan los costes, duración, rendimientos, vivienda y capacidades tecnológicas de las reglas nuevas. Generadores y talleres consumen suministros según su actividad efectiva; sin trabajadores o entradas no producen. Se retiró la bonificación genérica por número de tecnologías. Cada mundo fija sus reglas al contenido exacto; una discrepancia se rechaza.
+
+El paquete base y el ejemplo pasan a 2.0.0; se conserva el archivo base 1 exacto para recuperar el prototipo por SHA-256. Los ejecutores antiguos conservan tablas congeladas y los mundos existentes sus fuentes originales. Pasaron 108 pruebas, análisis limpio y equivalencia de cien años con 38.451 entradas causales. Compilación profile y firma inspeccionadas; instalación y comportamiento se registran por separado. [Evidencia y límites](docs/validation/catalog/README.md).
+
+Android 0.4 completó actualización, trabajo efectivo, cancelación, cierre/reapertura y restauración byte a byte. Los fallos del guion y del emulador se conservan. No acreditan el binario 0.5 ni rendimiento físico. R2/R3 permanecen parciales; la siguiente integración aborda un origen prehistórico con economía y recursos propios, sin sustituir la reconstrucción.
+
 ## Integración 0.4 — trabajo y transporte
 
 Pasaron 100 pruebas Flutter y el análisis limpio. La equivalencia con catálogo real llegó a cien años mediante días, décadas, siglo y guardado irregular: estado y 41.293 entradas causales idénticos. Las obras requieren jornadas efectivas, comparten personal con expediciones y transporte, y permiten cancelar con devolución proporcional idempotente. Las caravanas conservan carga y recorren ida y vuelta; cerrar una ruta no teletransporta sus materiales. La conversión opcional usa checkpoint 3 y mantiene las partidas antiguas.

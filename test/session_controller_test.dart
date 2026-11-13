@@ -263,6 +263,56 @@ void main() {
   );
 
   test(
+    'Legacy prototype resolves its exact archived core after a catalog update',
+    () async {
+      final oldCore = File(
+        'assets/content/legacy_core_1.json',
+      ).readAsStringSync();
+      final w = WorldState.generate(size: 64, fixedMaterials: false);
+      w.contentVersions = {'core': '1.0.0'};
+      final oldWorld = Checkpoint.create(
+        world: w,
+        coreSource: oldCore,
+      ).world.toJson();
+      final raw = jsonEncode({
+        'format': 'barrio-cero-save',
+        'version': 1,
+        'world': oldWorld,
+        'sha256': sha256.convert(utf8.encode(jsonEncode(oldWorld))).toString(),
+      });
+      final expectedHash = sha256.convert(utf8.encode(oldCore)).toString();
+      final upgraded = SessionController(
+        read: store.read,
+        write: store.write,
+        loadCore: () async => core,
+        resolveLegacyCore: (hash) async =>
+            hash == expectedHash ? oldCore : null,
+      );
+      await upgraded.initialize();
+      final result = await upgraded.importCheckpoint(
+        raw,
+        acceptLegacy: () async => true,
+      );
+      expect(result.migrated, isTrue);
+      expect(upgraded.snapshot!.coreSource, oldCore);
+      expect(upgraded.worldCopy()!.rulesVersion, 1);
+      expect(store.values['legacy_0'], raw);
+      final missing = SessionController(
+        read: store.read,
+        write: store.write,
+        loadCore: () async => core,
+      );
+      await missing.initialize();
+      final before = Map.from(store.values);
+      await expectLater(
+        missing.importCheckpoint(raw, acceptLegacy: () async => true),
+        throwsFormatException,
+      );
+      expect(store.values, before);
+    },
+  );
+
+  test(
     'initialization caches source load and reports invalid registry without editing it',
     () async {
       store.values['packages'] = '[42]';

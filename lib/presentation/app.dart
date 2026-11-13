@@ -63,6 +63,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   final store = SaveStore();
   final documents = DocumentExchange();
   Map<String, dynamic> state = {};
+  RuleCatalog? _catalog;
+  List<BuildingDefinition> get _buildings=>_catalog?.buildings??buildings;
+  List<Technology> get _technologies=>_catalog?.technologies??technologies;
   String? selected;
   int preferredSlot = 0;
   int get slot => session.snapshot?.slot ?? preferredSlot;
@@ -131,6 +134,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       read: store.read,
       write: store.write,
       loadCore: () => rootBundle.loadString('assets/content/core.json'),
+      resolveLegacyCore: (hash) async => hash==
+          'a751baac02f9a32bbd2e5058e507e53c50d118d95c9dad527c66f5e3db40e568'
+          ? await rootBundle.loadString('assets/content/legacy_core_1.json') : null,
     );
     session.addListener(_sessionChanged);
     initialization = session.initialize().catchError((Object error) {
@@ -144,6 +150,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   void refresh() {
     state = session.snapshot?.world ?? {};
+    _catalog=state['catalog']==null?null:RuleCatalog.fromJson(Map<String,dynamic>.from(state['catalog']));
     if (selected == null || !societies.any((s) => s['id'] == selected)) {
       selected = controlled.isNotEmpty
           ? controlled
@@ -1158,9 +1165,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   }
 
   String _buildingName(dynamic id) =>
-      buildings.where((b) => b.id == id).firstOrNull?.name ?? '$id';
+      _buildings.where((b) => b.id == id).firstOrNull?.name ?? '$id';
   String _technologyName(dynamic id) =>
-      technologies.where((t) => t.id == id).firstOrNull?.name ?? '$id';
+      _technologies.where((t) => t.id == id).firstOrNull?.name ?? '$id';
   void _communityActions() => _sheet('Dirigir la comunidad', [
     ListTile(
       title: const Text('Investigar'),
@@ -1344,7 +1351,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       ]);
       return;
     }
-    final definition = buildings
+    final definition = _buildings
         .where((b) => b.id == hit.entity['building'])
         .firstOrNull;
     if (definition == null) return;
@@ -1574,7 +1581,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   void _build() {
     final sim = _sim();
-    final entries = buildings
+    final entries = _buildings
         .map((b) => (b, sim.preview(_queryCommand('build', target: b.id))))
         .toList();
     entries.sort(
@@ -1610,7 +1617,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   void _research() {
     final sim = _sim();
-    final entries = technologies
+    final entries = _technologies
         .map((t) => (t, sim.preview(_queryCommand('research', target: t.id))))
         .toList();
     entries.sort(

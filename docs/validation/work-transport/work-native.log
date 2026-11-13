@@ -1,0 +1,8 @@
+Initial labels ['', '', '', '', '', '', "System UI isn't responding", '', '', '', 'Close app', 'Wait']
+{'error': 'No control MENÚ; visible ["System UI isn\'t responding", \'Close app\', \'Wait\']'}
+Traceback (most recent call last):
+  File "/tmp/barrio_work_native.py", line 10, in <module>
+    tap('MENÚ');tap('Actualizar reglas de la partida');tap('Copiar y actualizar');dump()
+    ^^^^^^^^^^^
+  File "<string>", line 20, in tap
+RuntimeError: No control MENÚ; visible ["System UI isn't responding", 'Close app', 'Wait']

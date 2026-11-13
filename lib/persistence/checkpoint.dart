@@ -58,6 +58,11 @@ class Checkpoint {
     }
     final state = _map(jsonDecode(jsonEncode(world.toJson())));
     state['contentVersions'] = bindings;
+    if(world.rulesVersion>=4&&!world.contentVersions.keys.any((k)=>k.endsWith('.sha256'))){
+      final registry=ContentRegistry();
+      for(final pack in packs){registry.importPack(pack);}
+      state['catalog']=RuleCatalog.fromContent(registry.compose(packs.map((p)=>p.pin).toList())).toJson();
+    }
     final payload = <String, dynamic>{
       'world': state,
       'target': target,
@@ -279,6 +284,7 @@ class Checkpoint {
         event['data'] = data;
       }
     }
+    raw['catalog']=RuleCatalog.fromContent(previous.content).toJson();
     raw['rulesVersion'] = WorldState.currentRules;
     raw['randomAlgorithm'] = RandomState.algorithm;
     final candidate = WorldState.fromJson(raw);
@@ -399,6 +405,9 @@ class Checkpoint {
             return id;
           }),
     );
+    if(candidate.rulesVersion>=4&&!candidate.catalog!.matches(RuleCatalog.fromContent(content))){
+      throw const FormatException('Las reglas guardadas no coinciden con el contenido exacto');
+    }
     if (candidate.societies.any((s) => s.materialRules == 2)) {
       for (final pack in packs) {
         validateMaterialCosts(pack.data);
