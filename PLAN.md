@@ -25,4 +25,6 @@ Integración mantiene app,build,contratos y registro. Agentes separados implemen
 
 ## Continuación inmediata
 
-H0 compiló y ejecutó una base Android. Continuar H1/H2 con separación del controlador de sesión y contratos tipados; selección de espacios ya protegida con prueba de regresión; después H3–H11. La especificación completa permanece vigente. Mantener lockfile y pruebas de regresión; no publicar el entorno, hacer push ni subir a tiendas.
+Tras probar el APK, el usuario señaló confusión por exceso de opciones. Priorizar UX1–UX3 de `docs/PLAYABILITY_REFERENCES.md`: jerarquía de la interfaz, órdenes comprensibles y guía contextual, coordinadas con la separación de sesión y contratos H1/H2. UX4 depende de los sistemas reales H6–H8; no cerrar H9 por reorganizar botones. Después continuar H3–H11 sin reducir PROJECT_SPEC.md.
+
+Mantener lockfile, pruebas de regresión y APK ejecutable. La autorización de publicación recibida cubrió únicamente el ZIP de pruebas en `downloads/android-test-0.1.0`; no autoriza publicar el entorno ni subir a tiendas.

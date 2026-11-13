@@ -39,4 +39,6 @@ Se corrigió la selección de espacios: explorar el archivo no redirige el autog
 
 También se corrigió una carrera observada en Android: al regresar del selector, un autoguardado antiguo podía sobrescribir la partida importada después de confirmarla en pantalla. Se eliminó la segunda cola de escrituras; la regresión está reproducida y aprobada en pruebas automatizadas. La repetición nativa del APK corregido se registra en docs/validation/h1/results.json.
 
-Continuación: completar separación de sesión y contratos H1/H2; seguir los hitos de PLAN.md manteniendo el APK ejecutable. No hay publicación en tiendas ni push del repositorio.
+El ZIP del APK se subió con autorización explícita a la rama `downloads/android-test-0.1.0`; su descarga HTTPS se comprobó con HTTP 200 y hashes coincidentes. No se publicó el entorno ni se subió a tiendas.
+
+Tras probarlo, el usuario señaló confusión por la cantidad de opciones. `docs/PLAYABILITY_REFERENCES.md` registra las referencias Polytopia, WorldBox y RimWorld, el diagnóstico de la interfaz y el bloque UX1–UX4. Es diseño pendiente de implementación; el APK entregado aún no contiene esos cambios. Priorizar jerarquía, órdenes comprensibles y guía contextual junto con H1/H2, manteniendo la especificación y los hitos restantes.
