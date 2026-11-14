@@ -49,7 +49,28 @@
     "forceStopReopenPreservesPopulationAndSkill": true,
     "originalDataRestoredExactly": true
   },
-  "newRulesStability": "running separately; not yet accepted",
+  "newRulesStability": {
+    "execution": "Captured rules6 AOT with frozen catalog; not rules7",
+    "seeds": 30,
+    "allReachedDays": 72000,
+    "annualChecksPerSeed": 200,
+    "millennia": [
+      {
+        "seed": 74,
+        "actualDays": 213960,
+        "requestedDays": 360000,
+        "terminal": "global_extinction"
+      },
+      {
+        "seed": 73,
+        "actualDays": 195900,
+        "requestedDays": 360000,
+        "terminal": "global_extinction"
+      }
+    ],
+    "activePopulatedMillenniumVerified": false,
+    "log": "docs/validation/population/stability-30-seeds.log"
+  },
   "knownLimitations": [
     "No household/kinship/inheritance system yet",
     "Migration is reconciled but still instantaneous",

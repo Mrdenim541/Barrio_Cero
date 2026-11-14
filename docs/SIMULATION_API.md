@@ -42,3 +42,12 @@ En reglas 6 la población se registra por grupos con fecha de nacimiento, cultur
 El gobierno puede quedarse sin dirección si no hay adultos elegibles: no se crea un adulto de edad inventada. Las órdenes nuevas se rechazan hasta que exista dirección adulta; la repetición de un recibo confirmado sigue devolviendo su resultado sin efectos. La migración cambia residencia manteniendo las personas y las culturas; su representación en tránsito aún no está implementada.
 
 La conversión mediante `Checkpoint.upgradeRules` no modifica el original: conserva contenido exacto, PRNG, identidades y cumpleaños conocidos; registra la estimación de edades comunes y los restos demográficos anteriores. El repositorio conserva una copia por SHA-256 antes de confirmar. La documentación de comportamiento y límites está en `docs/validation/population/README.md`.
+
+
+## Reglas 7: vínculos y hogares
+
+`WorldState.socialState` contiene vínculos personales, peticiones, hogares, tutelas y recuerdos. Los participantes se consultan desde las identidades poblacionales, sin crear una segunda población. El contacto se procesa mensualmente y no depende del render o de consultar una ficha. Las partidas de reglas 6 siguen ejecutándose con esas reglas hasta una conversión explícita. Convertir a 7 crea un registro personal vacío, sin inventar familias anteriores, y conserva sus grupos y habilidades.
+
+`home` recibe el ID de petición en `target` y `support` o `decline` en `choice`. Solo opera sobre una petición vigente de la comunidad controlada. Apoyar consume 4 maderas y 6 alimentos; la relación romántica no se establece por orden del jugador. `foster` recibe el ID del adulto que asume el cuidado; destaca a un menor existente y documenta tutela, sin atribuir parentesco biológico. Consume 2 alimentos y 1 agua. Las identidades, cumpleaños y población total se conservan.
+
+Las residencias históricas se mantienen tras muerte o traslado. La validación permite haber fundado un hogar antes de morir durante el mismo día; un fallecido no puede confirmar una orden nueva. Peticiones aceptadas sin hogar, participantes duplicados, secuencias reutilizadas o romances sin acuerdo de adultos se rechazan. Las instituciones políticas, genealogía biológica e herencias materiales todavía requieren implementación; no se deducen de estos registros.

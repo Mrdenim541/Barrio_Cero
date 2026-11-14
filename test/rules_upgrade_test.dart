@@ -48,6 +48,19 @@ void main() {
       );
     },
   );
+  test('Rules 6 conversion preserves exact cohorts and skills without inventing families',(){
+    final raw=WorldState.generate(size:64,origin:'prehistory').toJson();
+    raw.remove('socialState');raw['rulesVersion']=6;
+    final previous=Checkpoint.create(world:WorldState.fromJson(raw),coreSource:core);
+    final source=previous.encode(),before=Checkpoint.decode(previous.encode());
+    final upgraded=Checkpoint.upgradeRules(source);
+    expect(upgraded.world.populationState!.toJson(),before.world.populationState!.toJson());
+    expect(upgraded.world.societies.map((s)=>s.people.map((p)=>p.toJson()).toList()),before.world.societies.map((s)=>s.people.map((p)=>p.toJson()).toList()));
+    expect(upgraded.world.socialState!.bonds,isEmpty);expect(upgraded.world.socialState!.households,isEmpty);expect(upgraded.world.socialState!.guardians,isEmpty);
+    expect(upgraded.world.random.state,before.world.random.state);expect(upgraded.coreSource,before.coreSource);
+    expect(upgraded.world.ruleChanges.last['ageEstimation'],'unchanged; existing cohort dates retained');
+    expect(Checkpoint.decode(source).world.rulesVersion,6);
+  });
   test(
     'Cancel has no writes; upgrade keeps exact bytes; restore reactivates old rules',
     () async {

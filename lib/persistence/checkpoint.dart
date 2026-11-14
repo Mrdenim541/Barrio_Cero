@@ -289,6 +289,7 @@ class Checkpoint {
     raw['entities']??=WorldEntities.fromSettlements((raw['societies'] as List).cast<Map<String,dynamic>>()).toJson();
     final identities=WorldEntities.fromJson(Map<String,dynamic>.from(raw['entities']));
     raw['populationState']??=WorldState.estimatePopulation(previous.world.day,(raw['societies'] as List).cast<Map<String,dynamic>>(),identities).toJson();
+    raw['socialState']??=SocialState().toJson();
     raw['rulesVersion'] = WorldState.currentRules;
     raw['randomAlgorithm'] = RandomState.algorithm;
     final candidate = WorldState.fromJson(raw);
@@ -301,7 +302,7 @@ class Checkpoint {
       'to': WorldState.currentRules,
       'sourceSha256': sha256.convert(utf8.encode(source)).toString(),
       'amountAdjustments': adjustments,
-      'ageEstimation':'cohort-quantiles-v1; exact prominent birthdays retained',
+      'ageEstimation':previous.world.populationState==null?'cohort-quantiles-v1; exact prominent birthdays retained':'unchanged; existing cohort dates retained',
       'demographicRemainders':{for(final s in raw['societies'])s['id']:s['demographicMicros']},
     });
     final id = 'h${candidate.serial++}';

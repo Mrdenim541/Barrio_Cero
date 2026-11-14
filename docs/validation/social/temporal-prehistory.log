@@ -1,0 +1,37 @@
+PARTIAL RUN: group filter "full-content 100-year"; not full acceptance
+RUN full-content 100-year daily/decade/whole/save equivalence
+PROGRESS daily 3600/36000 days
+PROGRESS daily 7200/36000 days
+PROGRESS daily 10800/36000 days
+PROGRESS daily 14400/36000 days
+PROGRESS daily 18000/36000 days
+PROGRESS daily 21600/36000 days
+PROGRESS daily 25200/36000 days
+PROGRESS daily 28800/36000 days
+PROGRESS daily 32400/36000 days
+PROGRESS daily 36000/36000 days
+PROGRESS decades 3600/36000 days
+PROGRESS decades 7200/36000 days
+PROGRESS decades 10800/36000 days
+PROGRESS decades 14400/36000 days
+PROGRESS decades 18000/36000 days
+PROGRESS decades 21600/36000 days
+PROGRESS decades 25200/36000 days
+PROGRESS decades 28800/36000 days
+PROGRESS decades 32400/36000 days
+PROGRESS decades 36000/36000 days
+PROGRESS whole-century start
+PROGRESS whole-century 36000/36000 days
+PROGRESS save-resume 3699/36000 days
+PROGRESS save-resume 7261/36000 days
+PROGRESS save-resume 10823/36000 days
+PROGRESS save-resume 14522/36000 days
+PROGRESS save-resume 18084/36000 days
+PROGRESS save-resume 21646/36000 days
+PROGRESS save-resume 25208/36000 days
+PROGRESS save-resume 28907/36000 days
+PROGRESS save-resume 32469/36000 days
+PROGRESS save-resume 36000/36000 days
+{"check":"temporal_equivalence","origin":"prehistory","seed":17,"days":36000,"catalogEvents":166,"retainedChronicleEntries":2376,"totalRecordedEvents":10375}
+PASS full-content 100-year daily/decade/whole/save equivalence (82694 ms)
+1 groups passed in 82694 ms

@@ -137,7 +137,7 @@ void main() {
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     final before=screen.world.canonical();
     await tester.ensureVisible(find.text('Más acciones'));await tester.tap(find.text('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
-    await tester.ensureVisible(find.text('Formar aprendices'));await tester.tap(find.text('Formar aprendices'));
+    await tester.scrollUntilVisible(find.text('Formar aprendices'),100,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.ensureVisible(find.text('Formar aprendices'));await tester.pump();await tester.tap(find.text('Formar aprendices'));
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     await tester.scrollUntilVisible(find.text('Oficios técnicos'),140,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.pump(const Duration(milliseconds:500));await tester.ensureVisible(find.text('Oficios técnicos'));await tester.pump();await tester.tap(find.text('Oficios técnicos'));
     await tester.pump();await tester.pump(const Duration(milliseconds:500));

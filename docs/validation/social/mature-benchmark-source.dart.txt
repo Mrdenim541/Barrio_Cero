@@ -1,0 +1,164 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:barrio_cero_eras/simulation/engine.dart';
+import 'fixtures.dart';
+
+/// Explicit mature-settlement load fixture, not the normal opening or a balance
+/// acceptance result. Starting stocks/buildings/knowledge are declared once.
+/// No supplies, people, protection or repairs are injected during the run.
+void main() {
+  final content =
+      jsonDecode(File('assets/content/core.json').readAsStringSync())
+          as Map<String, dynamic>;
+  var all = true;
+  for (final size in [64, 96]) {
+    final world = WorldState.generate(
+      seed: 73,
+      size: size,
+      extraordinary: false,
+    );
+    world.controlledId = null;
+    for (var i = world.societies.length; i < 32; i++) {
+      final candidates = world.tiles
+          .where(
+            (t) =>
+                t.passable &&
+                [0, 1, 4].contains(t.biome) &&
+                t.richness >= 3 &&
+                !world.societies.any(
+                  (s) => (s.x - t.x).abs() + (s.y - t.y).abs() < 3,
+                ),
+          )
+          .toList();
+      if (candidates.isEmpty) throw StateError('No viable workload location');
+      final tile = candidates[(i * 127) % candidates.length];
+      final s = Society(
+        'load$i',
+        'Comunidad $i',
+        'cooperativa',
+        tile.x,
+        tile.y,
+        materialRules: 2,
+        siteLayout: 2,
+      );
+      s.people = [
+        Person('load${i}a', 'Ada $i', 'técnica', -28 * 360, 'inventive'),
+        Person('load${i}b', 'Lio $i', 'explorador', -24 * 360, 'bold'),
+        Person('load${i}c', 'Sol $i', 'consejera', -42 * 360, 'prudent'),
+      ];
+      s.leaderId = s.people.last.id;
+      world.societies.add(s);
+    }
+    for (final s in world.societies) {
+      s.catalog = world.catalog;
+      s.built = {
+        'farm': 6,
+        'well': 3,
+        'house': 8,
+        'school': 1,
+        'workshop': 1,
+        'loom': 1,
+      };
+      s.sites = [];
+      s.ensureSites();
+      s.tech = {
+        'agriculture',
+        'irrigation',
+        'masonry',
+        'sanitation',
+        'writing',
+        'education',
+        'medicine',
+        'trade',
+      };
+      var closure = true;
+      while (closure) {
+        closure = false;
+        for (final t in world.technologyDefinitions.where(
+          (t) => s.tech.contains(t.id),
+        )) {
+          for (final parent in t.requires) {
+            if (s.tech.add(parent)) closure = true;
+          }
+        }
+      }
+      s.resources = {for (final r in resourceIds) r: 1000};
+      s.health = 100;
+      s.morale = 80;
+      s.environment = 0;
+      s.policy.trade =
+          false; // A fixed trade policy is part of the declared fixture.
+      s.policy.expansion = false;
+      s.policy.diplomacy = 'cooperate';
+      s.policy.risk = .2;
+      s.policy.reserve = 200;
+    }
+    fixturePopulation(world);
+    world.validate();
+    final setup = Simulation(world)..registerContent(content);
+    for (final town in world.societies) {
+      final others = world.societies.where((s) => s.id != town.id).toList()
+        ..sort(
+          (a, b) => ((a.x - town.x).abs() + (a.y - town.y).abs()).compareTo(
+            (b.x - town.x).abs() + (b.y - town.y).abs(),
+          ),
+        );
+      for (final other in others) {
+        if (setup.command('trade', societyId: town.id, target: other.id).ok)
+          break;
+      }
+    }
+    world.validate();
+    final initialRoutes = world.routes.length;
+    final initialBytes = utf8.encode(jsonEncode(world.toJson())).length;
+    final sim = Simulation(world)..registerContent(content),
+        watch = Stopwatch()..start();
+    var days = 0, minAlive = 32, minPopulation = world.populationState!.total;
+    while (world.day < 36000 && !world.extinct) {
+      sim.advanceDays(1, delegateDecisions: true);
+      final n = world.societies.where((s) => s.alive).length;
+      if (n < minAlive) minAlive = n;
+      if (n >= 32) days++;
+      if (world.populationState!.total < minPopulation)
+        minPopulation = world.populationState!.total;
+      if (world.day % 360 == 0) world.validate();
+    }
+    watch.stop();
+    final passed = world.day == 36000 && days == 36000 && minAlive >= 32;
+    all &= passed;
+    stdout.writeln(
+      jsonEncode({
+        'fixture': 'mature32-v1',
+        'normalOpeningBalanceTest': false,
+        'injectionsDuringRun': false,
+        'rules': world.rulesVersion,
+        'map': size,
+        'seed': 73,
+        'initialSettlements': 32,
+        'initialPopulation': 1792,
+        'initialRoutes': initialRoutes,
+        'tradePolicy':
+            'one paid starting route per origin, no autonomous new routes',
+        'technologyPrerequisitesClosed': true,
+        'minimumLivingSettlements': minAlive,
+        'minimumPopulation': minPopulation,
+        'requestedDays': 36000,
+        'actualDays': world.day,
+        'daysWith32Settlements': days,
+        'passedSustainedLoad': passed,
+        'milliseconds': watch.elapsedMilliseconds,
+        'peakRssBytes': ProcessInfo.maxRss,
+        'initialSaveBytes': initialBytes,
+        'finalSaveBytes': utf8.encode(jsonEncode(world.toJson())).length,
+        'referencePhonePerformance': false,
+        'measuresFps': false,
+      }),
+    );
+  }
+  if (!all) {
+    stderr.writeln(
+      'FAIL: mature workload did not sustain 32 living settlements.',
+    );
+    exitCode = 1;
+  }
+}

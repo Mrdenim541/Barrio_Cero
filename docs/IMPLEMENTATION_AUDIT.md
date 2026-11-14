@@ -1,5 +1,9 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.8 — hogares y vínculos
+
+Reglas 7, 147 pruebas completas y análisis limpio. Contacto mensual, peticiones con participantes y plazos, hogar pagado, tutela de residentes existentes y memoria de pérdidas funcionan en el núcleo. Se comprobaron coste, idempotencia, vencimiento y muerte el mismo día de fundación. Los cien años equivalentes se repitieron en ambos orígenes. Android ejecutó hogar, cuidado y reapertura con datos originales restaurados. No hay genealogía biológica conocida, herencia material ni director declarativo unificado: R5 sigue parcial. El benchmark de apertura con 32 asentamientos falló la carga sostenida (mínimos 15/9); se conserva el fallo. [Evidencias](validation/social/results.json).
+
 ## Actualización 0.7 — reglas 6
 
 139 pruebas y análisis limpio; cien años equivalentes en ambos orígenes con catálogo real. Se añadieron grupos por fecha, cultura y residencia, pertenencia real de personajes, bajas reconciliadas, archivo de procedencia, sucesión sin habitantes inventados y formación con trabajo y recursos. Los traslados preservan residentes pero todavía son instantáneos. No hay hogares, parentescos, herencia o biología equina. R5 pasa a parcial. La evidencia de compilación y la comprobación Android se distinguen en [población](validation/population/README.md). La batería larga 0.6 terminó con treinta semillas de 200 años; sus dos milenios acabaron por extinción y no validan reglas 6.

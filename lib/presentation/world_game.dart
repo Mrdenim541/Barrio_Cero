@@ -421,7 +421,7 @@ class WorldGame extends FlameGame {
           c.drawImageRect(
             people!,
             peopleLayout!.cell(role*peopleLayout!.actions.length+action,frame),
-            r,
+            number(data['day'])-number(p['bornDay'])<16*360?Rect.fromLTWH(r.left+r.width*.15,r.top+r.height*.3,r.width*.7,r.height*.7):r,
             paint,
           );
         } else {

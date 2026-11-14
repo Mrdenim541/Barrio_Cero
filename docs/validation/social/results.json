@@ -1,0 +1,82 @@
+{
+  "recordedAt": "2026-11-14T02:44:16.564829+00:00",
+  "version": "0.8.0+9",
+  "rulesVersion": 7,
+  "checkpoint": 3,
+  "tests": {
+    "count": 147,
+    "passed": true,
+    "additionalRegression": "Optional conversion from rules6 keeps exact cohorts, skills, RNG and content; creates no fictitious prior family"
+  },
+  "analysis": "clean",
+  "native": {
+    "version": "0.8.0+9",
+    "rules": 7,
+    "mode": "profile",
+    "device": "API29 software emulator",
+    "scenario": "seed 31, day 120 reached by normal rules; no state injections",
+    "installationOutput": "Performing Streamed Install\nSuccess\n",
+    "previewPreservesCheckpoint": true,
+    "household": {
+      "id": "household:5",
+      "members": [
+        "p0b",
+        "p0a"
+      ],
+      "populationUnchanged": true,
+      "woodCost": 4,
+      "foodCost": 6
+    },
+    "care": {
+      "adult": "p0b",
+      "child": "p77",
+      "age": 2,
+      "populationUnchanged": true,
+      "biologicalAncestryInvented": false
+    },
+    "forceStopReopenPreservesSocialState": true,
+    "originalDataRestoredExactly": true
+  },
+  "offlineEmulatorSettings": {
+    "airplane": true,
+    "wifi": false,
+    "mobileData": false
+  },
+  "temporal": {
+    "execution": "Frozen Linux AOT; catalog 166; seed17; daily/decades/century/save-recovery",
+    "prehistory": {
+      "days": 36000,
+      "causalEntries": 10375,
+      "passed": true
+    },
+    "reconstruction": {
+      "days": 36000,
+      "causalEntries": 17044,
+      "passed": true
+    }
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.8.0-profile.apk",
+    "sha256": "488427b69eb8df0779fd16b675791f5fc631ff5c83c6fa2f4fe09eac6dda1ec8",
+    "compiled": true,
+    "signatureVerified": true
+  },
+  "opening32Benchmark": {
+    "accepted": false,
+    "reason": "Does not maintain 32 living communities throughout the century",
+    "map64Minimum": 15,
+    "map96Minimum": 9,
+    "referencePhonePerformance": false
+  },
+  "mature32Benchmark": "running separately; unaccepted until results verified",
+  "stability30Seeds": "not yet repeated for rules7; completed rules6 evidence is separate",
+  "milestoneR5": "partial",
+  "limitations": [
+    "No known biological genealogy or individual births of couples yet",
+    "No material inheritance or institutional succession system",
+    "Social rules not yet unified with declarative narrative instances",
+    "No physical dwelling assignment per household",
+    "Migrant transport, territory, institutions, species and eras remain incomplete",
+    "No active millennium or reference-phone performance acceptance"
+  ]
+}

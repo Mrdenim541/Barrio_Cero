@@ -1,0 +1,28 @@
+{
+  "version": "0.8.0+9",
+  "rules": 7,
+  "mode": "profile",
+  "device": "API29 software emulator",
+  "scenario": "seed 31, day 120 reached by normal rules; no state injections",
+  "installationOutput": "Performing Streamed Install\nSuccess\n",
+  "previewPreservesCheckpoint": true,
+  "household": {
+    "id": "household:5",
+    "members": [
+      "p0b",
+      "p0a"
+    ],
+    "populationUnchanged": true,
+    "woodCost": 4,
+    "foodCost": 6
+  },
+  "care": {
+    "adult": "p0b",
+    "child": "p77",
+    "age": 2,
+    "populationUnchanged": true,
+    "biologicalAncestryInvented": false
+  },
+  "forceStopReopenPreservesSocialState": true,
+  "originalDataRestoredExactly": true
+}

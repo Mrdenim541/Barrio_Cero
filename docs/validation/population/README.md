@@ -33,3 +33,7 @@ La prueba Android aísla el directorio de partidas y conserva los originales. Ve
 ## Resultado Android
 
 Instalación por actualización y recorrido aprobados en API29 profile: 336 habitantes entre seis ciudades, nuevo aprendiz sin incremento poblacional, coste efectivo de 10 alimentos y 5 conocimientos, 180 jornadas reservadas, finalización en el día 90 y reapertura con población y habilidad conservadas. Los cuatro originales se restauraron con hashes exactos. El primer intento falló en el selector de origen del guion antes de crear partida; se corrigió y repitió. Los avisos transitorios de UIAutomator también se conservan. No equivale a instalación limpia ni rendimiento físico.
+
+## Batería larga finalizada
+
+Las treinta semillas de reglas 6 alcanzaron 72.000 días con 200 comprobaciones anuales cada una. Los escenarios solicitados de mil años terminaron por extinción global a los días 213.960 y 195.900. El registro valida esos finales y la matriz de 200 años de 0.7; no valida mil años activos ni las relaciones personales añadidas en 0.8.

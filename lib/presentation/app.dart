@@ -1091,12 +1091,15 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     final leader = (s['people'] as List? ?? [])
         .where((dynamic p) => p['id'] == s['leaderId'] && p['diedDay'] == null)
         .firstOrNull;
+    final familyRequest=(((state['socialState'] as Map?)?['requests'] as List?)??[]).where((r)=>r['settlement']==s['id']&&r['status']=='pending').firstOrNull;
     final suggestion = !alive
         ? 'Esta comunidad dejó un legado. Puedes revisar su historia.'
         : !own
         ? 'Observas una comunidad autónoma. Consultar su ficha no cambia su gobierno.'
         : projects.isNotEmpty
         ? 'Trabajo en marcha: ${_buildingName(projects.first['building'])}. Termina en ${date(number(projects.first['finish']))}.'
+        : familyRequest!=null
+        ? 'Dos residentes solicitan organizar un hogar. Revisa su petición antes de ${date(number(familyRequest['expires']))}.'
         : state['origin']=='prehistory'
         ? _primitiveSuggestion(s)
         : 'Una oportunidad: amplía tus reservas con un huerto o mejora los hogares.';
@@ -1143,6 +1146,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                   : suggestion,
               style: const TextStyle(fontSize: 12),
             ),
+          if(own&&alive&&familyRequest!=null)TextButton(onPressed:_families,child:const Text('Revisar petición de hogar')),
           if (own && alive)
             Row(
               children: [
@@ -1221,6 +1225,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         _research();
       },
     ),
+    if (state['socialState'] != null)
+      ListTile(title:const Text('Hogares y vínculos'),
+        subtitle:const Text('Peticiones, convivencia, cuidado y memoria'),
+        onTap:(){Navigator.pop(context);_families();}),
     if (state['populationState'] != null)
       ListTile(title: const Text('Formar aprendices'),
         subtitle: const Text('Transmitir oficios con trabajo y provisiones'),
@@ -1690,6 +1698,38 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       if(!showLocked&&entries.any((e)=>!e.$2.allowed))TextButton(
         onPressed:(){Navigator.pop(context);_build(showLocked:true);},
         child:Text('Ver construcciones y requisitos (${entries.where((e)=>!e.$2.allowed).length} bloqueadas)')),
+    ]);
+  }
+
+  void _families(){
+    final s=society,raw=state['socialState'];if(s==null||raw is! Map)return;
+    final social=SocialState.fromJson(Map<String,dynamic>.from(raw));
+    final people=[for(final town in societies)...(town['people'] as List)];
+    String name(String id)=>people.where((p)=>p['id']==id).firstOrNull?['name']?.toString()??id;
+    final requests=social.requests.values.where((r)=>r.settlement==s['id']&&r.status=='pending');
+    final homes=social.households.values.where((h)=>h.settlement==s['id']);
+    final local=(s['people'] as List).map((p)=>p['id']).toSet();
+    _sheet('Hogares y vínculos',[
+      const Text('Los habitantes deciden sus relaciones. Puedes ayudar a organizar un hogar o a cuidar de un menor existente; la ascendencia desconocida sigue sin documentar.'),
+      if(requests.isEmpty)const Padding(padding:EdgeInsets.symmetric(vertical:12),child:Text('No hay peticiones de convivencia pendientes.')),
+      for(final r in requests)ListTile(title:Text('${name(r.a)} y ${name(r.b)}'),subtitle:Text('Solicitan ayuda para convivir. Vence en ${date(r.expires)}.'),
+        trailing:const Icon(Icons.chevron_right),onTap:(){Navigator.pop(context);_sheet('Una petición de hogar',[
+          Text('${name(r.a)} y ${name(r.b)} quieren convivir. Aceptar no cambia sus sentimientos ni impone un romance.'),
+          FilledButton(onPressed:(){Navigator.pop(context);_confirmCommand('Ayudar al hogar','home',target:r.id,choice:'support');},child:const Text('Revisar ayuda')),
+          TextButton(onPressed:(){Navigator.pop(context);_confirmCommand('Rechazar la ayuda','home',target:r.id,choice:'decline');},child:const Text('No financiar')),
+        ]);}),
+      for(final h in homes)ExpansionTile(title:Text('Hogar · ${h.members.map(name).join(', ')}'),subtitle:Text('Desde ${date(h.founded)} · ${h.joined.length-h.members.length} miembros anteriores'),children:[
+        for(final id in h.joined.keys)ListTile(title:Text(name(id)),subtitle:Text(h.left.containsKey(id)?'Dejó el hogar en ${date(h.left[id]!)}':'Convive en este hogar')),
+        if(h.members.any((id)=>people.any((p)=>p['id']==id&&p['diedDay']==null&&day-number(p['bornDay'])>=18*360)))TextButton(onPressed:(){
+          final adult=h.members.firstWhere((id)=>people.any((p)=>p['id']==id&&p['diedDay']==null&&day-number(p['bornDay'])>=18*360));
+          Navigator.pop(context);_confirmCommand('Asumir una tutela','foster',target:adult);
+        },child:const Text('Revisar cuidado de un menor')),
+      ]),
+      const SizedBox(height:12),const Text('Vínculos conocidos',style:TextStyle(color:gold)),
+      for(final b in social.bonds.values.where((b)=>local.contains(b.a)||local.contains(b.b)))ListTile(title:Text('${name(b.a)} · ${name(b.b)}'),subtitle:Text('${{'acquaintance':'Se conocen','friends':'Amistad','romance':'Pareja por acuerdo mutuo','separated':'Relación terminada','bereaved':'Duelo'}[b.status]} · confianza ${b.trust} · amistad ${b.friendship}')),
+      if(social.guardians.isNotEmpty)const Text('Cuidados documentados',style:TextStyle(color:gold)),
+      for(final g in social.guardians.where((g)=>local.contains(g['adult'])||local.contains(g['child'])))ListTile(title:Text('${name(g['adult'])} cuida de ${name(g['child'])}'),subtitle:Text('Tutela desde ${date(g['day'])}; no determina parentesco biológico.')),
+      for(final m in social.memories.where((m)=>(m['people'] as List).any(local.contains)).toList().reversed.take(12))ListTile(title:Text('${{'home':'Un hogar compartido','care':'Una responsabilidad de cuidado','distance':'La distancia separa al hogar','loss':'Una pérdida en la familia','separation':'Separación','legacy':'Legado'}[m['kind']]}'),subtitle:Text('${date(m['day'])} · ${(m['people'] as List).map((id)=>name(id)).join(', ')}')),
     ]);
   }
 

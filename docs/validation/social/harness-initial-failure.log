@@ -1,0 +1,4 @@
+  File "/tmp/barrio_social_native.py", line 1
+    exec(open('/tmp/barrio_native_smoke.py').read().split('
+                                                          ^
+SyntaxError: unterminated string literal (detected at line 1)

@@ -1,5 +1,7 @@
 import 'v2/learning.dart';
+import 'v2/social.dart';
 export 'v2/learning.dart';
+export 'v2/social.dart';
 import 'v2/population.dart';
 export 'v2/population.dart';
 import '../content/definitions.dart';
@@ -121,7 +123,9 @@ class TradeRoute {
  factory TradeRoute.fromJson(Map<String,dynamic> j){final rules=j['transportRules']??1;if(![1,2].contains(rules))throw const FormatException('Reglas de transporte desconocidas');if(rules==2&&(j['foodMillis'] is! int||j['foodMillis']!=Quantity.fromNumber(j['cargo']).millis||j['metalMillis'] is! int||j['returning'] is! bool||j['closing'] is! bool||j['crewAssigned'] is! int))throw const FormatException('Carga de transporte inválida');return TradeRoute(j['id'],j['from'],j['to'],List<int>.from(j['path']),cargo:(j['cargo'] as num).toDouble(),progress:j['progress'],blocked:j['blocked'],transportRules:rules,metalMillis:j['metalMillis']??0,returning:j['returning']??false,closing:j['closing']??false,crewAssigned:j['crewAssigned']??0);}
 }
 class WorldState {
- static const currentRules=6;
+ static const currentRules=7;
+ SocialState? socialState;
+ Map<String,SocialResident> get socialResidents=>{for(final s in societies)for(final p in s.people)p.id:SocialResident(p.id,s.id,p.bornDay,p.diedDay)};
  PopulationLedger? populationState;
  Iterable<Map<String,dynamic>> get identityRecords=>societies.map((s)=>s.identityView(day:populationState==null?null:day));
  String origin='reconstruction';
@@ -141,7 +145,7 @@ class WorldState {
  for(int y=0;y<size;y++){for(int x=0;x<size;x++) {final n=((math.sin(x/9)+math.cos(y/11)+math.sin((x+y+seed%17)/6))*1.2+3).floor().clamp(0,5).toInt();w.tiles.add(Tile(x,y,n,r.nextInt(5)+1,ruin:r.nextInt(80)==0));}}
  const names=['Barrio Cero','Liga del Junco','Forja Gris','Archivo del Alba','Vigías del Sur','Nómadas de Sal'];const profiles=['cooperativa','ecologista','industrial','científica','defensiva','mercantil'];
  for(int i=0;i<6;i++){int x=(size*(0.2+(i%3)*0.28)).round(),y=(size*(0.25+(i~/3)*0.45)).round();while(!w.tiles[y*size+x].passable){x=(x+1)%size;}if(scenario!=null){Tile? best;var distance=1<<30;for(final t in w.tiles){if(!scenario.biomes.contains(t.biome)||t.richness<scenario.minRichness||w.societies.any((s)=>(s.x-t.x).abs()+(s.y-t.y).abs()<5))continue;final d=(t.x-x).abs()+(t.y-y).abs();if(d<distance){best=t;distance=d;}}if(best==null)throw const FormatException('No hay emplazamiento viable para el origen');x=best.x;y=best.y;}final s=Society('s$i',names[i],profiles[i],x,y,culture:names[i],materialRules:fixedMaterials?2:1);s.policy.research=['agriculture','sanitation','mining','writing','masonry','trade'][i];s.policy.risk=i==2?0.7:0.35;s.policy.diplomacy=i==4?'defend':'cooperate';s.people=[Person('p${i}a',i==0?'Ana':'Iria $i','técnica',-28*360,'inventive'),Person('p${i}b',i==0?'Leo':'Nilo $i','explorador',-24*360,'bold'),Person('p${i}c',i==0?'Tito':'Sol $i','suministros',-42*360,'prudent')];if(scenario!=null){s.children=scenario.children;s.adults=scenario.adults;s.elders=scenario.elders;s.resources=Map.from(scenario.stocks);s.built=Map.from(scenario.built);s.tech=Set.from(scenario.knowledge);s.people=[for(var k=0;k<scenario.people.length;k++)Person('p$i${String.fromCharCode(97+k)}',i==0?scenario.people[k]['name']:'${scenario.people[k]['name']} $i',scenario.people[k]['role'],-(scenario.people[k]['age'] as int)*360,scenario.people[k]['trait'])];if(origin=='prehistory')s.policy.reserve=48;}s.leaderId=s.people.last.id;for(int j=0;j<6;j++){if(i!=j)s.relations['s$j']=r.nextInt(41)-10;}s.ensureSites();w.societies.add(s);}
- w.chronicle.add(HistoryEntry('h0',0,origin=='prehistory'?'Junto al primer fuego':'Un mundo vuelve a respirar',scenario==null?'Ana, Leo y Tito reúnen a 56 habitantes junto a las ruinas. Cada decisión tendrá memoria.':'${scenario.people.map((p)=>p['name']).join(', ')} reúnen a ${scenario.children+scenario.adults+scenario.elders} habitantes. ${scenario.description}','inicio','s0',w.societies.first.x,w.societies.first.y));w.serial=1;if(fixedMaterials)w.entities=WorldEntities.fromSettlements(w.identityRecords);for(final s in w.societies){s.catalog=w.catalog;}if(fixedMaterials){w.populationState=estimatePopulation(w.day,w.societies.map((s)=>s.toJson()),w.entities!);}return w;
+ w.chronicle.add(HistoryEntry('h0',0,origin=='prehistory'?'Junto al primer fuego':'Un mundo vuelve a respirar',scenario==null?'Ana, Leo y Tito reúnen a 56 habitantes junto a las ruinas. Cada decisión tendrá memoria.':'${scenario.people.map((p)=>p['name']).join(', ')} reúnen a ${scenario.children+scenario.adults+scenario.elders} habitantes. ${scenario.description}','inicio','s0',w.societies.first.x,w.societies.first.y));w.serial=1;if(fixedMaterials)w.entities=WorldEntities.fromSettlements(w.identityRecords);for(final s in w.societies){s.catalog=w.catalog;}if(fixedMaterials){w.populationState=estimatePopulation(w.day,w.societies.map((s)=>s.toJson()),w.entities!);w.socialState=SocialState();}return w;
  }
 
  static PopulationLedger estimatePopulation(int day,Iterable<Map<String,dynamic>> actors,WorldEntities entities){
@@ -178,18 +182,20 @@ class WorldState {
  Society? society(String? id){for(final s in societies){if(s.id==id)return s;}return null;}
  Society get controlled=>society(controlledId)??societies.first;
  String get date=>'Año ${day~/360+1} · mes ${(day%360)~/30+1} · día ${day%30+1}';
- Map<String,dynamic> toJson()=>{'schema':1,if(rulesVersion>=5)'origin':origin,if(populationState!=null)'populationState':populationState!.toJson(),if(catalog!=null)'catalog':catalog!.toJson(),if(entities!=null)'entities':entities!.toJson(),if(ruleChanges.isNotEmpty)'ruleChanges':ruleChanges,if(rulesVersion>1)'rulesVersion':rulesVersion,if(rulesVersion>1)'randomAlgorithm':RandomState.algorithm,'seed':seed,'size':size,'day':day,'serial':serial,'intensity':intensity,'extraordinary':extraordinary,'rng':random.state,'controlledId':controlledId,'tiles':tiles.map((t)=>t.toJson()).toList(),'societies':societies.map((s)=>s.toJson()).toList(),'chronicle':chronicle.map((h)=>h.toJson()).toList(),'pending':pending.map((e)=>e.toJson()).toList(),'routes':routes.map((r)=>r.toJson()).toList(),'annualSnapshots':annualSnapshots,'contentVersions':contentVersions,'contentHistory':contentHistory,'commandReceipts':commandReceipts};
- factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5,6].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));if(j['populationState']!=null)w.populationState=PopulationLedger.fromJson(Map<String,dynamic>.from(j['populationState']));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));w.validate();return w;}
+ Map<String,dynamic> toJson()=>{'schema':1,if(socialState!=null)'socialState':socialState!.toJson(),if(rulesVersion>=5)'origin':origin,if(populationState!=null)'populationState':populationState!.toJson(),if(catalog!=null)'catalog':catalog!.toJson(),if(entities!=null)'entities':entities!.toJson(),if(ruleChanges.isNotEmpty)'ruleChanges':ruleChanges,if(rulesVersion>1)'rulesVersion':rulesVersion,if(rulesVersion>1)'randomAlgorithm':RandomState.algorithm,'seed':seed,'size':size,'day':day,'serial':serial,'intensity':intensity,'extraordinary':extraordinary,'rng':random.state,'controlledId':controlledId,'tiles':tiles.map((t)=>t.toJson()).toList(),'societies':societies.map((s)=>s.toJson()).toList(),'chronicle':chronicle.map((h)=>h.toJson()).toList(),'pending':pending.map((e)=>e.toJson()).toList(),'routes':routes.map((r)=>r.toJson()).toList(),'annualSnapshots':annualSnapshots,'contentVersions':contentVersions,'contentHistory':contentHistory,'commandReceipts':commandReceipts};
+ factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5,6,7].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));if(j['populationState']!=null)w.populationState=PopulationLedger.fromJson(Map<String,dynamic>.from(j['populationState']));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));if(j['socialState']!=null)w.socialState=SocialState.fromJson(Map<String,dynamic>.from(j['socialState']));w.validate();return w;}
  void validate(){
+ if((rulesVersion>=7)!=(socialState!=null))throw const FormatException('Registro personal sin su versión de reglas');
+ socialState?.validate(day,socialResidents,societies.map((s)=>s.id).toSet());
  if((rulesVersion>=6)!=(populationState!=null))throw const FormatException('Población sin su versión de reglas');
  assertPopulation();
  for(final s in societies){s.catalog=catalog;}
  if(!['prehistory','reconstruction'].contains(origin)||(rulesVersion<5&&origin!='reconstruction'))throw const FormatException('Origen o versión incompatibles');
  if((rulesVersion>=4)!=(catalog!=null))throw const FormatException('Catálogo y versión de reglas incompatibles');
  final buildings=buildingDefinitions;final technologies=technologyDefinitions;
- for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5,6].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
+ for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5,6,7].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
  entities?.validate(identityRecords);
- if(![1,2,3,4,5,6].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
+ if(![1,2,3,4,5,6,7].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
  if(size!=64&&size!=96)throw const FormatException('Tamaño de mundo inválido');
  if(day<0||serial<0||tiles.length!=size*size)throw const FormatException('Calendario o terreno inválido');
  if(societies.isEmpty||societies.length>100)throw const FormatException('Número de sociedades inválido');
@@ -227,7 +233,7 @@ class WorldState {
  if(s.relations.entries.any((e)=>!ids.contains(e.key)||e.value< -100||e.value>100))throw const FormatException('Relación inválida');
  if([s.health,s.morale,s.environment].any((v)=>!v.isFinite||v<0||v>100))throw const FormatException('Indicador inválido');
  if(!s.policy.reserve.isFinite||s.policy.reserve<0||!s.policy.risk.isFinite||s.policy.risk<0||s.policy.risk>1)throw const FormatException('Política inválida');
- for(final p in s.people){if(!p.skill.isFinite||p.skill<0||p.skill>100||p.skills.entries.any((e)=>!courses.any((c)=>c.id==e.key)||e.value<0||e.value>1000)||!personIds.add(p.id)||p.bornDay>day||(p.diedDay!=null&&(p.diedDay!>day||p.diedDay!<p.bornDay)))throw const FormatException('Persona inválida');}
+ for(final p in s.people){if(!p.skill.isFinite||p.skill<0||p.skill>100||p.skills.entries.any((e)=>!courses.any((c)=>c.id==e.key)||e.value<0||e.value>1000)||(socialState!=null&&p.id.contains('|'))||!personIds.add(p.id)||p.bornDay>day||(p.diedDay!=null&&(p.diedDay!>day||p.diedDay!<p.bornDay)))throw const FormatException('Persona inválida');}
  if(s.alive&&!(populationState!=null&&s.leaderId=='')&&!s.people.any((p)=>p.id==s.leaderId))throw const FormatException('Dirigente inexistente');
  }
  for(final receipt in commandReceipts.entries){if(receipt.key.isEmpty||receipt.key.length>128||receipt.value['fingerprint'] is! String||receipt.value['message'] is! String||receipt.value['day'] is! int||(receipt.value['day'] as int)>day||(receipt.value['day'] as int)<0)throw const FormatException('Recibo de orden inválido');}
@@ -244,7 +250,7 @@ class WorldState {
  /// Commits an already validated candidate without changing the WorldState identity.
  /// References to nested entities must be reacquired after a successful submit.
  void _adopt(WorldState value) {
-  populationState=value.populationState;origin=value.origin;catalog=value.catalog;rulesVersion=value.rulesVersion;ruleChanges=value.ruleChanges;entities=value.entities;seed=value.seed;size=value.size;day=value.day;serial=value.serial;
+  socialState=value.socialState;populationState=value.populationState;origin=value.origin;catalog=value.catalog;rulesVersion=value.rulesVersion;ruleChanges=value.ruleChanges;entities=value.entities;seed=value.seed;size=value.size;day=value.day;serial=value.serial;
   intensity=value.intensity;extraordinary=value.extraordinary;random=value.random;
   controlledId=value.controlledId;tiles=value.tiles;societies=value.societies;
   chronicle=value.chronicle;pending=value.pending;routes=value.routes;
@@ -356,7 +362,7 @@ class Simulation {
    if(!result.ok)return _CommandEvaluation(CommandResult(false,result.message,code:'rejected'));
    candidate.commandReceipts[request.id]={'fingerprint':request.fingerprint,
     'message':result.message,'day':candidate.day,if(trial.materialPayments.isNotEmpty)'materials':trial.materialPayments};
-   candidate.entities?.reconcile(candidate.identityRecords);
+   candidate.socialState?.reconcile(candidate.day,candidate.socialResidents);candidate.entities?.reconcile(candidate.identityRecords);
    candidate.validate();
    return _CommandEvaluation(result,candidate:candidate,history:emitted);
   } catch(error) {
@@ -386,6 +392,10 @@ class Simulation {
   final prerequisites=<String>[];
   String technologyName(String id)=>technologies.where((t)=>t.id==id).firstOrNull?.name??id;
   switch(request.action){
+   case 'home':
+    if(request.choice=='support'){costs={'wood':4,'food':6};}duration=0;outcome='Atiende una petición real de convivencia. No impone afecto ni crea habitantes.';break;
+   case 'foster':
+    costs={'food':2,'water':1};duration=0;outcome='Un adulto con hogar asume el cuidado de un menor ya residente. Su parentesco biológico desconocido permanece desconocido.';break;
    case 'train':
     if(society!=null){final quote=_learningQuote(society,request.target,request.choice);costs=quote.costs;workers=quote.workers;duration=quote.days;outcome=quote.allowed?'Forma un residente existente. Maestro y aprendiz dejan de producir mientras trabajan; el aprendizaje parcial se conserva.':'Formación: ${quote.reason}';}
     break;
@@ -561,6 +571,32 @@ class Simulation {
  /// Trusted rule interface for autonomous actions; player callers use submit.
  CommandResult command(String action,{String? societyId,String? target,String? choice}) {
  final s=world.society(societyId??world.controlledId);if(action=='delegate'){world.controlledId=null;return const CommandResult(true,'Todas las comunidades quedan delegadas.');}if(action=='control'){final t=world.society(target);if(t==null||!t.alive)return const CommandResult(false,'Comunidad no disponible.');world.controlledId=t.id;return CommandResult(true,'Ahora guías ${t.name}.');}if(s==null||!s.alive)return const CommandResult(false,'No hay una comunidad viva seleccionada.');if(world.populationState!=null&&!s.people.any((p)=>p.id==s.leaderId&&p.alive&&world.day-p.bornDay>=18*360))return const CommandResult(false,'No hay una dirección adulta capaz de confirmar la orden.');
+ if(action=='home'){
+   final social=world.socialState,request=world.socialState?.requests[target];
+   if(social==null||request==null||request.settlement!=s.id)return const CommandResult(false,'No existe esa petición en tu comunidad.');
+   final error=social.canResolve(request.id,world.day,world.socialResidents);if(error!=null)return CommandResult(false,error);
+   if(choice=='decline'){social.decline(request.id,world.day,world.socialResidents);record(s,'Una ayuda que no llega','El consejo rechaza financiar el hogar. Sus habitantes conservan autonomía y vínculos.','vida personal');return const CommandResult(true,'Ayuda rechazada; no se imponen sentimientos.');}
+   if(choice!='support')return const CommandResult(false,'Respuesta de hogar desconocida.');
+   if(s.housing<s.population)return const CommandResult(false,'Hace falta espacio habitable para atender a todos los residentes.');
+   if(!_pay(s,{'wood':4,'food':6},destination:'sink:household_setup'))return const CommandResult(false,'El hogar necesita 4 maderas y 6 alimentos.');
+   final home=social.resolve(request.id,world.day,world.socialResidents);s.morale=math.min(100,s.morale+2);
+   record(s,'Un hogar compartido','Los miembros de ${home.id} establecen su hogar con provisiones reales. No se crean residentes ni parentescos desconocidos.','vida personal');
+   return const CommandResult(true,'Hogar establecido; sus miembros y recuerdos se conservarán.');
+ }
+ if(action=='foster'){
+   final social=world.socialState;final adult=s.people.where((p)=>p.id==target&&p.alive&&world.day-p.bornDay>=18*360).firstOrNull;
+   final home=adult==null?null:social?.homeOf(adult.id);
+   if(social==null||adult==null||home==null)return const CommandResult(false,'La tutela necesita un hogar y un adulto residente.');
+   if(s.people.where((p)=>p.alive).length>=24)return const CommandResult(false,'El seguimiento personal está ocupado; los demás cuidados continúan agregados.');
+   final group=world.populationState!.candidate(s.id,minimumAge:0,maximumAge:15);
+   if(group==null)return const CommandResult(false,'No hay un menor sin identidad destacada disponible para este cuidado.');
+   if(!_pay(s,{'food':2,'water':1},destination:'sink:foster_care'))return const CommandResult(false,'El cuidado necesita 2 alimentos y 1 agua.');
+   final child=Person(_id('p'),'Menor ${world.serial}','infante',group.bornDay,traitNames[world.random.nextInt(traitNames.length)],skill:0,birthEstimated:group.estimated);
+   world.populationState!.register(child.id,group.id);s.people.add(child);
+   social.addGuardian(adult.id,child.id,world.day,world.socialResidents);
+   record(s,'Una responsabilidad de cuidado','${adult.name} asume la tutela de ${child.name}, que ya vivía en la comunidad. Su parentesco biológico sigue sin documentar.','vida personal');
+   return const CommandResult(true,'Tutela registrada sin añadir habitantes ni inventar ascendencia.');
+ }
  if(action=='train'){
    final q=_learningQuote(s,target,choice);if(!q.allowed)return CommandResult(false,q.reason);
    final id='learning:${s.id}:${world.day}:${world.serial++}';
@@ -645,7 +681,7 @@ class Simulation {
  void _recordPopulationDeaths(List<String> ids,{String? cause}){
    if(ids.isEmpty)return;final victims=ids.toSet();
    for(final s in world.societies){for(final p in s.people){if(p.alive&&victims.contains(p.id)){p.diedDay=world.day;record(s,'Muere ${p.name}','Su grupo registra la baja; sus vínculos e historia conservan su identidad.','generación',cause:cause);}}}
-   _cleanupLearning();
+   _cleanupLearning();world.socialState?.reconcile(world.day,world.socialResidents);
  }
  Person? _promoteResident(Society s,String role){
    final ledger=world.populationState!;final group=ledger.candidate(s.id,minimumAge:18);
@@ -666,6 +702,7 @@ class Simulation {
    final expired=ledger.advanceTo(world.day+1);world.day++;
    for(final id in expired){final group=ledger.cohort(id);if(group!=null)_recordPopulationDeaths(ledger.killCohort(id,group.count,world.random.nextInt).people);}
    world.syncPopulation();_cleanupLearning();
+   if(world.socialState!=null){for(final s in world.societies){for(final p in s.people.where((p)=>p.alive&&p.role=='infante'&&world.day-p.bornDay>=18*360)){p.role='habitante';record(s,'${p.name} alcanza la edad adulta','Conserva su hogar, cuidados recibidos e identidad. Puede emprender un aprendizaje propio.','vida personal');}}}
    for(final s in world.societies){if(s.population==0)s.extinct=true;_ensureLeadership(s);}
    world.entities?.reconcile(world.identityRecords);
  }
@@ -673,7 +710,7 @@ class Simulation {
    if(count<=0)return 0;
    final moved=world.populationState!.transfer(from.id,to.id,count,band,world.random.nextInt);
    final ids=moved.people.toSet();final people=from.people.where((p)=>ids.contains(p.id)).toList();
-   from.people.removeWhere((p)=>ids.contains(p.id));to.people.addAll(people);_cleanupLearning();
+   from.people.removeWhere((p)=>ids.contains(p.id));to.people.addAll(people);_cleanupLearning();world.socialState?.reconcile(world.day,world.socialResidents);
    world.syncPopulation();
    if(from.population==0){from.extinct=true;record(from,'Los últimos habitantes parten','La ciudad queda deshabitada; sus residentes y su cultura continúan en otro lugar.','migración',cause:cause);}
    _ensureLeadership(from);_ensureLeadership(to);world.entities?.reconcile(world.identityRecords);
@@ -770,7 +807,33 @@ class Simulation {
    return usedTotal;
  }
 
- void _monthly(Society s){if(s.health<30&&s.population>0){final losses=math.max(1,(s.population*0.03).floor());_removePeople(s,losses);record(s,'Pérdidas por privación','$losses habitantes murieron; la comunidad recuerda la pérdida.','necesidad');}if(!s.alive)return;if(s.population==0){s.extinct=true;return;}if(s.id!=world.controlledId||delegateDecisions)_autonomy(s);if(world.random.nextInt(18)==0)_ambient(s);if(s.facilityFound&&s.facilityChoice==null&&(s.id!=world.controlledId||delegateDecisions)){final c=s.risk>0.6?'study':s.policy.diplomacy=='cooperate'?'share':'seal';command('facility',societyId:s.id,choice:c);record(s,'Resolución delegada','El consejo eligió $c según su política.','política');}}
+ void _socialMonth(Society s){
+   final social=world.socialState;if(social==null)return;
+   final residents=world.socialResidents;social.reconcile(world.day,residents);
+   final adults=s.people.where((p)=>p.alive&&world.day-p.bornDay>=18*360).toList()..sort((a,b)=>a.id.compareTo(b.id));
+   if(adults.length>=2){
+     final first=world.random.nextInt(adults.length),second=(first+1+world.random.nextInt(adults.length-1))%adults.length;
+     final a=adults[first],b=adults[second];
+     final bond=social.meet(a.id,b.id,world.day,wantsA:world.random.nextInt(100)<35,wantsB:world.random.nextInt(100)<35);
+     final friction=s.morale<25&&world.random.nextInt(3)==0;
+     bond.friendship=(bond.friendship+(friction?-8:5)).clamp(-100,100).toInt();bond.trust=(bond.trust+(friction?-6:4)).clamp(-100,100).toInt();
+     bond.rivalry=(bond.rivalry+(friction?5:-1)).clamp(0,100).toInt();
+     bond.affectionA=(bond.affectionA+(friction?-4:3)).clamp(-100,100).toInt();bond.affectionB=(bond.affectionB+(friction?-4:3)).clamp(-100,100).toInt();
+     if(bond.status=='acquaintance'&&bond.friendship>=15)bond.status='friends';
+     if(['friends','separated'].contains(bond.status)&&bond.wantsA&&bond.wantsB&&!social.related(a.id,b.id)&&bond.affectionA>=30&&bond.affectionB>=30&&bond.trust>=30){
+       bond.status='romance';record(s,'${a.name} y ${b.name} se acercan','Dos adultos deciden iniciar una relación por voluntad mutua. Su vida íntima queda fuera de la crónica pública.','vida personal');
+     }
+     if(bond.status=='romance'&&bond.trust< -20){bond.status='separated';final home=social.homeOf(b.id);if(home!=null&&home==social.homeOf(a.id)){home.left[b.id]=world.day;social.memories.add({'kind':'separation','people':[a.id,b.id],'day':world.day,'reference':home.id});}record(s,'Una relación termina','${a.name} y ${b.name} dejan de ser pareja. Su historia compartida permanece.','vida personal');}
+     final request=social.requestHome(a.id,b.id,s.id,world.day,residents);
+     if(request!=null)record(s,'Una petición de hogar','${a.name} y ${b.name} quieren organizar un hogar compartido. Puedes ayudar con provisiones; su relación personal no depende de una orden.','vida personal');
+   }
+   if(s.id!=world.controlledId||delegateDecisions){
+     final pending=social.requests.values.where((r)=>r.settlement==s.id&&r.status=='pending').toList();
+     for(final r in pending){if(s.resources['food']!>s.policy.reserve+6&&s.resources['wood']!>=4)command('home',societyId:s.id,target:r.id,choice:'support');}
+   }
+   social.reconcile(world.day,world.socialResidents);
+ }
+ void _monthly(Society s){_socialMonth(s);if(s.health<30&&s.population>0){final losses=math.max(1,(s.population*0.03).floor());_removePeople(s,losses);record(s,'Pérdidas por privación','$losses habitantes murieron; la comunidad recuerda la pérdida.','necesidad');}if(!s.alive)return;if(s.population==0){s.extinct=true;return;}if(s.id!=world.controlledId||delegateDecisions)_autonomy(s);if(world.random.nextInt(18)==0)_ambient(s);if(s.facilityFound&&s.facilityChoice==null&&(s.id!=world.controlledId||delegateDecisions)){final c=s.risk>0.6?'study':s.policy.diplomacy=='cooperate'?'share':'seal';command('facility',societyId:s.id,choice:c);record(s,'Resolución delegada','El consejo eligió $c según su política.','política');}}
  void _autonomy(Society s){final autonomous=s.id!=world.controlledId||(world.rulesVersion>=5&&delegateDecisions);final food=s.resources['food']!;if(s.projects.length<math.max(1,s.adults~/12)){String? target;if(food<s.policy.reserve*(s.leaderTrait=='patient'?1.3:1)||(s.built[world.origin=='prehistory'&&!s.supports('agriculture')?'foraging_camp':'farm']??0)<(s.population/(world.origin=='prehistory'&&!s.supports('agriculture')?20:35)).ceil()) {
    target=world.origin=='prehistory'&&!s.supports('agriculture')?'foraging_camp':'farm';
  } else if(s.resources['water']!<100){target=world.origin=='prehistory'&&!s.supports('masonry')?'water_collect':'well';}else if(s.housing<s.population+12){target=world.origin=='prehistory'&&!s.supports('masonry')?'shelter':'house';}else if(autonomous&&world.random.nextInt(3)==0){if(world.origin=='prehistory'){world.random.nextInt(4);target=(s.built['surface_stone']??0)==0?'surface_stone':s.supports('handcraft')&&(s.built['knapping_shed']??0)==0?'knapping_shed':s.supports('handcraft')&&(s.built['fiber_weave']??0)==0?'fiber_weave':null;}else{target=['sawmill','school','quarry','loom'][world.random.nextInt(4)];}}if(target!=null)command('build',societyId:s.id,target:target);}
