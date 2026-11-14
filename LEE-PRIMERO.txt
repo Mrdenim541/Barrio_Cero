@@ -1,0 +1,19 @@
+BARRIO CERO: ERAS 0.19.0 — versión de pruebas
+
+1. Termina de descargar el ZIP y elige Extraer en el gestor de archivos.
+2. Abre Barrio-Cero-Eras-0.19.0.apk, que está dentro del ZIP, y pulsa Instalar.
+3. Si Android lo pide, permite instalar aplicaciones desde ese gestor de archivos.
+
+Requiere Android 7 o posterior. APK universal: ARM32, ARM64 y x86_64.
+Puedes actualizar la versión anterior sin desinstalarla; conserva tus partidas.
+Por precaución, exporta una copia de tu historia antes de actualizar.
+
+Novedades: escalas de mapa accesibles, producción visible, progreso de obras
+y formación, caravanas con carga y noticias que localizan su región.
+Para ver continentes de la receta nueva, crea otra partida; los mundos antiguos
+conservan su terreno. Para consultar actividad, toca el nombre de la comunidad
+y después Ver actividad. Avanza un día para obtener la primera jornada.
+
+El juego continúa en desarrollo: esta entrega no completa todos los hitos.
+No incluye publicidad, cuentas ni conexión obligatoria para jugar.
+SHA-256 del APK: 39df65fad71d6f14d7defe7ba19ea6dcc6b0c9f821c1afb1106417f72d059da5
