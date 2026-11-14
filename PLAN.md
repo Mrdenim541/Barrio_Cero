@@ -1,5 +1,7 @@
 # Ejecución del rediseño aprobado: BARRIO CERO: ERAS
 
+**Aclaración vigente del usuario:** el producto es un planeta autónomo con acercamiento a territorios, asentamientos y habitantes. Observar o intervenir no debe suspender su evolución propia. [WORLD_AUTONOMY.md](docs/WORLD_AUTONOMY.md) precisa los cambios respecto de 0.14, las compatibilidades y los criterios transversales de E1–E6. La siguiente integración prioriza observación e intervención opcional; la guía no será necesaria para que el mundo avance. Esta dirección sustituye el énfasis previo en gestión manual, conservando las especificaciones y requisitos anteriores.
+
 La ampliación aprobada está en [REDESIGN_SPEC.md](docs/REDESIGN_SPEC.md). Conserva íntegra `PROJECT_SPEC.md`: 106 requisitos originales y 68 requisitos adicionales en [redesign_requirements.json](docs/redesign_requirements.json). La validación estructural de ese registro no demuestra funcionamiento. No se declara terminado ningún hito por disponer de documentación o botones.
 
 Decisiones aceptadas: prehistoria como origen predeterminado; reconstrucción como segundo escenario completo; familias destacadas con población común agregada; evolución durante generaciones y siglos; humanos y equinos jugables; visitantes extraterrestres mediante acontecimientos; intimidad adulta sin representación sexual gráfica. Android vertical, offline, API 24 como mínimo y referencia Android 10/4 GB. WorldBox, RimWorld y BitLife tienen las responsabilidades descritas en la ampliación.

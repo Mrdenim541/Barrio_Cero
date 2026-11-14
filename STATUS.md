@@ -1,5 +1,9 @@
 # Estado de BARRIO CERO: ERAS
 
+## Aclaración principal pendiente de implementar: planeta autónomo
+
+El usuario confirma que quiere acercarse desde el planeta hasta territorios, comunidades y habitantes, que deciden y evolucionan sin depender de sus órdenes. Intervenir será opcional y no debe apagar su autonomía. La revisión de 0.14 encuentra zoom por vistas y autonomía parcial; la sociedad controlada aún queda excluida de varias decisiones automáticas. La conexión de zoom entre escalas, los territorios políticos completos y la autoridad de intervención independiente requieren implementación. Se registra el criterio y el próximo orden de trabajo en [WORLD_AUTONOMY.md](docs/WORLD_AUTONOMY.md). Esta actualización no cambia código, reglas ni APK ni acredita esos comportamientos como completos.
+
 ## Organización vigente por petición del usuario
 
 Se agrupan los pendientes en seis entregas mayores: experiencia inicial; sociedades/territorio/familias; economía/eras/especies; narrativa/extraordinarios; historia/arte/Android; aceptación/entrega. La prioridad inmediata es hacer comprensible y visible la experiencia inicial. [Flujo activo y política de pruebas](PLAN.md). [Mapa de los 174 requisitos](docs/execution_batches.json).

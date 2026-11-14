@@ -1,5 +1,7 @@
 # Referencias y primera sesión de BARRIO CERO: ERAS
 
+Dirección vigente aclarada posteriormente por el usuario: [planeta autónomo](WORLD_AUTONOMY.md). WorldBox pasa a determinar el ciclo principal de observación e intervención opcional; RimWorld aporta necesidades, personajes y consecuencias, y BitLife acontecimientos personales. Seleccionar o intervenir no debe detener el gobierno propio de una sociedad. Los recorridos de gestión de este documento se conservan como caminos opcionales, no como condiciones de evolución del mundo.
+
 13 de noviembre de 2026. Dirección de diseño tras probar el APK y señalar el usuario que hay demasiadas opciones confusas. Dirección aprobada ampliada en [REDESIGN_SPEC.md](REDESIGN_SPEC.md); este documento no afirma que sus funciones ya estén implementadas. Conserva PROJECT_SPEC.md, especialmente sus apartados 6–8 y 17–19. R1 mejora primero el escenario actual; el origen prehistórico solo se ofrecerá con economía funcional en R4.
 
 ## Referencias seleccionadas

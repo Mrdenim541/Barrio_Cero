@@ -1,5 +1,7 @@
 # Experiencia inicial — integración 0.14
 
+Este documento describe la interfaz implementada en 0.14. La aclaración posterior [WORLD_AUTONOMY.md](WORLD_AUTONOMY.md) establece el siguiente cambio: observar el planeta e intervenir opcionalmente sin frenar sociedades. No se considera ya implementado por disponer de un botón de delegación.
+
 Esta entrega forma parte de E1 y conserva reglas 11. No completa las obligaciones de E1–E6 ni la aceptación de las primeras diez decisiones.
 
 ## Acceso desde el barrio
