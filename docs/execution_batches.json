@@ -1,0 +1,2441 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Execution grouping only; preserves all requirements, states, acceptance criteria and R0-R13 milestones.",
+  "baseSpecSha256": "49017fe7d421e4261fde238b19386286962c6bf793497660b99eb1a59bed075e",
+  "extensionSpecSha256": "891b3cf0a9a9401eedfd3a1dbf06e5337ca347a6a2db7cb530b31bd5209470a9",
+  "originalCount": 106,
+  "extensionCount": 68,
+  "finalAcceptanceBatch": "E6",
+  "agentPolicy": "Single agent; no unrequested parallel delegation.",
+  "testingPolicy": {
+    "duringDevelopment": "Targeted behavior tests for changed mechanisms; static analysis as appropriate. No automatic full long matrix per patch.",
+    "batchIntegration": "Full fast suite, applicable content validation, one final APK and a combined Android flow after code is stable.",
+    "longRuns": "After major stable simulation integrations and final acceptance; keep and consume the current frozen run without restarting it for documentation, UI or asset-only changes.",
+    "mandatoryFinal": "All agreed temporal, generational, narrative, recovery, 30-seed/200-year, active-millennium,32-settlement and Android criteria remain required."
+  },
+  "batches": [
+    {
+      "id": "E1",
+      "name": "Experiencia inicial comprensible",
+      "dependencies": [],
+      "deliverables": [
+        "Inicio centrado en habitantes, necesidades y una oportunidad real; observar, dirigir y delegar claramente diferenciados.",
+        "Acciones contextuales con coste, requisitos, duración y consecuencia; retirar opciones sin utilidad inmediata del primer plano.",
+        "Recorrido inicial de diez decisiones con capacidades actuales, sin ayudas invisibles; ampliar y repetir su aceptación en E5.",
+        "Primera mejora visible de composición del asentamiento y selección táctil, con edificios y actividades confirmados."
+      ],
+      "modules": [
+        "lib/presentation",
+        "lib/session",
+        "assets/art",
+        "tool/generate_art.py"
+      ],
+      "closeWhen": [
+        "Construir, avanzar, conocer otra comunidad, resolver una consecuencia y guardar/reabrir se entienden desde el flujo principal.",
+        "APK intermedio con captura real; R11 completo permanece abierto hasta E5."
+      ]
+    },
+    {
+      "id": "E2",
+      "name": "Sociedades, territorio y vidas personales",
+      "dependencies": [
+        "E1"
+      ],
+      "deliverables": [
+        "Territorio real, acceso a rutas, instituciones, pactos, agravios, ocupación, guerra, secesión y continuidad tras perder la capital.",
+        "Familias, genealogía conocida, relaciones adultas, separaciones, reconciliaciones, duelo, herencia y sucesión institucional.",
+        "Viajes de familias/personajes y fundación de colonias con población y materiales en tránsito.",
+        "Modelo final de identidades y contratos compartidos; conversiones explícitas, copia original y conservación de compromisos."
+      ],
+      "modules": [
+        "lib/simulation",
+        "lib/persistence",
+        "lib/content",
+        "lib/presentation"
+      ],
+      "closeWhen": [
+        "Una decisión cambia el desarrollo de dos sociedades vivas; rutas cortadas, refugio y conflicto conservan personas y materiales.",
+        "Cien años de continuidad familiar/política; las partidas existentes siguen recuperables."
+      ]
+    },
+    {
+      "id": "E3",
+      "name": "Economía histórica, eras y especies",
+      "dependencies": [
+        "E2"
+      ],
+      "deliverables": [
+        "Conservación material global, ocupaciones y capacidades territoriales; agua, alimento, vivienda, salud, mantenimiento y reparación completos.",
+        "Seis eras operativas por asentamiento, coexistencia desigual, 180 días de soporte y 360 de pérdida, caminos alternativos y reconstrucción.",
+        "Humanos y equinos jugables con anatomía, dieta, reproducción, longevidad, movilidad y herramientas propias; visitantes definidos para E4.",
+        "30 construcciones/mejoras y 48 tecnologías funcionales; ambos orígenes y seis estrategias viables en contextos diferentes."
+      ],
+      "modules": [
+        "lib/simulation",
+        "lib/content",
+        "content",
+        "assets/content",
+        "lib/presentation"
+      ],
+      "closeWhen": [
+        "Las eras cambian cadenas productivas e instituciones; investigar no crea infraestructura o combustible.",
+        "La especie modifica decisiones y viabilidad; diferencias y regresión demostradas mediante escenarios."
+      ]
+    },
+    {
+      "id": "E4",
+      "name": "Director narrativo y acontecimientos extraordinarios",
+      "dependencies": [
+        "E2",
+        "E3"
+      ],
+      "deliverables": [
+        "Instancias con participantes vivos, lugar, causas, vencimiento, decisiones, consecuencias y memoria; exclusiones y cascadas acotadas.",
+        "144 eventos independientes, 16 arcos con dos desenlaces mecánicos completos por arco y mínimos originales de plantillas/rasgos/perfiles conservados.",
+        "Instalación antigua con una implementación declarativa y tres recorridos completos; ocho familias configurables por separado.",
+        "Contacto, intercambio, infiltración, invasión, resistencia y convivencia extraterrestre; crisis locales, regionales y planetarias.",
+        "Violencia con víctimas, refugiados, ruinas y responsabilidad; intimidad adulta por elipsis y ajustes independientes de sangre/cuerpos/texto."
+      ],
+      "modules": [
+        "lib/simulation",
+        "lib/content",
+        "content",
+        "assets/content",
+        "lib/presentation"
+      ],
+      "closeWhen": [
+        "Los desenlaces se alcanzan desde el inicio de cada cadena y cambian el mundo; no basta ejecutar efectos aislados.",
+        "Desactivar una familia impide nuevos inicios y conserva consecuencias ya comprometidas; extinción no causa repoblación automática."
+      ]
+    },
+    {
+      "id": "E5",
+      "name": "Historia, arte y experiencia Android completa",
+      "dependencies": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "deliverables": [
+        "Historial por bloques con causas, genealogía y fronteras comparables; saltos completos de uno/diez/cien años.",
+        "Contenedor ZIP versionado y limitado, intercambio Android, contenido exacto por mundo y recuperación de interrupciones.",
+        "Arte original por era/especie, actividades y recorridos locales válidos, daños y transformaciones, fuentes e inventarios.",
+        "Primera sesión completa en ambos orígenes, guía opcional, accesibilidad, sonido/vibración y ajustes de presentación funcionales."
+      ],
+      "modules": [
+        "lib/persistence",
+        "lib/platform",
+        "android",
+        "lib/session",
+        "lib/presentation",
+        "assets/art",
+        "tool"
+      ],
+      "closeWhen": [
+        "Diez decisiones producen cambio visual persistente, consecuencia aplazada, interacción exterior y una opción desbloqueada por hechos.",
+        "Guardado, selección, importación, suspensión y recuperación funcionan en Android; capturas reales permiten revisar la dirección visual."
+      ]
+    },
+    {
+      "id": "E6",
+      "name": "Aceptación, rendimiento y entrega",
+      "dependencies": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "deliverables": [
+        "Matriz original y ampliación cerradas con evidencia; ninguna fila obligatoria pendiente o bloqueada se presenta como completa.",
+        "Equivalencia temporal, mundo vivo, generaciones, cadenas, 30 semillas/200 años, milenios activos y escenarios de extinción diferenciados.",
+        "32 asentamientos sostenidos, profile en Android de referencia y correcciones de problemas medidos.",
+        "Fuente y generadores íntegros, inventario, paquete de ejemplo, documentación, dependencias fijadas, APK firmado para pruebas y SHA-256; instalación limpia/actualización/offline."
+      ],
+      "modules": [
+        "docs",
+        "test",
+        "tool",
+        "android",
+        "build/deliverables"
+      ],
+      "closeWhen": [
+        "Compilación, instalación y funcionamiento acreditados por separado, con material real del APK final.",
+        "Sin publicación en tiendas o del entorno; el acceso a un teléfono/laboratorio de referencia sigue siendo la acción externa pendiente."
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "S01-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S01-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S01-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S01-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R7",
+        "R9"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S02-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S02-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S02-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S03-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S03-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S03-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S03-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R2",
+        "R13"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S04-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S04-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S04-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S04-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S04-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S04-R06",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R06",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R07",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S05-R08",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R4",
+        "R6",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S06-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R6"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S06-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R6"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S06-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R6"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S06-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R3",
+        "R6"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S07-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R2"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S07-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R2"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S07-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R2"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S07-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R2"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R06",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R07",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R08",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S08-R09",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S09-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "S09-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "S09-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "S09-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "S10-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S10-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S10-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S10-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S10-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R4",
+        "R6",
+        "R7"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "S11-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S11-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S11-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S11-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S11-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S12-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S12-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S12-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S12-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "S13-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S13-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S13-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S13-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S13-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R9",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S14-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ],
+      "batches": [
+        "E3",
+        "E4",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S14-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ],
+      "batches": [
+        "E3",
+        "E4",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S14-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ],
+      "batches": [
+        "E3",
+        "E4",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S14-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ],
+      "batches": [
+        "E3",
+        "E4",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S14-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ],
+      "batches": [
+        "E3",
+        "E4",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S14-R06",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ],
+      "batches": [
+        "E3",
+        "E4",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S14-R07",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R7",
+        "R8",
+        "R13"
+      ],
+      "batches": [
+        "E3",
+        "E4",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S15-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8",
+        "R10"
+      ],
+      "batches": [
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S15-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8",
+        "R10"
+      ],
+      "batches": [
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S15-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8",
+        "R10"
+      ],
+      "batches": [
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S15-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8",
+        "R10"
+      ],
+      "batches": [
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S15-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R8",
+        "R10"
+      ],
+      "batches": [
+        "E4",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S16-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S16-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S16-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S16-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S16-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S16-R06",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R2",
+        "R3",
+        "R10",
+        "R12"
+      ],
+      "batches": [
+        "E2",
+        "E3",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S17-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S17-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S17-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S17-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R1",
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "S18-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S18-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S18-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S18-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S18-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S18-R06",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S18-R07",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R0",
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S19-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S19-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S19-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S19-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S19-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S19-R06",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S19-R07",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "batches": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S20-R01",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S20-R02",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S20-R03",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S20-R04",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "S20-R05",
+      "registry": "docs/requirements.json",
+      "milestones": [
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-GOV-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R0"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-GOV-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R0"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-SCN-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R4"
+      ],
+      "batches": [
+        "E1",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-SCN-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R4"
+      ],
+      "batches": [
+        "E1",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-SCN-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-ERA-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-ERA-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-ERA-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-ERA-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-BIO-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R3"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-BIO-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-BIO-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-BIO-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-BIO-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-BIO-06",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-FAM-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R5"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-FAM-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R5"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-FAM-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R5"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-FAM-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R5"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-FAM-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-FAM-06",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-NAR-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-06",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-07",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-08",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-09",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-NAR-10",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R9"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-CAT-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-CAT-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-CAT-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-CAT-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-CAT-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-UX-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R1"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-UX-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R1"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-UX-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R1"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-UX-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-UX-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-UX-06",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-ART-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-ART-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-ART-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-CORE-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R2"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-CORE-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R2"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-CORE-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R2"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-CORE-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-CORE-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R1"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-SAVE-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R3"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-SAVE-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R3"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-SAVE-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R3"
+      ],
+      "batches": [
+        "E2",
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-SAVE-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-SAVE-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-SAVE-06",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R1"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-SAVE-07",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R10"
+      ],
+      "batches": [
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-VAL-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R12"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-VAL-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R6"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-VAL-03",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R7"
+      ],
+      "batches": [
+        "E3"
+      ],
+      "ownerBatch": "E3"
+    },
+    {
+      "id": "BC2-VAL-04",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R5"
+      ],
+      "batches": [
+        "E2"
+      ],
+      "ownerBatch": "E2"
+    },
+    {
+      "id": "BC2-VAL-05",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R8"
+      ],
+      "batches": [
+        "E4"
+      ],
+      "ownerBatch": "E4"
+    },
+    {
+      "id": "BC2-VAL-06",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R12"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-VAL-07",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R12"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-VAL-08",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R12"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-VAL-09",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R11"
+      ],
+      "batches": [
+        "E1",
+        "E5"
+      ],
+      "ownerBatch": "E5"
+    },
+    {
+      "id": "BC2-DEL-01",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    },
+    {
+      "id": "BC2-DEL-02",
+      "registry": "docs/redesign_requirements.json",
+      "milestones": [
+        "R13"
+      ],
+      "batches": [
+        "E6"
+      ],
+      "ownerBatch": "E6"
+    }
+  ]
+}

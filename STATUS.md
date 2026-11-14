@@ -1,5 +1,11 @@
 # Estado de BARRIO CERO: ERAS
 
+## Organización vigente por petición del usuario
+
+Se agrupan los pendientes en seis entregas mayores: experiencia inicial; sociedades/territorio/familias; economía/eras/especies; narrativa/extraordinarios; historia/arte/Android; aceptación/entrega. La prioridad inmediata es hacer comprensible y visible la experiencia inicial. [Flujo activo y política de pruebas](PLAN.md). [Mapa de los 174 requisitos](docs/execution_batches.json).
+
+Durante el desarrollo se comprueba el módulo cambiado. La suite rápida y un APK estable se integran por entrega; las baterías largas se reservan a cambios importantes del motor y al cierre, conservando la ejecución actual de reglas 11. La reorganización no marca requisitos como completos ni cambia las especificaciones. Los resultados históricos que siguen conservan su versión y alcance.
+
 ## Rediseño actual — R0 registrado; R1–R6 parciales
 
 ## Integración 0.12 — población y provisiones en tránsito

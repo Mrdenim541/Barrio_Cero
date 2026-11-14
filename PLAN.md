@@ -4,6 +4,50 @@ La ampliación aprobada está en [REDESIGN_SPEC.md](docs/REDESIGN_SPEC.md). Cons
 
 Decisiones aceptadas: prehistoria como origen predeterminado; reconstrucción como segundo escenario completo; familias destacadas con población común agregada; evolución durante generaciones y siglos; humanos y equinos jugables; visitantes extraterrestres mediante acontecimientos; intimidad adulta sin representación sexual gráfica. Android vertical, offline, API 24 como mínimo y referencia Android 10/4 GB. WorldBox, RimWorld y BitLife tienen las responsabilidades descritas en la ampliación.
 
+## Flujo activo: seis entregas completas
+
+Esta organización responde a la petición de reducir fragmentación y gasto de validación. Sustituye el orden de microversiones, conservando todos los criterios R0–R13 y los 174 requisitos. El mapa completo está en [execution_batches.json](docs/execution_batches.json): cada requisito tiene una entrega responsable y sus dependencias. Ningún estado de cumplimiento cambia por reagruparlo.
+
+| Entrega | Pendientes que integra | Resultado revisable |
+|---|---|---|
+| E1. Experiencia inicial comprensible | R1/R4 y primera parte de R11: entrada clara, necesidades, habitantes, acciones contextuales, costes, cámara, escena local y composición visual | Un recorrido jugable desde el inicio con decisiones y consecuencias visibles; APK y capturas reales. Las diez decisiones completas se vuelven a cerrar con todos los sistemas en E5. |
+| E2. Sociedades, territorio y vidas personales | R2/R3/R5/R6: territorio real, acceso político, instituciones, pactos, conflictos, ocupación, secesión, genealogía, relaciones adultas, herencia, sucesión y viajes de familias/personajes/colonias | Dos sociedades cuyo desarrollo cambia por decisiones reales, continuidad de familias y gobierno, pérdida de capital sin borrar identidad y guardados convertibles. |
+| E3. Economía histórica, eras y especies | R2/R3/R4/R7: conservación global, recursos y trabajos territoriales, seis eras con soporte/pérdida de capacidades, humanos/equinos y coexistencia | Ambos orígenes completos; anatomía y alimentación cambian estrategias; 30 construcciones/mejoras y 48 tecnologías diferenciadas, sin progreso automático por año. |
+| E4. Director narrativo y extraordinarios | R8/R9: participantes, causas, plazos, exclusiones, memoria, 144 eventos, 16 arcos, instalación unificada, ocho familias y extraterrestres | Cadenas completas con finales diferentes, consecuencias locales/regionales/planetarias, violencia con responsabilidad y ajustes que no borran hechos. |
+| E5. Historia, arte y Android completo | R10/R11 y cierre de R1: archivo histórico por bloques, comparación, saltos, ZIP, recuperación, arte por especie/era, recorridos, audio, accesibilidad y tutorial | Sesión completa de diez decisiones con los cuatro resultados exigidos, presentación acorde al objetivo y cierre/importación/reapertura reales en Android. |
+| E6. Aceptación y entrega | R12/R13 y revisión de todos los requisitos | Matriz cerrada, baterías completas, rendimiento medido, fuente/generadores/inventario/paquete, APK firmado de pruebas y SHA-256, instalación limpia y actualización. |
+
+La prioridad inmediata pasa a E1, para que el progreso del motor sea comprensible y visible. E2–E5 se desarrollan como bloques integrados según sus dependencias; las correcciones internas no se presentan como entregas completas del juego. Cada entrega conserva las obligaciones originales y de la ampliación, incluidas las que ya tienen una implementación parcial.
+
+## Validación proporcional al cambio
+
+- Durante el desarrollo: análisis y pruebas de comportamiento de los módulos cambiados, especialmente transacciones, población, guardado y compatibilidad. No repetir el recorrido Android completo ni los siglos por cada ajuste menor.
+- Al integrar una entrega: batería rápida completa, contenido si corresponde, una compilación final y un recorrido Android combinado sobre ese APK estable. Si una corrección afecta la compilación final, comprobar esa corrección y el binario resultante, sin repetir casos independientes ya acreditados.
+- Baterías largas: después de integraciones importantes y estables del motor, y en aceptación final. Los cambios exclusivos de documentación, arte o navegación no reinician una matriz congelada cuyo motor sigue igual. La matriz actual de reglas 11 continúa; se consumirán sus resultados existentes.
+- Conservar la semilla y el primer fallo reproducible. Añadir una regresión útil y corregir el defecto antes de volver a lanzar una batería larga. No crear pruebas que solo repitan código, ni contar pruebas omitidas o vacías como aprobadas.
+- Un solo agente, sin delegaciones adicionales no solicitadas. Informar por funciones terminadas, pendientes y evidencia; el número de pruebas no sustituye el avance jugable.
+
+`tool/run_acceptance.sh` tiene tres perfiles:
+
+```bash
+# Durante un cambio de migración: análisis y comportamiento de ese módulo.
+bash tool/run_acceptance.sh --profile quick --tests test/migration_transit_test.dart
+# Al integrar un bloque: suite rápida completa y APK profile.
+bash tool/run_acceptance.sh --profile integration
+# Aceptación estable: añade simulaciones y cargas largas obligatorias.
+bash tool/run_acceptance.sh --profile release
+```
+
+El perfil predeterminado es `quick`. `--dry-run` muestra las comprobaciones sin ejecutarlas ni registrarlas como aprobadas. Sin `--tests`, quick informa solo validación estática/análisis. El informe enumera pruebas diferidas y nunca declara aceptación completa del juego. Instalación, sesión Android y rendimiento físico mantienen evidencia separada. La validación final sigue exigiendo equivalencia temporal, mundo vivo, generaciones, ramas, interrupciones, treinta semillas/doscientos años, milenios activos y 32 asentamientos; el perfil rápido no las sustituye.
+
+## Pendientes y límites que no desaparecen al reorganizar
+
+La base 0.12 ya compila y funciona en Android, tiene guardado protegido, producción y formación, hogares básicos, migración de adultos en tránsito y varias verificaciones de siglos/carga. Eso permite construir los bloques anteriores sin rehacer esa base ni repetir sus comprobaciones por cambios ajenos.
+
+Persisten la conservación material global y el esquema final; territorios, instituciones y conflictos; genealogía y herencia; familias/colonización en tránsito; seis eras, equinos y visitantes completos; director y catálogo ampliados; historia durable, ZIP y recuperación extendida; arte final y experiencia inicial. El catálogo actual tiene 25 construcciones, 32 tecnologías, 104 eventos independientes y 12 arcos, todavía sin completar todos los recorridos exigidos.
+
+La referencia Android 10/4 GB requiere un teléfono o laboratorio equivalente para cerrar FPS, respuesta, cancelación y memoria. Es la dependencia externa de aceptación; no impide implementar los sistemas. Un APK compilado o un benchmark Linux no la sustituyen. No se publicará el entorno ni se hará un push como consecuencia de esta reorganización.
+
 ## Hitos actuales
 
 | Hito y resultado | Dependencias y módulos | Prueba y criterio de cierre | Estado |
@@ -35,7 +79,9 @@ Iteración 0.12: residencia temporal, coste completo de viaje, provisiones finit
 
 El usuario reconoce todavía el prototipo rechazado en las capturas del APK 0.2.0. Mantener R1 parcial aunque las pruebas técnicas aprueben. La siguiente integración debe producir una mejora visible de la escena local y la interacción, contrastada con las láminas objetivo existentes y con estado real; las dependencias de cuadrícula, ocupación y trabajo corresponden a R2–R4. No dar por entregada la dirección artística por cambiar navegación y textos.
 
-## Primer bloque e integración
+## Registro del primer bloque e integración
+
+Este bloque pertenece al arranque ya ejecutado. Se conserva como historial; el flujo activo E1–E6 determina el trabajo siguiente y no exige repetir esta preparación.
 
 1. Registrar la ampliación y preservar fuente, contenido, APK y guardados de referencia sin sobrescribirlos.
 2. Ejecutar validadores, análisis y pruebas rápidas; distinguir resultados previos, nuevos y bloqueados.
