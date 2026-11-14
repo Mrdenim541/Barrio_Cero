@@ -1,0 +1,20 @@
+build/validation/atlas-scenarios/prehistory-year.json: 1 file pushed, 0 skipped. 257.2 MB/s (1078555 bytes in 0.004s)
+SELinux: Loaded file_contexts
+Tap: Continuar historia
+Tap: PLANETA
+Tap: Acercarse al asentamiento
+Tap: Jugar
+Tap: Construir
+Tap: Huerto
+Tap: Confirmar orden
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Avanzar
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Años y delegación
+Tap: Avanzar 1 año
+Tap: Volver al mundo
+Tap: Continuar historia
+{"scope": "UI and exact checkpoint recovery only; no frame performance or rendered-count acceptance", "apkSha256": "834fdeea0adc8c7f657535fe068343822015d059ad982f5e8fc28392284c6165", "requestedRenderer": "default", "followSmokeOnly": true, "frameMetricsRequested": false, "device": {"serial": "emulator-5554", "hardware": "ranchu", "api": "29", "model": "Android SDK built for x86_64", "airplaneMode": "1", "wifiOn": "0", "mobileData": "0", "referencePhoneAcceptance": false}, "installation": "Performing Streamed Install\nSuccess\n", "fixture": {"size": 96, "settlements": 6, "normalOpening": false, "day": 360, "runtimeInjections": false}, "launchOutput": "Starting: Intent { cmp=com.barriocero.eras/.MainActivity }\nStatus: ok\nLaunchState: COLD\nActivity: com.barriocero.eras/.MainActivity\nTotalTime: 4869\nWaitTime: 4881\nComplete\n", "worldProfile": {"lod": "Mundo", "verified": "UI label and captured scene", "frameMetrics": "not requested", "renderedCountsVerified": false}, "playback": {"firstDay": 360, "lastDay": 370, "residentsMoved": ["p0a", "p0b", "p0c", "p1a", "p1c", "p2a", "p2b", "p2c", "p3a", "p3b", "p3c", "p4a", "p4b", "p4c", "p5a", "p5b", "p5c"], "autonomyRetained": true}, "construction": {"paidWoodMillis": 20000, "projectCommitted": true, "autonomyRetained": true}, "yearJump": {"firstDay": 413, "elapsedMs": 55998, "finalDay": 773, "confirmedDays": [413, 473, 533, 593, 653, 683, 743, 773], "phonePerformanceAcceptance": false}, "reopenExact": true, "localRoutesRestored": true, "originalSavesRestoredExactly": true, "passed": true}

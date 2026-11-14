@@ -58,10 +58,15 @@ class Checkpoint {
     }
     final state = _map(jsonDecode(jsonEncode(world.toJson())));
     state['contentVersions'] = bindings;
-    if(world.rulesVersion>=4&&!world.contentVersions.keys.any((k)=>k.endsWith('.sha256'))){
-      final registry=ContentRegistry();
-      for(final pack in packs){registry.importPack(pack);}
-      state['catalog']=RuleCatalog.fromContent(registry.compose(packs.map((p)=>p.pin).toList())).toJson();
+    if (world.rulesVersion >= 4 &&
+        !world.contentVersions.keys.any((k) => k.endsWith('.sha256'))) {
+      final registry = ContentRegistry();
+      for (final pack in packs) {
+        registry.importPack(pack);
+      }
+      state['catalog'] = RuleCatalog.fromContent(
+        registry.compose(packs.map((p) => p.pin).toList()),
+      ).toJson();
     }
     final payload = <String, dynamic>{
       'world': state,
@@ -284,13 +289,21 @@ class Checkpoint {
         event['data'] = data;
       }
     }
-    raw['origin']??='reconstruction';
-    raw['catalog']=RuleCatalog.fromContent(previous.content).toJson();
-    raw['entities']??=WorldEntities.fromSettlements((raw['societies'] as List).cast<Map<String,dynamic>>()).toJson();
-    final identities=WorldEntities.fromJson(Map<String,dynamic>.from(raw['entities']));
-    raw['populationState']??=WorldState.estimatePopulation(previous.world.day,(raw['societies'] as List).cast<Map<String,dynamic>>(),identities).toJson();
-    raw['socialState']??=SocialState().toJson();
-    if(WorldState.currentRules>=11)raw['migrations']??=[];
+    raw['origin'] ??= 'reconstruction';
+    raw['catalog'] = RuleCatalog.fromContent(previous.content).toJson();
+    raw['entities'] ??= WorldEntities.fromSettlements(
+      (raw['societies'] as List).cast<Map<String, dynamic>>(),
+    ).toJson();
+    final identities = WorldEntities.fromJson(
+      Map<String, dynamic>.from(raw['entities']),
+    );
+    raw['populationState'] ??= WorldState.estimatePopulation(
+      previous.world.day,
+      (raw['societies'] as List).cast<Map<String, dynamic>>(),
+      identities,
+    ).toJson();
+    raw['socialState'] ??= SocialState().toJson();
+    if (WorldState.currentRules >= 11) raw['migrations'] ??= [];
     raw['rulesVersion'] = WorldState.currentRules;
     raw['randomAlgorithm'] = RandomState.algorithm;
     final candidate = WorldState.fromJson(raw);
@@ -303,8 +316,12 @@ class Checkpoint {
       'to': WorldState.currentRules,
       'sourceSha256': sha256.convert(utf8.encode(source)).toString(),
       'amountAdjustments': adjustments,
-      'ageEstimation':previous.world.populationState==null?'cohort-quantiles-v1; exact prominent birthdays retained':'unchanged; existing cohort dates retained',
-      'demographicRemainders':{for(final s in raw['societies'])s['id']:s['demographicMicros']},
+      'ageEstimation': previous.world.populationState == null
+          ? 'cohort-quantiles-v1; exact prominent birthdays retained'
+          : 'unchanged; existing cohort dates retained',
+      'demographicRemainders': {
+        for (final s in raw['societies']) s['id']: s['demographicMicros'],
+      },
     });
     final id = 'h${candidate.serial++}';
     final home = candidate.controlled;
@@ -345,6 +362,74 @@ class Checkpoint {
       throw const FormatException('Partida demasiado grande');
     }
     return result;
+  }
+
+  /// Advance against already verified, fixed package bytes. Imports and content
+  /// changes still use create/decode. World integrity is validated on every call.
+  Checkpoint advanceWorld(
+    WorldState world, {
+    int? target,
+    required bool stopCrisis,
+    required Map<String, bool> settings,
+  }) {
+    final raw = _map(jsonDecode(jsonEncode(world.toJson())));
+    final previous = _payload['world'] as Map;
+    if (_canonical(raw['contentVersions']) !=
+            _canonical(previous['contentVersions']) ||
+        _canonical(raw['catalog']) != _canonical(previous['catalog']) ||
+        [
+          'seed',
+          'size',
+          'origin',
+          'rulesVersion',
+          'geographyVersion',
+        ].any((key) => raw[key] != previous[key])) {
+      throw const FormatException(
+        'Cambiar reglas o contenido requiere una conversión explícita',
+      );
+    }
+    final candidate = _world(raw);
+    if (target != null &&
+        (target < candidate.day || target > candidate.day + 360000)) {
+      throw const FormatException('Fecha objetivo inválida');
+    }
+    final known = {for (final e in content['events'] as List? ?? []) e['id']};
+    for (final e in candidate.pending) {
+      if ((e.type == 'content' || e.type == 'content_choice') &&
+          !known.contains(e.data['eventId'])) {
+        throw const FormatException('Evento pendiente sin definición fijada');
+      }
+    }
+    final options = Map<String, bool>.unmodifiable(_settings(settings));
+    final payload = {
+      'world': raw,
+      'target': target,
+      'stopCrisis': stopCrisis,
+      'settings': options,
+      'packages': _payload['packages'],
+    };
+    return Checkpoint._(
+      candidate,
+      target,
+      stopCrisis,
+      options,
+      coreSource,
+      additionalSources,
+      basePack,
+      content,
+      _map(_immutable(payload)),
+      version,
+    );
+  }
+
+  static dynamic _immutable(dynamic value) {
+    if (value is Map) {
+      return Map<String, dynamic>.unmodifiable(
+        value.map((key, item) => MapEntry(key as String, _immutable(item))),
+      );
+    }
+    if (value is List) return List<dynamic>.unmodifiable(value.map(_immutable));
+    return value;
   }
 
   static Checkpoint _fromPayload(
@@ -413,9 +498,18 @@ class Checkpoint {
             return id;
           }),
     );
-    if(candidate.rulesVersion>=5&&candidate.origin=='prehistory'&&!((content['origins'] as List?)??[]).any((o)=>o['id']=='prehistory'))throw const FormatException('Falta el origen fijado de esta partida');
-    if(candidate.rulesVersion>=4&&!candidate.catalog!.matches(RuleCatalog.fromContent(content))){
-      throw const FormatException('Las reglas guardadas no coinciden con el contenido exacto');
+    if (candidate.rulesVersion >= 5 &&
+        candidate.origin == 'prehistory' &&
+        !((content['origins'] as List?) ?? []).any(
+          (o) => o['id'] == 'prehistory',
+        )) {
+      throw const FormatException('Falta el origen fijado de esta partida');
+    }
+    if (candidate.rulesVersion >= 4 &&
+        !candidate.catalog!.matches(RuleCatalog.fromContent(content))) {
+      throw const FormatException(
+        'Las reglas guardadas no coinciden con el contenido exacto',
+      );
     }
     if (candidate.societies.any((s) => s.materialRules == 2)) {
       for (final pack in packs) {
@@ -435,7 +529,7 @@ class Checkpoint {
       sources.first,
       List.unmodifiable(sources.skip(1)),
       packs.first,
-      content,
+      _map(_immutable(content)),
       _map(jsonDecode(jsonEncode(payload))),
       version,
     );

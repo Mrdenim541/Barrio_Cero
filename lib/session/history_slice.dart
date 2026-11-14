@@ -17,8 +17,9 @@ Future<HistorySlice> advanceHistorySlice(
   required int targetDay,
   required bool stopOnCrisis,
   bool Function()? isCancelled,
-  int maxDays = 360,
-  Duration budget = const Duration(milliseconds: 200),
+  int maxDays = 1800,
+  Duration budget = const Duration(seconds: 1),
+  void Function()? onQuantum,
 }) async {
   if (maxDays < 1 || budget.isNegative) {
     throw ArgumentError('El lote requiere días y presupuesto válidos.');
@@ -42,6 +43,7 @@ Future<HistorySlice> advanceHistorySlice(
       ),
     );
     done = world.day >= targetDay || world.extinct || world.day < before + days;
+    onQuantum?.call();
     // Let the isolate receive cancellation, or the web UI handle input, between
     // simulation quanta. Nothing is published before the caller saves the slice.
     await Future<void>.delayed(Duration.zero);

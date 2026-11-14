@@ -343,15 +343,20 @@ void main() {
       try {
         await iterator.moveNext();
         final control = iterator.current['control'] as SendPort;
-        await iterator.moveNext();
-        final batch = iterator.current as Map;
+        Future<Map> nextBatch() async {
+          while(await iterator.moveNext()) {
+            final value=iterator.current as Map;
+            if(value['world']!=null)return value;
+          }
+          throw StateError('Worker ended before a checkpoint');
+        }
+        final batch = await nextBatch();
         expect(batch['done'], isFalse);
         control.send('cancel');
         await Future<void>.delayed(const Duration(milliseconds: 20));
         expect(exited, isFalse);
         control.send('ack');
-        await iterator.moveNext();
-        final finalBatch = iterator.current as Map;
+        final finalBatch = await nextBatch();
         expect(finalBatch['done'], isTrue);
         expect(finalBatch['cancelled'], isTrue);
         expect(finalBatch['world'], batch['world']);

@@ -1,11 +1,8 @@
 import 'dart:math' as math;
+import 'exact_math.dart';
 
-int _floor(int amount, int part, int whole) =>
-    (BigInt.from(amount) * BigInt.from(part) ~/ BigInt.from(whole)).toInt();
-int _ceil(int amount, int part, int whole) =>
-    ((BigInt.from(amount) * BigInt.from(part) + BigInt.from(whole - 1)) ~/
-            BigInt.from(whole))
-        .toInt();
+int _floor(int amount, int part, int whole) => scaledFloor(amount, part, whole);
+int _ceil(int amount, int part, int whole) => scaledCeil(amount, part, whole);
 
 /// Capacity is an existing productive site, not a building project or dwelling.
 /// Labor is expressed in thousandths of one adult's working day. Production
@@ -308,17 +305,18 @@ class _Planner {
 
   int offer(ProducerCapacity job, int requested) {
     final before = allocations[job.id] ?? 0;
-    int after = math.min(
-      job.laborCapacity,
-      before + math.min(remaining, math.max(0, requested)),
-    ).toInt();
+    int after = math
+        .min(
+          job.laborCapacity,
+          before + math.min(remaining, math.max(0, requested)),
+        )
+        .toInt();
     for (final input in job.inputs.entries) {
       if (input.value <= 0) continue;
       final paid = _ceil(input.value, before, 2000);
-      after = math.min(
-        after,
-        _floor(balance[input.key]! + paid, 2000, input.value),
-      ).toInt();
+      after = math
+          .min(after, _floor(balance[input.key]! + paid, 2000, input.value))
+          .toInt();
     }
     final used = math.max(0, after - before);
     if (used == 0) return 0;

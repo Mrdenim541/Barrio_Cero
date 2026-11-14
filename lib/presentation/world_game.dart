@@ -10,6 +10,7 @@ import 'planet_camera.dart';
 import 'planet_terrain.dart';
 import 'settlement_scene.dart';
 import 'settlement_activity.dart';
+import 'local_work.dart';
 
 const earth = Color(0xffcaba91);
 const ink = Color(0xff103239);
@@ -25,6 +26,11 @@ class WorldGame extends FlameGame {
   List<Map<String, dynamic>> _societies = [];
   final Map<String, SettlementScene> _scenes = {};
   final Map<String, Map<String, SiteWork>> _siteWork = {};
+  final Map<String, LocalWorkday> _workdays = {};
+  final Map<String, String> _workdayKeys = {};
+  bool playing = false;
+  double activitySeconds = 0;
+  double dayDuration = 1.2, _dayArrived = 0;
   double _workPulseUntil = 0;
   String? selected, localSelected;
   String? followedIndividualId;
@@ -65,10 +71,34 @@ class WorldGame extends FlameGame {
       Offset(number(s['x']).toDouble(), number(s['y']).toDouble());
   Rect settlementBounds(Map<String, dynamic> s) =>
       PlanetCamera.localRectToWorld(_origin(s), _scenes[s['id']]!.bounds);
-  Offset position(Map<String, dynamic> s) => settlementBounds(s).center;
+  Offset position(Map<String, dynamic> s) => PlanetCamera.localRectToWorld(
+    _origin(s),
+    _scenes[s['id']]!.siteBounds,
+  ).center;
   Rect entityWorldBounds(String actorId, LocalSelection entity) {
     final s = societies.firstWhere((s) => s['id'] == actorId);
-    return PlanetCamera.localRectToWorld(_origin(s), entity.bounds);
+    return PlanetCamera.localRectToWorld(_origin(s), _displayBounds(entity));
+  }
+
+  Rect _displayBounds(LocalSelection entity) {
+    final previous = entity.entity['_previousCell'];
+    if (entity.kind != 'person' ||
+        previous is! int ||
+        !playing ||
+        reduceMotion) {
+      return entity.bounds;
+    }
+    final before = Rect.fromLTWH(
+      (previous % 32 + .5) * 32 - 16,
+      (previous ~/ 32 + .5) * 32 - 36,
+      32,
+      48,
+    );
+    return Rect.lerp(
+      before,
+      entity.bounds,
+      ((_visualTime - _dayArrived) / dayDuration).clamp(0.0, 1.0),
+    )!;
   }
 
   Offset entityScreenPosition(String actorId, LocalSelection entity) =>
@@ -163,6 +193,7 @@ class WorldGame extends FlameGame {
   void present(Map<String, dynamic> snapshot, {required Object? generation}) {
     if (_generation == generation && data['day'] != snapshot['day']) {
       _workPulseUntil = _visualTime + 1.4;
+      _dayArrived = _visualTime;
     }
     final sites = <String>{
       for (final s in snapshot['societies'] as List? ?? [])
@@ -174,6 +205,9 @@ class WorldGame extends FlameGame {
       }
     } else {
       recentSites.clear();
+      _workdays.clear();
+      _workdayKeys.clear();
+      activitySeconds = 0;
       localSelected = null;
       _pendingFitId = null;
       stopFollowing();
@@ -195,6 +229,18 @@ class WorldGame extends FlameGame {
       _siteWork[s['id']] = {
         for (final work in activity.sites) work.siteId: work,
       };
+      final key = jsonEncode([
+        snapshot['day'],
+        s['adults'],
+        s['extinct'],
+        s['sites'],
+        s['people'],
+        s['lastProduction'],
+      ]);
+      if (_workdayKeys[s['id']] != key) {
+        _workdayKeys[s['id']] = key;
+        _workdays[s['id']] = LocalWorkday.read(snapshot, s);
+      }
     }
     terrainCache.sync(snapshot);
     final id = followedIndividualId;
@@ -259,6 +305,15 @@ class WorldGame extends FlameGame {
   void update(double dt) {
     super.update(dt);
     _visualTime += dt;
+    if (playing && !reduceMotion) activitySeconds += dt;
+    if (playing && followedIndividualId != null && selected != null) {
+      final person = _scenes[selected]?.entities
+          .where((e) => e.kind == 'person' && e.id == followedIndividualId)
+          .firstOrNull;
+      if (person != null) {
+        planetCamera.centerOn(entityWorldBounds(selected!, person).center);
+      }
+    }
     recentSites.removeWhere((_, expiry) => expiry <= _visualTime);
   }
 
@@ -316,11 +371,30 @@ class WorldGame extends FlameGame {
       for (final s in societies.reversed) {
         if (!settlementBounds(s).contains(point)) continue;
         final local = (point - _origin(s)) * PlanetCamera.localPixels;
+        if (planetCamera.pixelsPerMicrocell >= 4) {
+          for (final crew in _workdays[s['id']]?.crews ?? const <WorkCrew>[]) {
+            final p = crew.position(activitySeconds),
+                bounds = Rect.fromLTWH(p.dx - 14, p.dy - 30, 42, 40);
+            if (!bounds.contains(local)) continue;
+            selected = s['id'].toString();
+            localSelected = crew.id;
+            onSelect(selected!);
+            onLocalSelect?.call(
+              LocalSelection('crew', crew.id, {
+                'building': crew.building,
+                'adults': crew.adults,
+                'laborMillis': crew.laborMillis,
+                'action': crew.action(activitySeconds),
+              }, bounds),
+            );
+            return;
+          }
+        }
         final hit = _scenes[s['id']]!.entities.reversed
             .where(
               (e) =>
                   (e.kind == 'site' || planetCamera.pixelsPerMicrocell >= 8) &&
-                  e.bounds.contains(local),
+                  _displayBounds(e).contains(local),
             )
             .firstOrNull;
         if (hit == null) continue;
@@ -595,7 +669,7 @@ class WorldGame extends FlameGame {
       ..isAntiAlias = false
       ..filterQuality = FilterQuality.none;
     for (final e in _scenes[s['id']]!.entities) {
-      final rect = PlanetCamera.localRectToWorld(_origin(s), e.bounds);
+      final rect = entityWorldBounds(s['id'].toString(), e);
       if (!visible.overlaps(rect.inflate(1 / 32))) continue;
       if (e.kind == 'site') {
         lastSitesDrawn++;
@@ -690,7 +764,13 @@ class WorldGame extends FlameGame {
             : ancestral
             ? 6
             : 0;
-        final action = number(s['health'], 100) < 35 ? 6 : 0;
+        final action = number(s['health'], 100) < 35
+            ? 6
+            : playing &&
+                  p['_walking'] == true &&
+                  _visualTime - _dayArrived < dayDuration
+            ? 1
+            : 0;
         paint.color = Colors.white;
         if (people != null && peopleLayout != null) {
           final frame = reduceMotion ? 0 : (phase * 4).floor() % 4;
@@ -724,6 +804,53 @@ class WorldGame extends FlameGame {
             ..style = PaintingStyle.stroke
             ..strokeWidth = 1.5 / unit,
         );
+      }
+    }
+    if (density >= 4) _drawCrews(c, s, visible);
+  }
+
+  void _drawCrews(Canvas canvas, Map<String, dynamic> town, Rect visible) {
+    final crews = _workdays[town['id']]?.crews ?? const <WorkCrew>[];
+    final paint = Paint()
+      ..isAntiAlias = false
+      ..filterQuality = FilterQuality.none;
+    final roleId = data['origin'] == 'prehistory'
+        ? 'ancestral_artisan'
+        : 'farmer';
+    final role = peopleLayout?.roles.indexOf(roleId) ?? -1;
+    for (final crew in crews) {
+      final local = crew.position(activitySeconds);
+      for (var person = 0; person < crew.adults; person++) {
+        final box = Rect.fromLTWH(
+          local.dx - 12 + person * 11,
+          local.dy - 27,
+          24,
+          36,
+        );
+        final rect = PlanetCamera.localRectToWorld(_origin(town), box);
+        if (!visible.overlaps(rect)) continue;
+        lastPeopleDrawn++;
+        canvas.drawOval(
+          Rect.fromLTWH(rect.left, rect.bottom - .004, rect.width, .008),
+          paint..color = const Color(0x55000000),
+        );
+        if (people != null && peopleLayout != null && role >= 0) {
+          final frame = playing && !reduceMotion
+              ? (activitySeconds * 6).floor() % 4
+              : 0;
+          canvas.drawImageRect(
+            people!,
+            peopleLayout!.cell(
+              role * peopleLayout!.actions.length +
+                  crew.action(activitySeconds),
+              frame,
+            ),
+            rect,
+            paint..color = Colors.white,
+          );
+        } else {
+          canvas.drawRect(rect, paint..color = moss);
+        }
       }
     }
   }

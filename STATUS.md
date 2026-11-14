@@ -1,5 +1,13 @@
 # Estado de BARRIO CERO: ERAS
 
+## Entrega 0.20 — juego desde el mapa y habitantes en movimiento
+
+Se añaden recorridos persistentes de habitantes destacados, equipos ligados a producción real y acceso directo a Construir y Explorar. Jugar inicia la autonomía; intervenir no toma control permanente. Se mantiene la dirección visual del atlas. Los saltos actualizan el mapa con proyecciones separadas de la fecha guardada y conservan sus reglas diarias. [Diseño y límites](docs/design/LIVING_RELEASE_020.md).
+
+La suite completa aprobó 228 pruebas funcionales; el análisis posterior está limpio y las correcciones finales tienen baterías focalizadas de 9 y 18 pruebas. La primera prueba Android verificó movimiento de 18 residentes y restauración exacta de los originales, pero falló un selector del arnés y reveló acciones desactivadas durante los guardados. El paquete final aprobó reproducción, posiciones, una obra pagada, un año de salto y reapertura exacta. Los originales se restauraron por hash. El año observado tardó 55.998 ms en el emulador por software, sin acreditar rendimiento físico. [Evidencia](docs/validation/living/README.md).
+
+El siglo activo medido en el servidor tarda 32,4 segundos. No acredita cinco segundos ni rendimiento del teléfono. M3 sigue en curso y ningún requisito final se cierra por añadir movimiento. Mundo 1/checkpoint 3, reglas 11 y contenido original se conservan; las posiciones llevan extensión v1.
+
 ## Entrega 0.19 — actividad visible y ZIP reducido
 
 Continúa el atlas original con señales de producción confirmada, progreso de obras/formación y caravanas con carga visible. El rótulo de escala permite saltar entre planeta, región y asentamiento dentro de la cámara continua; una noticia localiza su región. La ficha muestra una línea de actividad y abre el detalle solo a petición. [Alcance y límites](docs/design/ACTIVITY_RELEASE_019.md).

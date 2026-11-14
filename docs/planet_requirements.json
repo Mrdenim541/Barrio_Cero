@@ -4391,5 +4391,12 @@
     ],
     "release": "https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.18.0-test",
     "remainingScope": "M2–M11 and physical performance acceptance remain open."
+  },
+  "milestoneProgress": {
+    "M3": {
+      "state": "in_progress",
+      "scope": "local visits persisted, bounded collective work presentation and direct actions; full job/logistics integration remains pending",
+      "evidence": "docs/validation/living/native-final/results.json"
+    }
   }
 }

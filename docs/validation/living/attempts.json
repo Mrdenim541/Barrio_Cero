@@ -1,0 +1,18 @@
+{
+  "integration": {
+    "functionalTests": 228,
+    "analyzeInitially": "two brace-style findings in test/tool; corrected and clean on recheck"
+  },
+  "finalFocusedTests": [
+    9,
+    18
+  ],
+  "candidateNative": {
+    "result": "failed",
+    "originalsRestored": true,
+    "reason": "driver requested offscreen shelter; moving residents verified",
+    "observedProductDefect": "interventions disabled during normal autosaves",
+    "correction": "keep actions available while playing and wait for the current write before starting a jump"
+  },
+  "discardedMemo": "exact cache preserved century hash but slowed the run; removed from application"
+}

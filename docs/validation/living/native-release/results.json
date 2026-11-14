@@ -1,0 +1,60 @@
+{
+  "scope": "UI and exact checkpoint recovery only; no frame performance or rendered-count acceptance",
+  "apkSha256": "c67d15cf8c54d11429ac3dd53c937b93f904846bb785d1a05bfb1ba876572bfc",
+  "requestedRenderer": "default",
+  "followSmokeOnly": true,
+  "frameMetricsRequested": false,
+  "device": {
+    "serial": "emulator-5554",
+    "hardware": "ranchu",
+    "api": "29",
+    "model": "Android SDK built for x86_64",
+    "airplaneMode": "1",
+    "wifiOn": "0",
+    "mobileData": "0",
+    "referencePhoneAcceptance": false
+  },
+  "installation": "Performing Streamed Install\nSuccess\n",
+  "fixture": {
+    "size": 96,
+    "settlements": 6,
+    "normalOpening": false,
+    "day": 360,
+    "runtimeInjections": false
+  },
+  "launchOutput": "Starting: Intent { cmp=com.barriocero.eras/.MainActivity }\nStatus: ok\nLaunchState: COLD\nActivity: com.barriocero.eras/.MainActivity\nTotalTime: 5178\nWaitTime: 5203\nComplete\n",
+  "worldProfile": {
+    "lod": "Mundo",
+    "verified": "UI label and captured scene",
+    "frameMetrics": "not requested",
+    "renderedCountsVerified": false
+  },
+  "playback": {
+    "firstDay": 360,
+    "lastDay": 380,
+    "residentsMoved": [
+      "p0a",
+      "p0b",
+      "p0c",
+      "p1a",
+      "p1b",
+      "p1c",
+      "p2a",
+      "p2b",
+      "p2c",
+      "p3a",
+      "p3b",
+      "p3c",
+      "p4a",
+      "p4b",
+      "p4c",
+      "p5a",
+      "p5b",
+      "p5c"
+    ],
+    "autonomyRetained": true
+  },
+  "error": "RuntimeError(\"Control unavailable: Refugio de pieles; ['Dismiss', 'Construir con propósito', 'Elige una mejora para revisar su coste antes de confirmar. Los edificios aparecen al terminar el trabajo.', 'Huerto\\\\nAlimento cultivado; reduce el hambre.\\\\nMadera 20 · Piedra 5 · 12 días', 'Zona de recolección\\\\nRecolecta alimento silvestre; su capacidad depende de la riqueza del lugar.\\\\nMadera 4 · Piedra 2 · 6 días', 'Piedras de superficie\\\\nReúne piedra sin una mina ni herramientas metálicas.\\\\nMadera 6 · 6 días', 'Puesto de agua\\\\nRecoge agua superficial en praderas, bosques y humedales ricos.\\\\nMadera 6 · Piedra 2 · 6 días', 'Scrim']\")",
+  "originalSavesRestoredExactly": true,
+  "passed": false
+}

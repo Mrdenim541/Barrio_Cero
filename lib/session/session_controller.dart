@@ -34,7 +34,7 @@ class SessionSnapshot {
 
   SessionSnapshot._(Checkpoint value, this.slot, this.generation, this.revision)
     : world = _freeze(value.world.toJson()) as Map<String, dynamic>,
-      content = _freeze(value.content) as Map<String, dynamic>,
+      content = value.content,
       settings = Map.unmodifiable(value.settings),
       coreSource = value.coreSource,
       additionalSources = List.unmodifiable(value.additionalSources),
@@ -199,10 +199,8 @@ class SessionController {
     bool? stopCrisis,
   }) {
     final current = _current();
-    return Checkpoint.create(
-      world: world,
-      coreSource: current.coreSource,
-      additionalSources: current.additionalSources,
+    return current.advanceWorld(
+      world,
       target: target,
       settings: settings ?? _settings,
       stopCrisis: stopCrisis ?? _stopCrisis,
@@ -238,21 +236,23 @@ class SessionController {
     int size = 96,
     String intensity = 'normal',
     bool extraordinary = true,
-    String origin='reconstruction',
+    String origin = 'reconstruction',
     bool autonomous = true,
+    bool localLife = true,
     int? slot,
   }) => _enqueue(() async {
     final destination = slot ?? _slot;
     _checkSlot(destination);
     final generated = WorldState.generate(
-        seed: seed,
-        size: size,
-        intensity: intensity,
-        extraordinary: extraordinary,
-        origin:origin,
-        geographyVersion:2,
-      );
+      seed: seed,
+      size: size,
+      intensity: intensity,
+      extraordinary: extraordinary,
+      origin: origin,
+      geographyVersion: 2,
+    );
     if (autonomous) generated.controlledId = null;
+    if (localLife) _activateLocalLife(generated);
     final candidate = Checkpoint.create(
       world: generated,
       coreSource: _installedCore!,
@@ -261,6 +261,33 @@ class SessionController {
       stopCrisis: autonomous ? false : _stopCrisis,
     );
     await _commit(candidate, destination: destination, replace: true);
+  });
+
+  static void _activateLocalLife(WorldState world) {
+    for (final s in world.societies) {
+      s.localLife ??= LocalLife(world.day);
+      s.localLife!.advance(
+        world.day,
+        [
+          for (final p in s.people)
+            if (p.alive && s.alive) p.toJson(),
+        ],
+        [for (final b in s.sites) b.toJson()],
+      );
+    }
+  }
+
+  /// Explicit start of play adds only versioned local positions to old worlds;
+  /// loading alone remains byte-preserving. Keep the previous checkpoint first.
+  Future<void> enableLocalLife() => _enqueue(() async {
+    _requireNoWorker();
+    final world = worldCopy();
+    if (world == null || world.societies.every((s) => s.localLife != null)) {
+      return;
+    }
+    await write('branch_$_slot', _current().encode());
+    _activateLocalLife(world);
+    await _commit(_candidate(world, target: _current().target));
   });
 
   Future<SessionLoadResult> _import(
@@ -450,28 +477,45 @@ class SessionController {
     return Intervention.preview(copy, _current().content, request);
   }
 
-  Future<CommandResult> submitIntervention(Command request) => _enqueue(() async {
-    _requireNoWorker();
-    final copy = worldCopy() ?? (throw StateError('No hay una partida activa'));
-    final result = Intervention.submit(copy, _current().content, request);
-    if (result.ok && !result.replayed) {
-      copy.validate();
-      await _commit(_candidate(copy, target: _current().target));
-    }
-    return result;
-  });
+  Future<CommandResult> submitIntervention(Command request) =>
+      _enqueue(() async {
+        _requireNoWorker();
+        final copy =
+            worldCopy() ?? (throw StateError('No hay una partida activa'));
+        final result = Intervention.submit(copy, _current().content, request);
+        if (result.ok && !result.replayed) {
+          copy.validate();
+          await _commit(_candidate(copy, target: _current().target));
+        }
+        return result;
+      });
 
-  Future<CommandResult> intervene(String actor, String action,
-      {String? target, String? choice, int? expectedGeneration, int? expectedRevision}) => _enqueue(() async {
+  Future<CommandResult> intervene(
+    String actor,
+    String action, {
+    String? target,
+    String? choice,
+    int? expectedGeneration,
+    int? expectedRevision,
+  }) => _enqueue(() async {
     _requireNoWorker();
     if ((expectedGeneration != null && expectedGeneration != _generation) ||
         (expectedRevision != null && expectedRevision != _revision)) {
-      return const CommandResult(false, 'La partida cambió. Revisa la intervención.', code: 'stale_session');
+      return const CommandResult(
+        false,
+        'La partida cambió. Revisa la intervención.',
+        code: 'stale_session',
+      );
     }
     final copy = worldCopy() ?? (throw StateError('No hay una partida activa'));
     final request = Command(
       id: 'intervention-$_generation-$_revision-${copy.day}-${copy.commandReceipts.length}',
-      action: action, actorId: actor, issuedDay: copy.day, target: target, choice: choice);
+      action: action,
+      actorId: actor,
+      issuedDay: copy.day,
+      target: target,
+      choice: choice,
+    );
     final result = Intervention.submit(copy, _current().content, request);
     if (result.ok && !result.replayed) {
       copy.validate();
@@ -492,21 +536,44 @@ class SessionController {
     final sim = Simulation(copy)..registerContent(_current().content);
     if (copy.controlledId != null) {
       final prior = copy.society(copy.controlledId)!;
-      final result = sim.submit(Command(
-        id: 'observe-$_generation-$_revision-${copy.day}', action: 'delegate',
-        actorId: copy.controlledId, issuedDay: copy.day));
+      final result = sim.submit(
+        Command(
+          id: 'observe-$_generation-$_revision-${copy.day}',
+          action: 'delegate',
+          actorId: copy.controlledId,
+          issuedDay: copy.day,
+        ),
+      );
       if (!result.ok) throw StateError(result.message);
-      sim.record(prior, 'El consejo decide',
-          'Sus gobiernos retoman las decisiones cotidianas; las intervenciones serán puntuales.', 'autonomía');
+      sim.record(
+        prior,
+        'El consejo decide',
+        'Sus gobiernos retoman las decisiones cotidianas; las intervenciones serán puntuales.',
+        'autonomía',
+      );
     }
-    copy.pending = [for (final event in copy.pending)
-      if (event.type == 'content_choice')
-        ScheduledEvent(event.id, 'content', event.societyId, copy.day + 1,
-          cause: event.cause, data: {...event.data,
-            'previousChoiceDay': event.day, 'delegatedOn': copy.day})
-      else event];
+    copy.pending = [
+      for (final event in copy.pending)
+        if (event.type == 'content_choice')
+          ScheduledEvent(
+            event.id,
+            'content',
+            event.societyId,
+            copy.day + 1,
+            cause: event.cause,
+            data: {
+              ...event.data,
+              'previousChoiceDay': event.day,
+              'delegatedOn': copy.day,
+            },
+          )
+        else
+          event,
+    ];
     copy.validate();
-    await _commit(_candidate(copy, target: _current().target, stopCrisis: false));
+    await _commit(
+      _candidate(copy, target: _current().target, stopCrisis: false),
+    );
   });
   Future<CommandResult> command(
     String action, {

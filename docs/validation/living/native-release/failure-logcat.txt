@@ -1,0 +1,402 @@
+--------- beginning of main
+11-14 18:54:48.353  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8683716 , only wrote 8683557
+11-14 18:54:48.354  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8683589 , only wrote 8683557
+11-14 18:54:48.370  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8684270 , only wrote 8684218
+11-14 18:54:48.469  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8688602 , only wrote 8686862
+11-14 18:54:48.489  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8687720 , only wrote 8687523
+11-14 18:54:48.512  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8688533 , only wrote 8688184
+11-14 18:54:48.529  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8688940 , only wrote 8688845
+11-14 18:54:48.533  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8689009 , only wrote 8688845
+11-14 18:54:48.552  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8689709 , only wrote 8689506
+11-14 18:54:48.570  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8690265 , only wrote 8690167
+11-14 18:54:48.570  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8690198 , only wrote 8690167
+11-14 18:54:48.592  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8691143 , only wrote 8690828
+11-14 18:54:48.653  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8693490 , only wrote 8693472
+11-14 18:54:48.702  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8695656 , only wrote 8695455
+11-14 18:54:48.724  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8696396 , only wrote 8696116
+11-14 18:54:48.745  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8697051 , only wrote 8696777
+11-14 18:54:48.769  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8697843 , only wrote 8697438
+11-14 18:54:48.790  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8698359 , only wrote 8698099
+11-14 18:54:48.810  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8698964 , only wrote 8698760
+11-14 18:54:48.903  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8702872 , only wrote 8702726
+11-14 18:54:48.917  1742  1742 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+11-14 18:54:48.927  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8703812 , only wrote 8702726
+11-14 18:54:48.945  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8703484 , only wrote 8703387
+11-14 18:54:48.962  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8704163 , only wrote 8704048
+11-14 18:54:48.982  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8704929 , only wrote 8704709
+11-14 18:54:48.989  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8705003 , only wrote 8704709
+11-14 18:54:49.009  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8705596 , only wrote 8705370
+11-14 18:54:49.029  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8706250 , only wrote 8706031
+11-14 18:54:49.030  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8706063 , only wrote 8706031
+11-14 18:54:49.049  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8706877 , only wrote 8706692
+11-14 18:54:49.067  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8707472 , only wrote 8707353
+11-14 18:54:49.089  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8708337 , only wrote 8708014
+11-14 18:54:49.113  1697  1848 W audio_hw_generic: Not supplying enough data to HAL, expected position 8709062 , only wrote 8708675
+11-14 18:54:52.455  1801  1801 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+11-14 18:55:00.015  2063  2063 D KeyguardClockSwitch: Updating clock: 655
+11-14 18:55:35.749  1711  1763 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 18:55:35.834  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+11-14 18:55:35.937 11835 11835 W Gralloc3: mapper 3.x is not supported
+11-14 18:55:36.416 11835 11835 D HostConnection: createUnique: call
+11-14 18:55:36.445 11835 11835 D HostConnection: HostConnection::get() New Host Connection established 0x734c04d375a0, tid 11835
+11-14 18:55:36.611 11835 11835 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-14 18:55:36.675 11835 11835 D eglCodecCommon: allocate: Ask for block of size 0x1000
+11-14 18:55:36.676 11835 11835 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffff8000 size 0x2000
+11-14 18:55:36.784 11835 11835 D eglCodecCommon: allocate: Ask for block of size 0xc9000
+11-14 18:55:36.784 11835 11835 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffdfa000 size 0xca000
+11-14 18:55:42.000 11841 11841 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:55:42.031 11841 11841 I AndroidRuntime: Using default boot image
+11-14 18:55:42.032 11841 11841 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:55:42.283 11841 11841 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:55:44.138 11841 11841 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:55:44.796 11841 11841 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:55:45.226 11841 11841 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:55:45.285 11841 11841 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:55:46.026 11841 11841 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:55:46.718 11841 11841 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+--------- beginning of system
+11-14 18:55:47.061  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:55:48.332  1928  4989 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@8a0cfc2
+11-14 18:55:48.361  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:55:48.586 11841 11841 D AndroidRuntime: Shutting down VM
+11-14 18:55:48.973  1742  1742 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+11-14 18:55:50.174  1735  1838 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 18:55:50.383 11855 11866 I OMXClient: IOmx service obtained
+11-14 18:55:50.403  1795  2335 I OMXMaster: makeComponentInstance(OMX.google.h264.encoder) in android.hardwar process
+11-14 18:55:50.993 11855 11866 W OMXUtils: do not know color format 0x7f000789 = 2130708361
+11-14 18:55:51.083 11855 11866 I ACodec  : setupAVCEncoderParameters with [profile: Baseline] [level: Level41]
+11-14 18:55:51.123 11855 11866 I ACodec  : [OMX.google.h264.encoder] cannot encode color aspects. Ignoring.
+11-14 18:55:51.143 11855 11866 I ACodec  : [OMX.google.h264.encoder] cannot encode HDR static metadata. Ignoring.
+11-14 18:55:51.143 11855 11866 I ACodec  : setupVideoEncoder succeeded
+11-14 18:55:51.183 11855 11866 W OMXUtils: do not know color format 0x7f000789 = 2130708361
+11-14 18:55:51.188  1795  2335 E OMXNodeInstance: getConfig(0xeafa21a0:google.h264.encoder, ConfigLatency(0x6f800005)) ERROR: Undefined(0x80001001)
+11-14 18:55:51.196  1795  2335 E OMXNodeInstance: getConfig(0xeafa21a0:google.h264.encoder, ConfigAndroidVendorExtension(0x6f100004)) ERROR: Undefined(0x80001001)
+11-14 18:55:51.290  1795  2335 D GraphicBufferSource: setting dataspace: 0x103, acquired=0
+11-14 18:55:51.317  1795  2335 D GraphicBufferSource: requesting color aspects (R:2(Limited), P:4(BT601_6_525), M:3(BT601_6), T:3(SMPTE170M))
+11-14 18:55:51.614  1795 11868 D SoftAVCEnc: Params width 320 height 640 level 41 colorFormat 0
+11-14 18:55:51.934  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+11-14 18:55:51.944  1795 11870 W Gralloc3: mapper 3.x is not supported
+11-14 18:55:52.236  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.allocator@3.0::IAllocator/default in either framework or device manifest.
+11-14 18:55:52.238  1795 11870 W Gralloc3: allocator 3.x is not supported
+11-14 18:55:52.279  1711  1763 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 18:55:52.283  1795 11870 D HostConnection: createUnique: call
+11-14 18:55:52.285  1795 11870 D HostConnection: HostConnection::get() New Host Connection established 0xeaa3b460, tid 11870
+11-14 18:55:52.327  1795 11870 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-14 18:55:52.330  1795 11870 D eglCodecCommon: allocate: Ask for block of size 0x1000
+11-14 18:55:52.330  1795 11870 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffff8000 size 0x2000
+11-14 18:55:52.361  1795 11870 D GraphicBufferSource: got buffer with new dataSpace #103
+11-14 18:55:52.364 11855 11866 D ACodec  : dataspace changed to 0x10c40000 (R:2(Limited), P:4(BT601_6_525), M:3(BT601_6), T:3(SMPTE170M)) (R:2(Limited), S:4(BT601_525), T:3(SMPTE_170M))
+11-14 18:55:52.400 11855 11855 I MPEG4Writer: limits: 4294967295/0 bytes/us, bit rate: -1 bps and the estimated moov size 3192 bytes
+11-14 18:55:52.445  1711  1763 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 18:55:52.481  1795 11868 D eglCodecCommon: allocate: Ask for block of size 0xc9000
+11-14 18:55:52.481  1795 11868 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffdfa000 size 0xca000
+11-14 18:55:52.513  1801  1801 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+11-14 18:55:53.254  1723  1723 W hw-IPCThreadState: All binder threads in pool (2 threads) busy for 116 ms
+11-14 18:55:53.319  1735  1838 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 18:55:53.325 11855 11873 I MPEG4Writer: setStartTimestampUs: 14325274403
+11-14 18:55:53.325 11855 11873 I MPEG4Writer: Earliest track starting time: 14325274403
+11-14 18:55:53.389  1735  1838 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 18:55:54.428 11861 11861 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:55:54.456 11861 11861 I AndroidRuntime: Using default boot image
+11-14 18:55:54.457 11861 11861 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:55:54.557 11861 11861 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:55:56.694  1735  1838 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 18:55:57.539 11861 11861 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:55:57.986  1735  1838 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 18:55:58.031 11861 11861 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:55:58.118 11861 11861 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:55:58.132 11861 11861 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:55:58.526 11861 11861 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:55:58.651 11861 11861 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 18:55:58.983  1735  1838 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 18:55:58.767  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:55:59.896  1928  7889 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@5188179
+11-14 18:55:59.926  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:55:59.217  1735  1838 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 18:55:59.976 11861 11861 D AndroidRuntime: Shutting down VM
+11-14 18:56:00.125  1795  1888 W GraphicBufferSource: released unpopulated slots: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+11-14 18:56:00.405  2063  2063 D KeyguardClockSwitch: Updating clock: 656
+11-14 18:56:00.445 11861 11861 W app_process: Suspending all threads took: 24.730ms
+11-14 18:56:00.479 11855 11873 I MPEG4Writer: Received total/0-length (6/0) buffers and encoded 6 frames. - Video
+11-14 18:56:00.501 11855 11855 D MPEG4Writer: Video track stopping. Stop source
+11-14 18:56:00.501 11855 11855 D MPEG4Writer: Video track source stopping
+11-14 18:56:00.501 11855 11855 D MPEG4Writer: Video track source stopped
+11-14 18:56:00.515 11855 11855 D MPEG4Writer: Video track stopped. Stop source
+11-14 18:56:00.515 11855 11855 D MPEG4Writer: Stopping writer thread
+11-14 18:56:00.516 11855 11872 D MPEG4Writer: 0 chunks are written in the last batch
+11-14 18:56:00.524 11855 11855 D MPEG4Writer: Writer thread stopped
+11-14 18:56:00.525 11855 11855 I MPEG4Writer: Ajust the moov start time from 14325274403 us -> 14325274403 us
+11-14 18:56:00.567 11855 11855 D MPEG4Writer: Video track stopping. Stop source
+11-14 18:56:03.917  1928  1946 W system_server: Long monitor contention with owner ActivityManager (1954) at void com.android.server.am.BroadcastQueue.processNextBroadcast(boolean)(BroadcastQueue.java:948) waiters=1 in void com.android.server.am.ActivityManagerService.dispatchUidsChanged() for 101ms
+11-14 18:56:03.919  1928  1946 W Looper  : Slow dispatch took 105ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=null m=53
+11-14 18:56:03.964  1928  1953 E memtrack: Couldn't load memtrack module
+11-14 18:56:03.964  1928  1953 W android.os.Debug: failed to get memory consumption info: -1
+11-14 18:56:04.011 11855 11855 D ScreenRecord: success
+11-14 18:56:04.134  2714 11903 I MediaProvider: Begin Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///sdcard/barrio020-life.mp4 flg=0x1400010 cmp=com.android.providers.media/.MediaService }
+11-14 18:56:04.385  1928  7889 W system_server: Long monitor contention with owner android.bg (1953) at void com.android.server.am.ActivityManagerService$5.handleMessage(android.os.Message)(ActivityManagerService.java:1992) waiters=0 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int) for 313ms
+11-14 18:56:05.845  2714 11903 W IsoInterface: Invalid box at 152 of length 1751411826 reached beyond end of parent 258
+11-14 18:56:05.947  2714 11903 I MediaProvider: End Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///sdcard/barrio020-life.mp4 flg=0x1400010 cmp=com.android.providers.media/.MediaService }
+11-14 18:56:08.952 11898 11898 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:56:08.997 11898 11898 I AndroidRuntime: Using default boot image
+11-14 18:56:08.997 11898 11898 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:56:09.136 11898 11898 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:56:10.376 11898 11898 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:56:10.678 11898 11898 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:56:10.725 11898 11898 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:56:10.737 11898 11898 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:56:10.977 11898 11898 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:56:11.226 11898 11898 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 18:56:11.451  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:56:15.744 11898 11898 W AccessibilityNodeInfoDumper: Fetch time: 329ms
+11-14 18:56:15.786  1928  7889 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@a81ea0f
+11-14 18:56:15.818  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:56:16.008 11898 11898 D AndroidRuntime: Shutting down VM
+11-14 18:56:23.587 11924 11924 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:56:23.647 11924 11924 I AndroidRuntime: Using default boot image
+11-14 18:56:23.647 11924 11924 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:56:23.800 11924 11924 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:56:24.953 11924 11924 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:56:25.135 11924 11924 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:56:25.249 11924 11924 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:56:25.751 11924 11924 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:56:26.296 11924 11924 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+11-14 18:56:29.092  1928  2017 I InputDispatcher: Window 'c59e649 com.barriocero.eras/com.barriocero.eras.MainActivity (server)' spent 2638.1ms processing the last input event: MotionEvent(deviceId=2, source=0x00001002, displayId=0, action=DOWN, actionButton=0x00000000, flags=0x00000000, metaState=0x00000000, buttonState=0x00000000, classification=NONE, edgeFlags=0x00000000, xPrecision=1.0, yPrecision=1.0, pointers=[0: (57.0, 552.0)]), policyFlags=0x6b000000
+11-14 18:56:29.235 11924 11924 D AndroidRuntime: Shutting down VM
+11-14 18:56:29.503  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8708876 , only wrote 8708675
+11-14 18:56:29.731  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8718737 , only wrote 8718590
+11-14 18:56:29.736  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8718815 , only wrote 8718590
+11-14 18:56:29.752  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8719301 , only wrote 8719251
+11-14 18:56:29.772  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8720131 , only wrote 8719912
+11-14 18:56:29.852  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8723442 , only wrote 8722556
+11-14 18:56:29.886  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8724051 , only wrote 8723217
+11-14 18:56:29.912  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8724364 , only wrote 8723878
+11-14 18:56:29.962  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8726052 , only wrote 8725861
+11-14 18:56:29.982  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8726750 , only wrote 8726522
+11-14 18:56:30.002  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8727398 , only wrote 8727183
+11-14 18:56:30.042  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8728947 , only wrote 8727844
+11-14 18:56:30.076  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8729373 , only wrote 8728505
+11-14 18:56:30.097  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8729430 , only wrote 8729166
+11-14 18:56:30.163  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8732048 , only wrote 8731810
+11-14 18:56:30.163  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8731838 , only wrote 8731810
+11-14 18:56:30.178  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8732475 , only wrote 8732471
+11-14 18:56:30.225  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8734528 , only wrote 8733793
+11-14 18:56:30.313  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8737662 , only wrote 8737098
+11-14 18:56:30.332  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8737955 , only wrote 8737759
+11-14 18:56:30.369  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8739399 , only wrote 8738420
+11-14 18:56:30.403  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8739888 , only wrote 8739081
+11-14 18:56:30.424  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8740038 , only wrote 8739742
+11-14 18:56:30.442  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8740493 , only wrote 8740403
+11-14 18:56:30.450  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8740794 , only wrote 8740403
+11-14 18:56:30.482  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8741811 , only wrote 8741725
+11-14 18:56:30.503  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8742635 , only wrote 8742386
+11-14 18:56:30.504  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8742420 , only wrote 8742386
+11-14 18:56:30.522  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8743187 , only wrote 8743047
+11-14 18:56:30.541  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8743872 , only wrote 8743708
+11-14 18:56:30.542  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8743778 , only wrote 8743708
+11-14 18:56:30.559  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8744439 , only wrote 8744369
+11-14 18:56:30.582  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8744511 , only wrote 8744369
+11-14 18:56:30.583  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8745273 , only wrote 8745030
+11-14 18:56:30.583  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8745060 , only wrote 8745030
+11-14 18:56:30.601  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8745802 , only wrote 8745691
+11-14 18:56:30.621  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8746579 , only wrote 8746352
+11-14 18:56:30.641  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8747235 , only wrote 8747013
+11-14 18:56:30.664  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8748027 , only wrote 8747674
+11-14 18:56:30.682  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8748482 , only wrote 8748335
+11-14 18:56:30.701  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8749175 , only wrote 8748996
+11-14 18:56:30.722  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8749892 , only wrote 8749657
+11-14 18:56:30.732  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8750121 , only wrote 8749657
+11-14 18:56:30.819  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8753489 , only wrote 8752962
+11-14 18:56:30.887  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8755965 , only wrote 8754945
+11-14 18:56:30.919  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8756365 , only wrote 8755606
+11-14 18:56:30.942  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8756582 , only wrote 8756267
+11-14 18:56:30.963  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8757198 , only wrote 8756928
+11-14 18:56:31.003  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8758708 , only wrote 8758250
+11-14 18:56:31.162  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8765240 , only wrote 8764860
+11-14 18:56:31.194  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8766275 , only wrote 8766182
+11-14 18:56:31.219  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8767316 , only wrote 8766843
+11-14 18:56:31.237  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8767599 , only wrote 8767504
+11-14 18:56:31.262  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8768604 , only wrote 8768165
+11-14 18:56:31.280  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8768997 , only wrote 8768826
+11-14 18:56:31.292  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8769350 , only wrote 8768826
+11-14 18:56:31.312  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8769677 , only wrote 8769487
+11-14 18:56:31.321  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8769888 , only wrote 8769487
+11-14 18:56:31.321  1697  3332 W audio_hw_generic: Hardware backing HAL too slow, could only write 0 of 661 frames
+11-14 18:56:31.346  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8770581 , only wrote 8770148
+11-14 18:56:31.442  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8774413 , only wrote 8774114
+11-14 18:56:31.488  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8776125 , only wrote 8776097
+11-14 18:56:31.582  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8780231 , only wrote 8778741
+11-14 18:56:31.602  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8779619 , only wrote 8778741
+11-14 18:56:31.618  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8779488 , only wrote 8779402
+11-14 18:56:31.642  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8780449 , only wrote 8780063
+11-14 18:56:31.659  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8780820 , only wrote 8780724
+11-14 18:56:31.662  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8780821 , only wrote 8780724
+11-14 18:56:31.693  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8782098 , only wrote 8781385
+11-14 18:56:31.722  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8782661 , only wrote 8781385
+11-14 18:56:31.744  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8782367 , only wrote 8782046
+11-14 18:56:31.782  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8783708 , only wrote 8782046
+11-14 18:56:31.812  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8783395 , only wrote 8782707
+11-14 18:56:31.853  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8784493 , only wrote 8784029
+11-14 18:56:31.868  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8784703 , only wrote 8784690
+11-14 18:56:31.888  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8785565 , only wrote 8784690
+11-14 18:56:31.972  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8788409 , only wrote 8787995
+11-14 18:56:32.013  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8789770 , only wrote 8789317
+11-14 18:56:32.171  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8796310 , only wrote 8795266
+11-14 18:56:32.222  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8797497 , only wrote 8795927
+11-14 18:56:32.243  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8796845 , only wrote 8796588
+11-14 18:56:32.262  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8797426 , only wrote 8797249
+11-14 18:56:32.282  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8798161 , only wrote 8797910
+11-14 18:56:32.313  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8799277 , only wrote 8797910
+11-14 18:56:32.362  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8800066 , only wrote 8799893
+11-14 18:56:32.452  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8803867 , only wrote 8803859
+11-14 18:56:32.471  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8804702 , only wrote 8804520
+11-14 18:56:32.473  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8804606 , only wrote 8804520
+11-14 18:56:32.519  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8806551 , only wrote 8806503
+11-14 18:56:32.814  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8819435 , only wrote 8808486
+11-14 18:56:32.842  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8809771 , only wrote 8808486
+11-14 18:56:32.858  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8809180 , only wrote 8809147
+11-14 18:56:32.861  1697  1697 W audio_hw_generic: Not supplying enough data to HAL, expected position 8809299 , only wrote 8809147
+11-14 18:56:36.120 11940 11940 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:56:36.147 11940 11940 I AndroidRuntime: Using default boot image
+11-14 18:56:36.147 11940 11940 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:56:36.356 11940 11940 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:56:37.888 11940 11940 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:56:38.137 11940 11940 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:56:38.177 11940 11940 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:56:38.227 11940 11940 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:56:38.500 11940 11940 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:56:38.629 11940 11940 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 18:56:39.125  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:56:39.125  1928  1928 W Looper  : Slow dispatch took 146ms main h=com.android.providers.settings.SettingsProvider$SettingsRegistry$MyHandler c=null m=1
+11-14 18:56:41.484 11940 11940 W AccessibilityNodeInfoDumper: Fetch time: 310ms
+11-14 18:56:41.498  1928  1943 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@c34d246
+11-14 18:56:41.508  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:56:41.639 11940 11940 D AndroidRuntime: Shutting down VM
+11-14 18:56:47.405 11957 11957 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:56:47.490 11957 11957 I AndroidRuntime: Using default boot image
+11-14 18:56:47.491 11957 11957 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:56:47.772 11957 11957 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:56:49.034  1742  1742 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+11-14 18:56:49.540 11957 11957 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:56:49.955 11957 11957 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:56:50.027 11957 11957 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:56:50.568 11957 11957 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:56:50.691 11957 11957 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+11-14 18:56:50.995 11957 11957 D AndroidRuntime: Shutting down VM
+11-14 18:56:51.463 11957 11957 W app_process: Suspending all threads took: 223.806ms
+11-14 18:56:52.574  1801  1801 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+11-14 18:56:57.660 11970 11970 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:56:57.740 11970 11970 I AndroidRuntime: Using default boot image
+11-14 18:56:57.740 11970 11970 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:56:57.957 11970 11970 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:56:59.532 11970 11970 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:56:59.794 11970 11970 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:56:59.853 11970 11970 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:57:00.166  1928  1928 W Looper  : Slow dispatch took 163ms main h=com.android.server.AlarmManagerService$AlarmHandler c=com.android.server.-$$Lambda$AlarmManagerService$2$Eo-D98J-N9R2METkD-12gPs320c@6603059 m=0
+11-14 18:56:59.876 11970 11970 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:57:00.174  2063  2063 D KeyguardClockSwitch: Updating clock: 657
+11-14 18:57:00.817 11970 11970 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:57:00.834 11552 11552 I Choreographer: Skipped 589 frames!  The application may be doing too much work on its main thread.
+11-14 18:57:00.861  2063  2415 I OpenGLRenderer: Davey! duration=739ms; Flags=0, IntendedVsync=14393036691024, Vsync=14393086691022, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=14393102615964, AnimationStart=14393102937191, PerformTraversalsStart=14393102942450, DrawStart=14393377901738, SyncQueued=14393446763557, SyncStart=14393448302184, IssueDrawCommandsStart=14393471486416, SwapBuffers=14393768063749, FrameCompleted=14393777459743, DequeueBufferDuration=780000, QueueBufferDuration=1246000, 
+11-14 18:57:00.938  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8810986 , only wrote 8809147
+11-14 18:57:01.036  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8813449 , only wrote 8813113
+11-14 18:57:01.080 11970 11970 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 18:57:01.092  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8815601 , only wrote 8813774
+11-14 18:57:01.153  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8816462 , only wrote 8816418
+11-14 18:57:01.163  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8816850 , only wrote 8816418
+11-14 18:57:01.192  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8817710 , only wrote 8817079
+11-14 18:57:01.209  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:57:01.212  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8817961 , only wrote 8817740
+11-14 18:57:01.219  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8818051 , only wrote 8817740
+11-14 18:57:01.236  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8818462 , only wrote 8818401
+11-14 18:57:01.311  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8821714 , only wrote 8821706
+11-14 18:57:01.433  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8827098 , only wrote 8826994
+11-14 18:57:01.443  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8827428 , only wrote 8826994
+11-14 18:57:01.534  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8831008 , only wrote 8830960
+11-14 18:57:01.556  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8831938 , only wrote 8831621
+11-14 18:57:01.573  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8832353 , only wrote 8832282
+11-14 18:57:01.603  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8833600 , only wrote 8832943
+11-14 18:57:01.613  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8833405 , only wrote 8832943
+11-14 18:57:02.034  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8851499 , only wrote 8851451
+11-14 18:57:02.043  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8851834 , only wrote 8851451
+11-14 18:57:02.136  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8855553 , only wrote 8855417
+11-14 18:57:02.167  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8856790 , only wrote 8856078
+11-14 18:57:02.362  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8864690 , only wrote 8864671
+11-14 18:57:02.379  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8865407 , only wrote 8865332
+11-14 18:57:02.634  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8876575 , only wrote 8876569
+11-14 18:57:02.650  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8877285 , only wrote 8877230
+11-14 18:57:02.819  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8884694 , only wrote 8884501
+11-14 18:57:02.896  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8887874 , only wrote 8887806
+11-14 18:57:02.913  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8888564 , only wrote 8888467
+11-14 18:57:02.931  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8889269 , only wrote 8889128
+11-14 18:57:02.949 11970 11970 W AccessibilityNodeInfoDumper: Fetch time: 141ms
+11-14 18:57:02.955  1928  4989 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@385e41e
+11-14 18:57:02.969  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:57:02.972  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8890938 , only wrote 8889789
+11-14 18:57:02.976  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8889940 , only wrote 8889789
+11-14 18:57:03.002  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8890957 , only wrote 8890450
+11-14 18:57:03.008  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8890682 , only wrote 8890450
+11-14 18:57:03.041  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8891921 , only wrote 8891772
+11-14 18:57:03.089  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8893870 , only wrote 8893755
+11-14 18:57:03.169  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8897319 , only wrote 8897060
+11-14 18:57:03.187  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8897841 , only wrote 8897721
+11-14 18:57:03.192  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8897927 , only wrote 8897721
+11-14 18:57:03.219  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8898902 , only wrote 8898382
+11-14 18:57:03.254  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8899938 , only wrote 8899043
+11-14 18:57:03.271  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8899788 , only wrote 8899704
+11-14 18:57:03.287  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8900420 , only wrote 8899704
+11-14 18:57:03.306 11970 11970 D AndroidRuntime: Shutting down VM
+11-14 18:57:03.316  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8900976 , only wrote 8900365
+11-14 18:57:03.386  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8903458 , only wrote 8903009
+11-14 18:57:03.405  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8903848 , only wrote 8903670
+11-14 18:57:03.420  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8904334 , only wrote 8904331
+11-14 18:57:03.663  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8915028 , only wrote 8914907
+11-14 18:57:03.769  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8919612 , only wrote 8919534
+11-14 18:57:03.875  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8924174 , only wrote 8924161
+11-14 18:57:03.882  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8924494 , only wrote 8924161
+11-14 18:57:03.902  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8925045 , only wrote 8924822
+11-14 18:57:03.920  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8925618 , only wrote 8925483
+11-14 18:57:03.981  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8928177 , only wrote 8928127
+11-14 18:57:03.988  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 8928428 , only wrote 8928127
+11-14 18:57:04.053  1697  1697 W audio_hw_generic: Not supplying enough data to HAL, expected position 8933291 , only wrote 8930771
+11-14 18:57:07.313  1928  2028 E WifiNative: Could not get Iface object for interface null
+11-14 18:57:07.355  1928  1959 E BluetoothAdapter: Bluetooth binder is null
+11-14 18:57:09.155 11987 11987 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:57:09.205 11987 11987 I AndroidRuntime: Using default boot image
+11-14 18:57:09.205 11987 11987 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:57:09.450 11987 11987 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:57:10.868 11987 11987 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:57:11.096 11987 11987 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:57:11.196 11987 11987 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:57:11.246 11987 11987 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:57:11.455 11987 11987 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:57:11.761 11987 11987 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 18:57:13.864 11987 11987 W AccessibilityNodeInfoDumper: Fetch time: 106ms
+11-14 18:57:11.891  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:57:13.868  1928  1943 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@1353dd0
+11-14 18:57:13.877  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:57:13.996 11987 11987 D AndroidRuntime: Shutting down VM
+11-14 18:57:19.634 12004 12004 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+11-14 18:57:19.700 12004 12004 I AndroidRuntime: Using default boot image
+11-14 18:57:19.701 12004 12004 I AndroidRuntime: Leaving lock profiling enabled
+11-14 18:57:20.000 12004 12004 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 18:57:21.499 12004 12004 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 18:57:21.925 12004 12004 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 18:57:21.960 12004 12004 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:57:21.981 12004 12004 I app_process: The ClassLoaderContext is a special shared library.
+11-14 18:57:22.327 12004 12004 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 18:57:22.497 12004 12004 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 18:57:24.358 12004 12004 W AccessibilityNodeInfoDumper: Fetch time: 195ms
+11-14 18:57:22.840  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:57:24.385  1928  6251 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@3d2080b
+11-14 18:57:24.417  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 18:57:24.545 12004 12004 D AndroidRuntime: Shutting down VM
+11-14 18:57:28.657  1711  1763 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 18:57:28.763  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+11-14 18:57:28.769 12023 12023 W Gralloc3: mapper 3.x is not supported
+11-14 18:57:28.984 12023 12023 D HostConnection: createUnique: call
+11-14 18:57:28.985 12023 12023 D HostConnection: HostConnection::get() New Host Connection established 0x7074578b85a0, tid 12023
+11-14 18:57:29.035 12023 12023 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-14 18:57:29.066 12023 12023 D eglCodecCommon: allocate: Ask for block of size 0x1000
+11-14 18:57:29.067 12023 12023 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffff8000 size 0x2000
+11-14 18:57:29.081 12023 12023 D eglCodecCommon: allocate: Ask for block of size 0xc9000
+11-14 18:57:29.081 12023 12023 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffd30000 size 0xca000

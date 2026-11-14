@@ -16,7 +16,13 @@ Future<void> main(List<String> args) async {
   final core = File('assets/content/core.json').readAsStringSync();
   final results = <Map<String, dynamic>>[];
   String? reference;
-  for (final mode in ['monthly', 'adaptive']) {
+  final modes = args.length > 1
+      ? args[1].split(',')
+      : ['adaptive', 'historical'];
+  if (modes.any((m) => !['adaptive', 'historical'].contains(m))) {
+    throw ArgumentError('Modo desconocido');
+  }
+  for (final mode in modes) {
     final directory = await Directory.systemTemp.createTemp('barrio-history-');
     var writes = 0, bytes = 0;
     final session = SessionController(
@@ -39,6 +45,7 @@ Future<void> main(List<String> args) async {
         size: 64,
         origin: 'prehistory',
         extraordinary: false,
+        localLife: args.contains('--local-life'),
       );
       var lease = await session.beginHistory(years);
       final sim = Simulation(WorldState.fromJson(lease.snapshot.world))
@@ -46,19 +53,27 @@ Future<void> main(List<String> args) async {
       writes = 0;
       bytes = 0;
       var batches = 0;
+      var calculationMicros = 0, snapshotMicros = 0, commitMicros = 0;
       final clock = Stopwatch()..start();
       while (true) {
+        final phase = Stopwatch()..start();
         final slice = await advanceHistorySlice(
           sim,
           targetDay: lease.target,
           stopOnCrisis: false,
-          maxDays: mode == 'monthly' ? 30 : 360,
+          maxDays: mode == 'adaptive' ? 360 : 1800,
         );
+        calculationMicros += phase.elapsedMicroseconds;
+        phase.reset();
+        final snapshot = sim.world.toJson();
+        snapshotMicros += phase.elapsedMicroseconds;
+        phase.reset();
         final next = await session.commitHistoryBatch(
           lease,
-          sim.world.toJson(),
+          snapshot,
           done: slice.done,
         );
+        commitMicros += phase.elapsedMicroseconds;
         batches++;
         if (next == null) break;
         lease = next;
@@ -72,6 +87,9 @@ Future<void> main(List<String> args) async {
       results.add({
         'mode': mode,
         'elapsedMs': clock.elapsedMilliseconds,
+        'calculationMs': calculationMicros / 1000,
+        'snapshotMs': snapshotMicros / 1000,
+        'commitMs': commitMicros / 1000,
         'checkpointBatches': batches,
         'writes': writes,
         'bytesWritten': bytes,
@@ -92,7 +110,8 @@ Future<void> main(List<String> args) async {
       'seed': 17,
       'origin': 'prehistory',
       'extraordinary': false,
-      'completeCanonicalMatch': true,
+      'completeCanonicalMatch': results.length > 1 ? true : null,
+      'localLifeEnabled': args.contains('--local-life'),
       'runs': results,
     }),
   );

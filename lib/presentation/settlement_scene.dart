@@ -35,6 +35,29 @@ class SettlementScene {
         .toList();
     for (var i = 0; i < people.length; i++) {
       final p = Map<String, dynamic>.from(people[i] as Map);
+      final life = ((society['localLife'] as Map?)?['residents'] as List? ?? [])
+          .where((r) => r['id'] == p['id'])
+          .firstOrNull;
+      if (life != null) {
+        final cell = life['route'][life['progress']] as int;
+        p['_previousCell'] = life['previous'];
+        p['_destination'] = life['destination'];
+        p['_walking'] = life['previous'] != cell;
+        result.add(
+          LocalSelection(
+            'person',
+            '${p['id']}',
+            p,
+            Rect.fromLTWH(
+              (cell % 32 + .5) * 32 - 16,
+              (cell ~/ 32 + .5) * 32 - 36,
+              32,
+              48,
+            ),
+          ),
+        );
+        continue;
+      }
       final site = sites.isEmpty ? null : sites[i % sites.length];
       final x = site == null ? 224.0 : (site['x'] as num).toDouble() * 32 + 16;
       final y = site == null ? 224.0 : (site['y'] as num).toDouble() * 32 + 72;
@@ -56,6 +79,16 @@ class SettlementScene {
             .map((e) => e.bounds)
             .reduce((a, b) => a.expandToInclude(b))
             .inflate(32);
+  Rect get siteBounds {
+    final sites = entities.where((e) => e.kind == 'site');
+    return sites.isEmpty
+        ? bounds
+        : sites
+              .map((e) => e.bounds)
+              .reduce((a, b) => a.expandToInclude(b))
+              .inflate(32);
+  }
+
   double scale(Size viewport, double zoom) =>
       math.min(
         viewport.width / math.max(320, bounds.width),

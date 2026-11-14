@@ -113,7 +113,7 @@ void main() {
       expect(screen.world.controlled.resources['metal'], 0);
       expect(find.textContaining('Lidera Tara'), findsOneWidget);
       await openCommunityActions(tester);
-      await tester.tap(find.text('Construir'));
+      await tester.tap(find.text('Construir').last);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('Huerto'), findsNothing);
@@ -257,7 +257,7 @@ void main() {
       () => session.world != null && !session.advancing,
     );
     expect(find.text('Año 1 · mes 1 · día 1'), findsOneWidget);
-    expect(find.text('Construir'), findsNothing);
+    expect(find.text('Construir'), findsOneWidget);
     expect(find.text('Intervenir'), findsOneWidget);
     // Essential time controls must remain readable on the smallest phone.
     expect(tester.getSize(find.text('Avanzar')).height, lessThan(24));
@@ -284,7 +284,7 @@ void main() {
     expect(find.byIcon(Icons.play_arrow), findsOneWidget);
     expect(tester.takeException(), isNull);
     await openCommunityActions(tester);
-      await tester.tap(find.text('Construir'));
+      await tester.tap(find.text('Construir').last);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     await tester.tap(find.text('Huerto'));
@@ -445,7 +445,7 @@ void main() {
       final mapBounds = tester.getRect(find.byWidgetPredicate((w) => w is GameWidget));
       expect(mapBounds.height, greaterThan(640 * .42),
           reason: 'The world keeps priority even with enlarged text');
-      expect(find.text('Construir'), findsNothing);
+      expect(find.text('Construir'), findsOneWidget);
       expect(find.textContaining('Las plazas de vivienda están ocupadas'), findsNothing);
       final unchanged = screen.world.canonical();
       await tester.tap(find.byTooltip('Agua'));

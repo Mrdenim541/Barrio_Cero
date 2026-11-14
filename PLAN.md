@@ -1,5 +1,7 @@
 # Ejecución del rediseño aprobado: BARRIO CERO: ERAS
 
+Avance 0.20: recorridos persistentes, trabajo colectivo visible y acciones accesibles. El siglo en cinco segundos sigue pendiente; se conserva simulación exacta, recuperación y trazabilidad. [Diseño](docs/design/LIVING_RELEASE_020.md).
+
 Avance 0.19: presentar trabajo confirmado, obras/formación, caravanas y escalas contextuales; distribuir APK release en ZIP. M3 en curso, sin cerrar tareas personales ni recorridos locales. Ver [alcance](docs/design/ACTIVITY_RELEASE_019.md) y evidencia de `docs/validation/activity/`.
 
 ## Prioridad actual del usuario — presentación 0.18

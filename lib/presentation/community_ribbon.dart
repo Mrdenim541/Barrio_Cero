@@ -10,6 +10,7 @@ class CommunityRibbon extends StatelessWidget {
   final bool foodLow, waterLow, enabled, travellers;
   final VoidCallback onDetails, onFood, onWater, onHousing, onAction;
   final VoidCallback? onMore;
+  final VoidCallback? onBuild, onExplore;
   const CommunityRibbon({
     super.key,
     required this.name,
@@ -30,6 +31,8 @@ class CommunityRibbon extends StatelessWidget {
     required this.onAction,
     this.onMore,
     this.activity,
+    this.onBuild,
+    this.onExplore,
   });
 
   static String _count(int n) => n < 1000 ? '$n' : '${n ~/ 1000}mil';
@@ -147,9 +150,39 @@ class CommunityRibbon extends StatelessWidget {
         const SizedBox(height: 4),
         Row(
           children: [
+            if (onBuild != null) ...[
+              Expanded(
+                child: FilledButton(
+                  onPressed: enabled ? onBuild : null,
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(48, 48),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                  ),
+                  child: const Text(
+                    'Construir',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 4),
+            ],
+            if (onExplore != null) ...[
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: enabled ? onExplore : null,
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(48, 48),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                  ),
+                  child: const Text('Explorar', style: TextStyle(fontSize: 12)),
+                ),
+              ),
+              const SizedBox(width: 4),
+            ],
             Expanded(
               child: FilledButton(
                 style: FilledButton.styleFrom(
+                  minimumSize: const Size(48, 48),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 6,
@@ -158,6 +191,7 @@ class CommunityRibbon extends StatelessWidget {
                 onPressed: enabled ? onAction : null,
                 child: Text(
                   action,
+                  style: TextStyle(fontSize: onBuild == null ? 14 : 12),
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

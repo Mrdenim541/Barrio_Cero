@@ -12,6 +12,7 @@ import '../platform/document_exchange.dart';
 import '../session/session_controller.dart';
 import '../session/history_worker.dart';
 import '../session/history_slice.dart';
+import '../session/history_projection.dart';
 import 'world_game.dart';
 import 'settlement_scene.dart';
 import 'community_brief.dart';
@@ -113,6 +114,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   int speed = 1;
   int? get jumpTarget => session.snapshot?.target;
   int jumpStart = 0;
+  int? calculatedDay;
+  Map<String,dynamic>? _historicalMap;
   Map<String, dynamic>? jumpBefore;
   SendPort? jumpControl;
   Isolate? worker;
@@ -209,6 +212,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     game.present(state, generation: session.snapshot?.generation);
     game.selected = selected;
     game.reduceMotion = reduceMotion;
+    game.playing = timer!=null && !busy;
     final generation = session.snapshot?.generation;
     if (generation != null && generation != _followGeneration) {
       _followGeneration = generation;
@@ -638,11 +642,19 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     if (timer != null) {
       timer!.cancel();
       setState(() => timer = null);
+      game.playing=false;
     } else {
       timer = Timer.periodic(Duration(milliseconds: 1200 ~/ speed), (t) {
         _advance(1);
       });
       setState(() {});
+      game.playing=true;
+      if(societies.any((s)=>s['localLife']==null)) {
+        unawaited(session.enableLocalLife().catchError((Object e){
+          timer?.cancel();timer=null;game.playing=false;
+          if(mounted)setState(() {note='No se pudo iniciar la vida local: $e';});
+        }));
+      }
     }
   }
 
@@ -666,7 +678,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     if (error != null) worker?.kill();
     worker = null;
     if (!mounted) return;
-    setState(() => busy = false);
+    setState(() {busy = false;calculatedDay=null;_historicalMap=null;refresh();});
     if (error != null) {
       _message(error);
     } else if (report) {
@@ -675,7 +687,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _jump(int years, {bool resume = false}) async {
-    if (advancing || busy) {
+    if (busy || session.snapshot==null) {
       _message('Espera a que se confirme el avance actual.');
       return;
     }
@@ -683,8 +695,17 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     webCancel = false;
     timer?.cancel();
     timer = null;
+    final generation=session.snapshot!.generation;
+    await session.idle;
+    if(!mounted)return;
+    if(session.snapshot?.generation!=generation) {
+      await _endJump(error:'La partida cambió antes del salto.');return;
+    }
     jumpBefore = Map<String, dynamic>.from(state);
     jumpStart = day;
+    calculatedDay=day;
+    _historicalMap=state;
+    game.playing=false;
     try {
       historyLease = await session.beginHistory(
         resume ? 1 : years,
@@ -713,6 +734,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               if (m['error'] != null) {
                 await _endJump(error: 'Salto detenido: ${m['error']}');
                 return;
+              }
+              if(m['preview'] is Map) {
+                _showHistoryProjection(Map<String,dynamic>.from(m['preview'] as Map));return;
               }
               if (m['world'] != null) {
                 final done = m['done'] == true;
@@ -752,7 +776,23 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     }
   }
 
+  void _showHistoryProjection(Map<String,dynamic> projection) {
+    if(!mounted || !busy || number(projection['day'])<day)return;
+    final base=_historicalMap ?? state;
+    final updates=projection['tileUpdates'] as List? ?? [];
+    final tiles=updates.isEmpty?base['tiles']:List<dynamic>.from(base['tiles'] as List);
+    for(final change in updates) {tiles[change['index'] as int]=change['tile'];}
+    final map=<String,dynamic>{...base,...projection,'tiles':tiles}..remove('tileUpdates');
+    _historicalMap=map;
+    setState(() {
+      calculatedDay=number(projection['day']);
+      game.present(map,generation:session.snapshot?.generation);
+    });
+  }
+
   Future<void> _jumpWeb() async {
+    final terrain=<int,String>{};
+    final previewClock=Stopwatch()..start();var lastPreview=0;
     try {
       while (historyLease != null && !webCancel) {
         final lease = historyLease!;
@@ -764,6 +804,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           targetDay: lease.target,
           stopOnCrisis: lease.snapshot.stopCrisis,
           isCancelled: () => webCancel,
+          onQuantum:() {
+            if(previewClock.elapsedMilliseconds-lastPreview<300)return;
+            lastPreview=previewClock.elapsedMilliseconds;
+            _showHistoryProjection(historyProjection(candidate,terrain));
+          },
         );
         historyLease = await session.commitHistoryBatch(
           lease,
@@ -787,7 +832,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(cancelled ? 'Historia pausada' : 'Una nueva era'),
+        title: Text(cancelled ? 'Historia pausada' : 'Historia del salto'),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -998,7 +1043,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     });
   }
 
-  Widget _world() => Column(
+  Widget _world() {
+    game.playing=timer!=null&&!busy;game.dayDuration=1.2/speed;
+    return Column(
     children: [
       AtlasPanel(
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -1009,7 +1056,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    date(day),
+                    date(busy ? (calculatedDay ?? day) : day),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -1018,7 +1065,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                     ),
                   ),
                   Text(
-                    following && tracked != null
+                    busy ? 'Guardado: ${date(day)}' : following && tracked != null
                         ? 'Siguiendo a ${tracked!.name}'
                         : controlled.isEmpty
                         ? 'Mundo autónomo'
@@ -1031,7 +1078,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               ),
             ),
             TextButton(
-              onPressed: busy || advancing ? null : _menu,
+              onPressed: busy || (advancing && timer==null) ? null : _menu,
               child: const Text('MENÚ'),
             ),
           ],
@@ -1149,7 +1196,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               LinearProgressIndicator(
                 value: jumpTarget == null || jumpTarget == jumpStart
                     ? null
-                    : ((day - jumpStart) / (jumpTarget! - jumpStart))
+                    : (((calculatedDay ?? day) - jumpStart) / (jumpTarget! - jumpStart))
                           .clamp(0.0, 1.0)
                           .toDouble(),
               ),
@@ -1170,13 +1217,13 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                     ? 'Reproducir un día por paso'
                     : 'Pausar tiempo',
                 child: TextButton(
-                  onPressed: busy || advancing ? null : _play,
+                  onPressed: busy || (advancing && timer==null) ? null : _play,
                   child: Wrap(
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Icon(timer == null ? Icons.play_arrow : Icons.pause),
-                      Text(timer == null ? 'Pausa' : 'Activo',
+                      Text(timer == null ? 'Jugar' : 'Pausar',
                           style: const TextStyle(fontSize: 12)),
                     ],
                   ),
@@ -1193,7 +1240,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             ),
             Expanded(
               child: TextButton(
-                onPressed: busy || advancing ? null : _timeOptions,
+                onPressed: busy || (advancing && timer==null) ? null : _timeOptions,
                 style: TextButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   minimumSize: const Size(48, 48),
@@ -1220,6 +1267,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       ),
     ],
   );
+  }
   Widget _mapButton(IconData icon, String label, VoidCallback tap) => SizedBox(
     width: 48,
     height: 48,
@@ -1352,11 +1400,13 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     return SingleChildScrollView(primary: false, child: CommunityRibbon(
       name: '${s['name']}', leader: leader?['name']?.toString() ?? '',
       activity: activity.hasWork ? activity.summary : null,
+      onBuild:alive&&_canAct(s)?()=>_build():null,
+      onExplore:alive&&_canAct(s)?()=>_confirmCommand('Preparar expedición','explore'):null,
       population: brief.population, housing: brief.housing,
       food: number(resources['food']), water: number(resources['water']),
       foodLow: brief.foodLow, waterLow: brief.waterLow,
       action: alive ? (controlled.isEmpty ? 'Intervenir' : 'Dejar actuar al mundo') : brief.focus.title,
-      enabled: !busy && !advancing, travellers: travelling,
+      enabled: !busy && (!advancing || timer!=null), travellers: travelling,
       onDetails: () => _details(s),
       onFood: () => _stockDetails('Alimento', resources['food'] as num? ?? 0,
           brief.foodLow, 'Reserva actual. Se repone con producción y disminuye con consumo, obras, viajes o intercambios.'),
@@ -1653,8 +1703,16 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   void _inspectLocal(LocalSelection hit) {
     final s = society;
     if (s == null) return;
+    if(hit.kind=='crew') {
+      _sheet('Equipo de ${_buildingName(hit.entity['building'])}',[
+        Text('${hit.entity['adults']} habitantes · ${SettlementActivity.labor(number(hit.entity['laborMillis']))} jornadas'),
+        Text(switch(number(hit.entity['action'])) {1=>'Se dirige al trabajo.',2=>'Trabaja en el lugar.',3=>'Regresa con la producción.',_=>'Descansa entre jornadas.'}),
+        OutlinedButton(onPressed:(){Navigator.pop(context);_activityDetails(s);},child:const Text('Ver actividad')),
+      ]);return;
+    }
     if (hit.kind == 'person') {
       final p = hit.entity;
+      final destination=(s['sites'] as List? ?? []).where((b)=>b['id']==p['_destination']).firstOrNull;
       final population=_personPopulation(p['id'].toString());
       _sheet('${p['name']}', [
         Text(
@@ -1667,6 +1725,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               ? 'Dirige esta comunidad.'
               : 'Habitante destacado de ${s['name']}.',
         ),
+        if(destination!=null)Text('${p['_walking']==true?'Camina hacia':'Visita'} ${_buildingName(destination['building'])}.',style:const TextStyle(color:gold)),
         Text('Experiencia: ${((p['skill'] as num? ?? 1) * 100).round()}%'),
         for(final c in courses)if(((p['skills'] as Map?)?[c.id] as int? ??0)>0)Text('${c.name}: ${((p['skills'][c.id] as int)/10).round()}%'),
         if(_canAct(s)&&state['populationState']!=null)OutlinedButton(onPressed:(){Navigator.pop(context);_learning(target:p['id'].toString());},child:const Text('Aprender un oficio')),
@@ -2498,7 +2557,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ),
     const SizedBox(height: 12),
     const Text(
-      'Se guardará un punto anterior. El avance usa las mismas reglas diarias. Pausar conserva los días ya confirmados.',
+      'El mapa se actualiza mientras transcurren los años. La fecha guardada se muestra por separado. Un cierre inesperado puede repetir hasta cinco años de cálculo sin confirmar.',
       style: TextStyle(color: earth, height: 1.5),
     ),
     const SizedBox(height: 18),

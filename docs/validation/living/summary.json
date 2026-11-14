@@ -1,0 +1,17 @@
+{
+  "fullFlutterSuitePassed": 228,
+  "finalFocusedBatteries": [
+    9,
+    18
+  ],
+  "analysis": "passed",
+  "releaseBuild": "passed",
+  "nativeFinal": "passed",
+  "worldAndRoutesRecoveredExactly": true,
+  "originalSavesRestoredExactly": true,
+  "centuryHostMs": 32421,
+  "nativeYearMs": 55998,
+  "fiveSecondCenturyAccepted": false,
+  "phonePerformanceAccepted": false,
+  "fullGameAcceptance": false
+}

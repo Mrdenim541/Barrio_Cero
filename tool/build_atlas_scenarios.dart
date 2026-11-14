@@ -18,6 +18,14 @@ void main() {
       geographyVersion: 2,
       extraordinary: false,
     )..controlledId = null;
+    for (final s in generated.societies) {
+      s.localLife = LocalLife(0)
+        ..advance(
+          0,
+          [for (final p in s.people) p.toJson()],
+          [for (final b in s.sites) b.toJson()],
+        );
+    }
     final opening = Checkpoint.create(
       world: generated,
       coreSource: source,

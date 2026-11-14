@@ -22,9 +22,7 @@ List<Widget> activitySheet(
       '${SettlementActivity.labor(activity.laborMillis)} jornadas asignadas',
       style: const TextStyle(color: gold, fontSize: 20),
     ),
-    const Text(
-      'El trabajo es colectivo: estas señales representan asignaciones ya contabilizadas, no órdenes nuevas.',
-    ),
+    const Text('La comunidad organiza sus oficios por su cuenta.'),
     for (final item in activity.sites)
       ListTile(
         dense: true,
@@ -32,7 +30,7 @@ List<Widget> activitySheet(
         leading: const Icon(Icons.handyman_outlined),
         title: Text(buildingName(item.building)),
         subtitle: Text(
-          '${SettlementActivity.labor(item.laborMillis)} jornadas · parcela ${item.siteId.split(':').last}',
+        '${SettlementActivity.labor(item.laborMillis)} jornadas',
         ),
       ),
     for (final e in activity.otherLabor.entries)

@@ -1,15 +1,15 @@
 # BARRIO CERO: ERAS
 
 
-## APK de prueba 0.19 en ZIP
+## Juego de prueba 0.20 en ZIP
 
-[Descargar ZIP para Android · 23,5 MB](https://raw.githubusercontent.com/Mrdenim541/Barrio_Cero/downloads/android-test-0.19.0/Barrio-Cero-Eras-0.19.0.zip) · [Notas y capturas reales](https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.19.0-test)
+[Descargar ZIP para Android · 23,6 MB](https://raw.githubusercontent.com/Mrdenim541/Barrio_Cero/downloads/android-test-0.20.0/Barrio-Cero-Eras-0.20.0.zip) · [Notas y capturas reales](https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.20.0-test)
 
-Extrae el ZIP y abre el APK que contiene. Android 7 o posterior; el mismo certificado permite actualizar conservando las partidas. Descarga un 74 % menor que el APK anterior gracias a compilación release y compresión, conservando ARM32, ARM64 y x86_64.
+Extrae el ZIP e instala el APK como actualización, sin desinstalar. Android 7 o posterior.
 
-Mantiene el atlas original y añade producción visible, progreso de obras/formación, caravanas con carga, selector contextual de escala y noticias que localizan su región. Toca el nombre de una comunidad y Ver actividad para consultar su jornada. Crea otro mundo para los continentes nuevos; tus mapas anteriores no se regeneran.
+Pulsa **Jugar** para iniciar el mundo. **Construir** permite elegir y pagar una obra; **Explorar** prepara una expedición. **Intervenir** reúne otras decisiones. Puedes actuar mientras las sociedades siguen decidiendo por su cuenta. Seguir centra un habitante; al tocarlo puedes consultar su visita actual.
 
-Es una versión de desarrollo. [Evidencia y alcance](docs/validation/activity/README.md); las eras, especies, tareas personales completas y demás pendientes siguen en el plan.
+Los habitantes destacados tienen recorridos guardados y los equipos representan trabajo productivo. El salto histórico actualiza el mapa durante el cálculo. Un siglo tardó 32,4 s en el servidor: todavía no se acreditan cinco segundos en el teléfono. Es un avance de desarrollo; [evidencia y pendientes](docs/validation/living/README.md).
 
 Juego individual para Android, escrito en Flutter/Dart con Flame y una simulación local reproducible. No requiere cuentas, servidor, anuncios ni claves de API para jugar. La especificación completa se conserva en [PROJECT_SPEC.md](PROJECT_SPEC.md); el estado verificable de la entrega está en [STATUS.md](STATUS.md).
 

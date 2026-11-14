@@ -28,8 +28,11 @@ Requiere Android 7 o posterior. APK universal: ARM32, ARM64 y x86_64.
 Puedes actualizar la versión anterior sin desinstalarla; conserva tus partidas.
 Por precaución, exporta una copia de tu historia antes de actualizar.
 
-Novedades: escalas de mapa accesibles, producción visible, progreso de obras
-y formación, caravanas con carga y noticias que localizan su región.
+Novedades: recorridos guardados de habitantes, equipos de trabajo animados,
+Construir y Explorar visibles, y saltos con mapa actualizado durante el cálculo.
+Pulsa Jugar para iniciar la vida del mundo. Tus intervenciones no detienen
+la autonomía de las sociedades. Los saltos conservan reglas diarias; todavía
+no se garantiza un siglo en cinco segundos en el teléfono.
 Para ver continentes de la receta nueva, crea otra partida; los mundos antiguos
 conservan su terreno. Para consultar actividad, toca el nombre de la comunidad
 y después Ver actividad. Avanza un día para obtener la primera jornada.

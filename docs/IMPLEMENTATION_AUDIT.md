@@ -1,5 +1,9 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.20 — recorridos persistentes y acciones desde el mapa
+
+Habitantes destacados con posición, destino y ruta guardados; equipos colectivos vinculados al trabajo; Construir/Explorar visibles durante reproducción. Saltos con proyección visual separada del checkpoint y contenido validado reutilizado. 228 pruebas completas, correcciones focalizadas y análisis limpio. Android final comprobó movimiento, obra pagada, autonomía, salto anual y reapertura exacta, restaurando originales. El siglo activo del servidor tarda 32,4 s; cinco segundos y rendimiento físico siguen pendientes. [Evidencia](validation/living/README.md).
+
 ## Actualización 0.19 — presentación de actividad y distribución optimizada
 
 Producción colectiva de la jornada confirmada, obras/formación, caravanas y escalas contextuales se representan sin alterar reglas 11 ni guardados. Integración completa: análisis, 221 pruebas y APK release. Android API29 offline comprobó actividad, cámara, seguimiento y reapertura exacta, restaurando los originales. ZIP universal de 23,5 MB; M3 sigue en curso por asignaciones personales y recorridos locales pendientes. [Evidencia](validation/activity/README.md).

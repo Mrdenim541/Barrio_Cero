@@ -3,6 +3,7 @@ import 'dart:isolate';
 
 import '../simulation/engine.dart';
 import 'history_slice.dart';
+import 'history_projection.dart';
 
 /// Each batch, including the final one, waits for durable confirmation. Cancel
 /// requests stop at a daily boundary; they never acknowledge an unwritten batch.
@@ -28,12 +29,23 @@ void historyWorker(Map<String, dynamic> args) async {
     }
     final target = args['target'] as int;
     final stop = args['stop'] as bool;
+    final clock = Stopwatch()..start();
+    var lastPreview = 0;
+    final terrain = {
+      for (var i = 0; i < world.tiles.length; i++)
+        i: '${world.tiles[i].damage}:${world.tiles[i].ruin}',
+    };
     while (world.day < target && !cancel) {
       final slice = await advanceHistorySlice(
         sim,
         targetDay: target,
         stopOnCrisis: stop,
         isCancelled: () => cancel,
+        onQuantum: () {
+          if (clock.elapsedMilliseconds - lastPreview < 300) return;
+          lastPreview = clock.elapsedMilliseconds;
+          send.send({'preview': historyProjection(world, terrain)});
+        },
       );
       final done = slice.done || slice.cancelled;
       confirmation = Completer<void>();

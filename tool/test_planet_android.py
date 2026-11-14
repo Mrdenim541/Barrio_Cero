@@ -22,6 +22,7 @@ parser.add_argument("--expected-settlements", type=int, default=32)
 parser.add_argument("--renderer", choices=["default", "skia", "software"], default="default")
 parser.add_argument("--root-access", action="store_true", help="Userdebug emulator only: test non-debuggable release, preserving app ownership")
 parser.add_argument("--activity-smoke", action="store_true", help="Inspect committed production and scale controls without changing the world")
+parser.add_argument("--play-smoke", action="store_true", help="Actual playback, resident movement, paid construction, one-year worker jump and restart")
 parser.add_argument("--follow-smoke", action="store_true",
                     help="Check final package installation, follow persistence and reopening without repeating all camera profiles")
 parser.add_argument("--skip-frame-metrics", action="store_true",
@@ -102,7 +103,7 @@ def hierarchy():
 
 
 def text(node):
-    return node.get("text") or node.get("content-desc") or ""
+    return (node.get("text") or node.get("content-desc") or "").replace("\\n", "\n")
 
 
 def tap(label):
@@ -207,58 +208,134 @@ try:
     tap("Continuar historia")
     result["worldProfile"] = profile("Mundo", minimum_towns=args.expected_settlements)
     capture("01-planet-settlements.png")
-    if args.activity_smoke:
+    if args.play_smoke:
         tap("PLANETA")
         tap("Acercarse al asentamiento")
         profile("Asentamiento")
-        capture("02-city-work-signals.png")
-        tap(w["societies"][0]["name"])
-        tap("Ver actividad")
-        assert any("Jornada confirmada" in text(n) for n in hierarchy())
-        result["committedActivityVisible"] = True
-        capture("03-confirmed-production.png")
-        adb("shell", "input", "keyevent", "4")
-        tap("Mundo")
-    if not args.follow_smoke:
-        tap("Ver región")
-        result["regionProfile"] = profile("Región")
-        capture("02-connected-region.png")
+        start_world = json.loads(checkpoint())["payload"]["world"]
+        def positions(world):
+            return {r["id"]:r["route"][r["progress"]]
+                    for town in world["societies"]
+                    for r in town.get("localLife", {}).get("residents", [])}
+        assert positions(start_world), "Declared fixture must include local life"
+        capture("02-before-play.png")
+        tap("Jugar")
+        deadline = time.monotonic() + 90
+        while True:
+            moving = json.loads(checkpoint())["payload"]["world"]
+            if moving["day"] >= start_world["day"] + 8:
+                break
+            if time.monotonic() > deadline:
+                raise RuntimeError("Playback did not advance eight days")
+            time.sleep(.4)
+        capture("03-residents-moving.png")
+        moving = json.loads(checkpoint())["payload"]["world"]
+        changed = [key for key, value in positions(start_world).items()
+                   if key in positions(moving) and positions(moving)[key] != value]
+        assert changed, "No persisted featured resident changed position"
+        assert moving["controlledId"] is None
+        result["playback"] = {"firstDay":start_world["day"],"lastDay":moving["day"],
+                              "residentsMoved":changed,"autonomyRetained":True}
+        tap("Construir")
+        tap("Huerto")
+        capture("04-construction-cost.png")
+        before_order = json.loads(checkpoint())["payload"]["world"]
+        tap("Confirmar orden")
+        deadline = time.monotonic() + 30
+        while True:
+            ordered = json.loads(checkpoint())["payload"]["world"]
+            if len(ordered["commandReceipts"]) > len(before_order["commandReceipts"]):
+                break
+            if time.monotonic() > deadline:
+                raise RuntimeError("Construction did not commit")
+            time.sleep(.2)
+        a,b=before_order["societies"][0],ordered["societies"][0]
+        assert ordered["day"]==before_order["day"] and ordered["controlledId"] is None
+        assert len(b["projects"])==len(a["projects"])+1
+        assert b["resourceMillis"]["wood"]<a["resourceMillis"]["wood"]
+        result["construction"]={"paidWoodMillis":a["resourceMillis"]["wood"]-b["resourceMillis"]["wood"],
+                                "projectCommitted":True,"autonomyRetained":True}
+        tap("Avanzar")
+        tap("Años y delegación")
+        tap("Avanzar 1 año")
+        clock=time.monotonic();minimum_target=ordered["day"]+360;checkpoint_days=[]
+        deadline=clock+180
+        while True:
+            saved=json.loads(checkpoint())["payload"]
+            if not checkpoint_days or checkpoint_days[-1]!=saved["world"]["day"]:
+                checkpoint_days.append(saved["world"]["day"])
+            if saved["target"] is None and saved["world"]["day"]>=minimum_target:
+                break
+            if time.monotonic()>deadline:
+                raise RuntimeError("One-year worker jump exceeded functional test timeout")
+            time.sleep(.25)
+        branch=json.loads(read_app(folder+"/branch_0.json"))["payload"]["world"]
+        target=branch["day"]+360
+        assert saved["world"]["day"]==target
+        result["yearJump"]={"firstDay":branch["day"],"elapsedMs":round((time.monotonic()-clock)*1000),
+                            "finalDay":target,"confirmedDays":checkpoint_days,
+                            "phonePerformanceAcceptance":False}
+        capture("05-historical-report.png")
+        tap("Volver al mundo")
+        final=checkpoint();stop();launch();tap("Continuar historia")
+        profile("Mundo")
+        assert checkpoint()==final
+        result["reopenExact"]=True
+        result["localRoutesRestored"]=bool(positions(json.loads(final)["payload"]["world"]))
+        capture("06-played-world-reopened.png")
+    else:
+        if args.activity_smoke:
+            tap("PLANETA")
+            tap("Acercarse al asentamiento")
+            profile("Asentamiento")
+            capture("02-city-work-signals.png")
+            tap(w["societies"][0]["name"])
+            tap("Ver actividad")
+            assert any("Jornada confirmada" in text(n) for n in hierarchy())
+            result["committedActivityVisible"] = True
+            capture("03-confirmed-production.png")
+            adb("shell", "input", "keyevent", "4")
+            tap("Mundo")
+        if not args.follow_smoke:
+            tap("Ver región")
+            result["regionProfile"] = profile("Región")
+            capture("02-connected-region.png")
+            tap("Seguir")
+            tap("Ver todo el asentamiento")
+            result["cityProfile"] = profile("Asentamiento", minimum_sites=1)
+            capture("03-city-in-the-planet.png")
+            for _ in range(4):
+                adb("shell", "input", "swipe", "250", "280", "50", "180", "450")
+            result["outsideCityProfile"] = profile("Asentamiento", maximum_towns=0)
+            capture("04-continuous-ground-outside-city.png")
+            tap("Centrar comunidad")
+            result["recenteredProfile"] = profile("Asentamiento", minimum_sites=1)
+            capture("05-city-recentered.png")
+        assert checkpoint() == baseline
+        result["cameraPreservesExactCheckpoint"] = True
         tap("Seguir")
-        tap("Ver todo el asentamiento")
-        result["cityProfile"] = profile("Asentamiento", minimum_sites=1)
-        capture("03-city-in-the-planet.png")
-        for _ in range(4):
-            adb("shell", "input", "swipe", "250", "280", "50", "180", "450")
-        result["outsideCityProfile"] = profile("Asentamiento", maximum_towns=0)
-        capture("04-continuous-ground-outside-city.png")
-        tap("Centrar comunidad")
-        result["recenteredProfile"] = profile("Asentamiento", minimum_sites=1)
-        capture("05-city-recentered.png")
-    assert checkpoint() == baseline
-    result["cameraPreservesExactCheckpoint"] = True
-    tap("Seguir")
-    deadline = time.monotonic() + 5
-    while True:
-        preference = json.loads(read_app(folder + "/view_0.json"))
-        if preference.get("active") is True or time.monotonic() >= deadline:
-            break
-        time.sleep(.1)
-    assert preference["active"] is True
-    assert preference["individualId"] == w["societies"][0]["people"][0]["id"]
-    result["protagonistPreference"] = preference
-    assert checkpoint() == baseline
-    stop()
-    launch()
-    tap("Continuar historia")
-    result["reopenedFollowProfile"] = profile("Asentamiento", minimum_sites=1)
-    assert any("Siguiendo a " in text(n) for n in hierarchy())
-    result["protagonistRestored"] = True
-    capture("06-reopened-protagonist.png")
-    tap("Mundo")
-    profile("Mundo", minimum_towns=args.expected_settlements)
-    capture("07-reopened-planet.png")
-    assert checkpoint() == baseline
-    result["reopenExact"] = True
+        deadline = time.monotonic() + 5
+        while True:
+            preference = json.loads(read_app(folder + "/view_0.json"))
+            if preference.get("active") is True or time.monotonic() >= deadline:
+                break
+            time.sleep(.1)
+        assert preference["active"] is True
+        assert preference["individualId"] == w["societies"][0]["people"][0]["id"]
+        result["protagonistPreference"] = preference
+        assert checkpoint() == baseline
+        stop()
+        launch()
+        tap("Continuar historia")
+        result["reopenedFollowProfile"] = profile("Asentamiento", minimum_sites=1)
+        assert any("Siguiendo a " in text(n) for n in hierarchy())
+        result["protagonistRestored"] = True
+        capture("06-reopened-protagonist.png")
+        tap("Mundo")
+        profile("Mundo", minimum_towns=args.expected_settlements)
+        capture("07-reopened-planet.png")
+        assert checkpoint() == baseline
+        result["reopenExact"] = True
 except Exception as error:
     result["error"] = repr(error)
     print(repr(error), flush=True)

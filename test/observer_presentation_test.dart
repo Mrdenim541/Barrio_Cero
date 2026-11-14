@@ -227,9 +227,12 @@ void main() {
       await t.pump();
       await t.tap(find.byTooltip('Ver todo el asentamiento'));
       await t.pump();
-      final before = screen.world.canonical();
-      await t.tap(find.byIcon(Icons.play_arrow));
+      await t.runAsync(() async {
+        await t.tap(find.byIcon(Icons.play_arrow));
+        await screen.session.idle;
+      });
       await t.pump();
+      final before = screen.world.canonical();
       final map = t.getRect(find.byWidgetPredicate((w) => w is GameWidget));
       final scene = SettlementScene(screen.world.societies.first.toJson());
       final person = scene.entities.firstWhere((e) => e.kind == 'person');
@@ -254,7 +257,7 @@ void main() {
       await t.tap(find.text('Intervenir'));
       await t.pump();
       await t.pump(const Duration(milliseconds: 100));
-      await t.tap(find.text('Construir'));
+      await t.tap(find.text('Construir').last);
       await t.pump();
       await t.pump(const Duration(milliseconds: 100));
       await t.ensureVisible(find.text('Refugio de pieles'));
