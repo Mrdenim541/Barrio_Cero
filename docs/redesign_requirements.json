@@ -109,6 +109,13 @@
           "result": "passed",
           "command": "flutter test --no-pub; AOT century per origin; API29 profile home/care/reopen",
           "scope": "Hogares pagados, vínculos entre adultos, tutela sin habitantes extra, memoria de pérdidas y cien años equivalentes; no cierra genealogía, herencia, instituciones ni R5 completo."
+        },
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
+          "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
         }
       ]
     },
@@ -164,6 +171,13 @@
           "result": "passed",
           "command": "flutter test; flutter analyze; century group for each origin; Android API29 isolated save directory",
           "scope": "116 pruebas, dos aperturas, refugio con costes y trabajo, terreno, talla, crónica diferida; cien años equivalentes por origen. No completa R4/R11 ni la aceptación global."
+        },
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
+          "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
         }
       ]
     },
@@ -189,6 +203,13 @@
           "result": "passed",
           "command": "flutter test --no-pub; AOT century per origin; API29 profile home/care/reopen",
           "scope": "Hogares pagados, vínculos entre adultos, tutela sin habitantes extra, memoria de pérdidas y cien años equivalentes; no cierra genealogía, herencia, instituciones ni R5 completo."
+        },
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
+          "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
         }
       ]
     },
@@ -199,7 +220,7 @@
         "R4",
         "R5"
       ],
-      "state": "pending",
+      "state": "partial",
       "evidence": [
         {
           "path": "docs/validation/work-transport/results.json",
@@ -207,6 +228,13 @@
           "result": "passed",
           "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
           "scope": "100 pruebas; trabajo real compartido, devolución de reservas, ida y vuelta material; equivalencia temporal. El hito completo sigue pendiente."
+        },
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
+          "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
         }
       ]
     },
@@ -1517,6 +1545,13 @@
           "result": "passed",
           "command": "flutter test --no-pub; AOT century per origin; API29 profile home/care/reopen",
           "scope": "Hogares pagados, vínculos entre adultos, tutela sin habitantes extra, memoria de pérdidas y cien años equivalentes; no cierra genealogía, herencia, instituciones ni R5 completo."
+        },
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
+          "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
         }
       ]
     },
@@ -2041,6 +2076,13 @@
           "result": "passed",
           "command": "flutter test; Android upgrade/union/capital/restore",
           "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        },
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
+          "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
         }
       ]
     },
@@ -2316,7 +2358,15 @@
         "36.000 días, diez décadas y un siglo producen mismo estado y secuencia.",
         "Repetir con guardado, lotes, guía, cámara y ajustes visuales."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
+          "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        }
+      ]
     },
     {
       "id": "BC2-VAL-02",

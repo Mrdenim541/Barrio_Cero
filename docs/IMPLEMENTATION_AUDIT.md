@@ -1,5 +1,11 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.10 — reglas 9
+
+166 pruebas y análisis limpio; ambos orígenes alcanzaron siglos idénticos con catálogo real. Aperturas conectadas sin alterar el terreno, prioridad de decisiones pendientes, respuesta autónoma diaria a necesidades graves e invitaciones migratorias con origen, razones, adultos comunes y cuidado restante comprobados. Android profile API29 confirmó cinco adultos trasladados, veinte alimentos pagados, consulta sin efectos y reapertura exacta; originales restaurados por hash. El primer intento de navegación nativa falló y se conserva. R6 sigue parcial: la migración aún es inmediata. El diagnóstico de apertura con 32 encontró reservas de transporte que ocupan todos los adultos; la carga larga y el rendimiento físico tienen aceptación separada. [Evidencia](validation/migration/README.md).
+
+La matriz larga de reglas 8 terminó: treinta semillas alcanzaron doscientos años y los dos escenarios de mil años siguieron activos hasta el objetivo, con controles anuales. Esto no equivale a validar reglas 9, 32 comunidades sostenidas ni FPS del teléfono.
+
 ## Actualización 0.8 — hogares y vínculos
 
 Reglas 7, 147 pruebas completas y análisis limpio. Contacto mensual, peticiones con participantes y plazos, hogar pagado, tutela de residentes existentes y memoria de pérdidas funcionan en el núcleo. Se comprobaron coste, idempotencia, vencimiento y muerte el mismo día de fundación. Los cien años equivalentes se repitieron en ambos orígenes. Android ejecutó hogar, cuidado y reapertura con datos originales restaurados. No hay genealogía biológica conocida, herencia material ni director declarativo unificado: R5 sigue parcial. El benchmark de apertura con 32 asentamientos falló la carga sostenida (mínimos 15/9); se conserva el fallo. [Evidencias](validation/social/results.json).

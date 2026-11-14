@@ -66,3 +66,27 @@ void fixturePopulation(WorldState world, {bool trimFeatures = false}) {
   world.entities!.reconcile(world.identityRecords);
   world.validate();
 }
+
+/// Static test fixture: declare an accessible corridor instead of assuming a
+/// random map connects the two actors. Never called by production commands.
+void fixturePath(WorldState world, String from, String to) {
+  final a = world.society(from)!, b = world.society(to)!;
+  var x = a.x, y = a.y;
+  void open() {
+    final i = y * world.size + x, t = world.tiles[i];
+    if (!t.passable || t.damage >= .9) {
+      world.tiles[i] = Tile(x, y, 0, t.richness, ruin: t.ruin);
+    }
+  }
+
+  open();
+  while (x != b.x) {
+    x += x < b.x ? 1 : -1;
+    open();
+  }
+  while (y != b.y) {
+    y += y < b.y ? 1 : -1;
+    open();
+  }
+  world.validate();
+}

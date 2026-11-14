@@ -315,26 +315,54 @@ class PopulationLedger {
     return PopulationChange(amount, List.unmodifiable(people));
   }
 
+  int availableToMove(
+    String settlement,
+    int ageBand, {
+    int minimumAge = 0,
+    bool commonOnly = false,
+  }) => _cohorts.values
+      .where(
+        (c) =>
+            c.settlement == settlement &&
+            band(c) == ageBand &&
+            age(c) >= minimumAge,
+      )
+      .fold<int>(0, (n, c) => n + (commonOnly ? commonIn(c.id) : c.count));
+
   PopulationChange transfer(
     String from,
     String to,
     int amount,
     int ageBand,
-    int Function(int) pick,
-  ) {
+    int Function(int) pick, {
+    int minimumAge = 0,
+    bool commonOnly = false,
+  }) {
     if (from == to ||
         to.isEmpty ||
         to.length > 128 ||
         ageBand < 0 ||
         ageBand > 2 ||
         amount < 0 ||
-        amount > totals(from).at(ageBand) ||
+        amount >
+            availableToMove(
+              from,
+              ageBand,
+              minimumAge: minimumAge,
+              commonOnly: commonOnly,
+            ) ||
         totals(to).total + amount > 10000000) {
       throw const FormatException('Traslado poblacional inválido');
     }
     final groups =
         _cohorts.values
-            .where((c) => c.settlement == from && band(c) == ageBand)
+            .where(
+              (c) =>
+                  c.settlement == from &&
+                  band(c) == ageBand &&
+                  age(c) >= minimumAge &&
+                  (!commonOnly || commonIn(c.id) > 0),
+            )
             .toList()
           ..sort((a, b) => a.id.compareTo(b.id));
     if (groups.any((c) => age(c) >= 120)) {
@@ -343,9 +371,10 @@ class PopulationLedger {
     var remaining = amount;
     final people = <String>[];
     for (final c in groups) {
-      final n = remaining < c.count ? remaining : c.count;
+      final available = commonOnly ? commonIn(c.id) : c.count;
+      final n = remaining < available ? remaining : available;
       if (n == 0) break;
-      final moving = _sampleMembers(c, n, pick);
+      final moving = commonOnly ? <String>[] : _sampleMembers(c, n, pick);
       _removeMembers(moving, c.id);
       _reduce(c, n);
       final target = add(

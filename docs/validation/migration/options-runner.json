@@ -1,0 +1,6 @@
+{
+  "runtimeSourcesMatchFrozenRules9": true,
+  "changeFromFrozenRunner": "Isolated option fixtures now declare the required source illness. Main runtime, long-run scenarios and APK unchanged.",
+  "sourceSha256": "efa0713ec2b37b82cb71a060d5cfac7a6f3bdf0d0974959733e0113c19b8257b",
+  "executableSha256": "2ea93db6dc91cc188965b458a35ac59f6c6ae387a830025e7b609351aa1f8d22"
+}

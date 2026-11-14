@@ -1,0 +1,5 @@
+Unhandled exception:
+Bad state: No connected source in the candidate seeds
+#0      main (file:///workspace/Barrio_Cero/tool/build_migration_scenario.dart:23:3)
+#1      _delayEntrypointInvocation.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:312:33)
+#2      _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193:12)

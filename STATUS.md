@@ -1,6 +1,14 @@
 # Estado de BARRIO CERO: ERAS
 
-## Rediseño actual — R0 registrado; R1–R5 parciales
+## Rediseño actual — R0 registrado; R1–R6 parciales
+
+## Integración 0.10 — acceso y migración con origen real
+
+166 pruebas, análisis limpio y APK profile compilado, instalado y ejecutado en API29. Las invitaciones requieren necesidad, adultos comunes, capacidad de cuidado y acceso real; no vacían la primera ciudad sana por identificador. La autonomía puede iniciar una obra de agua urgente desde el primer día con costes y trabajo normales. Las nuevas aperturas conectan las seis comunidades sin modificar terreno; sesenta mundos lo comprueban. Las partidas existentes conservan posición y reglas hasta conversión explícita.
+
+Android comprobó consulta inmutable, traslado de cinco adultos sin crear población, pago de veinte alimentos, reapertura exacta y restauración de todos los originales. El primer guion falló al navegar por Más acciones; el segundo usó Historia y aprobó. Ambos orígenes repitieron cien años equivalentes con el catálogo completo. Las 307 opciones aprobaron en fixtures de efectos, no como recorridos completos de arcos. [Evidencia y pendientes](docs/validation/migration/README.md).
+
+La batería larga de reglas 9 y las cargas de 32 continúan separadas de esas aprobaciones. El diagnóstico de apertura ya encontró una nueva causa: el transporte puede reservar todos los adultos y dejar sin trabajo a los pozos. R6 y R12 siguen parciales; falta corregir el reparto ante ese compromiso antiguo, el tránsito migratorio y el resto de la ampliación. Los resultados de treinta semillas y dos milenios activos de reglas 8 son válidos para aquella versión y no acreditan automáticamente la actual.
 
 Se conservaron los 106 requisitos originales y se añadieron 68 requisitos de la ampliación aprobada. La versión intermedia 0.2.0 incorpora Barrio/Mundo/Historia, fichas legibles, consulta y confirmación de costes, SessionController y confirmación durable de todos los lotes históricos.
 

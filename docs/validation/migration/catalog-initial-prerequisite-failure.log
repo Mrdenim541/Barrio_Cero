@@ -1,0 +1,10 @@
+PARTIAL RUN: group filter "actual content every arc"; not full acceptance
+RUN actual content every arc option, declarative flags and scheduled nodes
+Unhandled exception:
+Bad state: refugee_letter accept: No hay un grupo real con condiciones de salida para este acontecimiento.
+#0      check (file:///workspace/Barrio_Cero/tool/simulation_check.dart:6)
+#1      main.<anonymous closure> (file:///workspace/Barrio_Cero/tool/simulation_check.dart:143)
+#2      main.test (file:///workspace/Barrio_Cero/tool/simulation_check.dart:17)
+#3      main (file:///workspace/Barrio_Cero/tool/simulation_check.dart:115)
+#4      _delayEntrypointInvocation.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:312)
+#5      _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193)

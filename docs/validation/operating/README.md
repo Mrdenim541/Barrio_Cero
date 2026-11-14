@@ -21,3 +21,7 @@ Los escenarios de 32 comunidades todavía fallaron. Apertura: mínimos de 12/15;
 El diagnóstico diario reprodujo la primera caída en el día 930. A los 240 días, Puesto 10 conservaba salud 100 y reservas, pero solo dos adultos para doce menores y seis mayores. Varios acontecimientos habían trasladado sus adultos a otros asentamientos eligiendo el primer origen por identificador. Después se agotó el agua y desapareció la comunidad. La corrección de producción no soluciona esa decisión migratoria; debe corregirse y volver a ejecutar las mismas cargas, sin proporcionar habitantes o recursos artificiales.
 
 R2/R4/R5/R12 siguen parciales. Faltan conservación global, migraciones en tránsito, instituciones y territorio, genealogía y herencia, especies, eras, director completo, historia por bloques, contenido ampliado y aceptación final de Android. La matriz larga de reglas 8 conserva resultados separados; no se declara aprobada antes de terminar.
+
+## Batería larga de reglas 8 finalizada
+
+Las treinta semillas alcanzaron 72.000 días con 200 controles anuales cada una. Ambos escenarios de mil años alcanzaron 360.000 días con el mundo activo: semillas 74 sin extraordinarios y 73 con extraordinarios, 1.000 controles anuales por caso. Son resultados del ejecutable congelado de reglas 8 (fuente `805c93c`); no acreditan reglas 9, carga sostenida de 32 o rendimiento físico.

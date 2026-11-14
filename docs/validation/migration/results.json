@@ -1,0 +1,75 @@
+{
+  "recordedAt": "2026-11-14T05:07:37.582010+00:00",
+  "version": "0.10.0+11",
+  "rulesVersion": 9,
+  "tests": {
+    "passed": true,
+    "count": 166
+  },
+  "analysis": "clean",
+  "catalogOptionEffects": {
+    "passed": true,
+    "options": 307,
+    "events": 166,
+    "scope": "Isolated effects fixtures; not complete arc paths"
+  },
+  "temporal": {
+    "prehistory": {
+      "check": "temporal_equivalence",
+      "origin": "prehistory",
+      "seed": 17,
+      "days": 36000,
+      "catalogEvents": 166,
+      "retainedChronicleEntries": 2265,
+      "totalRecordedEvents": 9064,
+      "passed": true
+    },
+    "reconstruction": {
+      "check": "temporal_equivalence",
+      "origin": "reconstruction",
+      "seed": 17,
+      "days": 36000,
+      "catalogEvents": 166,
+      "retainedChronicleEntries": 2324,
+      "totalRecordedEvents": 18323,
+      "passed": true
+    }
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.10.0-profile.apk",
+    "sha256": "70866d09ffbe116651e9edede25f9455eaca3430cf35ec589a79456beeb6af67",
+    "compiled": true,
+    "installedAndExecuted": true
+  },
+  "native": {
+    "version": "0.10.0+11",
+    "rules": 9,
+    "mode": "profile",
+    "device": "API29 software emulator; not reference-phone performance",
+    "scenario": "Declared initial illness in one naturally connected community; no residents, resources or paths injected during play",
+    "installationOutput": "Performing Streamed Install\nSuccess\n",
+    "previewPreservesCheckpoint": true,
+    "migration": {
+      "source": "s1",
+      "destination": "s0",
+      "adultsMoved": 5,
+      "populationConserved": true,
+      "namedResidentsRetained": true,
+      "foodCost": 20,
+      "clockAndPrngPreserved": true,
+      "transport": "instantaneous; full migration-in-transit remains pending"
+    },
+    "forceStopReopenPreservesMigrationExactly": true,
+    "originalDataRestoredExactly": true
+  },
+  "sustained32": {
+    "state": "in_progress",
+    "accepted": false
+  },
+  "stability": {
+    "state": "in_progress",
+    "rules": 9,
+    "previousRules8Passed": true
+  },
+  "milestones": "R1/R2/R3/R4/R5/R6/R12 partial; no full milestone closed by this iteration"
+}

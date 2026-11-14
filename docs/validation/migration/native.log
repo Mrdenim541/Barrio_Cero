@@ -1,0 +1,10 @@
+/workspace/Barrio_Cero/build/validation/migration-native-checkpoint.json: 1 file pushed, 0 skipped. 2399.8 MB/s (732655 bytes in 0.000s)
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Tap: Historia
+Tap: Consultar decisiones de tu comunidad
+Tap: Organizar la respuesta
+Tap: Confirmar orden
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+{"version": "0.10.0+11", "rules": 9, "mode": "profile", "device": "API29 software emulator; not reference-phone performance", "scenario": "Declared initial illness in one naturally connected community; no residents, resources or paths injected during play", "installationOutput": "Performing Streamed Install\nSuccess\n", "previewPreservesCheckpoint": true, "migration": {"source": "s1", "destination": "s0", "adultsMoved": 5, "populationConserved": true, "namedResidentsRetained": true, "foodCost": 20, "clockAndPrngPreserved": true, "transport": "instantaneous; full migration-in-transit remains pending"}, "forceStopReopenPreservesMigrationExactly": true, "originalDataRestoredExactly": true}

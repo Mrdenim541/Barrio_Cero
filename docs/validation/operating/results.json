@@ -63,7 +63,32 @@
     "matureMinimum96": 14,
     "followUp": "Observe first population loss to distinguish migration concentration from production shortage; do not loosen workload criteria"
   },
-  "stability": "Rules8 matrix in progress separately; not claimed passed",
+  "stability": {
+    "rules": 8,
+    "sourceCommit": "805c93c",
+    "seeds": 30,
+    "allReachedDays": 72000,
+    "annualChecksPerSeed": 200,
+    "millennia": [
+      {
+        "seed": 74,
+        "extraordinary": false,
+        "actualDays": 360000,
+        "terminal": "target_reached",
+        "annualChecks": 1000
+      },
+      {
+        "seed": 73,
+        "extraordinary": true,
+        "actualDays": 360000,
+        "terminal": "target_reached",
+        "annualChecks": 1000
+      }
+    ],
+    "activeMillenniaVerified": true,
+    "log": "docs/validation/operating/stability-30-seeds.log",
+    "scope": "Frozen rules8 AOT, not rules9 or phone performance"
+  },
   "globalMaterialConservation": "partial; validated production phase and meals, other world flows remain separate",
   "milestones": "R2/R4/R5/R12 partial; does not complete the game"
 }

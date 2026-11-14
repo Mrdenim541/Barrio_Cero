@@ -1822,6 +1822,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       return;
     }
     final all = _sim().eligibleEvents(selected);
+    final order={for(var i=0;i<all.length;i++)all[i]['id']:i};
+    final waiting=((state['pending'] as List?)??[]).where((e)=>e['type']=='content_choice'&&e['societyId']==selected).map((e)=>e['data']['eventId']).toSet();
+    all.sort((a,b){final priority=(waiting.contains(a['id'])?0:1).compareTo(waiting.contains(b['id'])?0:1);return priority==0?order[a['id']]!.compareTo(order[b['id']]!):priority;});
     final events = all.take(showAll?1000:3).toList();
     _sheet('Decisiones de la comunidad', [
       if (events.isEmpty)
@@ -2253,9 +2256,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             await showDialog<bool>(
               context: context,
               builder: (context) => AlertDialog(
+                scrollable:true,
                 title: const Text('Actualizar reglas de esta partida'),
                 content: Text(state['populationState']!=null
-                  ? 'Se conservará una copia exacta del archivo original, con sus reglas. El nuevo reparto de trabajo prioriza alimento y agua. Se mantendrán los grupos, cumpleaños, culturas, hogares y vínculos existentes. La producción nueva se calculará al avanzar el próximo día.'
+                  ? 'Se conservará una copia exacta del archivo original, con sus reglas. El nuevo reparto de trabajo prioriza alimento y agua. Se mantendrán los grupos, cumpleaños, culturas, hogares y vínculos existentes. La producción nueva se calculará al avanzar el próximo día. Las invitaciones migratorias exigirán un origen con necesidad, paso seguro y capacidad para cuidar a quienes permanecen.'
                   : 'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. Las edades de la población común se estimarán; se conservan las fechas conocidas y no se inventarán parentescos. Puedes continuar con las reglas antiguas.',
                 ),
                 actions: [

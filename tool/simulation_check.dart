@@ -140,7 +140,13 @@ void main(List<String> arguments){
   if(c['maxPopulation']!=null){s.children=0;s.elders=0;s.adults=(c['maxPopulation'] as num).toInt();}
   if(c['minHousing']!=null)s.housingModifier+=(c['minHousing'] as num).toInt();
   s.flags.addAll(List<String>.from(c['flags']??[]));s.tech.addAll(List<String>.from(c['technologies']??[]));
-  fixturePopulation(w,trimFeatures:true);final result=e.resolveContentEvent(event['id'],option['id'],scheduled:true);check(result.ok,'${event['id']} ${option['id']}: ${result.message}');
+  fixturePopulation(w,trimFeatures:true);
+  // Population invitations now require real people with a reason to leave.
+  // Declare that precondition once in this effects fixture, for both accept
+  // and decline. This is not an end-to-end narrative or balance scenario.
+  final invitation=(event['options'] as List).any((o)=>(o['effects'] as List).any((effect)=>effect['type']=='population'&&(effect['value'] as num)>0));
+  if(w.rulesVersion>=9&&invitation){w.society('s1')!.health=30;check(e.findPath(w.society('s1')!,s).isNotEmpty,'invitation fixture requires a natural connection');}
+  final result=e.resolveContentEvent(event['id'],option['id'],scheduled:true);check(result.ok,'${event['id']} ${option['id']}: ${result.message}');
   w.validate();branches++;executedOptions.add('${event['id']}:${option['id']}');
  }}
  check(branches>0&&branches==expectedOptions.length&&executedOptions.containsAll(expectedOptions),'catalog option coverage incomplete');

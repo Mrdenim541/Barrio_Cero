@@ -1,0 +1,10 @@
+{
+  "version": "0.10.0+11",
+  "rules": 9,
+  "mode": "profile",
+  "device": "API29 software emulator; not reference-phone performance",
+  "scenario": "Declared initial illness in one naturally connected community; no residents, resources or paths injected during play",
+  "installationOutput": "Performing Streamed Install\nSuccess\n",
+  "error": "RuntimeError(\"No control Decisiones; visible ['Año 1 · mes 1 · día 1', 'Diriges Barrio Cero', 'MENÚ', 'Acercar', 'Alejar', 'Centrar comunidad', 'Barrio Cero', 'Comunidad', '56 habitantes · Lidera Tito', 'Alimento 260 · Agua 250 · Salud 90%', 'Una oportunidad: amplía tus reservas con un huerto o mejora los hogares.', 'Construir', 'Más acciones', 'Reproducir un día por paso', '+ Día', 'Avanzar', 'Barrio\\\\nTab 1 of 3', 'Mundo\\\\nTab 2 of 3', 'Historia\\\\nTab 3 of 3']\")",
+  "originalDataRestoredExactly": true
+}

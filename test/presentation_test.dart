@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:io';
 import 'package:flame/game.dart';
 import 'package:barrio_cero_eras/presentation/settlement_scene.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:barrio_cero_eras/presentation/app.dart';
 import 'package:barrio_cero_eras/persistence/checkpoint.dart';
-import 'package:barrio_cero_eras/simulation/engine.dart' show WorldState;
+import 'package:barrio_cero_eras/simulation/engine.dart' show WorldState, ScheduledEvent;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -158,6 +159,23 @@ void main() {
     expect(checkpoint.world.controlled.population,56);
     await tester.runAsync(() async {await screen.session.loadSlot(0);});await tester.pump();
     expect(screen.world.canonical(),checkpoint.world.canonical());expect(tester.takeException(),isNull);
+    await tester.pumpWidget(const SizedBox.shrink());await tester.pump(const Duration(milliseconds:50));
+  });
+
+  testWidgets('A real pending invitation appears before generic opportunities and previews its actual source', (tester) async {
+    tester.view.physicalSize=const Size(320,640);tester.view.devicePixelRatio=1;
+    addTearDown(tester.view.resetPhysicalSize);addTearDown(tester.view.resetDevicePixelRatio);
+    final world=WorldState.generate(seed:42,size:64);world.society('s1')!.health=30;fixturePath(world,'s1','s0');
+    world.pending.add(ScheduledEvent('fixture-choice','content_choice','s0',3600000,data:{'eventId':'refugee_letter'}));
+    final source=Checkpoint.create(world:world,coreSource:File('assets/content/core.json').readAsStringSync()).encode();
+    late dynamic screen;
+    await tester.runAsync(() async {await tester.pumpWidget(const BarrioApp());screen=tester.state(find.byType(ErasScreen));await screen.initialization;await screen.session.importCheckpoint(source);});
+    await tester.pump();await tester.pump(const Duration(milliseconds:500));final before=screen.world.canonical();
+    await tester.ensureVisible(find.text('Más acciones'));await tester.pump();await tester.tap(find.text('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await tester.scrollUntilVisible(find.text('Decisiones'),120,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.ensureVisible(find.text('Decisiones'));await tester.pump();await tester.tap(find.text('Decisiones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    expect(find.text('Carta de refugio'),findsOneWidget);expect(tester.getTopLeft(find.text('Carta de refugio')).dy,lessThan(400));
+    await tester.tap(find.widgetWithText(OutlinedButton,'Organizar la respuesta').first);await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    expect(find.textContaining('Grupo previsto: 5 adultos de Liga del Junco'),findsOneWidget);expect(screen.world.canonical(),before);expect(tester.takeException(),isNull);
     await tester.pumpWidget(const SizedBox.shrink());await tester.pump(const Duration(milliseconds:50));
   });
 
