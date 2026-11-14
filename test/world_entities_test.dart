@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
@@ -73,7 +74,7 @@ void main() {
       origin.children = 0;
       origin.adults = 0;
       origin.elders = 0;
-      origin.extinct = true;
+      origin.extinct = true;fixturePopulation(w,trimFeatures:true);
       Simulation(w).advanceDays(1);
       expect(w.entities!.societies['s0']!.capitalId, 'settlement:s1');
       expect(w.entities!.cultures.length, 6);

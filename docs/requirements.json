@@ -496,10 +496,15 @@
       "sectionTitle": "Población, generaciones y herencia",
       "requirement": "Representa la población común mediante grupos demográficos por asentamiento, edades, ocupaciones y condiciones relevantes. Mantén identidad individual para líderes, especialistas y personajes destacados. No simules cada ciudadano con un proceso independiente en cada fotograma.",
       "milestone": "H5",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/population/results.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "Población, formación y sucesión reconciliadas en reglas 6; completar hogares, herencia, objetivos, instituciones y migraciones en tránsito antes de cerrar todo el bloque."
     },
     {
       "id": "S09-R02",
@@ -507,10 +512,15 @@
       "sectionTitle": "Población, generaciones y herencia",
       "requirement": "Implementa envejecimiento, nacimientos, muertes, formación de nuevos especialistas, migración y sucesión. Los personajes iniciales no permanecen jóvenes ni gobiernan automáticamente cien años después. Los reemplazos adquieren objetivos y habilidades coherentes; las instituciones y decisiones pueden sobrevivir a sus autores.",
       "milestone": "H5",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/population/results.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "Población, formación y sucesión reconciliadas en reglas 6; completar hogares, herencia, objetivos, instituciones y migraciones en tránsito antes de cerrar todo el bloque."
     },
     {
       "id": "S09-R03",
@@ -518,10 +528,15 @@
       "sectionTitle": "Población, generaciones y herencia",
       "requirement": "Una comunidad puede dejar descendientes, colonias, refugiados, tradiciones, conocimientos o ruinas. La pérdida de su capital no borra todos esos vínculos. Registra herencias relevantes sin exigir un árbol genealógico completo para cada habitante.",
       "milestone": "H5",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/population/results.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "Población, formación y sucesión reconciliadas en reglas 6; completar hogares, herencia, objetivos, instituciones y migraciones en tránsito antes de cerrar todo el bloque."
     },
     {
       "id": "S09-R04",
@@ -529,10 +544,15 @@
       "sectionTitle": "Población, generaciones y herencia",
       "requirement": "Evita personajes fallecidos ejecutando nuevas acciones, migrantes duplicados y crecimiento sin capacidad material. Distingue emigración de muerte, ocupación de destrucción y continuidad cultural de continuidad política.",
       "milestone": "H5",
-      "status": "unverified",
+      "status": "partial",
       "owner": "integration",
-      "evidence": [],
-      "nextCheck": "Contrastar el comportamiento con este requisito y registrar una prueba ejecutada; la presencia de código no lo cierra."
+      "evidence": [
+        {
+          "path": "docs/validation/population/results.json",
+          "result": "passed"
+        }
+      ],
+      "nextCheck": "Población, formación y sucesión reconciliadas en reglas 6; completar hogares, herencia, objetivos, instituciones y migraciones en tránsito antes de cerrar todo el bloque."
     },
     {
       "id": "S10-R01",

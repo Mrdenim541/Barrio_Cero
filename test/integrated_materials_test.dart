@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -146,6 +147,7 @@ void main() {
         s.elders = 0;
         s.extinct = true;
       }
+      fixturePopulation(w,trimFeatures:true);
       final ended = sim.advance(const AdvanceRequest(days: 10));
       expect(ended.advancedDays, 0);
       expect(ended.stop, AdvanceStop.extinct);

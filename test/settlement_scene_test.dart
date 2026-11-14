@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:ui';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:barrio_cero_eras/presentation/settlement_scene.dart';
@@ -96,7 +97,7 @@ void main() {
         s.resources[r] = 10000;
       }
     }
-    Simulation(world).advanceDays(1);
+    fixturePopulation(world);Simulation(world).advanceDays(1);
     expect(world.societies.length, greaterThan(6));
     expect(world.societies.every((s) => s.siteLayout == 1), isTrue);
     world.validate();

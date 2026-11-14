@@ -124,6 +124,43 @@ void main() {
     },
   );
 
+  testWidgets('Learning previews, commits and reopens at 320 with enlarged text', (tester) async {
+    tester.view.physicalSize=const Size(320,640);tester.view.devicePixelRatio=1;
+    tester.platformDispatcher.textScaleFactorTestValue=1.3;
+    addTearDown(tester.view.resetPhysicalSize);addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    late dynamic screen;
+    await tester.runAsync(() async {
+      await tester.pumpWidget(const BarrioApp());screen=tester.state(find.byType(ErasScreen));
+      await screen.initialization;await screen.session.createWorld(seed:42,size:64,origin:'reconstruction');
+    });
+    await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    final before=screen.world.canonical();
+    await tester.ensureVisible(find.text('Más acciones'));await tester.tap(find.text('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await tester.ensureVisible(find.text('Formar aprendices'));await tester.tap(find.text('Formar aprendices'));
+    await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await tester.scrollUntilVisible(find.text('Oficios técnicos'),140,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.pump(const Duration(milliseconds:500));await tester.ensureVisible(find.text('Oficios técnicos'));await tester.pump();await tester.tap(find.text('Oficios técnicos'));
+    await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await tester.scrollUntilVisible(find.text('Duración: 90 días'),100,scrollable:find.byType(Scrollable).last);await tester.pump();
+    expect(find.text('Duración: 90 días'),findsOneWidget);expect(screen.world.canonical(),before);
+    await tester.scrollUntilVisible(find.text('Confirmar orden'),100,scrollable:find.byType(Scrollable).last);await tester.pump();
+    await tester.runAsync(() async {
+      await tester.tap(find.text('Confirmar orden'));
+      final deadline=DateTime.now().add(const Duration(seconds:15));
+      while(screen.world.controlled.lessons.isEmpty||screen.advancing){
+        if(DateTime.now().isAfter(deadline))fail('Training not committed: ${screen.note}');
+        await Future<void>.delayed(const Duration(milliseconds:10));
+      }
+    });
+    await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    final checkpoint=Checkpoint.decode(File('${documents.path}/barrio_cero/world_0.json').readAsStringSync());
+    expect(checkpoint.world.controlled.lessons.single.work.remaining,180);
+    expect(checkpoint.world.controlled.population,56);
+    await tester.runAsync(() async {await screen.session.loadSlot(0);});await tester.pump();
+    expect(screen.world.canonical(),checkpoint.world.canonical());expect(tester.takeException(),isNull);
+    await tester.pumpWidget(const SizedBox.shrink());await tester.pump(const Duration(milliseconds:50));
+  });
+
   testWidgets('Create, order, advance and reload a committed world at 320x640', (
     tester,
   ) async {

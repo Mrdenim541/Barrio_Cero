@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:barrio_cero_eras/simulation/engine.dart';
@@ -109,13 +110,13 @@ void main() {
     final world = WorldState.generate(size: 64);
     final simulation = Simulation(world);
     for (final adults in [0, 3]) {
-      world.controlled.adults = adults;
+      world.controlled.adults = adults;fixturePopulation(world,trimFeatures:true);
       final before = world.canonical();
       expect(simulation.command('build', target: 'farm').ok, isFalse);
       expect(simulation.command('explore').ok, isFalse);
       expect(world.canonical(), before);
     }
-    world.controlled.adults = 4;
+    world.controlled.adults = 4;fixturePopulation(world,trimFeatures:true);
     expect(simulation.command('build', target: 'farm').ok, isTrue);
     expect(world.controlled.workers, 0);
     final before = world.canonical();
@@ -144,7 +145,7 @@ void main() {
     final simulation = Simulation(world);
     final leo = world.controlled.people.firstWhere((p) => p.name == 'Leo');
     expect(simulation.command('explore').ok, isTrue);
-    leo.diedDay = world.day;
+    if(world.populationState!=null){final id=world.populationState!.cohortOf(leo.id)!;world.populationState!.killCohort(id,1,(_)=>0);world.syncPopulation();}leo.diedDay = world.day;
     simulation.advanceDays(8);
     expect(world.controlled.facilityFound, isFalse);
     expect(world.controlled.expeditionWorkers, 0);

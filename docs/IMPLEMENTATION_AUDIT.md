@@ -1,5 +1,11 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.7 — reglas 6
+
+139 pruebas y análisis limpio; cien años equivalentes en ambos orígenes con catálogo real. Se añadieron grupos por fecha, cultura y residencia, pertenencia real de personajes, bajas reconciliadas, archivo de procedencia, sucesión sin habitantes inventados y formación con trabajo y recursos. Los traslados preservan residentes pero todavía son instantáneos. No hay hogares, parentescos, herencia o biología equina. R5 pasa a parcial. La evidencia de compilación y la comprobación Android se distinguen en [población](validation/population/README.md). La batería larga 0.6 terminó con treinta semillas de 200 años; sus dos milenios acabaron por extinción y no validan reglas 6.
+
+La auditoría histórica que sigue describe H1 y no sustituye los resultados posteriores. STATUS.md y los registros de cada versión conservan las diferencias.
+
 Actualizada durante H1, 13 de noviembre de 2026. **El APK profile se compiló, instaló y ejecutó en Android 10; esto no completa todos los sistemas del juego.** Análisis limpio y 39 pruebas Flutter aprobadas. Se comprobó creación/carga, orden, avance, mapa/asentamiento, guardado y recuperación tras cierre del proceso. Resultados y capturas en `docs/validation/h0/` y `docs/validation/android/`. La tabla distingue las pruebas parciales de los criterios todavía pendientes. Los resultados de H1 están en `docs/validation/h1/`.
 
 ## Comprobaciones realizadas

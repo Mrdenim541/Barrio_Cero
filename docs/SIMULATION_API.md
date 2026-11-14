@@ -18,7 +18,7 @@ Registrar JSON ya validado mediante `registerContent(pack)` en cada instancia, i
 
 Operaciones permitidas: recurso, población, salud, moral, ambiente, vivienda, defensa, relación, bandera, tecnología y programación. Las 16 plantillas calculan parámetros de semilla/fecha sin consumir azar por abrir pantallas. Sus costes y resultados son valores concretos. Las probabilidades base y condicionales intervienen en el director autónomo. En UI el jugador puede inspeccionar y resolver los eventos compatibles.
 
-Los doce rasgos modifican reglas: prudencia/audacia (riesgo); generosidad (carga); reserva/conciliación (diplomacia); inventiva/tradición (conocimiento); paciencia (reservas); inquietud (umbral de expansión); severidad (defensa); custodia (ambiente); pragmatismo (producción). Todas las tecnologías aportan 1% de productividad institucional y algunas añaden sus efectos específicos y desbloqueos. No existen treinta subsistemas científicos independientes.
+Los doce rasgos modifican reglas: prudencia/audacia (riesgo); generosidad (carga); reserva/conciliación (diplomacia); inventiva/tradición (conocimiento); paciencia (reservas); inquietud (umbral de expansión); severidad (defensa); custodia (ambiente); pragmatismo (producción). En reglas 4 o posteriores las capacidades y recetas proceden del catálogo declarativo fijado al mundo. Se eliminó el factor genérico por número de tecnologías; los ejecutores antiguos conservan sus tablas y reglas originales. La diferenciación completa de 48 tecnologías y seis eras sigue pendiente.
 
 ## Comprobaciones ejecutadas y límites
 
@@ -30,4 +30,15 @@ La ejecución falló después por un contador obsoleto que exigía 300 opciones 
 
 ## Límites del modelo
 
-Demografía agregada con fracciones, no cohortes anuales exactas. Identidades destacadas no se reconcilian completamente con cada baja común. El mapa no tiene propiedad política por celda ni simulación hidrológica. Las sociedades conservan cultura y memoria, pero no hay modelo general de constituciones, ocupación o secesión. Producción usa rendimiento territorial sin agotar toda reserva natural. Noticias rutinarias se limitan conservando causas referenciadas; instantáneas anuales son resúmenes, no estados rebobinables. Importar paquetes y migraciones debe respetar la capa de validación y el conjunto exacto de contenido guardado por la presentación.
+En reglas 6 la población se registra por grupos con fecha de nacimiento, cultura y residencia, con personajes como miembros de esos mismos grupos. Las bajas, sucesión y transferencias se reconcilian; las edades comunes iniciales se marcan estimadas. Las reglas antiguas conservan su demografía agregada. Familias, parentescos y tránsito material de migrantes siguen pendientes. El mapa no tiene propiedad política por celda ni simulación hidrológica. Las sociedades conservan cultura y memoria, pero no hay modelo general de constituciones, ocupación o secesión. Producción usa rendimiento territorial sin agotar toda reserva natural. Noticias rutinarias se limitan conservando causas referenciadas; instantáneas anuales son resúmenes, no estados rebobinables. Importar paquetes y migraciones debe respetar la capa de validación y el conjunto exacto de contenido guardado por la presentación.
+
+
+## Reglas 6: población y aprendizaje
+
+`WorldState.populationState` es la autoridad de recuento; `Society.children/adults/elders` son proyecciones comprobadas. `WorldState.validate()` rechaza discrepancias, personas sin grupo o un archivo de bajas incompatible. No se debe ajustar una proyección a mano para implementar una acción. `tool/fixtures.dart` solo reconstruye escenarios de prueba editados explícitamente; nunca se usa para reparar partidas de producción.
+
+`train` usa `target: resident` para destacar un residente existente o un ID de persona para continuar su aprendizaje; `choice` es `craft`, `technical` o `scout`. `cancel_train` recibe el ID del aprendizaje. La consulta y la confirmación pasan por la misma transacción aislada que las obras. El trabajo reserva maestro y aprendiz antes de construcción y producción, después de rutas y expediciones. La cancelación usa el mismo cálculo de devolución proporcional de `WorkOrder` y se registra una sola vez.
+
+El gobierno puede quedarse sin dirección si no hay adultos elegibles: no se crea un adulto de edad inventada. Las órdenes nuevas se rechazan hasta que exista dirección adulta; la repetición de un recibo confirmado sigue devolviendo su resultado sin efectos. La migración cambia residencia manteniendo las personas y las culturas; su representación en tránsito aún no está implementada.
+
+La conversión mediante `Checkpoint.upgradeRules` no modifica el original: conserva contenido exacto, PRNG, identidades y cumpleaños conocidos; registra la estimación de edades comunes y los restos demográficos anteriores. El repositorio conserva una copia por SHA-256 antes de confirmar. La documentación de comportamiento y límites está en `docs/validation/population/README.md`.

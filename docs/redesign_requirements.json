@@ -88,6 +88,13 @@
           "result": "passed",
           "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
           "scope": "108 pruebas; definiciones ejecutables fijadas, producción con entradas, legado exacto; cien años equivalentes. El hito completo sigue pendiente."
+        },
+        {
+          "path": "docs/validation/population/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub; flutter analyze --no-pub; compiled AOT century group per origin",
+          "scope": "139 pruebas; población, bajas, cultura, sucesión y formación con reservas; cien años equivalentes por origen. No acredita hogares, parentesco, tránsito migrante ni el hito completo."
         }
       ]
     },
@@ -119,6 +126,13 @@
           "result": "passed",
           "command": "flutter test; flutter analyze; simulation_check full-content 100-year",
           "scope": "108 pruebas; definiciones ejecutables fijadas, producción con entradas, legado exacto; cien años equivalentes. El hito completo sigue pendiente."
+        },
+        {
+          "path": "docs/validation/population/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub; flutter analyze --no-pub; compiled AOT century group per origin",
+          "scope": "139 pruebas; población, bajas, cultura, sucesión y formación con reservas; cien años equivalentes por origen. No acredita hogares, parentesco, tránsito migrante ni el hito completo."
         }
       ]
     },
@@ -146,8 +160,16 @@
         "R3",
         "R4"
       ],
-      "state": "pending",
-      "evidence": []
+      "state": "partial",
+      "evidence": [
+        {
+          "path": "docs/validation/population/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub; flutter analyze --no-pub; compiled AOT century group per origin",
+          "scope": "139 pruebas; población, bajas, cultura, sucesión y formación con reservas; cien años equivalentes por origen. No acredita hogares, parentesco, tránsito migrante ni el hito completo."
+        }
+      ]
     },
     {
       "id": "R6",
@@ -1370,13 +1392,21 @@
         "S09-R04"
       ],
       "requirement": "Personajes destacados pertenecen a cohortes; población común agregada.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Crear o destacar una identidad no aumenta la población.",
         "Cohorte, ocupación, edad, estado y residencia se reconcilian tras bajas y migración."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/population/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub; flutter analyze --no-pub; compiled AOT century group per origin",
+          "scope": "139 pruebas; población, bajas, cultura, sucesión y formación con reservas; cien años equivalentes por origen. No acredita hogares, parentesco, tránsito migrante ni el hito completo."
+        }
+      ]
     },
     {
       "id": "BC2-FAM-02",
@@ -1422,13 +1452,21 @@
         "S09-R04"
       ],
       "requirement": "Nacimiento, adopción, formación, migración y muerte idempotentes.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Una adopción cambia vínculos sin crear habitantes.",
         "No hay migrantes duplicados ni fallecidos actuando; formación y nacimientos requieren soporte."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/population/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test --no-pub; flutter analyze --no-pub; compiled AOT century group per origin",
+          "scope": "139 pruebas; población, bajas, cultura, sucesión y formación con reservas; cien años equivalentes por origen. No acredita hogares, parentesco, tránsito migrante ni el hito completo."
+        }
+      ]
     },
     {
       "id": "BC2-FAM-05",

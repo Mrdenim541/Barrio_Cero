@@ -1,0 +1,20 @@
+{
+  "version": "0.7.0+8",
+  "rules": 6,
+  "mode": "profile",
+  "device": "Android API29 software emulator; not reference-phone performance",
+  "installationOutput": "Performing Streamed Install\nSuccess\n",
+  "startingPopulation": 336,
+  "previewPreservesCheckpoint": true,
+  "committed": {
+    "learner": "p2",
+    "teacher": "p0a",
+    "remainingWork": 180,
+    "foodCost": 10,
+    "knowledgeCost": 5,
+    "populationUnchanged": true
+  },
+  "completedByActualWork": true,
+  "forceStopReopenPreservesPopulationAndSkill": true,
+  "originalDataRestoredExactly": true
+}

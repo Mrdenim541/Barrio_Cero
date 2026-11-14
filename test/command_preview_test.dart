@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -81,7 +82,7 @@ void main() {
       ];
       for (final (action, target, setup) in cases) {
         final world = WorldState.generate(size: 64);
-        setup(world);
+        setup(world);fixturePopulation(world,trimFeatures:true);
         final sim = Simulation(world);
         final command = request(world, action, target: target);
         final before = world.canonical();
@@ -183,7 +184,7 @@ void main() {
       world.controlled.children = 0;
       world.controlled.adults = 0;
       world.controlled.elders = 0;
-      world.controlled.extinct = true;
+      world.controlled.extinct = true;fixturePopulation(world,trimFeatures:true);
       final extinct = world.canonical();
       final preview = sim.preview(request(world, 'build', target: 'farm'));
       expect(preview.allowed, isFalse);

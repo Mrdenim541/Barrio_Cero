@@ -1,3 +1,4 @@
+import 'fixtures.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:barrio_cero_eras/simulation/engine.dart';
@@ -91,7 +92,7 @@ void main(List<String> arguments){
  test('paused construction reserves resources and prevents double spend',(){final w=WorldState.generate(size:64);final e=withContent(w),s=w.controlled;final before=s.resources['wood']!;check(e.command('build',target:'farm').ok,'build failed');check(s.resources['wood']==before-20,'payment');s.resources['wood']=0;check(!e.command('build',target:'farm').ok,'double spend');e.advanceDays(12);check(s.built['farm']==3,'not completed');});
  test('facility routes seal/salvage/share have real distinct effects',(){final states=<String>{};for(final choice in ['seal','salvage','share']){final w=WorldState.generate(seed:42,size:64);final e=withContent(w);check(e.command('explore').ok,'explore');e.advanceDays(8);check(w.controlled.facilityFound,'no discovery');check(e.command('facility',choice:choice).ok,'decision');e.advanceDays(12);check(w.chronicle.any((h)=>h.cause!=null&&h.category=='consecuencia'),'missing cause');states.add(jsonEncode(w.controlled.toJson()));}check(states.length==3,'branches identical');});
  test('study provides short and historical consequences',(){final w=WorldState.generate(seed:2,size:64);final e=withContent(w);w.controlled.tech.add('science');e.command('explore');e.advanceDays(8);e.command('facility',choice:'study');e.advanceDays(25);check(w.controlled.tech.contains('electricity'),'study did not unlock power');e.advanceDays(730);check(w.chronicle.any((h)=>h.title=='Voces entre estrellas'||h.title=='La visita hostil'||h.title=='Los tutores del silencio'),'historical contact missing');});
- test('leadership succession and extinct populations',(){final w=WorldState.generate(size:64);final e=withContent(w);e.advanceDays(36000);for(final s in w.societies){for(final p in s.people.where((p)=>p.alive)){check(w.day-p.bornDay<=101*360,'immortal character');}if(s.alive)check(s.people.any((p)=>p.id==s.leaderId&&p.alive),'dead leader');}for(final s in w.societies){s.children=0;s.adults=0;s.elders=0;s.extinct=true;}check(e.advanceDays(100)==0,'extinct world acts');});
+ test('leadership succession and extinct populations',(){final w=WorldState.generate(size:64);final e=withContent(w);e.advanceDays(36000);for(final s in w.societies){for(final p in s.people.where((p)=>p.alive)){check(w.day-p.bornDay<=101*360,'immortal character');}if(s.alive)check(s.people.any((p)=>p.id==s.leaderId&&p.alive),'dead leader');}for(final s in w.societies){s.children=0;s.adults=0;s.elders=0;s.extinct=true;}fixturePopulation(w,trimFeatures:true);check(e.advanceDays(100)==0,'extinct world acts');});
  test('full-content 30 seeds x 200 years and two millennia',(){
   const strategies=['food','science','trade','defense','expansion','isolation'];
   const intensities=['normal','caótica','extrema'];
@@ -139,7 +140,7 @@ void main(List<String> arguments){
   if(c['maxPopulation']!=null){s.children=0;s.elders=0;s.adults=(c['maxPopulation'] as num).toInt();}
   if(c['minHousing']!=null)s.housingModifier+=(c['minHousing'] as num).toInt();
   s.flags.addAll(List<String>.from(c['flags']??[]));s.tech.addAll(List<String>.from(c['technologies']??[]));
-  final result=e.resolveContentEvent(event['id'],option['id'],scheduled:true);check(result.ok,'${event['id']} ${option['id']}: ${result.message}');
+  fixturePopulation(w,trimFeatures:true);final result=e.resolveContentEvent(event['id'],option['id'],scheduled:true);check(result.ok,'${event['id']} ${option['id']}: ${result.message}');
   w.validate();branches++;executedOptions.add('${event['id']}:${option['id']}');
  }}
  check(branches>0&&branches==expectedOptions.length&&executedOptions.containsAll(expectedOptions),'catalog option coverage incomplete');

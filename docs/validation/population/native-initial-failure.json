@@ -1,0 +1,9 @@
+{
+  "version": "0.7.0+8",
+  "rules": 6,
+  "mode": "profile",
+  "device": "Android API29 software emulator; not reference-phone performance",
+  "installationOutput": "Performing Streamed Install\nSuccess\n",
+  "error": "RuntimeError(\"No control Prehistoria; visible ['Un mundo por escribir', 'Cada decisión deja memoria. El tiempo se detiene cuando cierras el juego.', 'Origen\\\\nPrehistoria', '24 habitantes, refugios y recolección. Aprende a tallar y a cultivar sin empezar con metal ni electricidad.', '21110', 'Intensidad\\\\nNormal', 'Volver', 'Fundar Barrio Cero', 'Dismiss']\")",
+  "originalDataRestoredExactly": true
+}

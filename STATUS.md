@@ -1,6 +1,6 @@
 # Estado de BARRIO CERO: ERAS
 
-## Rediseño actual — R0 registrado; R1 parcial
+## Rediseño actual — R0 registrado; R1–R5 parciales
 
 Se conservaron los 106 requisitos originales y se añadieron 68 requisitos de la ampliación aprobada. La versión intermedia 0.2.0 incorpora Barrio/Mundo/Historia, fichas legibles, consulta y confirmación de costes, SessionController y confirmación durable de todos los lotes históricos.
 
@@ -9,6 +9,16 @@ La línea base de 39 pruebas pasó antes de modificarla. La batería integrada p
 **R1 sigue parcial.** El usuario señaló que las capturas todavía parecen el prototipo rechazado. La navegación y la persistencia mejoraron, pero el arte, la distribución local y la presentación del asentamiento no alcanzan la lámina objetivo. Las capturas actuales son evidencia de una versión intermedia, no del aspecto final acordado. No se considera resuelta la objeción visual por aprobar pruebas técnicas.
 
 Próxima prioridad dentro del rediseño: una escena local legible con escala útil, composición del asentamiento e interacción contextual vinculadas al estado real; contrastarla con `docs/design/world-and-settlement-target.png` mediante capturas ejecutadas. Los caminos, puestos de trabajo, recorridos y edificios nuevos que requieran modelo local se integrarán con R2–R4; no se dibujarán como simulación funcional sin sus reglas. R2 está iniciado; R3–R13 y el alcance original continúan sujetos a sus criterios pendientes.
+
+## Integración 0.7 — grupos reales y formación
+
+Las reglas 6 registran población por fecha de nacimiento, residencia y cultura; los personajes destacados pertenecen a esos grupos y no son habitantes adicionales. Bajas, envejecimiento y traslados actualizan ambos registros. La sucesión procede de adultos existentes; la conversión opcional conserva fechas conocidas y marca las estimadas. Las bajas conservan procedencia cultural.
+
+La formación reserva maestro, aprendiz y provisiones, progresa por trabajo y se recupera al cargar. Retirada, fallecimiento, traslado o cancelación preservan aprendizaje parcial y devuelven solo la reserva no utilizada. El especialista no puede enseñar y dirigir una expedición a la vez. Fabricación y exploración usan habilidades reales. La autonomía puede preparar relevo con sus propios recursos.
+
+Pasaron **139 pruebas**, incluido el recorrido de formación a 320 puntos y texto ampliado, y el análisis limpio. Ambos orígenes aprobaron cien años por cuatro recorridos con catálogo real: 22.201 entradas causales en reconstrucción y 10.579 en prehistoria. APK profile compilado y firma inspeccionada, con API mínima 24. Android comprobó reserva, formación completa al día 90, cierre y reapertura; los originales se restauraron por hashes. La batería de treinta semillas nuevas sigue en ejecución y tiene resultados separados en [población](docs/validation/population/results.json).
+
+R5 es parcial. Faltan hogares, parentescos, relaciones y herencias. La migración conserva residentes pero todavía no los transporta; faltan ocupaciones completas, biología alternativa, instituciones, eras y narrativa instanciada. La crónica sigue teniendo poda. Esta integración no completa los hitos restantes ni acredita mil años activos, carga sostenida de 32 asentamientos o rendimiento del teléfono de referencia.
 
 ## Integración 0.6 — apertura prehistórica
 

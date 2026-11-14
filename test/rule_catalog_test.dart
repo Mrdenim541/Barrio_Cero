@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
@@ -123,7 +124,7 @@ void main() {
   test('Legacy rules use frozen tables and retain exact serialization', () {
     final raw = WorldState.generate(size: 64).toJson();
     raw['rulesVersion'] = 3;
-    raw.remove('catalog');
+    raw.remove('catalog');raw.remove('populationState');
     final w = WorldState.fromJson(raw);
     final before = w.canonical();
     final copy = WorldState.fromJson(jsonDecode(before));
@@ -161,12 +162,12 @@ void main() {
       s.resources['fuel'] = .08;
       s.resources['energy'] = 5;
       s.health = 100;
-      s.adults = 0;
+      s.adults = 0;fixturePopulation(w,trimFeatures:true);
       final sim = Simulation(w);
       sim.advanceDays(1);
       expect(s.resources['fuel'], .08);
       expect(s.resources['energy'], 5);
-      s.adults = 2;
+      s.adults = 2;fixturePopulation(w,trimFeatures:true);
       s.health = 100;
       sim.advanceDays(1);
       expect(s.resources['fuel'], 0);
@@ -182,6 +183,8 @@ void main() {
     s.built = {'workshop': 1};
     s.sites.clear();
     s.ensureSites();
+    // Isolate recipe stoichiometry from the separate trained-craft bonus.
+    for(final person in s.people){person.skills['craft']=0;}
     s.resources['metal'] = .02;
     s.resources['tools'] = 20;
     s.health = 100;

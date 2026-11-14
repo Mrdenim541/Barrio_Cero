@@ -1,3 +1,7 @@
+import 'v2/learning.dart';
+export 'v2/learning.dart';
+import 'v2/population.dart';
+export 'v2/population.dart';
 import '../content/definitions.dart';
 import '../content/legacy_catalog.dart';
 import '../content/catalog_generated.dart' show baseCatalogData,baseScenarioData;
@@ -36,11 +40,13 @@ class Tile {
 }
 const traitNames=['prudent','bold','generous','guarded','inventive','traditional','patient','restless','conciliatory','severe','green','pragmatic'];
 class Person {
- String id,name,role,trait; int bornDay; int? diedDay; double skill;
- Person(this.id,this.name,this.role,this.bornDay,this.trait,{this.diedDay,this.skill=1});
+ String id,name,role,trait; int bornDay; int? diedDay; double skill; bool birthEstimated; Map<String,int> skills={};
+ Person(this.id,this.name,this.role,this.bornDay,this.trait,{this.diedDay,this.skill=1,this.birthEstimated=false});
  bool get alive=>diedDay==null;
- Map<String,dynamic> toJson()=>{'id':id,'name':name,'role':role,'bornDay':bornDay,'trait':trait,'diedDay':diedDay,'skill':skill};
- factory Person.fromJson(Map<String,dynamic> j)=>Person(j['id'],j['name'],j['role'],j['bornDay'],j['trait'],diedDay:j['diedDay'],skill:(j['skill'] as num).toDouble());
+ Map<String,dynamic> toJson()=>{'id':id,'name':name,'role':role,if(birthEstimated)'birthEstimated':true,'bornDay':bornDay,'trait':trait,'diedDay':diedDay,'skill':skill,if(skills.isNotEmpty)'skills':skills};
+ int competence(String course){final explicit=skills[course];if(explicit!=null)return explicit;final c=courses.where((c)=>c.id==course).firstOrNull;return c!=null&&c.teacherRoles.contains(role)?(skill*1000).round():0;}
+ factory Person.fromJson(Map<String,dynamic> j){final p=Person(j['id'],j['name'],j['role'],j['bornDay'],j['trait'],diedDay:j['diedDay'],skill:(j['skill'] as num).toDouble(),birthEstimated:j['birthEstimated']??false);if(j['skills']!=null){final raw=j['skills'];if(raw is! Map||raw.entries.any((e)=>e.value is! int||e.value<0||e.value>1000||!courses.any((c)=>c.id==e.key)))throw const FormatException('Competencia personal inválida');p.skills=Map<String,int>.from(raw);}return p;}
+
 }
 class Policy {
  double reserve=120,risk=0.35; bool expansion=true,trade=true; String research='agriculture', diplomacy='cooperate';
@@ -64,6 +70,7 @@ class Society {
  Map<String,double> get resources=>_resources;
  set resources(Map<String,double> value){_resources=materialRules==2?FixedInventory(value):Map<String,double>.from(value);}
  Map<String,int> built={}; List<Project> projects=[]; Set<String> tech={}; Map<String,int> relations={};
+ List<LearningProject> lessons=[];
  List<BuildingSite> sites=[]; List<Person> people=[]; Policy policy=Policy(); bool facilityFound=false; String? facilityChoice; bool extinct=false; int housingModifier=0,defenseModifier=0; int discoveries=0; int expeditionWorkers=0; int transportWorkers=0; Set<String> flags={}; Map<String,double> demographicCarry={}; Map<String,int> demographicMicros={};
  Society(this.id,this.name,this.profile,this.x,this.y,{this.children=12,this.adults=38,this.elders=6,this.founded=0,this.culture='Cero',this.leaderId='',this.siteLayout=2,this.materialRules=1}) {resources={for(final r in resourceIds)r:0};resources.addAll({'food':260,'wood':100,'stone':75,'metal':25,'water':250,'medicine':12,'tools':20,'energy':5,'knowledge':35,'textiles':20,'crystal':5,'fuel':30});built={'farm':2,'well':1,'house':4};}
  void addSite(String building){
@@ -89,11 +96,11 @@ class Society {
  double get risk=>(policy.risk+(leaderTrait=='bold'?0.3:leaderTrait=='prudent'?-0.25:0)).clamp(0,1).toDouble();
  int get population=>children+adults+elders;
  int get housing=>math.max(0,catalog==null?(built['house']??0)*(supports('masonry')?22:18)+(built['habitat']??0)*50+housingModifier:catalog!.buildings.fold<int>(housingModifier,(total,b)=>total+(built[b.id]??0)*b.housingCapacity)+(supports('masonry')?(built['house']??0)*4:0));
- int get workers=>math.max(0,adults-projects.length*4-expeditionWorkers-transportWorkers);
+ int get workers=>math.max(0,adults-projects.length*4-expeditionWorkers-transportWorkers-lessons.fold<int>(0,(n,l)=>n+l.work.workers));
  bool get alive=>!extinct&&population>0;
- Map<String,dynamic> identityView()=>{'id':id,'name':name,'culture':culture,'leaderId':leaderId,'population':population,'extinct':extinct,'people':[for(final p in people)if(p.alive){'id':p.id,'diedDay':null}]};
- Map<String,dynamic> toJson()=>{if(materialRules==2)'materialRules':2,if(materialRules==2)'resourceMillis':(_resources as FixedInventory).millis,if(siteLayout!=1)'siteLayout':siteLayout,'id':id,'name':name,'profile':profile,'culture':culture,'leaderId':leaderId,'x':x,'y':y,'founded':founded,'population':population,'children':children,'adults':adults,'elders':elders,'health':health,'morale':morale,'environment':environment,'resources':resources,'built':built,'projects':projects.map((e)=>e.toJson()).toList(),'tech':tech.toList()..sort(),'relations':relations,'sites':sites.map((e)=>e.toJson()).toList(),'people':people.map((e)=>e.toJson()).toList(),'policy':policy.toJson(),'facilityFound':facilityFound,'facilityChoice':facilityChoice,'extinct':extinct,'discoveries':discoveries,'expeditionWorkers':expeditionWorkers,if(transportWorkers>0)'transportWorkers':transportWorkers,'housingModifier':housingModifier,'defenseModifier':defenseModifier,'flags':flags.toList()..sort(),'demographicCarry':materialRules==2?{for(final e in demographicMicros.entries)e.key:e.value/1000000}:demographicCarry,if(materialRules==2)'demographicMicros':demographicMicros};
- factory Society.fromJson(Map<String,dynamic> j){final s=Society(j['id'],j['name'],j['profile'],j['x'],j['y'],children:j['children'],adults:j['adults'],elders:j['elders'],materialRules:j['materialRules']??1,siteLayout:j['siteLayout']??1,founded:j['founded'],culture:j['culture'],leaderId:j['leaderId']);s.health=(j['health'] as num).toDouble();s.morale=(j['morale'] as num).toDouble();s.environment=(j['environment'] as num).toDouble();s.resources=(j['resources'] as Map).map((k,v)=>MapEntry(k as String,(v as num).toDouble()));if(s.materialRules==2){final raw=j['resourceMillis'];if(raw is! Map||raw.length!=s.resources.length||s.resources.keys.any((r)=>raw[r] is! int||raw[r]!=(_resourcesMillis(s))[r]||(j['resources'][r] as num).toDouble()!=s.resources[r]))throw const FormatException('Inventario entero incoherente');}if(s.materialRules==1&&j.containsKey('resourceMillis'))throw const FormatException('Materiales enteros sin versión');s.built=Map<String,int>.from(j['built']);s.projects=(j['projects'] as List).map((e)=>Project.fromJson(Map<String,dynamic>.from(e))).toList();s.tech=Set<String>.from(j['tech']);s.relations=Map<String,int>.from(j['relations']);s.sites=(j['sites'] as List? ?? []).map((e)=>BuildingSite.fromJson(Map<String,dynamic>.from(e))).toList();s.ensureSites();s.people=(j['people'] as List).map((e)=>Person.fromJson(Map<String,dynamic>.from(e))).toList();s.policy=Policy.fromJson(Map<String,dynamic>.from(j['policy']));s.facilityFound=j['facilityFound'];s.facilityChoice=j['facilityChoice'];s.extinct=j['extinct'];s.discoveries=j['discoveries'];s.expeditionWorkers=j['expeditionWorkers']??0;s.transportWorkers=j['transportWorkers']??0;s.housingModifier=j['housingModifier']??0;s.defenseModifier=j['defenseModifier']??0;s.flags=Set<String>.from(j['flags']??[]);if(s.materialRules==2){final raw=j['demographicMicros'];if(raw is! Map||raw.entries.any((e)=>!['grown','aged','oldDeaths','births'].contains(e.key)||e.value is! int||e.value<0||e.value>=1000000))throw const FormatException('Resto demográfico inválido');s.demographicMicros=Map<String,int>.from(raw);final projection=j['demographicCarry'];if(projection is! Map||projection.length!=raw.length||raw.entries.any((e)=>projection[e.key]!=e.value/1000000))throw const FormatException('Resto demográfico incoherente');}s.demographicCarry=(j['demographicCarry'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,(v as num).toDouble()));return s;}
+ Map<String,dynamic> identityView({int? day})=>{'id':id,'name':name,'culture':culture,'leaderId':leaderId,'population':population,'extinct':extinct,'people':[for(final p in people)if(p.alive){'id':p.id,'diedDay':null,if(day!=null)'eligibleLeader':day-p.bornDay>=18*360}]};
+ Map<String,dynamic> toJson()=>{if(materialRules==2)'materialRules':2,if(materialRules==2)'resourceMillis':(_resources as FixedInventory).millis,if(siteLayout!=1)'siteLayout':siteLayout,'id':id,'name':name,'profile':profile,'culture':culture,'leaderId':leaderId,'x':x,'y':y,'founded':founded,'population':population,'children':children,'adults':adults,'elders':elders,'health':health,'morale':morale,'environment':environment,'resources':resources,'built':built,'projects':projects.map((e)=>e.toJson()).toList(),if(lessons.isNotEmpty)'lessons':lessons.map((l)=>l.toJson()).toList(),'tech':tech.toList()..sort(),'relations':relations,'sites':sites.map((e)=>e.toJson()).toList(),'people':people.map((e)=>e.toJson()).toList(),'policy':policy.toJson(),'facilityFound':facilityFound,'facilityChoice':facilityChoice,'extinct':extinct,'discoveries':discoveries,'expeditionWorkers':expeditionWorkers,if(transportWorkers>0)'transportWorkers':transportWorkers,'housingModifier':housingModifier,'defenseModifier':defenseModifier,'flags':flags.toList()..sort(),'demographicCarry':materialRules==2?{for(final e in demographicMicros.entries)e.key:e.value/1000000}:demographicCarry,if(materialRules==2)'demographicMicros':demographicMicros};
+ factory Society.fromJson(Map<String,dynamic> j){final s=Society(j['id'],j['name'],j['profile'],j['x'],j['y'],children:j['children'],adults:j['adults'],elders:j['elders'],materialRules:j['materialRules']??1,siteLayout:j['siteLayout']??1,founded:j['founded'],culture:j['culture'],leaderId:j['leaderId']);s.health=(j['health'] as num).toDouble();s.morale=(j['morale'] as num).toDouble();s.environment=(j['environment'] as num).toDouble();s.resources=(j['resources'] as Map).map((k,v)=>MapEntry(k as String,(v as num).toDouble()));if(s.materialRules==2){final raw=j['resourceMillis'];if(raw is! Map||raw.length!=s.resources.length||s.resources.keys.any((r)=>raw[r] is! int||raw[r]!=(_resourcesMillis(s))[r]||(j['resources'][r] as num).toDouble()!=s.resources[r]))throw const FormatException('Inventario entero incoherente');}if(s.materialRules==1&&j.containsKey('resourceMillis'))throw const FormatException('Materiales enteros sin versión');s.built=Map<String,int>.from(j['built']);s.projects=(j['projects'] as List).map((e)=>Project.fromJson(Map<String,dynamic>.from(e))).toList();s.lessons=(j['lessons'] as List? ?? []).map((l)=>LearningProject.fromJson(Map<String,dynamic>.from(l))).toList();s.tech=Set<String>.from(j['tech']);s.relations=Map<String,int>.from(j['relations']);s.sites=(j['sites'] as List? ?? []).map((e)=>BuildingSite.fromJson(Map<String,dynamic>.from(e))).toList();s.ensureSites();s.people=(j['people'] as List).map((e)=>Person.fromJson(Map<String,dynamic>.from(e))).toList();s.policy=Policy.fromJson(Map<String,dynamic>.from(j['policy']));s.facilityFound=j['facilityFound'];s.facilityChoice=j['facilityChoice'];s.extinct=j['extinct'];s.discoveries=j['discoveries'];s.expeditionWorkers=j['expeditionWorkers']??0;s.transportWorkers=j['transportWorkers']??0;s.housingModifier=j['housingModifier']??0;s.defenseModifier=j['defenseModifier']??0;s.flags=Set<String>.from(j['flags']??[]);if(s.materialRules==2){final raw=j['demographicMicros'];if(raw is! Map||raw.entries.any((e)=>!['grown','aged','oldDeaths','births'].contains(e.key)||e.value is! int||e.value<0||e.value>=1000000))throw const FormatException('Resto demográfico inválido');s.demographicMicros=Map<String,int>.from(raw);final projection=j['demographicCarry'];if(projection is! Map||projection.length!=raw.length||raw.entries.any((e)=>projection[e.key]!=e.value/1000000))throw const FormatException('Resto demográfico incoherente');}s.demographicCarry=(j['demographicCarry'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,(v as num).toDouble()));return s;}
 }
 class HistoryEntry {
  final String id,title,text,category,societyId; final int day,x,y; final String? cause;
@@ -114,7 +121,9 @@ class TradeRoute {
  factory TradeRoute.fromJson(Map<String,dynamic> j){final rules=j['transportRules']??1;if(![1,2].contains(rules))throw const FormatException('Reglas de transporte desconocidas');if(rules==2&&(j['foodMillis'] is! int||j['foodMillis']!=Quantity.fromNumber(j['cargo']).millis||j['metalMillis'] is! int||j['returning'] is! bool||j['closing'] is! bool||j['crewAssigned'] is! int))throw const FormatException('Carga de transporte inválida');return TradeRoute(j['id'],j['from'],j['to'],List<int>.from(j['path']),cargo:(j['cargo'] as num).toDouble(),progress:j['progress'],blocked:j['blocked'],transportRules:rules,metalMillis:j['metalMillis']??0,returning:j['returning']??false,closing:j['closing']??false,crewAssigned:j['crewAssigned']??0);}
 }
 class WorldState {
- static const currentRules=5;
+ static const currentRules=6;
+ PopulationLedger? populationState;
+ Iterable<Map<String,dynamic>> get identityRecords=>societies.map((s)=>s.identityView(day:populationState==null?null:day));
  String origin='reconstruction';
  RuleCatalog? catalog;
  List<BuildingDefinition> get buildingDefinitions=>catalog?.buildings??buildings;
@@ -132,21 +141,55 @@ class WorldState {
  for(int y=0;y<size;y++){for(int x=0;x<size;x++) {final n=((math.sin(x/9)+math.cos(y/11)+math.sin((x+y+seed%17)/6))*1.2+3).floor().clamp(0,5).toInt();w.tiles.add(Tile(x,y,n,r.nextInt(5)+1,ruin:r.nextInt(80)==0));}}
  const names=['Barrio Cero','Liga del Junco','Forja Gris','Archivo del Alba','Vigías del Sur','Nómadas de Sal'];const profiles=['cooperativa','ecologista','industrial','científica','defensiva','mercantil'];
  for(int i=0;i<6;i++){int x=(size*(0.2+(i%3)*0.28)).round(),y=(size*(0.25+(i~/3)*0.45)).round();while(!w.tiles[y*size+x].passable){x=(x+1)%size;}if(scenario!=null){Tile? best;var distance=1<<30;for(final t in w.tiles){if(!scenario.biomes.contains(t.biome)||t.richness<scenario.minRichness||w.societies.any((s)=>(s.x-t.x).abs()+(s.y-t.y).abs()<5))continue;final d=(t.x-x).abs()+(t.y-y).abs();if(d<distance){best=t;distance=d;}}if(best==null)throw const FormatException('No hay emplazamiento viable para el origen');x=best.x;y=best.y;}final s=Society('s$i',names[i],profiles[i],x,y,culture:names[i],materialRules:fixedMaterials?2:1);s.policy.research=['agriculture','sanitation','mining','writing','masonry','trade'][i];s.policy.risk=i==2?0.7:0.35;s.policy.diplomacy=i==4?'defend':'cooperate';s.people=[Person('p${i}a',i==0?'Ana':'Iria $i','técnica',-28*360,'inventive'),Person('p${i}b',i==0?'Leo':'Nilo $i','explorador',-24*360,'bold'),Person('p${i}c',i==0?'Tito':'Sol $i','suministros',-42*360,'prudent')];if(scenario!=null){s.children=scenario.children;s.adults=scenario.adults;s.elders=scenario.elders;s.resources=Map.from(scenario.stocks);s.built=Map.from(scenario.built);s.tech=Set.from(scenario.knowledge);s.people=[for(var k=0;k<scenario.people.length;k++)Person('p$i${String.fromCharCode(97+k)}',i==0?scenario.people[k]['name']:'${scenario.people[k]['name']} $i',scenario.people[k]['role'],-(scenario.people[k]['age'] as int)*360,scenario.people[k]['trait'])];if(origin=='prehistory')s.policy.reserve=48;}s.leaderId=s.people.last.id;for(int j=0;j<6;j++){if(i!=j)s.relations['s$j']=r.nextInt(41)-10;}s.ensureSites();w.societies.add(s);}
- w.chronicle.add(HistoryEntry('h0',0,origin=='prehistory'?'Junto al primer fuego':'Un mundo vuelve a respirar',scenario==null?'Ana, Leo y Tito reúnen a 56 habitantes junto a las ruinas. Cada decisión tendrá memoria.':'${scenario.people.map((p)=>p['name']).join(', ')} reúnen a ${scenario.children+scenario.adults+scenario.elders} habitantes. ${scenario.description}','inicio','s0',w.societies.first.x,w.societies.first.y));w.serial=1;if(fixedMaterials)w.entities=WorldEntities.fromSettlements(w.societies.map((s)=>s.identityView()));for(final s in w.societies){s.catalog=w.catalog;}return w;
+ w.chronicle.add(HistoryEntry('h0',0,origin=='prehistory'?'Junto al primer fuego':'Un mundo vuelve a respirar',scenario==null?'Ana, Leo y Tito reúnen a 56 habitantes junto a las ruinas. Cada decisión tendrá memoria.':'${scenario.people.map((p)=>p['name']).join(', ')} reúnen a ${scenario.children+scenario.adults+scenario.elders} habitantes. ${scenario.description}','inicio','s0',w.societies.first.x,w.societies.first.y));w.serial=1;if(fixedMaterials)w.entities=WorldEntities.fromSettlements(w.identityRecords);for(final s in w.societies){s.catalog=w.catalog;}if(fixedMaterials){w.populationState=estimatePopulation(w.day,w.societies.map((s)=>s.toJson()),w.entities!);}return w;
+ }
+
+ static PopulationLedger estimatePopulation(int day,Iterable<Map<String,dynamic>> actors,WorldEntities entities){
+   final values=actors.toList();
+   final result=PopulationLedger.fromProjections(day:day,settlements:values.map((s)=>{
+     'id':s['id'],'cultureId':entities.cityFor(s['id'])!.cultureId,
+     'children':s['children'],'adults':s['adults'],'elders':s['elders'],'people':s['people'],
+   }));
+   for(final s in values){result.birthCredits[s['id']]={entities.cityFor(s['id'])!.cultureId:((s['demographicMicros'] as Map?)?['births']??0) as int};}
+   return result;
+ }
+ void syncPopulation(){
+   final ledger=populationState;if(ledger==null)return;
+   for(final s in societies){final n=ledger.totals(s.id);s.children=n.children;s.adults=n.adults;s.elders=n.elders;}
+ }
+ void assertPopulation({bool deep=true}){
+   final ledger=populationState;if(ledger==null)return;
+   if(ledger.day!=day||entities==null)throw const FormatException('Calendario o identidades de población incoherentes');
+   for(final s in societies){final n=ledger.totals(s.id);if(n.children!=s.children||n.adults!=s.adults||n.elders!=s.elders)throw const FormatException('Población agregada distinta de sus grupos');}
+   if(!deep)return;
+   ledger.validate();final actors=societies.map((s)=>s.id).toSet();
+   for(final c in ledger.cohorts){if(!actors.contains(c.settlement)||!entities!.cultures.containsKey(c.culture))throw const FormatException('Grupo sin asentamiento o cultura');}
+   if(ledger.birthCredits.keys.any((s)=>!actors.contains(s))||ledger.birthCredits.values.any((c)=>c.keys.any((id)=>!entities!.cultures.containsKey(id))))throw const FormatException('Natalidad sin asentamiento');
+   final alive=<String>{};
+   for(final s in societies){for(final p in s.people.where((p)=>p.alive)){
+     final c=ledger.cohort(ledger.cohortOf(p.id)??'');
+     if(c==null||c.settlement!=s.id||c.bornDay!=p.bornDay)throw const FormatException('Persona fuera de su población real');
+     alive.add(p.id);
+   }}
+   final people={for(final s in societies)for(final p in s.people)p.id:p};
+   for(final e in ledger.archives.entries){final p=people[e.key];if(p==null||p.alive||p.bornDay!=e.value['bornDay']||p.diedDay!=e.value['diedDay']||!actors.contains(e.value['settlement'])||!entities!.cultures.containsKey(e.value['culture']))throw const FormatException('Legado personal incompatible con sus bajas');}
+   if(ledger.members.length!=alive.length||ledger.members.keys.any((p)=>!alive.contains(p)))throw const FormatException('Personas fallecidas o duplicadas en los grupos');
  }
  Society? society(String? id){for(final s in societies){if(s.id==id)return s;}return null;}
  Society get controlled=>society(controlledId)??societies.first;
  String get date=>'Año ${day~/360+1} · mes ${(day%360)~/30+1} · día ${day%30+1}';
- Map<String,dynamic> toJson()=>{'schema':1,if(rulesVersion>=5)'origin':origin,if(catalog!=null)'catalog':catalog!.toJson(),if(entities!=null)'entities':entities!.toJson(),if(ruleChanges.isNotEmpty)'ruleChanges':ruleChanges,if(rulesVersion>1)'rulesVersion':rulesVersion,if(rulesVersion>1)'randomAlgorithm':RandomState.algorithm,'seed':seed,'size':size,'day':day,'serial':serial,'intensity':intensity,'extraordinary':extraordinary,'rng':random.state,'controlledId':controlledId,'tiles':tiles.map((t)=>t.toJson()).toList(),'societies':societies.map((s)=>s.toJson()).toList(),'chronicle':chronicle.map((h)=>h.toJson()).toList(),'pending':pending.map((e)=>e.toJson()).toList(),'routes':routes.map((r)=>r.toJson()).toList(),'annualSnapshots':annualSnapshots,'contentVersions':contentVersions,'contentHistory':contentHistory,'commandReceipts':commandReceipts};
- factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));w.validate();return w;}
+ Map<String,dynamic> toJson()=>{'schema':1,if(rulesVersion>=5)'origin':origin,if(populationState!=null)'populationState':populationState!.toJson(),if(catalog!=null)'catalog':catalog!.toJson(),if(entities!=null)'entities':entities!.toJson(),if(ruleChanges.isNotEmpty)'ruleChanges':ruleChanges,if(rulesVersion>1)'rulesVersion':rulesVersion,if(rulesVersion>1)'randomAlgorithm':RandomState.algorithm,'seed':seed,'size':size,'day':day,'serial':serial,'intensity':intensity,'extraordinary':extraordinary,'rng':random.state,'controlledId':controlledId,'tiles':tiles.map((t)=>t.toJson()).toList(),'societies':societies.map((s)=>s.toJson()).toList(),'chronicle':chronicle.map((h)=>h.toJson()).toList(),'pending':pending.map((e)=>e.toJson()).toList(),'routes':routes.map((r)=>r.toJson()).toList(),'annualSnapshots':annualSnapshots,'contentVersions':contentVersions,'contentHistory':contentHistory,'commandReceipts':commandReceipts};
+ factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5,6].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));if(j['populationState']!=null)w.populationState=PopulationLedger.fromJson(Map<String,dynamic>.from(j['populationState']));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));w.validate();return w;}
  void validate(){
+ if((rulesVersion>=6)!=(populationState!=null))throw const FormatException('Población sin su versión de reglas');
+ assertPopulation();
  for(final s in societies){s.catalog=catalog;}
  if(!['prehistory','reconstruction'].contains(origin)||(rulesVersion<5&&origin!='reconstruction'))throw const FormatException('Origen o versión incompatibles');
  if((rulesVersion>=4)!=(catalog!=null))throw const FormatException('Catálogo y versión de reglas incompatibles');
  final buildings=buildingDefinitions;final technologies=technologyDefinitions;
- for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
- entities?.validate(societies.map((s)=>s.identityView()));
- if(![1,2,3,4,5].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
+ for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5,6].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
+ entities?.validate(identityRecords);
+ if(![1,2,3,4,5,6].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
  if(size!=64&&size!=96)throw const FormatException('Tamaño de mundo inválido');
  if(day<0||serial<0||tiles.length!=size*size)throw const FormatException('Calendario o terreno inválido');
  if(societies.isEmpty||societies.length>100)throw const FormatException('Número de sociedades inválido');
@@ -166,14 +209,26 @@ class WorldState {
  final siteIds=<String>{};final sitePositions=<String>{};final siteCounts=<String,int>{};for(final site in s.sites){if(!siteIds.add(site.id)||!sitePositions.add('${site.x}:${site.y}')||site.x<0||site.x>=32||site.y<0||site.y>=32||!buildings.any((b)=>b.id==site.building))throw const FormatException('Plano local inválido');siteCounts[site.building]=(siteCounts[site.building]??0)+1;}if(s.built.entries.any((e)=>(siteCounts[e.key]??0)!=e.value))throw const FormatException('Plano y edificios no coinciden');
  if(rulesVersion>=3&&s.projects.any((p)=>p.work==null))throw const FormatException('Obra sin compromiso de trabajo');
  for(final p in s.projects){final work=p.work;if(work==null)continue;if(!workIds.add(work.id)||work.workers!=4)throw const FormatException('Compromiso de obra duplicado o inválido');if(work.committed.isNotEmpty){final definition=buildings.where((b)=>b.id==p.building).firstOrNull;if(definition==null)throw const FormatException('Edificio de obra desconocido');final expected={for(final e in definition.cost.entries)if(e.value>0)e.key:Quantity.fromNumber(e.value).millis};if(expected.length!=work.committed.length||expected.entries.any((e)=>work.committed[e.key]!=e.value))throw const FormatException('Coste reservado incoherente');}}
+ if(rulesVersion<6&&s.lessons.isNotEmpty)throw const FormatException('Formación sin reglas compatibles');
+ final named=<String>{};
+ for(final l in s.lessons){
+   if(!workIds.add(l.id)||l.work.createdDay>day||l.work.remaining==0||l.work.committed.keys.any((r)=>!['food','knowledge'].contains(r)))throw const FormatException('Reserva de formación inválida');
+   for(final id in [l.learner,if(l.teacher!=null)l.teacher!]){if(!named.add(id)||!s.people.any((p)=>p.id==id&&p.alive&&day-p.bornDay>=18*360&&day-p.bornDay<65*360))throw const FormatException('Participante de formación incompatible');}
+   final fraction=1000-l.startingSkill;
+   final expectedWork=(180*fraction/1000).ceil();final expectedCost={'food':((l.teacher==null?20000:10000)*fraction/1000).ceil(),'knowledge':((l.teacher==null?15000:5000)*fraction/1000).ceil()};
+   if(l.work.totalWork!=expectedWork||l.work.committed.length!=expectedCost.length||expectedCost.entries.any((e)=>l.work.committed[e.key]!=e.value))throw const FormatException('Coste o duración de formación incoherente');
+   final learner=s.people.firstWhere((p)=>p.id==l.learner);final progress=l.startingSkill+(1000-l.startingSkill)*(l.work.totalWork-l.work.remaining)~/l.work.totalWork;
+   if(learner.competence(l.course)!=progress||l.teacher!=null&&!s.people.any((p)=>p.id==l.teacher&&p.competence(l.course)>=1000))throw const FormatException('Aprendizaje y progreso incompatibles');
+ }
+ if(pending.any((e)=>e.type=='discovery'&&e.societyId==s.id&&named.contains(e.data['explorerId'])))throw const FormatException('Persona reservada dos veces');
  if(s.projects.any((p)=>p.work!=null&&p.work!.committed.keys.any((r)=>!resourceIds.contains(r))))throw const FormatException('Material de obra inválido');
  if(s.projects.any((p)=>p.finish<0||!buildings.any((b)=>b.id==p.building)))throw const FormatException('Proyecto inválido');
  if(s.tech.any((id)=>!technologies.any((t)=>t.id==id)))throw const FormatException('Tecnología inválida');
  if(s.relations.entries.any((e)=>!ids.contains(e.key)||e.value< -100||e.value>100))throw const FormatException('Relación inválida');
  if([s.health,s.morale,s.environment].any((v)=>!v.isFinite||v<0||v>100))throw const FormatException('Indicador inválido');
  if(!s.policy.reserve.isFinite||s.policy.reserve<0||!s.policy.risk.isFinite||s.policy.risk<0||s.policy.risk>1)throw const FormatException('Política inválida');
- for(final p in s.people){if(!personIds.add(p.id)||p.bornDay>day||(p.diedDay!=null&&(p.diedDay!>day||p.diedDay!<p.bornDay)))throw const FormatException('Persona inválida');}
- if(s.alive&&!s.people.any((p)=>p.id==s.leaderId))throw const FormatException('Dirigente inexistente');
+ for(final p in s.people){if(!p.skill.isFinite||p.skill<0||p.skill>100||p.skills.entries.any((e)=>!courses.any((c)=>c.id==e.key)||e.value<0||e.value>1000)||!personIds.add(p.id)||p.bornDay>day||(p.diedDay!=null&&(p.diedDay!>day||p.diedDay!<p.bornDay)))throw const FormatException('Persona inválida');}
+ if(s.alive&&!(populationState!=null&&s.leaderId=='')&&!s.people.any((p)=>p.id==s.leaderId))throw const FormatException('Dirigente inexistente');
  }
  for(final receipt in commandReceipts.entries){if(receipt.key.isEmpty||receipt.key.length>128||receipt.value['fingerprint'] is! String||receipt.value['message'] is! String||receipt.value['day'] is! int||(receipt.value['day'] as int)>day||(receipt.value['day'] as int)<0)throw const FormatException('Recibo de orden inválido');}
  for(final receipt in commandReceipts.values){
@@ -189,7 +244,7 @@ class WorldState {
  /// Commits an already validated candidate without changing the WorldState identity.
  /// References to nested entities must be reacquired after a successful submit.
  void _adopt(WorldState value) {
-  origin=value.origin;catalog=value.catalog;rulesVersion=value.rulesVersion;ruleChanges=value.ruleChanges;entities=value.entities;seed=value.seed;size=value.size;day=value.day;serial=value.serial;
+  populationState=value.populationState;origin=value.origin;catalog=value.catalog;rulesVersion=value.rulesVersion;ruleChanges=value.ruleChanges;entities=value.entities;seed=value.seed;size=value.size;day=value.day;serial=value.serial;
   intensity=value.intensity;extraordinary=value.extraordinary;random=value.random;
   controlledId=value.controlledId;tiles=value.tiles;societies=value.societies;
   chronicle=value.chronicle;pending=value.pending;routes=value.routes;
@@ -284,6 +339,11 @@ class Simulation {
      (request.actorId==null&&request.action!='control'&&request.action!='delegate')){
    return const _CommandEvaluation(CommandResult(false,'Asume la dirección de la comunidad antes de darle órdenes.',code:'not_controlled'));
   }
+  if(world.populationState!=null&&!['control','delegate'].contains(request.action)){
+   final actor=world.society(request.actorId);
+   if(actor==null||!actor.alive)return const _CommandEvaluation(CommandResult(false,'No hay una comunidad viva seleccionada.',code:'rejected'));
+   if(!actor.people.any((p)=>p.id==actor.leaderId&&p.alive&&world.day-p.bornDay>=18*360))return const _CommandEvaluation(CommandResult(false,'No hay una dirección adulta capaz de confirmar la orden.',code:'rejected'));
+  }
   final emitted=<HistoryEntry>[];
   try {
    final candidate=WorldState.fromJson(world.toJson());
@@ -296,7 +356,7 @@ class Simulation {
    if(!result.ok)return _CommandEvaluation(CommandResult(false,result.message,code:'rejected'));
    candidate.commandReceipts[request.id]={'fingerprint':request.fingerprint,
     'message':result.message,'day':candidate.day,if(trial.materialPayments.isNotEmpty)'materials':trial.materialPayments};
-   candidate.entities?.reconcile(candidate.societies.map((s)=>s.identityView()));
+   candidate.entities?.reconcile(candidate.identityRecords);
    candidate.validate();
    return _CommandEvaluation(result,candidate:candidate,history:emitted);
   } catch(error) {
@@ -326,6 +386,11 @@ class Simulation {
   final prerequisites=<String>[];
   String technologyName(String id)=>technologies.where((t)=>t.id==id).firstOrNull?.name??id;
   switch(request.action){
+   case 'train':
+    if(society!=null){final quote=_learningQuote(society,request.target,request.choice);costs=quote.costs;workers=quote.workers;duration=quote.days;outcome=quote.allowed?'Forma un residente existente. Maestro y aprendiz dejan de producir mientras trabajan; el aprendizaje parcial se conserva.':'Formación: ${quote.reason}';}
+    break;
+   case 'cancel_train':
+    duration=0;outcome='Libera al maestro y al aprendiz, conserva lo aprendido y devuelve las provisiones que aún no se han utilizado.';break;
    case 'federate':
     costs={'food':20,'knowledge':10};duration=0;prerequisites.add('Confianza mutua: 40 / 30');outcome='Une las sociedades conservando las reservas, habitantes y culturas locales.';break;
    case 'cancel_build':
@@ -351,7 +416,7 @@ class Simulation {
     }
     break;
    case 'explore':
-    costs=_explorationCost;workers=4;duration=8;
+    costs=_explorationCost;workers=4;duration=society==null?null:_explorationDays(society);
     prerequisites.addAll(['Cuatro trabajadores disponibles','Sin otra expedición en marcha']);
     outcome='Una expedición buscará vestigios. Su resultado se conocerá al regresar.';
     break;
@@ -402,8 +467,8 @@ class Simulation {
    prerequisites:prerequisites,outcome:outcome);
  }
 
- String _id(String prefix)=>'$prefix${world.serial++}';
- HistoryEntry record(Society s,String title,String text,String category,{String? cause}){final h=HistoryEntry(_id('h'),world.day,title,text,category,s.id,s.x,s.y,cause:cause);world.chronicle.add(h);if(world.chronicle.length>2400){final referenced={...world.chronicle.map((e)=>e.cause),...world.pending.map((e)=>e.cause)};int removed=0;world.chronicle.removeWhere((entry){if(removed<400&&!referenced.contains(entry.id)&&entry.id!=h.id){removed++;return true;}return false;});}onHistory?.call(h);return h;}
+ String _id(String prefix){var id='$prefix${world.serial++}';if(world.populationState!=null){while(prefix=='s'&&world.society(id)!=null||prefix=='p'&&world.societies.any((s)=>s.people.any((p)=>p.id==id))){id='$prefix${world.serial++}';}}return id;}
+ HistoryEntry record(Society s,String title,String text,String category,{String? cause}){final h=HistoryEntry(_id('h'),world.day,title,text,category,s.id,s.x,s.y,cause:cause);world.chronicle.add(h);if(world.chronicle.length>2400){final referenced={...world.chronicle.map((e)=>e.cause),...world.pending.map((e)=>e.cause),for(final actor in world.societies)for(final lesson in actor.lessons)lesson.cause};int removed=0;world.chronicle.removeWhere((entry){if(removed<400&&!referenced.contains(entry.id)&&entry.id!=h.id){removed++;return true;}return false;});}onHistory?.call(h);return h;}
  bool _pay(Society s,Map<String,double> cost,{String destination='sink:committed',Map<String,String> allocations=const {}}){
  if(s.materialRules==2){
    final amounts=<String,int>{};
@@ -421,9 +486,101 @@ class Simulation {
  for(final e in cost.entries){s.resources[e.key]=s.resources[e.key]!-e.value;}return true;
  }
 
+
+ Set<String> _reservedPeople(Society s)=>{
+   for(final l in s.lessons)...[l.learner,if(l.teacher!=null)l.teacher!],
+   for(final e in world.pending.where((e)=>e.type=='discovery'&&e.societyId==s.id))
+     if(e.data['explorerId'] is String)e.data['explorerId'] as String,
+ };
+ Person? _scout(Society s)=>s.people.where((p)=>p.alive&&
+   (world.populationState==null?p.role=='explorador':world.day-p.bornDay>=18*360&&p.competence('scout')>=1000&&!_reservedPeople(s).contains(p.id))).firstOrNull;
+ int _explorationDays(Society s)=>world.populationState==null||_scout(s)!=null?8:12;
+ LearningQuote _learningQuote(Society s,String? target,String? courseId){
+   if(world.populationState==null)return const LearningQuote.rejected('Esta partida necesita convertir sus reglas antes de formar aprendices.');
+   final course=courses.where((c)=>c.id==courseId).firstOrNull;
+   if(course==null)return const LearningQuote.rejected('Oficio desconocido.');
+   final reserved=_reservedPeople(s);Person? learner;PopulationCohort? group;
+   if(target=='resident'){
+     if(s.people.where((p)=>p.alive).length>=24)return const LearningQuote.rejected('Ya hay 24 habitantes destacados; elige uno de ellos.');
+     group=world.populationState!.candidate(s.id,minimumAge:18,maximumAge:60);
+     if(group==null)return const LearningQuote.rejected('No hay residentes adultos disponibles para destacar como aprendices.');
+   }else{
+     learner=s.people.where((p)=>p.id==target&&p.alive&&world.day-p.bornDay>=18*360&&world.day-p.bornDay<65*360&&!reserved.contains(p.id)).firstOrNull;
+     if(learner==null)return const LearningQuote.rejected('El aprendiz debe ser un residente adulto libre.');
+   }
+   final initial=learner?.competence(course.id)??0;
+   if(initial>=1000)return const LearningQuote.rejected('Esta persona ya domina ese oficio.');
+   final teachers=s.people.where((p)=>p.alive&&p.id!=learner?.id&&world.day-p.bornDay>=18*360&&world.day-p.bornDay<65*360&&p.competence(course.id)>=1000&&!reserved.contains(p.id)).toList()..sort((a,b)=>a.id.compareTo(b.id));
+   final teacher=teachers.firstOrNull;
+   if(teacher==null&&((s.built['school']??0)==0||!s.supports('writing')||!s.supports(course.manualTechnology)))return const LearningQuote.rejected('Hace falta un maestro vivo disponible, o escuela, escritura y conocimientos especializados para estudiar manuales.');
+   final workers=teacher==null?1:2;
+   if(s.workers<workers)return const LearningQuote.rejected('No queda personal libre para maestro y aprendiz.');
+   final remaining=1000-initial;
+   final costs={'food':((teacher==null?20000:10000)*remaining/1000).ceil()/1000,'knowledge':((teacher==null?15000:5000)*remaining/1000).ceil()/1000};
+   if(costs.entries.any((e)=>s.resources[e.key]!<e.value))return const LearningQuote.rejected('Faltan alimentos o conocimientos para reservar la formación.');
+   return LearningQuote(course:course,teacher:teacher?.id,learner:learner?.id,cohort:group?.id,workers:workers,totalWork:(180*remaining/1000).ceil(),costs:costs);
+ }
+ void _refundWork(Society s,WorkOrder order){
+   if(order.committed.isEmpty)return;
+   final ledger=MaterialLedger(resourceIds.toSet());final opening={for(final e in _resourcesMillis(s).entries)if(e.value>0)e.key:e.value};
+   if(opening.isNotEmpty)ledger.transfer(id:'opening',from:'source:opening',to:'inventory',amounts:opening);
+   ledger.transfer(id:'reserved',from:'source:opening',to:'escrow:work',amounts:order.committed);
+   final refund=order.refund,returned={for(final e in order.refund.entries)if(e.value>0)e.key:e.value};
+   if(returned.isNotEmpty)ledger.transfer(id:'refund',from:'escrow:work',to:'inventory',amounts:returned);
+   final spent={for(final e in order.committed.entries)if(e.value>(refund[e.key]??0))e.key:e.value-(refund[e.key]??0)};
+   if(spent.isNotEmpty)ledger.transfer(id:'abandoned',from:'escrow:work',to:'sink:abandoned',amounts:spent);
+   s.resources={for(final r in resourceIds)r:ledger.balance('inventory',r)/1000};
+   if(captureMaterialPayments)materialPayments.add({'society':s.id,'day':world.day,'ledger':ledger.toJson()});
+ }
+ void _cancelLearning(Society s,LearningProject l,String reason){
+   _refundWork(s,l.work);s.lessons.remove(l);
+   record(s,'Formación interrumpida','$reason Se conserva el aprendizaje logrado y se devuelven provisiones no utilizadas.','formación',cause:l.cause);
+ }
+ void _cleanupLearning(){
+   for(final s in world.societies){for(final l in List<LearningProject>.from(s.lessons)){
+     bool valid(String id)=>s.people.any((p)=>p.id==id&&p.alive&&world.day-p.bornDay>=18*360&&world.day-p.bornDay<65*360);
+     if(!valid(l.learner)||l.teacher!=null&&!valid(l.teacher!))_cancelLearning(s,l,'Un participante ha fallecido, se ha trasladado o se ha retirado.');
+   }}
+ }
+ int _learningTick(Society s,int available){
+   var used=0;
+   for(final l in List<LearningProject>.from(s.lessons)..sort((a,b)=>a.work.sequence.compareTo(b.work.sequence))){
+     final work=l.work;
+     if(available<work.workers){work.paused=true;continue;}
+     final n=work.advance(available);available-=n;used+=n;
+     final learner=s.people.firstWhere((p)=>p.id==l.learner);
+     learner.skills[l.course]=l.startingSkill+(1000-l.startingSkill)*(work.totalWork-work.remaining)~/work.totalWork;
+     if(work.remaining==0){
+       for(final c in courses){learner.skills.putIfAbsent(c.id,()=>learner.competence(c.id));}
+       learner.role=courses.firstWhere((c)=>c.id==l.course).role;learner.skill=1;s.lessons.remove(l);
+       record(s,'${learner.name} completa su aprendizaje','La formación en ${courses.firstWhere((c)=>c.id==l.course).name.toLowerCase()} ha consumido trabajo y provisiones. Su conocimiento permanece con esa persona.','formación',cause:l.cause);
+     }
+   }
+   return used;
+ }
  /// Trusted rule interface for autonomous actions; player callers use submit.
  CommandResult command(String action,{String? societyId,String? target,String? choice}) {
- final s=world.society(societyId??world.controlledId);if(action=='delegate'){world.controlledId=null;return const CommandResult(true,'Todas las comunidades quedan delegadas.');}if(action=='control'){final t=world.society(target);if(t==null||!t.alive)return const CommandResult(false,'Comunidad no disponible.');world.controlledId=t.id;return CommandResult(true,'Ahora guías ${t.name}.');}if(s==null||!s.alive)return const CommandResult(false,'No hay una comunidad viva seleccionada.');
+ final s=world.society(societyId??world.controlledId);if(action=='delegate'){world.controlledId=null;return const CommandResult(true,'Todas las comunidades quedan delegadas.');}if(action=='control'){final t=world.society(target);if(t==null||!t.alive)return const CommandResult(false,'Comunidad no disponible.');world.controlledId=t.id;return CommandResult(true,'Ahora guías ${t.name}.');}if(s==null||!s.alive)return const CommandResult(false,'No hay una comunidad viva seleccionada.');if(world.populationState!=null&&!s.people.any((p)=>p.id==s.leaderId&&p.alive&&world.day-p.bornDay>=18*360))return const CommandResult(false,'No hay una dirección adulta capaz de confirmar la orden.');
+ if(action=='train'){
+   final q=_learningQuote(s,target,choice);if(!q.allowed)return CommandResult(false,q.reason);
+   final id='learning:${s.id}:${world.day}:${world.serial++}';
+   if(!_pay(s,q.costs,destination:'escrow:$id'))return const CommandResult(false,'No se pudieron reservar las provisiones.');
+   Person learner;
+   if(q.learner!=null){learner=s.people.firstWhere((p)=>p.id==q.learner);}else{
+     final group=world.populationState!.cohort(q.cohort!)!;
+     learner=Person(_id('p'),'Aprendiz ${world.serial}','aprendiz',group.bornDay,traitNames[world.random.nextInt(traitNames.length)],skill:0,birthEstimated:group.estimated);
+     world.populationState!.register(learner.id,group.id);s.people.add(learner);
+   }
+   final h=record(s,'${learner.name} comienza su aprendizaje',q.teacher==null?'Estudiará manuales en la escuela.':'Aprenderá junto a ${s.people.firstWhere((p)=>p.id==q.teacher).name}.','formación');
+   final work=WorkOrder(id:id,totalWork:q.totalWork,remaining:q.totalWork,workers:q.workers,createdDay:world.day,sequence:world.serial++,committed:{for(final e in q.costs.entries)e.key:Quantity.fromNumber(e.value).millis});
+   s.lessons.add(LearningProject(id,learner.id,q.course!.id,h.id,work,teacher:q.teacher,startingSkill:learner.competence(q.course!.id)));
+   return CommandResult(true,'Formación reservada: ${q.days} días de trabajo.');
+ }
+ if(action=='cancel_train'){
+   final lesson=s.lessons.where((l)=>l.id==target).firstOrNull;
+   if(lesson==null)return const CommandResult(false,'No existe esa formación activa.');
+   _cancelLearning(s,lesson,'El consejo detiene la formación.');return const CommandResult(true,'Formación cancelada; progreso y devolución registrados.');
+ }
  if(action=='close_route'){
    final found=world.routes.where((r)=>r.id==target&&r.transportRules==2&&(r.from==s.id||world.entities?.sameSociety(r.from,s.id)==true));
    if(found.isEmpty)return const CommandResult(false,'No hay una ruta propia que pueda cerrarse.');
@@ -436,18 +593,7 @@ class Simulation {
  }
  if(action=='cancel_build'){
    final matches=s.projects.where((p)=>p.work?.id==target);if(matches.isEmpty)return const CommandResult(false,'No hay una obra activa con esa identidad.');
-   final project=matches.first;final order=project.work!;final refund=order.refund;
-   if(order.committed.isNotEmpty){
-     final ledger=MaterialLedger(resourceIds.toSet());final opening={for(final e in _resourcesMillis(s).entries)if(e.value>0)e.key:e.value};
-     if(opening.isNotEmpty)ledger.transfer(id:'opening',from:'source:opening',to:'inventory',amounts:opening);
-     ledger.transfer(id:'reserved',from:'source:opening',to:'escrow:project',amounts:order.committed);
-     final returned={for(final e in refund.entries)if(e.value>0)e.key:e.value};
-     if(returned.isNotEmpty)ledger.transfer(id:'refund',from:'escrow:project',to:'inventory',amounts:returned);
-     final spent={for(final e in order.committed.entries)if(e.value>(refund[e.key]??0))e.key:e.value-(refund[e.key]??0)};
-     if(spent.isNotEmpty)ledger.transfer(id:'abandoned',from:'escrow:project',to:'sink:abandoned',amounts:spent);
-     s.resources={for(final r in resourceIds)r:ledger.balance('inventory',r)/1000};
-     if(captureMaterialPayments)materialPayments.add({'society':s.id,'day':world.day,'ledger':ledger.toJson()});
-   }
+   final project=matches.first;_refundWork(s,project.work!);
    s.projects.remove(project);record(s,'Obra cancelada','Se detiene el trabajo y se devuelve la parte no utilizada de los materiales registrados.','construcción');return const CommandResult(true,'Obra cancelada; se libera el trabajo comprometido.');
  }
  if(action=='capital'){
@@ -461,7 +607,7 @@ class Simulation {
    if(graph==null||owner==null||joining==null||owner.id==joining.id||other==null||!other.alive)return const CommandResult(false,'No hay dos sociedades vivas distintas.');
    if((s.relations[other.id]??0)<40||(other.relations[s.id]??0)<30)return const CommandResult(false,'La unión requiere confianza mutua: 40 hacia el vecino y 30 de su parte.');
    if(!_pay(s,{'food':20,'knowledge':10}))return const CommandResult(false,'El acuerdo requiere 20 alimentos y 10 conocimientos.');
-   graph.federate(owner.id,joining.id);graph.reconcile(world.societies.map((s)=>s.identityView()));record(s,'Un pacto de unión','${joining.name} se une a ${owner.name}. Sus ciudades, habitantes y culturas conservan identidad propia.','política');return const CommandResult(true,'Sociedades unidas; las reservas siguen perteneciendo a cada asentamiento.');
+   graph.federate(owner.id,joining.id);graph.reconcile(world.identityRecords);record(s,'Un pacto de unión','${joining.name} se une a ${owner.name}. Sus ciudades, habitantes y culturas conservan identidad propia.','política');return const CommandResult(true,'Sociedades unidas; las reservas siguen perteneciendo a cada asentamiento.');
  }
  if(action=='policy'){switch(target){case 'balanced':s.policy=Policy();break;case 'food':s.policy.reserve=240;s.policy.expansion=false;s.policy.research='agriculture';s.policy.risk=0.2;break;case 'science':s.policy.research='science';s.policy.risk=0.65;break;case 'trade':s.policy.trade=true;s.policy.diplomacy='cooperate';s.policy.risk=0.25;break;case 'defense':s.policy.diplomacy='defend';s.policy.risk=0.3;s.policy.expansion=false;break;case 'expansion':s.policy.expansion=true;s.policy.risk=0.6;break;case 'isolation':s.policy.trade=false;s.policy.diplomacy='isolate';s.policy.expansion=false;s.policy.risk=0.2;break;default:return const CommandResult(false,'Política desconocida.');}record(s,'Prioridades de gobierno', 'El consejo adopta $target; se conservan al cambiar de comunidad.','política');return const CommandResult(true,'Prioridades actualizadas.');}
  if(action=='repair'){if(world.tiles[s.y*world.size+s.x].damage<=0&&s.housingModifier>=0&&s.defenseModifier>=0)return const CommandResult(false,'No hay daños que reparar.');if(!_pay(s,_repairCost))return const CommandResult(false,'Reparar requiere 10 madera, 8 piedra y 2 herramientas.');final tile=world.tiles[s.y*world.size+s.x];tile.damage=math.max(0.0,tile.damage-0.5);if(s.housingModifier<0)s.housingModifier=math.min(0,s.housingModifier+18);if(s.defenseModifier<0)s.defenseModifier=math.min(0,s.defenseModifier+5);record(s,'Manos que reparan','Se recuperan viviendas dañadas y se limpia parte del territorio.','reparación');return const CommandResult(true,'Reparación completada.');}
@@ -473,11 +619,11 @@ class Simulation {
  if(action=='explore'){
   if(s.expeditionWorkers>0||world.pending.any((e)=>e.type=='discovery'&&e.societyId==s.id))return const CommandResult(false,'La expedición anterior todavía no ha regresado.');
   if(s.workers<4)return const CommandResult(false,'La expedición necesita cuatro adultos disponibles.');
-  final explorer=s.people.where((p)=>p.alive&&p.role=='explorador').firstOrNull;
+  final explorer=_scout(s);
   if(!_pay(s,_explorationCost))return const CommandResult(false,'Se necesitan 12 alimentos y 2 herramientas.');
   s.expeditionWorkers=4;
-  final h=record(s,explorer==null?'Parte un equipo de exploración':'${explorer.name} parte de expedición','Cuatro adultos buscarán rutas y vestigios durante ocho días.','exploración');
-  world.pending.add(ScheduledEvent(_id('e'),'discovery',s.id,world.day+8,cause:h.id,data:{'workers':4,'explorerId':explorer?.id,if(world.rulesVersion>=3)'remainingWork':32,if(world.rulesVersion>=3)'assigned':0,if(world.rulesVersion>=3)'paused':false}));
+  final h=record(s,explorer==null?'Parte un equipo de exploración':'${explorer.name} parte de expedición','Cuatro adultos buscarán rutas y vestigios durante ${_explorationDays(s)} días.','exploración');
+  world.pending.add(ScheduledEvent(_id('e'),'discovery',s.id,world.day+_explorationDays(s),cause:h.id,data:{'workers':4,'explorerId':explorer?.id,if(world.rulesVersion>=3)'remainingWork':_explorationDays(s)*4,if(world.rulesVersion>=3)'assigned':0,if(world.rulesVersion>=3)'paused':false}));
   return const CommandResult(true,'Expedición en camino; cuatro trabajadores reservados.');
  }
  if(action=='facility'){if(!s.facilityFound||s.facilityChoice!=null)return const CommandResult(false,'No hay una instalación pendiente.');final options=_facilityCosts;if(!options.containsKey(choice))return const CommandResult(false,'Respuesta desconocida.');if(!_pay(s,options[choice]!))return const CommandResult(false,'Faltan recursos para esa respuesta.');s.facilityChoice=choice;s.flags.add('facility_committed');final h=record(s,'El destino de la instalación',{'seal':'La entrada queda sellada. Se preserva el entorno.','salvage':'Se recuperan piezas, pero se pierde el archivo.','study':'El equipo técnico estudia el núcleo. El resultado depende de salud y conocimientos.','share':'Se invita a vecinos a compartir el hallazgo.'}[choice]!,'decisión');world.pending.add(ScheduledEvent(_id('e'),'facility_$choice',s.id,world.day+(choice=='study'?25:10),cause:h.id));return const CommandResult(true,'Decisión comprometida; sus consecuencias llegarán.');}
@@ -495,8 +641,99 @@ class Simulation {
    return AdvanceResult(advanced,world.day,stop,world.pending.where((e)=>e.type=='content_choice').map((e)=>e.id));
  }
  bool delegateDecisions=false;
- int advanceDays(int count,{bool stopOnCrisis=false,bool delegateDecisions=false}){this.delegateDecisions=delegateDecisions;int advanced=0;for(int i=0;i<count;i++){if(world.extinct)break;_tick();advanced++;if(stopOnCrisis&&(world.pending.any((e)=>e.type=='content_choice')||world.societies.any((s)=>s.alive&&(s.health<35||(s.resources['food']??0)<s.population*0.5||(s.facilityFound&&s.facilityChoice==null)))))break;}return advanced;}
- void _tick(){world.day++;final actors=List<Society>.from(world.societies);final worked=<String,int>{};
+ int advanceDays(int count,{bool stopOnCrisis=false,bool delegateDecisions=false}){world.assertPopulation();this.delegateDecisions=delegateDecisions;int advanced=0;for(int i=0;i<count;i++){if(world.extinct)break;_tick();advanced++;if(stopOnCrisis&&(world.pending.any((e)=>e.type=='content_choice')||world.societies.any((s)=>s.alive&&(s.health<35||(s.resources['food']??0)<s.population*0.5||(s.facilityFound&&s.facilityChoice==null)))))break;}return advanced;}
+ void _recordPopulationDeaths(List<String> ids,{String? cause}){
+   if(ids.isEmpty)return;final victims=ids.toSet();
+   for(final s in world.societies){for(final p in s.people){if(p.alive&&victims.contains(p.id)){p.diedDay=world.day;record(s,'Muere ${p.name}','Su grupo registra la baja; sus vínculos e historia conservan su identidad.','generación',cause:cause);}}}
+   _cleanupLearning();
+ }
+ Person? _promoteResident(Society s,String role){
+   final ledger=world.populationState!;final group=ledger.candidate(s.id,minimumAge:18);
+   if(group==null)return null;
+   final id=_id('p');final person=Person(id,['Alma','Dara','Bruno','Nerea','Elio','Maia'][world.random.nextInt(6)],role,group.bornDay,traitNames[world.random.nextInt(traitNames.length)],birthEstimated:group.estimated);
+   ledger.register(id,group.id);s.people.add(person);return person;
+ }
+ void _ensureLeadership(Society s){
+   if(!s.alive){s.leaderId='';return;}
+   if(s.people.any((p)=>p.alive&&p.id==s.leaderId&&world.day-p.bornDay>=18*360))return;
+   final options=s.people.where((p)=>p.alive&&world.day-p.bornDay>=18*360).toList()..sort((a,b)=>a.id.compareTo(b.id));
+   final leader=options.firstOrNull??_promoteResident(s,'dirigente');
+   s.leaderId=leader?.id??'';
+   if(leader!=null)record(s,'El consejo elige a ${leader.name}','La persona elegida ya formaba parte de la población. Asume los compromisos de la comunidad.','generación');
+ }
+ void _populationDay(){
+   final ledger=world.populationState!;world.assertPopulation(deep:false);
+   final expired=ledger.advanceTo(world.day+1);world.day++;
+   for(final id in expired){final group=ledger.cohort(id);if(group!=null)_recordPopulationDeaths(ledger.killCohort(id,group.count,world.random.nextInt).people);}
+   world.syncPopulation();_cleanupLearning();
+   for(final s in world.societies){if(s.population==0)s.extinct=true;_ensureLeadership(s);}
+   world.entities?.reconcile(world.identityRecords);
+ }
+ int _transferResidents(Society from,Society to,int count,int band,{String? cause}){
+   if(count<=0)return 0;
+   final moved=world.populationState!.transfer(from.id,to.id,count,band,world.random.nextInt);
+   final ids=moved.people.toSet();final people=from.people.where((p)=>ids.contains(p.id)).toList();
+   from.people.removeWhere((p)=>ids.contains(p.id));to.people.addAll(people);_cleanupLearning();
+   world.syncPopulation();
+   if(from.population==0){from.extinct=true;record(from,'Los últimos habitantes parten','La ciudad queda deshabitada; sus residentes y su cultura continúan en otro lugar.','migración',cause:cause);}
+   _ensureLeadership(from);_ensureLeadership(to);world.entities?.reconcile(world.identityRecords);
+   return moved.count;
+ }
+ void _populationYear(Society s){
+   final ledger=world.populationState!;var deaths=0;
+   final groups=ledger.cohorts.where((c)=>c.settlement==s.id).toList()..sort((a,b)=>a.id.compareTo(b.id));
+   for(final c in groups){
+     final age=ledger.age(c);var rate=age<1?8000:age<16?2000:age<65?3000:(25000+(age-65)*2500).clamp(0,500000).toInt();
+     if(s.supports('medicine'))rate=rate*7~/10;
+     final expected=c.count*rate;var n=expected~/1000000;
+     if(world.random.nextInt(1000000)<expected%1000000)n++;
+     n=math.min(n,c.count);if(n>0){final loss=ledger.killCohort(c.id,n,world.random.nextInt);deaths+=loss.count;_recordPopulationDeaths(loss.people);}
+   }
+   world.syncPopulation();
+   if(deaths>0)record(s,'Balance de una generación','$deaths habitantes fallecen por causas naturales; la población y sus grupos registran las mismas bajas.','generación');
+   if(s.alive&&s.health>55&&s.housing>s.population&&s.resources['food']!>s.population){
+     final parents=<String,int>{};
+     for(final group in ledger.cohorts.where((c)=>c.settlement==s.id&&ledger.band(c)==1)){
+       final common=ledger.commonIn(group.id);if(common>0)parents[group.culture]=(parents[group.culture]??0)+common;
+     }
+     final rate=s.supports('biotech')?55000:45000;
+     final credits=ledger.birthCredits.putIfAbsent(s.id,()=>{}),due=<String,int>{};
+     for(final culture in (parents.keys.toList()..sort())){final total=(credits[culture]??0)+parents[culture]!*rate;credits[culture]=total%1000000;if(total>=1000000)due[culture]=total~/1000000;}
+     final intended=due.values.fold<int>(0,(n,v)=>n+v);
+     final births=[intended,s.housing-s.population,(s.resources['food']!/2).floor(),s.resources['water']!.floor()].reduce(math.min);
+     if(births>0&&_pay(s,{'food':births*2.0,'water':births.toDouble()},destination:'sink:birth_care')){
+       final allocated=<String,int>{};var remaining=intended;
+       for(var i=0;i<births;i++){
+         var draw=world.random.nextInt(remaining);for(final culture in (due.keys.toList()..sort())){if(draw<due[culture]!){due[culture]=due[culture]!-1;allocated[culture]=(allocated[culture]??0)+1;break;}draw-=due[culture]!;}remaining--;
+       }
+       for(final culture in (allocated.keys.toList()..sort())){ledger.add(settlement:s.id,culture:culture,bornDay:world.day,count:allocated[culture]!);}
+       world.syncPopulation();record(s,'Nace una nueva generación','$births nacimientos incorporan grupos infantiles, conservan sus culturas y consumen provisiones de cuidado.','generación');
+     }
+   }
+   if(s.population==0&&!s.extinct){s.extinct=true;record(s,'Silencio en ${s.name}','La comunidad desaparece; sus ruinas y su historia permanecen.','legado');}
+   _ensureLeadership(s);world.entities?.reconcile(world.identityRecords);
+   if(s.alive&&s.policy.expansion&&s.population>(s.leaderTrait=='restless'?80:95)&&s.resources['food']!>300&&world.societies.length<40)_foundPopulationColony(s);
+ }
+ void _foundPopulationColony(Society s){
+   if(s.children<5||s.adults<20)return;
+   final x=(s.x+world.random.nextInt(15)-7).clamp(1,world.size-2).toInt(),y=(s.y+world.random.nextInt(15)-7).clamp(1,world.size-2).toInt();
+   if(!world.tiles[y*world.size+x].passable||world.societies.any((o)=>(o.x-x).abs()+(o.y-y).abs()<5))return;
+   const cost={'food':150.0,'water':150.0,'wood':80.0,'stone':40.0,'tools':10.0};
+   if(!_pay(s,cost,destination:'escrow:founding'))return;
+   final c=Society(_id('s'),'${s.culture} · ${world.societies.length+1}',s.profile,x,y,children:0,adults:0,elders:0,founded:world.day,culture:s.culture,siteLayout:s.siteLayout,materialRules:s.materialRules);
+   c.catalog=world.catalog;c.resources={for(final r in resourceIds)r:0};c.resources.addAll(cost);
+   c.built={};c.sites=[];c.tech=Set.from(s.tech);c.people=[];c.leaderId='';
+   final city=world.entities!.cityFor(s.id)!;
+   world.societies.add(c);world.entities!.addColony(actorId:c.id,ownerId:city.societyId,cultureId:city.cultureId);
+   _transferResidents(s,c,5,0);_transferResidents(s,c,20,1);
+   c.relations[s.id]=50;s.relations[c.id]=50;
+   // The first refuge uses the ordinary command, costs and actual work. No
+   // finished buildings are duplicated out of the founding supplies.
+   command('build',societyId:c.id,target:world.buildingDefinitions.any((b)=>b.id=='shelter')?'shelter':'house');
+   record(s,'Se funda ${c.name}','25 residentes y sus provisiones establecen una ciudad de la misma sociedad. El refugio aún necesita trabajo.','expansión');
+ }
+
+ void _tick(){if(world.populationState!=null){_populationDay();}else{world.day++;}final actors=List<Society>.from(world.societies);final worked=<String,int>{};final dailyAdults={for(final s in actors)s.id:s.adults};
  if(world.rulesVersion>=3){
    actors.sort((a,b)=>a.id.compareTo(b.id));
    for(final s in actors){
@@ -505,18 +742,18 @@ class Simulation {
      for(final r in routes){r.crewAssigned=available>=2?2:0;available-=r.crewAssigned;used+=r.crewAssigned;}
      final expeditions=world.pending.where((e)=>e.type=='discovery'&&e.societyId==s.id).toList()..sort((a,b)=>a.id.compareTo(b.id));
      for(final e in expeditions){e.data=Map<String,dynamic>.from(e.data);final remaining=(e.data['remainingWork'] as int? ?? math.max(0,e.day-world.day+1)*4);final assigned=math.min(4,math.min(available,remaining));available-=assigned;used+=assigned;e.data['remainingWork']=remaining-assigned;e.data['assigned']=assigned;e.data['paused']=remaining>0&&assigned==0;e.day=remaining-assigned==0?world.day:world.day+(assigned==0?1:((remaining-assigned)/assigned).ceil());}
-     used+=_projects(s,available:available);worked[s.id]=used;
+     final learning=_learningTick(s,available);available-=learning;used+=learning;used+=_projects(s,available:available);worked[s.id]=used;
    }
    final travel=List<TradeRoute>.from(world.routes)..sort((a,b)=>a.id.compareTo(b.id));for(final r in travel){_routeTick(r);}
  }
- for(final s in actors){if(!s.alive)continue;_economy(s,laborAvailable:world.rulesVersion>=3?math.max(0,s.adults-(worked[s.id]??0)):null);if(world.rulesVersion<3)_projects(s);if(world.day%30==0){_monthly(s);_directContent(s);}if(world.day%360==0)_yearly(s);}final due=world.pending.where((e)=>e.day<=world.day).toList()..sort((a,b){final c=a.day.compareTo(b.day);return c==0?a.id.compareTo(b.id):c;});for(final e in due){world.pending.remove(e);final s=world.society(e.societyId);if(s!=null&&e.type=='discovery')s.expeditionWorkers=0;if(s==null||!s.alive)continue;_resolve(s,e);}if(world.rulesVersion<3){for(final r in List<TradeRoute>.from(world.routes)) {
+ for(final s in actors){if(!s.alive)continue;_economy(s,laborAvailable:world.rulesVersion>=3?math.max(0,(world.populationState==null?s.adults:math.min(s.adults,dailyAdults[s.id]??0))-(worked[s.id]??0)):null);if(world.rulesVersion<3)_projects(s);if(world.day%30==0){_monthly(s);_directContent(s);}if(world.day%360==0)_yearly(s);}final due=world.pending.where((e)=>e.day<=world.day).toList()..sort((a,b){final c=a.day.compareTo(b.day);return c==0?a.id.compareTo(b.id):c;});for(final e in due){world.pending.remove(e);final s=world.society(e.societyId);if(s!=null&&e.type=='discovery')s.expeditionWorkers=0;if(s==null||!s.alive)continue;_resolve(s,e);}if(world.rulesVersion<3){for(final r in List<TradeRoute>.from(world.routes)) {
    _routeTick(r);
- }}world.entities?.reconcile(world.societies.map((s)=>s.identityView()));if(world.day%360==0){world.annualSnapshots['${world.day}']={'population':world.societies.fold<int>(0,(int p,s)=>p+s.population),'settlements':world.societies.where((s)=>s.alive).length,'technologies':world.societies.fold<int>(0,(int p,s)=>p+s.tech.length),'damage':world.societies.fold<double>(0.0,(double p,s)=>p+s.environment)};if(world.annualSnapshots.length>1000)world.annualSnapshots.remove(world.annualSnapshots.keys.first);}}
- void _economy(Society s,{int? laborAvailable}){final workers=laborAvailable??s.workers;double multiplier=math.min(1,workers/math.max(1,s.built.values.fold<int>(0,(int a,b)=>a+b)*2));multiplier*=s.health/100;multiplier*=s.leaderTrait=='pragmatic'?1.25:1;multiplier*=s.supports('cybernetics')?1.2:1;multiplier*=world.rulesVersion>=4?1:1+s.tech.length*0.01;multiplier*=s.supports('automation')?1.5:1;if(s.supports('metallurgy'))multiplier*=1.15;if(s.supports('industry'))multiplier*=1.25;if(s.supports('robotics'))multiplier*=1.2;for(final b in buildings){final total=s.built[b.id]??0;final n=world.rulesVersion>=5&&b.capacityPerRichness>0?math.min(total,world.tiles[s.y*world.size+s.x].richness*b.capacityPerRichness):total;if(n==0)continue;if(world.rulesVersion>=5){final tile=world.tiles[s.y*world.size+s.x];if(!b.allowedBiomes.contains(tile.biome)||tile.richness<b.minimumRichness)continue;}var activity=n*multiplier;
+ }}world.assertPopulation(deep:false);world.entities?.reconcile(world.identityRecords);if(world.day%360==0){world.annualSnapshots['${world.day}']={'population':world.societies.fold<int>(0,(int p,s)=>p+s.population),'settlements':world.societies.where((s)=>s.alive).length,'technologies':world.societies.fold<int>(0,(int p,s)=>p+s.tech.length),'damage':world.societies.fold<double>(0.0,(double p,s)=>p+s.environment)};if(world.annualSnapshots.length>1000)world.annualSnapshots.remove(world.annualSnapshots.keys.first);}}
+ void _economy(Society s,{int? laborAvailable}){final workers=laborAvailable??s.workers;double multiplier=math.min(1,workers/math.max(1,s.built.values.fold<int>(0,(int a,b)=>a+b)*2));multiplier*=s.health/100;multiplier*=s.leaderTrait=='pragmatic'?1.25:1;multiplier*=s.supports('cybernetics')?1.2:1;multiplier*=world.rulesVersion>=4?1:1+s.tech.length*0.01;multiplier*=s.supports('automation')?1.5:1;if(s.supports('metallurgy'))multiplier*=1.15;if(s.supports('industry'))multiplier*=1.25;if(s.supports('robotics'))multiplier*=1.2;for(final b in buildings){final total=s.built[b.id]??0;final n=world.rulesVersion>=5&&b.capacityPerRichness>0?math.min(total,world.tiles[s.y*world.size+s.x].richness*b.capacityPerRichness):total;if(n==0)continue;if(world.rulesVersion>=5){final tile=world.tiles[s.y*world.size+s.x];if(!b.allowedBiomes.contains(tile.biome)||tile.richness<b.minimumRichness)continue;}var activity=n*multiplier;final craft=world.populationState!=null&&workers>0&&s.people.any((p)=>p.alive&&world.day-p.bornDay>=18*360&&world.day-p.bornDay<65*360&&p.competence('craft')>=1000&&!_reservedPeople(s).contains(p.id))&&['knapping_shed','fiber_weave','workshop'].contains(b.id)?0.9:1.0;
  if(world.rulesVersion>=4){
-   for(final input in b.dailyInputs.entries){if(input.value>0)activity=math.min(activity,s.resources[input.key]!/input.value);}
+   for(final input in b.dailyInputs.entries){if(input.value>0)activity=math.min(activity,s.resources[input.key]!/(input.value*craft));}
    if(activity<=0)continue;
-   for(final input in b.dailyInputs.entries){final available=Quantity.fromNumber(s.resources[input.key]!).millis;final required=(input.value*activity*1000).ceil();s.resources[input.key]=(available-math.min(available,required))/1000;}
+   for(final input in b.dailyInputs.entries){final available=Quantity.fromNumber(s.resources[input.key]!).millis;final required=(input.value*craft*activity*1000).ceil();s.resources[input.key]=(available-math.min(available,required))/1000;}
  }else{if(b.id=='generator'&&(s.resources['fuel']??0)<0.08*n)continue;if(b.id=='generator')s.resources['fuel']=math.max(0.0,s.resources['fuel']!-0.08*n);if(b.id=='workshop'&&(s.resources['metal']??0)<0.04*n)continue;if(b.id=='workshop')s.resources['metal']=math.max(0.0,s.resources['metal']!-0.04*n);}
  for(final e in b.yield.entries){double output=e.value*(world.rulesVersion>=4?activity:n*multiplier);if(e.key=='knowledge'){if(b.id=='oral_circle'&&s.supports('oral_teaching'))output*=1.4;output*=s.leaderTrait=='inventive'?1.3:s.leaderTrait=='traditional'?0.85:1;output*=s.supports('writing')?1.15:1;output*=s.supports('computing')?1.3:1;}if(e.key=='medicine'&&s.supports('chemistry'))output*=1.5;if(e.key=='energy'&&s.supports('fusion'))output*=3;if(e.key=='food'){output*=[1.15,1.0,0.65,0.6,1.1,0.8][world.tiles[s.y*world.size+s.x].biome];output*=s.supports('agriculture')?1.4:1;output*=s.supports('irrigation')?1.3:1;output*=1-s.environment*0.004;}s.resources[e.key]=math.min(100000.0,(s.resources[e.key]??0)+math.max(0.0,output));}}
  s.resources['wood']=math.min(100000.0,s.resources['wood']!+workers*0.015);s.resources['knowledge']=math.min(100000.0,s.resources['knowledge']!+workers*(s.supports('education')?0.012:0.006));final foodNeed=s.population*0.045,waterNeed=s.population*0.035;bool hunger=s.resources['food']!<foodNeed,thirst=s.resources['water']!<waterNeed;s.resources['food']=math.max(0.0,s.resources['food']!-foodNeed);s.resources['water']=math.max(0.0,s.resources['water']!-waterNeed);s.health=(s.health+(hunger?-0.65:0.04)+(thirst?-0.9:0.02)+(s.supports('sanitation')?0.02:0)).clamp(0,100).toDouble();s.morale=(s.morale+(s.supports('synthesis')?0.02:0)+(hunger?-0.25:0.015)+(s.population>s.housing?-0.03:0.01)).clamp(0,100).toDouble();if(hunger||thirst){if(world.day%30==0)record(s,'Reservas agotadas','La escasez reduce salud y obliga a cambiar prioridades.','necesidad');}s.environment=(s.environment+(s.built['generator']??0)*0.001+(s.built['mine']??0)*0.001-(s.supports('ecology')||s.leaderTrait=='green'?0.008:0.001)).clamp(0,100).toDouble();
@@ -537,18 +774,19 @@ class Simulation {
  void _autonomy(Society s){final autonomous=s.id!=world.controlledId||(world.rulesVersion>=5&&delegateDecisions);final food=s.resources['food']!;if(s.projects.length<math.max(1,s.adults~/12)){String? target;if(food<s.policy.reserve*(s.leaderTrait=='patient'?1.3:1)||(s.built[world.origin=='prehistory'&&!s.supports('agriculture')?'foraging_camp':'farm']??0)<(s.population/(world.origin=='prehistory'&&!s.supports('agriculture')?20:35)).ceil()) {
    target=world.origin=='prehistory'&&!s.supports('agriculture')?'foraging_camp':'farm';
  } else if(s.resources['water']!<100){target=world.origin=='prehistory'&&!s.supports('masonry')?'water_collect':'well';}else if(s.housing<s.population+12){target=world.origin=='prehistory'&&!s.supports('masonry')?'shelter':'house';}else if(autonomous&&world.random.nextInt(3)==0){if(world.origin=='prehistory'){world.random.nextInt(4);target=(s.built['surface_stone']??0)==0?'surface_stone':s.supports('handcraft')&&(s.built['knapping_shed']??0)==0?'knapping_shed':s.supports('handcraft')&&(s.built['fiber_weave']??0)==0?'fiber_weave':null;}else{target=['sawmill','school','quarry','loom'][world.random.nextInt(4)];}}if(target!=null)command('build',societyId:s.id,target:target);}
+ if(autonomous&&world.populationState!=null&&s.lessons.isEmpty&&food>s.population*3&&s.resources['water']!>s.population*2&&s.workers>=4){for(final c in courses){final experts=s.people.where((p)=>p.alive&&p.competence(c.id)>=1000);if(experts.length==1&&(world.day-experts.first.bornDay)~/360>=50){if(command('train',societyId:s.id,target:'resident',choice:c.id).ok)break;}}}
  if(autonomous){final preferred=technologies.where((t)=>t.id==s.policy.research&&!s.tech.contains(t.id)&&t.requires.every(s.tech.contains)&&(world.rulesVersion<5||s.resources['knowledge']!>=t.cost));final available=technologies.where((t)=>!s.tech.contains(t.id)&&t.requires.every(s.tech.contains)&&(world.rulesVersion<5||s.resources['knowledge']!>=t.cost)).toList();if(world.origin=='prehistory')available.sort((a,b)=>a.cost==b.cost?a.id.compareTo(b.id):a.cost.compareTo(b.cost));if(preferred.isNotEmpty) {
    command('research',societyId:s.id,target:preferred.first.id);
  } else if(available.isNotEmpty){command('research',societyId:s.id,target:available.first.id);}if(s.policy.trade&&world.day%180==0){final others=world.societies.where((o)=>o.alive&&o.id!=s.id).toList();if(others.isNotEmpty)command('trade',societyId:s.id,target:others[world.random.nextInt(others.length)].id);}if(!s.facilityFound&&world.day%(s.supports('orbital')?360:720)==0)command('explore',societyId:s.id);}
- if(s.health<45&&s.population>15){final candidates=world.societies.where((o)=>o.alive&&o.id!=s.id&&o.health>65&&o.housing>o.population+4).toList();if(candidates.isNotEmpty){final to=candidates.first;final n=math.min(4,s.adults);s.adults-=n;to.adults+=n;record(s,'Familias emigran','$n adultos se trasladan a ${to.name} buscando seguridad.','migración');record(to,'Llegan refugiados','$n adultos de ${s.name} se incorporan sin duplicar población.','migración');}}
+ if(s.health<45&&s.population>15){final candidates=world.societies.where((o)=>o.alive&&o.id!=s.id&&o.health>65&&o.housing>o.population+4).toList();if(candidates.isNotEmpty){final to=candidates.first;final n=math.min(4,s.adults);if(world.populationState!=null){_transferResidents(s,to,n,1);}else{s.adults-=n;to.adults+=n;}record(s,'Familias emigran','$n adultos se trasladan a ${to.name} buscando seguridad.','migración');record(to,'Llegan refugiados','$n adultos de ${s.name} se incorporan sin duplicar población.','migración');}}
  }
- void _yearly(Society s){final r=world.random;int cohort(String id,double rate){if(s.materialRules==2){final total=(s.demographicMicros[id]??0)+(rate*1000000).round();s.demographicMicros[id]=total%1000000;return total~/1000000;}final total=(s.demographicCarry[id]??0)+rate;final count=total.floor();s.demographicCarry[id]=total-count;return count;} final grown=math.min(s.children,cohort('grown',s.children/16));s.children-=grown;s.adults+=grown;final aged=math.min(s.adults,cohort('aged',s.adults/45));s.adults-=aged;s.elders+=aged;final oldDeaths=math.min(s.elders,cohort('oldDeaths',s.elders*(s.supports('medicine')?0.05:0.09)));s.elders-=oldDeaths;final births=(s.health>55&&s.housing>s.population&&s.resources['food']!>s.population)?cohort('births',s.adults*(s.supports('biotech')?0.055:0.045)):0;s.children+=math.min(births,math.max(0,s.housing-s.population));for(final p in s.people.where((p)=>p.alive)){final age=(world.day-p.bornDay)~/360;if(age>72&&(r.nextInt(100)<(age-70)*5||age>100)){p.diedDay=world.day;record(s,'Muere ${p.name}','Su trabajo y sus decisiones quedan en la memoria de ${s.culture}.','generación');}}
+ void _yearly(Society s){if(world.populationState!=null){_populationYear(s);return;}final r=world.random;int cohort(String id,double rate){if(s.materialRules==2){final total=(s.demographicMicros[id]??0)+(rate*1000000).round();s.demographicMicros[id]=total%1000000;return total~/1000000;}final total=(s.demographicCarry[id]??0)+rate;final count=total.floor();s.demographicCarry[id]=total-count;return count;} final grown=math.min(s.children,cohort('grown',s.children/16));s.children-=grown;s.adults+=grown;final aged=math.min(s.adults,cohort('aged',s.adults/45));s.adults-=aged;s.elders+=aged;final oldDeaths=math.min(s.elders,cohort('oldDeaths',s.elders*(s.supports('medicine')?0.05:0.09)));s.elders-=oldDeaths;final births=(s.health>55&&s.housing>s.population&&s.resources['food']!>s.population)?cohort('births',s.adults*(s.supports('biotech')?0.055:0.045)):0;s.children+=math.min(births,math.max(0,s.housing-s.population));for(final p in s.people.where((p)=>p.alive)){final age=(world.day-p.bornDay)~/360;if(age>72&&(r.nextInt(100)<(age-70)*5||age>100)){p.diedDay=world.day;record(s,'Muere ${p.name}','Su trabajo y sus decisiones quedan en la memoria de ${s.culture}.','generación');}}
  if(!s.people.any((p)=>p.alive&&p.id==s.leaderId)&&s.adults>0){final id=_id('p');final p=Person(id,['Alma','Dara','Bruno','Nerea','Elio','Maia'][r.nextInt(6)],'dirigente',world.day-(22+r.nextInt(24))*360,traitNames[r.nextInt(traitNames.length)]);s.people.add(p);s.leaderId=id;record(s,'Una nueva generación dirige','${p.name}, de carácter ${p.trait}, asume los compromisos existentes.','generación');}if(s.people.where((p)=>p.alive&&p.role=='técnica').isEmpty&&s.adults>10){s.people.add(Person(_id('p'),'Aprendiz ${world.day~/360}','técnica',world.day-24*360,'inventive'));}
- if(s.policy.expansion&&s.population>(s.leaderTrait=='restless'?80:95)&&s.resources['food']!>300&&world.societies.length<40){_colonize(s);}if(s.population==0&&!s.extinct){s.extinct=true;record(s,'Silencio en ${s.name}','La comunidad desaparece; sus ruinas y su historia permanecen.','legado');}world.entities?.reconcile(world.societies.map((s)=>s.identityView()));}
- void _colonize(Society s){if(s.children<5||s.adults<20)return;final x=(s.x+world.random.nextInt(15)-7).clamp(1,world.size-2).toInt(),y=(s.y+world.random.nextInt(15)-7).clamp(1,world.size-2).toInt();if(!world.tiles[y*world.size+x].passable||world.societies.any((o)=>((o.x-x).abs()+(o.y-y).abs())<5))return;const cost={'food':150.0,'wood':80.0,'stone':40.0,'tools':10.0};if(!_pay(s,cost))return;final c=Society(_id('s'),'${s.culture} · ${world.societies.length+1}',s.profile,x,y,children:5,adults:20,elders:0,founded:world.day,culture:s.culture,siteLayout:s.siteLayout,materialRules:s.materialRules);c.catalog=world.catalog;c.resources={for(final r in resourceIds)r:0};c.resources.addAll(cost);c.built={'farm':1,'well':1,'house':2};c.tech=Set.from(s.tech);c.people=[Person(_id('p'),'Vera','dirigente',world.day-30*360,'patient')];c.leaderId=c.people.first.id;s.children-=5;s.adults-=20;c.relations[s.id]=50;s.relations[c.id]=50;c.ensureSites();world.societies.add(c);record(s,'Nace ${c.name}','25 habitantes y recursos reales fundan una colonia vinculada a su cultura.','expansión');}
- void _removePeople(Society s,int n){int v=math.min(n,s.elders);s.elders-=v;n-=v;v=math.min(n,s.adults);s.adults-=v;n-=v;s.children=math.max(0,s.children-n);if(s.population==0){s.extinct=true;for(final p in s.people.where((p)=>p.alive)) {
+ if(s.policy.expansion&&s.population>(s.leaderTrait=='restless'?80:95)&&s.resources['food']!>300&&world.societies.length<40){_colonize(s);}if(s.population==0&&!s.extinct){s.extinct=true;record(s,'Silencio en ${s.name}','La comunidad desaparece; sus ruinas y su historia permanecen.','legado');}world.entities?.reconcile(world.identityRecords);}
+ void _colonize(Society s){if(world.populationState!=null){_foundPopulationColony(s);return;}if(s.children<5||s.adults<20)return;final x=(s.x+world.random.nextInt(15)-7).clamp(1,world.size-2).toInt(),y=(s.y+world.random.nextInt(15)-7).clamp(1,world.size-2).toInt();if(!world.tiles[y*world.size+x].passable||world.societies.any((o)=>((o.x-x).abs()+(o.y-y).abs())<5))return;const cost={'food':150.0,'wood':80.0,'stone':40.0,'tools':10.0};if(!_pay(s,cost))return;final c=Society(_id('s'),'${s.culture} · ${world.societies.length+1}',s.profile,x,y,children:5,adults:20,elders:0,founded:world.day,culture:s.culture,siteLayout:s.siteLayout,materialRules:s.materialRules);c.catalog=world.catalog;c.resources={for(final r in resourceIds)r:0};c.resources.addAll(cost);c.built={'farm':1,'well':1,'house':2};c.tech=Set.from(s.tech);c.people=[Person(_id('p'),'Vera','dirigente',world.day-30*360,'patient')];c.leaderId=c.people.first.id;s.children-=5;s.adults-=20;c.relations[s.id]=50;s.relations[c.id]=50;c.ensureSites();world.societies.add(c);record(s,'Nace ${c.name}','25 habitantes y recursos reales fundan una colonia vinculada a su cultura.','expansión');}
+ void _removePeople(Society s,int n,{String? cause}){if(world.populationState!=null){final loss=world.populationState!.remove(s.id,math.min(n,s.population),world.random.nextInt);_recordPopulationDeaths(loss.people,cause:cause);world.syncPopulation();if(s.population==0&&!s.extinct){s.extinct=true;record(s,'La comunidad cae','No queda población capaz de actuar. Sus ruinas conservan su legado.','legado',cause:cause);}_ensureLeadership(s);world.entities?.reconcile(world.identityRecords);return;}int v=math.min(n,s.elders);s.elders-=v;n-=v;v=math.min(n,s.adults);s.adults-=v;n-=v;s.children=math.max(0,s.children-n);if(s.population==0){s.extinct=true;for(final p in s.people.where((p)=>p.alive)) {
    p.diedDay=world.day;
- }record(s,'La comunidad cae','No queda población capaz de actuar. Las ruinas conservan su legado.','legado');world.entities?.reconcile(world.societies.map((s)=>s.identityView()));}}
+ }record(s,'La comunidad cae','No queda población capaz de actuar. Las ruinas conservan su legado.','legado');world.entities?.reconcile(world.identityRecords);}}
  void _finishRouteAtHome(TradeRoute r){
    final source=world.society(r.from);if(source==null||!source.alive){r.blocked=true;return;}
    source.resources['food']=source.resources['food']!+r.cargo;source.resources['metal']=source.resources['metal']!+r.metalMillis/1000;
@@ -587,8 +825,8 @@ class Simulation {
  case 'facility_seal':s.environment=math.max(0.0,s.environment-10);s.morale=(s.morale+8).clamp(0,100).toDouble();record(s,'El jardín del umbral','El sellado evita riesgos y deja una zona protegida.','consecuencia',cause:e.cause);break;
  case 'facility_salvage':s.resources['metal']=s.resources['metal']!+65;s.resources['tools']=s.resources['tools']!+15;s.environment=(s.environment+8).clamp(0,100).toDouble();record(s,'Metal a cambio de memoria','Se recuperan materiales; el archivo antiguo queda destruido.','consecuencia',cause:e.cause);break;
  case 'facility_share':final others=world.societies.where((o)=>o.alive&&o.id!=s.id).toList();if(others.isEmpty){record(s,'Una invitación sin respuesta','No queda otra comunidad capaz de aceptar; el núcleo se conserva.','consecuencia',cause:e.cause);break;}final o=others.first;s.relations[o.id]=math.min(100,(s.relations[o.id]??0)+35);o.relations[s.id]=math.min(100,(o.relations[s.id]??0)+35);s.resources['knowledge']=s.resources['knowledge']!+45;o.resources['knowledge']=o.resources['knowledge']!+25;record(s,'El pacto del umbral','${o.name} comparte estudios y conserva una deuda de cooperación.','consecuencia',cause:e.cause);_openRoute(s,o);break;
- case 'facility_study':if(!s.people.any((p)=>p.alive&&p.role=='técnica')){record(s,'Estudio suspendido','No queda especialista; el proyecto espera una generación formada.','consecuencia',cause:e.cause);world.pending.add(ScheduledEvent(_id('e'),'facility_study',s.id,world.day+360,cause:e.cause));break;}final safe=s.supports('science')||world.random.nextInt(100)<s.health*0.7;if(safe){s.resources['energy']=s.resources['energy']!+90;s.tech.add('electricity');final discovery=record(s,'El núcleo despierta','La investigación produce energía y una tecnología recuperada.','consecuencia',cause:e.cause);world.pending.add(ScheduledEvent(_id('e'),'energy_growth',s.id,world.day+120,cause:discovery.id));if(world.extraordinary)world.pending.add(ScheduledEvent(_id('e'),'signal',s.id,world.day+720,cause:discovery.id));}else{s.health=(s.health-20).clamp(0,100).toDouble();_removePeople(s,3);record(s,'Accidente del núcleo','La investigación sin garantías libera una descarga y causa tres bajas.','consecuencia',cause:e.cause);}break;
- case 'energy_growth':final room=math.max(0,s.housing-s.population);if(room>=4){final source=world.societies.where((o)=>o.alive&&o.id!=s.id&&o.adults>=4).toList();if(source.isNotEmpty){source.first.adults-=4;s.adults+=4;record(s,'La luz atrae familias','Cuatro adultos llegan desde ${source.first.name}; aumentan la demanda de alimentos.','migración',cause:e.cause);}}else{record(s,'Una ciudad demasiado estrecha','La energía atrajo interés, pero la falta de vivienda impide recibir familias.','consecuencia',cause:e.cause);}break;
+ case 'facility_study':if(!s.people.any((p)=>p.alive&&(world.populationState==null?p.role=='técnica':p.competence('technical')>=1000))){record(s,'Estudio suspendido','No queda especialista; el proyecto espera una generación formada.','consecuencia',cause:e.cause);world.pending.add(ScheduledEvent(_id('e'),'facility_study',s.id,world.day+360,cause:e.cause));break;}final safe=s.supports('science')||world.random.nextInt(100)<s.health*0.7;if(safe){s.resources['energy']=s.resources['energy']!+90;s.tech.add('electricity');final discovery=record(s,'El núcleo despierta','La investigación produce energía y una tecnología recuperada.','consecuencia',cause:e.cause);world.pending.add(ScheduledEvent(_id('e'),'energy_growth',s.id,world.day+120,cause:discovery.id));if(world.extraordinary)world.pending.add(ScheduledEvent(_id('e'),'signal',s.id,world.day+720,cause:discovery.id));}else{s.health=(s.health-20).clamp(0,100).toDouble();_removePeople(s,3);record(s,'Accidente del núcleo','La investigación sin garantías libera una descarga y causa tres bajas.','consecuencia',cause:e.cause);}break;
+ case 'energy_growth':final room=math.max(0,s.housing-s.population);if(room>=4){final source=world.societies.where((o)=>o.alive&&o.id!=s.id&&o.adults>=4).toList();if(source.isNotEmpty){if(world.populationState!=null){_transferResidents(source.first,s,4,1,cause:e.cause);}else{source.first.adults-=4;s.adults+=4;}record(s,'La luz atrae familias','Cuatro adultos llegan desde ${source.first.name}; aumentan la demanda de alimentos.','migración',cause:e.cause);}}else{record(s,'Una ciudad demasiado estrecha','La energía atrajo interés, pero la falta de vivienda impide recibir familias.','consecuencia',cause:e.cause);}break;
  case 'signal':final allied=s.relations.values.where((v)=>v>35).length;final peaceful=s.policy.diplomacy=='cooperate'&&(allied>0||s.supports('xenology'));if(peaceful){s.resources['knowledge']=s.resources['knowledge']!+120;s.tech.add('radio');record(s,'Voces entre estrellas','La señal recibe respuesta: intercambio bajo un pacto de convivencia.','extraordinario',cause:e.cause);}else if(s.risk>0.6){_removePeople(s,math.min(s.adults,12));s.resources['energy']=0;record(s,'La visita hostil','La señal y una respuesta agresiva desembocan en incursión y resistencia.','extraordinario',cause:e.cause);}else{s.morale=(s.morale-12).clamp(0,100).toDouble();s.resources['knowledge']=s.resources['knowledge']!+50;record(s,'Los tutores del silencio','El contacto entrega conocimiento a cambio de influencia política.','extraordinario',cause:e.cause);}break;
  case 'anomaly':final response=s.supports('ecology')||s.risk<0.3;if(response){s.resources['crystal']=s.resources['crystal']!+10;record(s,'Anomalía contenida','La preparación permite recuperar cristales sin pérdidas.','extraordinario',cause:e.cause);}else{s.environment=(s.environment+20).clamp(0,100).toDouble();s.health=(s.health-15).clamp(0,100).toDouble();world.tiles[s.y*world.size+s.x].damage=1;record(s,'La tierra cambia de voz','Una instalación autónoma daña el territorio e interrumpe sus rutas.','extraordinario',cause:e.cause);}break;
  }}
@@ -636,7 +874,7 @@ extension ContentSimulation on Simulation {
  }
  void _directContent(Society s){if(content==null||(s.id==world.controlledId&&!delegateDecisions)||!s.alive)return;final eligible=eligibleEvents(s.id);if(eligible.isEmpty)return;final candidates=eligible.where((event){double chance=((event['baseProbability']??0.1) as num).toDouble();for(final conditional in (event['conditionalProbability']??[]) as List){if(_conditions(s,Map<String,dynamic>.from(conditional['conditions']??{})))chance*=(conditional['multiplier'] as num).toDouble();}return world.random.nextDouble()<chance.clamp(0,1);}).toList();if(candidates.isEmpty)return;final e=candidates[world.random.nextInt(candidates.length)];final options=e['options'] as List;if(options.isEmpty)return;final option=_delegatedOption(s,options);resolveContentEvent(e['id'],option['id'],societyId:s.id,delegated:true);}
  CommandResult resolveContentEvent(String eventId,String optionId,{String? societyId,bool delegated=false,bool scheduled=false,String? cause}) {
- final s=world.society(societyId??world.controlledId);if(s==null||!s.alive)return const CommandResult(false,'No queda una comunidad capaz de decidir.');final es=contentEvents.where((e)=>e['id']==eventId);if(es.isEmpty)return const CommandResult(false,'Acontecimiento no encontrado.');final e=es.first;
+ final s=world.society(societyId??world.controlledId);if(s==null||!s.alive)return const CommandResult(false,'No queda una comunidad capaz de decidir.');if(world.populationState!=null&&!s.people.any((p)=>p.id==s.leaderId&&p.alive&&world.day-p.bornDay>=18*360))return const CommandResult(false,'No hay una dirección adulta capaz de resolver la decisión.');final es=contentEvents.where((e)=>e['id']==eventId);if(es.isEmpty)return const CommandResult(false,'Acontecimiento no encontrado.');final e=es.first;
  if(world.rulesVersion>=5&&e['origins'] is List&&!(e['origins'] as List).contains(world.origin))return const CommandResult(false,'Este acontecimiento no pertenece al origen de este mundo.');
  final queued=world.pending.where((p)=>p.type=='content_choice'&&p.societyId==s.id&&p.data['eventId']==eventId).toList();
  if(!scheduled&&queued.isEmpty&&!eligibleEvents(s.id).any((x)=>x['id']==eventId))return const CommandResult(false,'Las condiciones ya no se cumplen.');if(!_conditions(s,Map<String,dynamic>.from(e['conditions']??{})))return const CommandResult(false,'Consecuencia cancelada: el contexto cambió.');
@@ -648,7 +886,7 @@ extension ContentSimulation on Simulation {
  }
  void _applyContentEffect(Society s,Map<String,dynamic> e,String cause){final rawValue=e['value']??e['amount']??0;final n=rawValue is num?rawValue.toDouble():0.0;switch(e['type']){
  case 'resource':final id=_resource(e['resource']);if(resourceIds.contains(id))s.resources[id]=(s.resources[id]!+n).clamp(0,100000).toDouble();break;
- case 'population':if(n<0){_removePeople(s,-n.toInt());}else{s.adults+=math.min(n.toInt(),math.max(0,s.housing-s.population));}break;
+ case 'population':if(n<0){_removePeople(s,-n.toInt(),cause:cause);}else{final count=math.min(n.toInt(),math.max(0,s.housing-s.population));if(world.populationState!=null){final origins=world.societies.where((o)=>o.id!=s.id&&o.alive&&o.adults>=count).toList()..sort((a,b)=>a.id.compareTo(b.id));if(count>0&&origins.isNotEmpty){_transferResidents(origins.first,s,count,1,cause:cause);record(s,'Llegan residentes de ${origins.first.name}','$count adultos cambian de residencia conservando identidad, edad y cultura.','migración',cause:cause);}}else{s.adults+=count;}}break;
  case 'health':s.health=(s.health+n).clamp(0,100).toDouble();break;
  case 'morale':case 'mood':s.morale=(s.morale+n).clamp(0,100).toDouble();break;
  case 'environment':s.environment=(s.environment+n).clamp(0,100).toDouble();break;

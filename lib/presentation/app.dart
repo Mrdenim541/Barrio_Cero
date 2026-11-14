@@ -1098,7 +1098,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         : projects.isNotEmpty
         ? 'Trabajo en marcha: ${_buildingName(projects.first['building'])}. Termina en ${date(number(projects.first['finish']))}.'
         : state['origin']=='prehistory'
-        ? 'Primer paso: un refugio añade ocho plazas. Revisa el coste y elige dónde invertir.'
+        ? _primitiveSuggestion(s)
         : 'Una oportunidad: amplía tus reservas con un huerto o mejora los hogares.';
     return Container(
       width: double.infinity,
@@ -1187,6 +1187,31 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       _buildings.where((b) => b.id == id).firstOrNull?.name ?? '$id';
   String _technologyName(dynamic id) =>
       _technologies.where((t) => t.id == id).firstOrNull?.name ?? '$id';
+  String _primitiveSuggestion(Map<String,dynamic> s) {
+    if(_housing(s)<=number(s['population']))return 'Primer paso: un refugio añade ocho plazas. Revisa el coste y elige dónde invertir.';
+    final known=Set<String>.from(s['tech']??[]);
+    final resources=s['resources'] as Map? ?? {};
+    if(!(_catalog?.provides(known,'handcraft')??false)) {
+      final technique=_technologies.where((t)=>t.capabilities.contains('handcraft')).firstOrNull;
+      if(technique!=null&&(resources['knowledge'] as num? ??0)>=technique.cost&&technique.requires.every(known.contains))return 'Ya puedes aprender ${technique.name.toLowerCase()}: Más acciones → Investigar.';
+      return 'El círculo de memoria sigue aprendiendo. Protege las reservas mientras reúnes conocimientos.';
+    }
+    if(number((s['built'] as Map?)?['knapping_shed'])==0)return 'Consulta el taller de talla para convertir piedra y madera en herramientas.';
+    if((resources['tools'] as num? ??0)>=2&&s['facilityFound']!=true)return 'Las herramientas permiten preparar una expedición desde Más acciones → Explorar.';
+    return 'Observa a otras comunidades y revisa sus necesidades antes de comprometer un intercambio.';
+  }
+
+  Map<String,dynamic>? _personPopulation(String id) {
+    final population=state['populationState'] as Map?;
+    if(population==null)return null;
+    final cohortId=(population['members'] as Map?)?[id];
+    final cohort=((population['cohorts'] as List?)??[]).where((c)=>c['id']==cohortId).firstOrNull;
+    final record=cohort??(population['archives'] as Map?)?[id];
+    return record is Map?Map<String,dynamic>.from(record):null;
+  }
+  String _cultureName(dynamic id)=>
+    (((state['entities'] as Map?)?['cultures'] as List?)??[])
+      .where((c)=>c['id']==id).firstOrNull?['name']?.toString()??'Sin registro';
   void _communityActions() => _sheet('Dirigir la comunidad', [
     ListTile(
       title: const Text('Investigar'),
@@ -1196,6 +1221,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         _research();
       },
     ),
+    if (state['populationState'] != null)
+      ListTile(title: const Text('Formar aprendices'),
+        subtitle: const Text('Transmitir oficios con trabajo y provisiones'),
+        onTap: () {Navigator.pop(context);_learning();}),
     ListTile(
       title: const Text('Explorar'),
       subtitle: const Text('Preparar una expedición y conocer su coste'),
@@ -1347,9 +1376,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     if (s == null) return;
     if (hit.kind == 'person') {
       final p = hit.entity;
+      final population=_personPopulation(p['id'].toString());
       _sheet('${p['name']}', [
         Text(
-          '${p['role']} · ${(day - number(p['bornDay'])) ~/ 360} años',
+          '${p['role']} · ${p['birthEstimated']==true?'aprox. ':''}${(day - number(p['bornDay'])) ~/ 360} años',
           style: const TextStyle(color: moss, fontSize: 18),
         ),
         const SizedBox(height: 12),
@@ -1359,6 +1389,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               : 'Habitante destacado de ${s['name']}.',
         ),
         Text('Experiencia: ${((p['skill'] as num? ?? 1) * 100).round()}%'),
+        for(final c in courses)if(((p['skills'] as Map?)?[c.id] as int? ??0)>0)Text('${c.name}: ${((p['skills'][c.id] as int)/10).round()}%'),
+        if(s['id']==controlled&&state['populationState']!=null)OutlinedButton(onPressed:(){Navigator.pop(context);_learning(target:p['id'].toString());},child:const Text('Aprender un oficio')),
+        if(population!=null)Text('Cultura: ${_cultureName(population['culture'])}'),
+        if(p['birthEstimated']==true)const Text('Su fecha de nacimiento procede de la estimación inicial de su grupo de población.'),
         const SizedBox(height: 16),
         OutlinedButton(
           onPressed: () {
@@ -1656,6 +1690,31 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       if(!showLocked&&entries.any((e)=>!e.$2.allowed))TextButton(
         onPressed:(){Navigator.pop(context);_build(showLocked:true);},
         child:Text('Ver construcciones y requisitos (${entries.where((e)=>!e.$2.allowed).length} bloqueadas)')),
+    ]);
+  }
+
+  void _learning({String target='resident'}) {
+    final s=society;if(s==null)return;
+    final sim=_sim();final people=(s['people'] as List).where((p)=>p['diedDay']==null).toList();
+    final learner=people.where((p)=>p['id']==target).firstOrNull;
+    _sheet('Formar aprendices',[
+      Text(target=='resident'?'Destacar un residente adulto de la población. No añade habitantes.':'Aprendiz: ${learner?['name']??target}'),
+      const Text('El maestro y el aprendiz reservan tiempo de trabajo. Sin maestro se necesitan escuela y manuales adecuados.'),
+      const SizedBox(height:12),
+      for(final c in courses)Builder(builder:(context){
+        final preview=sim.preview(_queryCommand('train',target:target,choice:c.id));
+        return ListTile(title:Text(c.name),subtitle:Text(preview.allowed?'${c.description}\n${_costText(preview)} · ${preview.durationDays} días':preview.reason),
+          trailing:preview.allowed?const Icon(Icons.chevron_right):const Icon(Icons.lock_outline),
+          onTap:preview.allowed?(){Navigator.pop(context);_confirmCommand('Aprender ${c.name.toLowerCase()}','train',target:target,choice:c.id);}:null);
+      }),
+      if(target=='resident')ExpansionTile(title:const Text('Elegir un habitante destacado'),children:[
+        for(final p in people.where((p)=>day-number(p['bornDay'])>=18*360&&day-number(p['bornDay'])<65*360))ListTile(title:Text(p['name'].toString()),subtitle:Text(p['role'].toString()),onTap:(){Navigator.pop(context);_learning(target:p['id'].toString());}),
+      ]),
+      if(((s['lessons'] as List?)??[]).isNotEmpty)const Text('Formación en curso',style:TextStyle(color:gold)),
+      for(final l in ((s['lessons'] as List?)??[]))ListTile(
+        title:Text('${people.where((p)=>p['id']==l['learner']).firstOrNull?['name']??'Aprendiz'} · ${courses.where((c)=>c.id==l['course']).firstOrNull?.name??l['course']}'),
+        subtitle:Text('${((1-number(l['work']['remaining'])/number(l['work']['totalWork']))*100).floor()}% · ${l['work']['paused']==true?'En espera de personal':'Trabajando'}'),
+        trailing:IconButton(tooltip:'Detener formación',icon:const Icon(Icons.close),onPressed:(){Navigator.pop(context);_confirmCommand('Detener aprendizaje','cancel_train',target:l['id']);})),
     ]);
   }
 
@@ -2134,7 +2193,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               builder: (context) => AlertDialog(
                 title: const Text('Actualizar reglas de esta partida'),
                 content: const Text(
-                  'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. No se inventarán familias ni historia anterior. Puedes continuar con las reglas antiguas.',
+                  'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. Las edades de la población común se estimarán; se conservan las fechas conocidas y no se inventarán parentescos. Puedes continuar con las reglas antiguas.',
                 ),
                 actions: [
                   TextButton(

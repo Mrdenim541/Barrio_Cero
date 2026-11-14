@@ -1,0 +1,22 @@
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: CREAR UN MUNDO
+Tap: Origen
+Tap: Reconstrucción
+Tap: Fundar Barrio Cero
+Tap: Más acciones
+Tap: Formar aprendices
+Tap: Oficios técnicos
+Tap: Confirmar orden
+Tap: Avanzar
+Tap: Avanzar un mes
+Native day 30
+Tap: Avanzar
+Tap: Avanzar un mes
+Native day 60
+Tap: Avanzar
+Tap: Avanzar un mes
+ERROR: null root node returned by UiTestAutomationBridge.
+Native day 90
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+{"version": "0.7.0+8", "rules": 6, "mode": "profile", "device": "Android API29 software emulator; not reference-phone performance", "installationOutput": "Performing Streamed Install\nSuccess\n", "startingPopulation": 336, "previewPreservesCheckpoint": true, "committed": {"learner": "p2", "teacher": "p0a", "remainingWork": 180, "foodCost": 10, "knowledgeCost": 5, "populationUnchanged": true}, "completedByActualWork": true, "forceStopReopenPreservesPopulationAndSkill": true, "originalDataRestoredExactly": true}

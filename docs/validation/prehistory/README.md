@@ -30,3 +30,7 @@ Las capturas `01`–`05` proceden del APK ejecutado. La cuarta muestra el cuarto
 R2/R3 requieren todavía conservación global, conciliación poblacional completa y el modelo final. R4 deberá integrarse con esos contratos y con los criterios finales de aceptación. Faltan hogares y genealogías, ocupaciones completas, sociedades e instituciones avanzadas, territorio, transporte de migrantes, equinos, eras operativas y regresión, director narrativo completo, historia durable y los objetivos ampliados de contenido.
 
 La captura aún muestra recomendaciones que necesitan seguir mejor el progreso posterior al primer refugio; el recorrido de diez decisiones y la revisión de comprensión pertenecen a R11. Los fallos nativos intermitentes del emulador en iteraciones anteriores siguen registrados. No se acredita estabilidad de un teléfono real, mil años activos ni el escenario sostenido de 32 asentamientos por estas pruebas.
+
+## Batería larga finalizada
+
+La ejecución AOT congelada de 0.6 terminó: las treinta semillas alcanzaron 72.000 días (200 años) con comprobaciones anuales y catálogo real. Los escenarios de mil años terminaron por extinción global en los días 196.680 y 195.900; no acreditan mil años activos. El registro está en `stability-30-seeds.log`. No valida las nuevas reglas de población de 0.7 ni el rendimiento Android.

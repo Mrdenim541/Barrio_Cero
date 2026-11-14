@@ -100,6 +100,16 @@ class WorldEntities {
   bool sameSociety(String a, String b) =>
       cityFor(a)?.societyId != null &&
       cityFor(a)?.societyId == cityFor(b)?.societyId;
+  void addColony({required String actorId,required String ownerId,required String cultureId}) {
+    final culture=cultures[cultureId];
+    if(cityFor(actorId)!=null||settlements.containsKey('settlement:$actorId')||
+        !societies.containsKey(ownerId)||culture==null) {
+      throw const FormatException('Nueva ciudad sin identidad válida');
+    }
+    settlements['settlement:$actorId']=SettlementIdentity('settlement:$actorId',
+      actorId,ownerId,cultureId,culture.speciesId);
+    _invalidate();
+  }
   void reconcile(Iterable<Map<String, dynamic>> input) {
     final actors = {for (final a in input) a['id'] as String: a};
     for (final a in actors.values) {
@@ -145,7 +155,7 @@ class WorldEntities {
       final alivePeople = living
           .expand(
             (c) => (actors[c.actorId]!['people'] as List).where(
-              (p) => p['diedDay'] == null,
+              (p) => p['diedDay'] == null && p['eligibleLeader'] != false,
             ),
           )
           .toList();
@@ -223,7 +233,7 @@ class WorldEntities {
       if (s.leaderId != null &&
           !owned.any(
             (c) => (actors[c.actorId]!['people'] as List).any(
-              (p) => p['id'] == s.leaderId && p['diedDay'] == null,
+              (p) => p['id'] == s.leaderId && p['diedDay'] == null && p['eligibleLeader'] != false,
             ),
           )) {
         throw const FormatException('Dirigente político inválido');

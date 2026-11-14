@@ -1,0 +1,48 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/presentation_test.dart
+00:00 +0: Learning previews, commits and reopens at 320 with enlarged text
+
+Warning: A call to tap() with finder "Found 1 widget with text "Más acciones": [
+  Text("Más acciones", dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+]" derived an Offset (Offset(236.0, 622.8)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderParagraph#eb1bf relayoutBoundary=up31
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#5c935(TextSpan(debugLabel: ((englishLike labelMedium 2021).merge(((whiteMountainView labelMedium).apply).apply)).apply, inherit: false, color: Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), family: sans-serif, size: 12.0, weight: 500, letterSpacing: 0.5, baseline: alphabetic, height: 1.3x, leadingDistribution: even, decoration: Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB) TextDecoration.none, "Historia")), RenderParagraph#cd380@Offset(22.7, 17.8), RenderPadding#c3bc6@Offset(22.7, 21.8), RenderRepaintBoundary#8f82b@Offset(22.7, 21.8), RenderAnimatedOpacity#3a2fc@Offset(22.7, 21.8), RenderCustomMultiChildLayoutBox#bd07f@Offset(22.7, 46.8), RenderFlex#ff91d@Offset(22.7, 46.8), RenderPointerListener#ed8d0@Offset(22.7, 46.8), RenderSemanticsAnnotations#12d7b@Offset(22.7, 46.8), RenderMouseRegion#0afcd@Offset(22.7, 46.8), RenderSemanticsAnnotations#b47d0@Offset(22.7, 46.8), RenderSemanticsAnnotations#defe9@Offset(22.7, 46.8), RenderPointerListener#68ec5@Offset(22.7, 46.8), _RenderExclusiveMouseRegion#8c926@Offset(22.7, 46.8), _RenderLayoutSurrogateProxyBox#f0317@Offset(22.7, 46.8), RenderStack#375a9@Offset(22.7, 46.8), RenderSemanticsAnnotations#76816@Offset(22.7, 46.8), RenderSemanticsAnnotations#e86dd@Offset(22.7, 46.8), RenderMergeSemantics#cf359@Offset(22.7, 46.8), RenderFlex#3a52e@Offset(236.0, 46.8), RenderConstrainedBox#b318b@Offset(236.0, 46.8), RenderSemanticsAnnotations#6c538@Offset(236.0, 46.8), RenderPadding#58f8a@Offset(236.0, 46.8), _RenderInkFeatures#3a50e@Offset(236.0, 46.8), RenderPhysicalModel#6f664@Offset(236.0, 46.8), RenderFlex#41783@Offset(236.0, 622.8), RenderPadding#5d1e0@Offset(236.0, 622.8), RenderCustomMultiChildLayoutBox#66a49@Offset(236.0, 622.8), _RenderInkFeatures#b6b0e@Offset(236.0, 622.8), RenderPhysicalModel#5e35b@Offset(236.0, 622.8), RenderSemanticsAnnotations#7093f@Offset(236.0, 622.8), RenderRepaintBoundary#0fb2d@Offset(236.0, 622.8), RenderIgnorePointer#d689b@Offset(236.0, 622.8), _RenderSnapshotWidget#e84e8@Offset(236.0, 622.8), _RenderSnapshotWidget#33001@Offset(236.0, 622.8), _RenderSnapshotWidget#37c6a@Offset(236.0, 622.8), _RenderSnapshotWidget#d8f8f@Offset(236.0, 622.8), RenderRepaintBoundary#787b2@Offset(236.0, 622.8), RenderSemanticsAnnotations#377e4@Offset(236.0, 622.8), RenderOffstage#c145e@Offset(236.0, 622.8), RenderSemanticsAnnotations#1387e@Offset(236.0, 622.8), _RenderTheater#fb5af@Offset(236.0, 622.8), RenderAbsorbPointer#cf381@Offset(236.0, 622.8), RenderPointerListener#2c139@Offset(236.0, 622.8), RenderSemanticsAnnotations#9a620@Offset(236.0, 622.8), RenderSemanticsAnnotations#1eabb@Offset(236.0, 622.8), RenderSemanticsAnnotations#bc4cd@Offset(236.0, 622.8), RenderTapRegionSurface#10929@Offset(236.0, 622.8), RenderSemanticsAnnotations#412cf@Offset(236.0, 622.8), RenderSemanticsAnnotations#15a59@Offset(236.0, 622.8), RenderSemanticsAnnotations#dfaa9@Offset(236.0, 622.8), HitTestEntry<HitTestTarget>#82c5f(_ReusableRenderView#d7d3c), HitTestEntry<HitTestTarget>#097d5(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2077:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1041:7)
+#3      main.<anonymous closure> (file:///workspace/Barrio_Cero/test/presentation_test.dart:139:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.element (package:flutter_test/src/controller.dart:864:30)
+#2      WidgetController.ensureVisible (package:flutter_test/src/controller.dart:2301:32)
+#3      main.<anonymous closure> (file:///workspace/Barrio_Cero/test/presentation_test.dart:140:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Learning previews, commits and reopens at 320 with enlarged text
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +0 -1: Learning previews, commits and reopens at 320 with enlarged text [E]
+  Test failed. See exception logs above.
+  The test description was: Learning previews, commits and reopens at 320 with enlarged text
+  
+00:02 +0 -1: Some tests failed.

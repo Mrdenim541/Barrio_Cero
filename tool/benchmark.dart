@@ -1,3 +1,4 @@
+import 'fixtures.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:barrio_cero_eras/simulation/engine.dart';
@@ -45,7 +46,7 @@ void main() {
       world.societies.add(s);
       world.entities?.reconcile(world.societies.map((s) => s.identityView()));
     }
-    world.validate();
+    fixturePopulation(world);world.validate();
     final sim = Simulation(world)..registerContent(pack);
     final watch = Stopwatch()..start();
     var sustainedDays = 0;

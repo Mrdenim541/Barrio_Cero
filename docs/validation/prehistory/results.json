@@ -143,5 +143,28 @@
     "104 independent events and 12 arcs; expanded minimum still pending",
     "Narrative instances and full participant semantics pending",
     "No reference-device performance or active millennium accepted"
-  ]
+  ],
+  "stability": {
+    "version": "0.6.0+7; rules 5; captured AOT binary and frozen core",
+    "seedRuns": 30,
+    "allReachedDays": 72000,
+    "yearsPerSeed": 200,
+    "millennia": [
+      {
+        "seed": 74,
+        "requestedDays": 360000,
+        "actualDays": 196680,
+        "terminal": "global_extinction"
+      },
+      {
+        "seed": 73,
+        "requestedDays": 360000,
+        "actualDays": 195900,
+        "terminal": "global_extinction"
+      }
+    ],
+    "activeThousandYearsVerified": false,
+    "log": "docs/validation/prehistory/stability-30-seeds.log",
+    "scope": "Historical evidence; does not verify rules 6, Android performance, or prolonged populated millennia."
+  }
 }

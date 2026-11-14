@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:barrio_cero_eras/simulation/engine.dart';
@@ -24,11 +25,12 @@ void main() {
     for (final p in w.controlled.people) {
       p.diedDay = 0;
     }
+    fixturePopulation(w,trimFeatures:true);
     sim.advanceDays(20);
     expect(w.controlled.built['farm'], 2);
     expect(w.controlled.projects.single.work!.remaining, 48);
     expect(w.controlled.projects.single.work!.paused, isTrue);
-    w.controlled.adults = 4;
+    w.controlled.adults = 4;fixturePopulation(w,trimFeatures:true);
     sim.advanceDays(12);
     expect(w.controlled.projects, isEmpty);
     expect(w.controlled.built['farm'], 3);
@@ -36,9 +38,9 @@ void main() {
   });
   test('Workers finishing construction cannot also produce that day', () {
     final w = WorldState.generate(size: 64);
-    w.controlled.adults = 4;
+    w.controlled.adults = 4;fixturePopulation(w,trimFeatures:true);
     w.controlled.children = 0;
-    w.controlled.elders = 0;
+    w.controlled.elders = 0;fixturePopulation(w,trimFeatures:true);
     final sim = Simulation(w);
     sim.submit(order(w, 'build', target: 'farm'));
     sim.advanceDays(12);
@@ -71,13 +73,13 @@ void main() {
       final sim = Simulation(w);
       sim.submit(order(w, 'build', target: 'farm'));
       sim.submit(order(w, 'explore', id: 'explore'));
-      w.controlled.adults = 2;
+      w.controlled.adults = 2;fixturePopulation(w,trimFeatures:true);
       sim.advanceDays(8);
       expect(w.controlled.facilityFound, isFalse);
       expect(w.controlled.projects.single.work!.remaining, 48);
       final discovery = w.pending.singleWhere((e) => e.type == 'discovery');
       expect(discovery.data['remainingWork'], 16);
-      w.controlled.adults = 8;
+      w.controlled.adults = 8;fixturePopulation(w,trimFeatures:true);
       sim.advanceDays(4);
       expect(w.controlled.facilityFound, isTrue);
       expect(w.controlled.projects.single.work!.remaining, 32);
@@ -160,11 +162,11 @@ void main() {
       final w = routeWorld();
       final sim = Simulation(w);
       sim.submit(order(w, 'trade', target: 's1'));
-      w.controlled.adults = 1;
+      w.controlled.adults = 1;fixturePopulation(w,trimFeatures:true);
       sim.advanceDays(1);
       expect(w.routes.single.progress, 0);
       expect(w.routes.single.blocked, isTrue);
-      w.controlled.adults = 38;
+      w.controlled.adults = 38;fixturePopulation(w,trimFeatures:true);
       sim.advanceDays(2);
       expect(w.routes.single.returning, isTrue);
       expect(w.routes.single.metalMillis, 3000);

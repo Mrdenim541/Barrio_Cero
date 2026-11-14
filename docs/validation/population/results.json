@@ -1,0 +1,61 @@
+{
+  "recordedAt": "2026-11-14T02:10:16.180634+00:00",
+  "version": "0.7.0+8",
+  "rulesVersion": 6,
+  "checkpoint": 3,
+  "tests": {
+    "passed": true,
+    "count": 139,
+    "command": "flutter test --no-pub --reporter expanded"
+  },
+  "analysis": "clean",
+  "content": "passed; structural check only",
+  "temporal": {
+    "execution": "Linux Dart AOT, full catalog, seed 17, four paths per origin",
+    "reconstruction": {
+      "days": 36000,
+      "causalEntries": 22201,
+      "passed": true
+    },
+    "prehistory": {
+      "days": 36000,
+      "causalEntries": 10579,
+      "passed": true
+    }
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.7.0-profile.apk",
+    "sha256": "a05d282c3deac070337e70193b0b4d08e57a33e94e4f87009635df34a56163a9",
+    "compiled": true,
+    "signatureVerified": true
+  },
+  "native": {
+    "version": "0.7.0+8",
+    "rules": 6,
+    "mode": "profile",
+    "device": "Android API29 software emulator; not reference-phone performance",
+    "installationOutput": "Performing Streamed Install\nSuccess\n",
+    "startingPopulation": 336,
+    "previewPreservesCheckpoint": true,
+    "committed": {
+      "learner": "p2",
+      "teacher": "p0a",
+      "remainingWork": 180,
+      "foodCost": 10,
+      "knowledgeCost": 5,
+      "populationUnchanged": true
+    },
+    "completedByActualWork": true,
+    "forceStopReopenPreservesPopulationAndSkill": true,
+    "originalDataRestoredExactly": true
+  },
+  "newRulesStability": "running separately; not yet accepted",
+  "knownLimitations": [
+    "No household/kinship/inheritance system yet",
+    "Migration is reconciled but still instantaneous",
+    "No equine biology or operational eras",
+    "Narrative participants and deadlines incomplete",
+    "No active populated millennium or sustained 32 settlements certified",
+    "No reference-phone performance acceptance"
+  ]
+}

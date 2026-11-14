@@ -1,3 +1,4 @@
+import '../tool/fixtures.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
@@ -147,7 +148,7 @@ void main() {
       sim.advanceDays(1);
       expect(w.controlled.resources['water'], lessThan(water));
       final valid = start();
-      valid.controlled.adults = 200;
+      valid.controlled.adults = 200;fixturePopulation(valid);
       final v = valid.controlled;
       valid.tiles[v.y * valid.size + v.x] = Tile(v.x, v.y, 0, 3);
       valid.controlled.built['foraging_camp'] = 3;
