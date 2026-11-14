@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-11-14T17:56:30.177569+00:00",
+  "url": "https://raw.githubusercontent.com/Mrdenim541/Barrio_Cero/downloads/android-test-0.19.0/Barrio-Cero-Eras-0.19.0.zip",
+  "anonymousRequest": true,
+  "status": 200,
+  "bytes": 23535622,
+  "zipSha256": "67dac5fada17c484b1cd955407220a2bfea076c9eee554e21e9a84a50e1de4f8",
+  "zipCrcPassed": true,
+  "apkSha256": "39df65fad71d6f14d7defe7ba19ea6dcc6b0c9f821c1afb1106417f72d059da5",
+  "matchesInstalledTestArtifact": true,
+  "downloadBranchCommit": "b3c0533",
+  "fullGameAcceptance": false
+}

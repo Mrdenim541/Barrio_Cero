@@ -28,6 +28,6 @@ Esta comprobación funcional no mide FPS, latencia ni memoria física. `frameMet
 
 ## Distribución
 
-El ZIP se distribuye mediante la rama pública `downloads/android-test-0.19.0`; la página de Release enlaza el archivo. El servicio de subida de assets rechazó la autorización en la entrega previa; no se repite esa ruta fallida. `github-download.json` registrará por separado la descarga anónima completa, su CRC, y los hashes del ZIP y APK interior.
+El ZIP se distribuye mediante la rama pública `downloads/android-test-0.19.0`; la página de Release enlaza el archivo. El servicio de subida de assets rechazó la autorización en la entrega previa; no se repite esa ruta fallida. `github-download.json` y `github-download-http.log` registran una descarga anónima completa: HTTP 200, 23.535.622 bytes, CRC válido y hashes exactos del ZIP y APK interior. Coincide con el APK instalado y reabierto.
 
 Mundo/checkpoint nuevos, trabajos locales, territorio/política completos, eras, especies, inmortalidad, catálogo ampliado, milenios activos y rendimiento físico siguen pendientes. Los 174 IDs se mantienen; ningún requisito final se cierra por esta entrega.
