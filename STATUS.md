@@ -8,6 +8,16 @@ Durante el desarrollo se comprueba el módulo cambiado. La suite rápida y un AP
 
 ## Rediseño actual — R0 registrado; R1–R6 parciales
 
+## Integración 0.14 — el mundo ocupa el primer plano
+
+La ficha se reduce a nombre, dirigente, alimento, agua, habitantes y una acción sugerida. Los detalles, costes y requisitos se abren al tocar; Más acciones conserva construcción, guía y funciones avanzadas. Se retiran los párrafos, los costes permanentes y el segundo botón destacado. Los resultados aparecen temporalmente sobre la escena y siguen consultables, sin restar altura al mapa. La escena deja dos controles visibles; los rótulos se reservan a selección o acercamiento. Se añade indicador de carga y un borde breve para edificios realmente terminados, sin animar obras inexistentes ni cambiar la simulación.
+
+La integración aprueba análisis y 192 pruebas, incluidas navegación/detalles con texto ampliado en 320/360/412, conservación del área de mapa tras una orden y feedback de una construcción real sin alterar el tiempo. APK profile compilado; el recorrido Android y sus capturas se registran por separado en [validación de pantalla compacta](docs/validation/compact/). Las reglas 11, el esquema y los archivos protegidos de simulación y contenido permanecen iguales; la matriz larga existente continúa.
+
+Android abrió la partida prehistórica producida por 0.13, consultó agua sin escritura, investigó técnicas de talla pagando cinco conocimientos y construyó el taller desbloqueado pagando cuatro maderas y ocho piedras. El nuevo sitio quedó terminado en el día 60 y la reapertura conservó exactamente el checkpoint. Se revisaron capturas del barrio despejado y de la obra terminada; todos los originales se restauraron por hash. Se conservan un fallo del guion al buscar una opción fuera del área visible y un SIGSEGV del renderizador Vulkan al arrancar el emulador; el reintento retoma el estado ya comprobado, sin repetir investigación. No se acredita estabilidad gráfica en el teléfono de referencia.
+
+E1 sigue parcial hasta demostrar las diez decisiones completas y revisar comprensión. El arte por eras/especies, los demás sistemas de E2–E5 y la aceptación física/final de E6 no se consideran terminados por esta mejora de presentación.
+
 ## Integración 0.13 — necesidades, acciones contextuales y guía opcional
 
 La ficha del barrio muestra reservas y ocupación de vivienda y sugiere una acción según necesidades, decisiones pendientes, peticiones, obras y conocimientos. Su coste o requisito procede del mismo evaluador que confirma la orden. Construir y Más acciones permanecen accesibles al ampliar el texto. La guía lee diez tipos de decisiones confirmadas de la comunidad seleccionada, permite seguir libremente y no confunde ordenar con terminar una obra. El mapa local añade encuadre cercano, vista general, rótulos de edificios y terreno del bioma real; no atribuye obras a personajes sin asignación.

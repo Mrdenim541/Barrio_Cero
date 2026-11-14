@@ -10,6 +10,13 @@ import 'package:barrio_cero_eras/persistence/checkpoint.dart';
 import 'package:barrio_cero_eras/content/content_pack.dart';
 import 'package:barrio_cero_eras/simulation/engine.dart' show WorldState, ScheduledEvent, Simulation, Command;
 
+Future<void> openCommunityActions(WidgetTester tester) async {
+  await tester.ensureVisible(find.byTooltip('Más acciones'));
+  await tester.tap(find.byTooltip('Más acciones'));
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late Directory documents;
@@ -101,6 +108,7 @@ void main() {
       expect(screen.world.controlled.population, 24);
       expect(screen.world.controlled.resources['metal'], 0);
       expect(find.textContaining('Lidera Tara'), findsOneWidget);
+      await openCommunityActions(tester);
       await tester.tap(find.text('Construir'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
@@ -138,7 +146,7 @@ void main() {
     });
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     final before=screen.world.canonical();
-    await tester.ensureVisible(find.text('Más acciones'));await tester.tap(find.text('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await tester.ensureVisible(find.byTooltip('Más acciones'));await tester.tap(find.byTooltip('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
     await tester.scrollUntilVisible(find.text('Formar aprendices'),100,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.ensureVisible(find.text('Formar aprendices'));await tester.pump();await tester.tap(find.text('Formar aprendices'));
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     await tester.scrollUntilVisible(find.text('Oficios técnicos'),140,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.pump(const Duration(milliseconds:500));await tester.ensureVisible(find.text('Oficios técnicos'));await tester.pump();await tester.tap(find.text('Oficios técnicos'));
@@ -177,8 +185,8 @@ void main() {
     await tester.runAsync(() async {await tester.pumpWidget(const BarrioApp());screen=tester.state(find.byType(ErasScreen));await screen.initialization;await screen.session.importCheckpoint(source);});
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     final before=screen.world.canonical();
-    await tester.ensureVisible(find.text('Ver habitantes en camino'));
-    await tester.tap(find.text('Ver habitantes en camino'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await openCommunityActions(tester);
+    await tester.tap(find.text('Viajes de población'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
     expect(find.textContaining('5 habitantes en tránsito'),findsOneWidget);expect(find.textContaining('Provisiones restantes'),findsOneWidget);
     expect(screen.world.canonical(),before);expect(tester.takeException(),isNull);
     await tester.pumpWidget(const SizedBox.shrink());await tester.pump(const Duration(milliseconds:50));
@@ -193,7 +201,7 @@ void main() {
     late dynamic screen;
     await tester.runAsync(() async {await tester.pumpWidget(const BarrioApp());screen=tester.state(find.byType(ErasScreen));await screen.initialization;await screen.session.importCheckpoint(source);});
     await tester.pump();await tester.pump(const Duration(milliseconds:500));final before=screen.world.canonical();
-    await tester.ensureVisible(find.text('Más acciones'));await tester.pump();await tester.tap(find.text('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await tester.ensureVisible(find.byTooltip('Más acciones'));await tester.pump();await tester.tap(find.byTooltip('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
     await tester.scrollUntilVisible(find.text('Decisiones'),120,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.ensureVisible(find.text('Decisiones'));await tester.pump();await tester.tap(find.text('Decisiones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
     expect(find.text('Carta de refugio'),findsOneWidget);expect(tester.getTopLeft(find.text('Carta de refugio')).dy,lessThan(400));
     await tester.tap(find.widgetWithText(OutlinedButton,'Organizar la respuesta').first);await tester.pump();await tester.pump(const Duration(milliseconds:500));
@@ -245,12 +253,14 @@ void main() {
       () => session.world != null && !session.advancing,
     );
     expect(find.text('Año 1 · mes 1 · día 1'), findsOneWidget);
-    expect(find.text('Construir'), findsOneWidget);
+    expect(find.text('Construir'), findsNothing);
+    expect(find.byTooltip('Más acciones'), findsOneWidget);
     // Essential time controls must remain readable on the smallest phone.
     expect(tester.getSize(find.text('Avanzar')).height, lessThan(24));
     expect(find.text('Barrio'), findsOneWidget);
     expect(find.text('Mundo'), findsOneWidget);
     expect(find.text('Historia'), findsOneWidget);
+    final initialMap = tester.getRect(find.byWidgetPredicate((w) => w is GameWidget));
     expect(session.game.mode, 'Asentamiento');
     final beforeNavigation = session.world.toJson();
     await tester.tap(find.text('Mundo'));
@@ -268,7 +278,8 @@ void main() {
     );
     expect(find.byIcon(Icons.play_arrow), findsOneWidget);
     expect(tester.takeException(), isNull);
-    await tester.tap(find.text('Construir'));
+    await openCommunityActions(tester);
+      await tester.tap(find.text('Construir'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     await tester.tap(find.text('Huerto'));
@@ -280,6 +291,9 @@ void main() {
       'Confirmar orden',
       () => session.world.commandReceipts.isNotEmpty && !session.advancing,
     );
+    expect(tester.getRect(find.byWidgetPredicate((w) => w is GameWidget)).height,
+        greaterThanOrEqualTo(initialMap.height),
+        reason: 'A result message overlays the world instead of taking permanent scene space');
     expect(
       session.world.society(session.world.controlledId).projects.length,
       1,
@@ -423,9 +437,22 @@ void main() {
       await tester.tap(find.text('Barrio'));
       await tester.pump(const Duration(milliseconds: 500));
       expect(tester.takeException(), isNull);
+      final mapBounds = tester.getRect(find.byWidgetPredicate((w) => w is GameWidget));
+      expect(mapBounds.height, greaterThan(640 * .42),
+          reason: 'The world keeps priority even with enlarged text');
+      expect(find.text('Construir'), findsNothing);
+      expect(find.textContaining('Las plazas de vivienda están ocupadas'), findsNothing);
       final unchanged = screen.world.canonical();
-      await tester.ensureVisible(find.byTooltip('Guía opcional'));
-      await tester.tap(find.byTooltip('Guía opcional'));
+      await tester.tap(find.byTooltip('Agua'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.text('Agua'), findsOneWidget);
+      expect(screen.world.canonical(), unchanged);
+      await tester.tapAt(const Offset(8, 8));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await openCommunityActions(tester);
+      await tester.tap(find.text('Guía opcional'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('Tu comunidad, paso a paso'), findsOneWidget);
@@ -444,8 +471,8 @@ void main() {
       expect(tester.takeException(), isNull);
       await tester.tap(find.text('Barrio'));
       await tester.pump();
-      await tester.ensureVisible(find.text('Comunidad'));
-      await tester.tap(find.text('Comunidad'));
+      await tester.ensureVisible(find.byTooltip('Comunidad'));
+      await tester.tap(find.byTooltip('Comunidad'));
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('Habitantes destacados'), findsOneWidget);
       expect(find.textContaining('bornDay'), findsNothing);

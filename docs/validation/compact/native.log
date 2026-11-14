@@ -1,0 +1,12 @@
+/workspace/Barrio_Cero/build/validation/experience_completed_checkpoint.json: 1 file pushed, 0 skipped. 364.9 MB/s (1040512 bytes in 0.003s)
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Rendered compact view: 01-real-compact-neighborhood.png 11658
+Tap: Agua
+Tap: Aprender un oficio
+Tap: Confirmar orden
+Tap: Más acciones
+Tap: Construir
+ERROR: null root node returned by UiTestAutomationBridge.
+RuntimeError("Missing control Taller de talla: ['Dismiss', 'Construir con propósito', 'Elige una mejora para revisar su coste antes de confirmar. Los edificios aparecen al terminar el trabajo.', 'Zona de recolección\\nRecolecta alimento silvestre; su capacidad depende de la riqueza del lugar.\\nMadera 4 · Piedra 2 · 6 días', 'Piedras de superficie\\nReúne piedra sin una mina ni herramientas metálicas.\\nMadera 6 · 6 días', 'Puesto de agua\\nRecoge agua superficial en praderas, bosques y humedales ricos.\\nMadera 6 · Piedra 2 · 6 días', 'Trenzado vegetal\\nTrabaja fibras de la madera para fabricar tejidos y equipar intercambios.\\nMadera 6 · Piedra 2 · 8 días', 'Scrim']")
+{"version": "0.14.0+15", "rulesVersion": 11, "scope": "Existing real prehistory save, compact ribbon, read-only resource detail, knowledge unlock, advanced build, completion and exact reopen", "device": "API29 software emulator, 320x640; not reference-phone performance", "installationOutput": "Performing Streamed Install\nSuccess\n", "apkSha256": "692f5bead61025a42624cf57b8274ed0e53037b0cf2158a5b7dcadf99d868860", "01-real-compact-neighborhood.png": {"terrainPixelsInExpandedMapBand": 11658, "band": [8, 292, 260, 340]}, "resourceReadPreservesCheckpoint": true, "realKnowledgeUnlock": {"technology": "stone_tools", "knowledgePaid": 5, "noTimeAdvanced": true}, "error": "RuntimeError(\"Missing control Taller de talla: ['Dismiss', 'Construir con propósito', 'Elige una mejora para revisar su coste antes de confirmar. Los edificios aparecen al terminar el trabajo.', 'Zona de recolección\\\\nRecolecta alimento silvestre; su capacidad depende de la riqueza del lugar.\\\\nMadera 4 · Piedra 2 · 6 días', 'Piedras de superficie\\\\nReúne piedra sin una mina ni herramientas metálicas.\\\\nMadera 6 · 6 días', 'Puesto de agua\\\\nRecoge agua superficial en praderas, bosques y humedales ricos.\\\\nMadera 6 · Piedra 2 · 6 días', 'Trenzado vegetal\\\\nTrabaja fibras de la madera para fabricar tejidos y equipar intercambios.\\\\nMadera 6 · Piedra 2 · 8 días', 'Scrim']\")", "originalSavesRestoredExactly": true, "passed": false}

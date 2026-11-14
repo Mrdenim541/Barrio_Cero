@@ -1,0 +1,74 @@
+from pathlib import Path
+exec(Path('/tmp/barrio_experience_native.py').read_text().split('moved = False')[0])
+from PIL import Image
+import io, ast
+out = root / 'docs/validation/compact/continuation-retry'
+out.mkdir(parents=True, exist_ok=False)
+apk = root / 'build/deliverables/barrio-cero-eras-0.14.0-profile.apk'
+before = 'app_flutter/native_before_14_continue_retry'
+after = 'app_flutter/native_after_14_continue_retry'
+fixture = 'app_flutter/native_after_14_compact'
+result = {'version':'0.14.0+15','rulesVersion':11,
+          'scope':'Resume the real accepted research checkpoint; use the contextual workshop action, pay, complete and reopen without repeating research',
+          'apkSha256':hashlib.sha256(apk.read_bytes()).hexdigest()}
+tree = ast.parse(Path('/tmp/barrio_compact_native.py').read_text())
+function = next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='map_capture')
+exec(compile(ast.Module(body=[function],type_ignores=[]),'map capture helper','exec'))
+moved = False
+try:
+    stop()
+    if exists(before) or exists(after):
+        raise RuntimeError('Retained continuation exists; refusing overwrite')
+    original = inventory()
+    (out/'original-inventory.json').write_text(json.dumps(original,indent=2)+'\n')
+    run('mv',folder,before)
+    moved = True
+    run('cp','-R',fixture,folder)
+    source = rawworld()
+    initial = world()
+    town = initial['societies'][0]
+    assert initial['day']==30 and 'stone_tools' in town['tech'] and not town['projects']
+    biome=initial['tiles'][town['y']*initial['size']+town['x']]['biome']
+    ground=[(130,147,101),(101,126,88),(182,156,108),
+            (133,136,123),(116,140,119),(108,133,128)][biome]
+    result['resumeCheckpointSha256']=hashlib.sha256(source).hexdigest()
+    adb('shell','am','start','-n',pkg+'/.MainActivity')
+    tap('Continuar historia')
+    tap('Preparar herramientas')
+    assert rawworld()==source
+    capture('01-real-contextual-workshop-cost.png')
+    tap('Confirmar orden')
+    ordered=waitworld(lambda w:any(p['building']=='knapping_shed' for p in w['societies'][0]['projects']))
+    costs=next(b for b in json.loads((root/'assets/content/core.json').read_text())['buildings'] if b['id']=='knapping_shed')['costs']
+    for material,amount in costs.items():
+        assert abs(ordered['societies'][0]['resources'][material]-(town['resources'][material]-amount))<.00001
+    result['actualBuildingCost']=costs
+    tap('Avanzar')
+    tap('Avanzar un mes')
+    completed=waitworld(lambda w:w['societies'][0]['built'].get('knapping_shed')==1)
+    assert len(completed['societies'][0]['sites'])==len(town['sites'])+1
+    final=rawworld()
+    result['persistentCompletion']={'day':completed['day'],'building':'knapping_shed','siteAdded':True}
+    map_capture('02-real-workshop-completed.png')
+    stop()
+    adb('shell','am','start','-n',pkg+'/.MainActivity')
+    tap('Continuar historia')
+    map_capture('03-real-compact-reopened.png')
+    assert rawworld()==final
+    result['forceStopReopenExact']=True
+except Exception as error:
+    result['error']=repr(error)
+    print(repr(error),flush=True)
+finally:
+    if moved:
+        stop()
+        if exists(after):raise RuntimeError('Refusing retained continuation overwrite')
+        if exists(folder):run('mv',folder,after)
+        if exists(folder):raise RuntimeError('Restoration destination still exists')
+        run('mv',before,folder)
+        result['originalSavesRestoredExactly']=inventory()==original
+        if not result['originalSavesRestoredExactly']:raise RuntimeError('Original saves mismatch')
+    result['passed']='error' not in result
+    (out/'results.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps(result,ensure_ascii=False),flush=True)
+if not result['passed']:raise SystemExit(1)

@@ -13,6 +13,7 @@ import '../session/history_worker.dart';
 import 'world_game.dart';
 import 'settlement_scene.dart';
 import 'community_brief.dart';
+import 'community_ribbon.dart';
 
 class BarrioApp extends StatelessWidget {
   const BarrioApp({super.key});
@@ -65,8 +66,6 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   final documents = DocumentExchange();
   Map<String, dynamic> state = {};
   RuleCatalog? _catalog;
-  String? _briefQuoteKey;
-  CommandPreview? _briefQuote;
   List<BuildingDefinition> get _buildings=>_catalog?.buildings??buildings;
   List<Technology> get _technologies=>_catalog?.technologies??technologies;
   String? selected;
@@ -98,6 +97,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   Future<void> get saveQueue => session.idle;
   late final Future<void> initialization;
   String note = '';
+  bool _noticeVisible = false;
+  Timer? _noticeTimer;
   Map<String, dynamic>? get core => session.snapshot?.content;
   String? get coreHash => session.coreHash;
   ContentPack? get basePack => session.basePack;
@@ -159,7 +160,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           ? controlled
           : societies.firstOrNull?['id']?.toString();
     }
-    game.data = state;
+    game.present(state, generation: session.snapshot?.generation);
     game.selected = selected;
     game.reduceMotion = reduceMotion;
   }
@@ -175,6 +176,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     timer?.cancel();
+    _noticeTimer?.cancel();
     jumpControl?.send('cancel');
     results?.close();
     worker?.kill();
@@ -268,8 +270,14 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   void _message(String text) {
     if (!mounted) return;
-    setState(() => note = text);
-    if (session.snapshot != null) return;
+    _noticeTimer?.cancel();
+    setState(() {note = text; _noticeVisible = session.snapshot != null;});
+    if (session.snapshot != null) {
+      _noticeTimer = Timer(const Duration(seconds: 5), () {
+        if (mounted) setState(() => _noticeVisible = false);
+      });
+      return;
+    }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(text),
@@ -393,7 +401,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       );
       if (!mounted) return;
       _focusHome();
-      setState(() => note = '');
+      setState(() {note = ''; _noticeVisible = false;});
     } catch (e) {
       _message('No se pudo crear el mundo: $e');
     }
@@ -672,7 +680,23 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(child: session.snapshot == null ? _welcome() : _world()),
+    body: SafeArea(child: Stack(fit: StackFit.expand, children: [
+      session.snapshot == null ? _welcome() : _world(),
+      if (_noticeVisible && session.snapshot != null)
+        Positioned(left: 12, right: 12, top: 64, child: Material(
+          color: const Color(0xff34443e), elevation: 4,
+          borderRadius: BorderRadius.circular(8),
+          child: Row(children: [
+            Expanded(child: TextButton(
+              onPressed: () => _sheet('Último resultado', [Text(note)]),
+              child: Text(note, maxLines: 2, overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white)),
+            )),
+            IconButton(tooltip: 'Cerrar mensaje', icon: const Icon(Icons.close, size: 18),
+                onPressed: () => setState(() => _noticeVisible = false)),
+          ]),
+        )),
+    ])),
   );
   Widget _welcome() => Center(
     child: SingleChildScrollView(
@@ -796,6 +820,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                 children: [
                   Text(
                     date(day),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: gold,
                       fontWeight: FontWeight.bold,
@@ -841,7 +867,18 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                                   .toDouble();
                             },
                             onTapUp: (d) => game.touch(d.localPosition),
-                            child: ClipRect(child: GameWidget(game: game)),
+                            child: ClipRect(child: GameWidget(game: game,
+                              loadingBuilder: (_) => const Center(child: Column(
+                                mainAxisSize: MainAxisSize.min, children: [
+                                  SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2)),
+                                  SizedBox(height: 12), Text('Preparando vista…', style: TextStyle(color: earth)),
+                                ])),
+                              errorBuilder: (_, error) => Center(child: TextButton.icon(
+                                icon: const Icon(Icons.info_outline),
+                                label: const Text('No se pudo abrir la vista'),
+                                onPressed: () => _sheet('Detalle de la vista', [Text('$error')]),
+                              )),
+                            )),
                           ),
                         ),
                         Positioned(
@@ -849,20 +886,6 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                           top: 4,
                           child: Column(
                             children: [
-                              _mapButton(
-                                Icons.add,
-                                'Acercar',
-                                () => game.zoom = (game.zoom * 1.4)
-                                    .clamp(.6, 9)
-                                    .toDouble(),
-                              ),
-                              _mapButton(
-                                Icons.remove,
-                                'Alejar',
-                                () => game.zoom = (game.zoom / 1.4)
-                                    .clamp(.6, 9)
-                                    .toDouble(),
-                              ),
                               _mapButton(
                                 Icons.my_location,
                                 'Centrar comunidad',
@@ -926,33 +949,6 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                 ],
               ),
       ),
-      if (note.isNotEmpty)
-        Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () => _sheet('Último resultado', [Text(note)]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Text(
-                      note,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 12, color: earth),
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(
-                tooltip: 'Cerrar mensaje',
-                onPressed: () => setState(() => note = ''),
-                icon: const Icon(Icons.close, size: 18),
-              ),
-            ],
-          ),
-        ),
       if (busy)
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -998,7 +994,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             Expanded(
               child: TextButton(
                 onPressed: busy || advancing ? null : () => _advance(1),
-                child: const Text('+ Día'),
+                style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 4),
+                    minimumSize: const Size(48, 48)),
+                child: const Text('+ Día', style: TextStyle(fontSize: 12)),
               ),
             ),
             Expanded(
@@ -1008,7 +1006,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   minimumSize: const Size(48, 48),
                 ),
-                child: const Text('Avanzar', maxLines: 1),
+                child: const Text('Avanzar', maxLines: 1, style: TextStyle(fontSize: 12)),
               ),
             ),
           ],
@@ -1041,6 +1039,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ),
   );
   void _mapOptions() => _sheet('Leer el mundo', [
+    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      _mapButton(Icons.remove, 'Alejar', () => game.zoom = (game.zoom / 1.4).clamp(.6, 9).toDouble()),
+      const Padding(padding: EdgeInsets.symmetric(horizontal: 12), child: Text('Zoom')),
+      _mapButton(Icons.add, 'Acercar', () => game.zoom = (game.zoom * 1.4).clamp(.6, 9).toDouble()),
+    ]),
     if(state['migrations'] is List)ListTile(
       title:const Text('Viajes de población'),
       subtitle:const Text('Residentes, rutas y provisiones en tránsito'),
@@ -1100,146 +1103,55 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   Widget _selection() {
     final s = society;
     if (s == null) {
-      return const Padding(
-        padding: EdgeInsets.all(14),
-        child: Text('Toca una comunidad para conocerla.'),
-      );
+      return const Padding(padding: EdgeInsets.all(14),
+          child: Text('Toca una comunidad para conocerla.'));
     }
     final resources = s['resources'] as Map? ?? {};
     final own = s['id'] == controlled;
     final alive = s['extinct'] != true && number(s['population']) > 0;
     final brief = CommunityBrief.read(state, s, _catalog);
-    final focus = brief.focus;
-    final quoteKey = '${session.snapshot?.generation}:${session.snapshot?.revision}:${s['id']}:${focus.action}:${focus.target}';
-    if (_briefQuoteKey != quoteKey) {
-      _briefQuoteKey = quoteKey;
-      _briefQuote = own && focus.action != null
-          ? _sim().preview(_queryCommand(focus.action!, target: focus.target, choice: focus.choice))
-          : null;
-    }
-    final quote = _briefQuote;
-    final travelling=((state['migrations'] as List?)??[]).any((j)=>['outbound','returning'].contains(j['status'])&&(j['from']==s['id']||j['to']==s['id']));
-    final leader = (s['people'] as List? ?? [])
-        .where((dynamic p) => p['id'] == s['leaderId'] && p['diedDay'] == null)
-        .firstOrNull;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-      decoration: const BoxDecoration(
-        color: ink,
-        border: Border(top: BorderSide(color: Color(0xff47514b))),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Flexible(child: SingleChildScrollView(primary: false, child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  '${s['name']}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () => _details(s),
-                child: const Text('Comunidad'),
-              ),
-            ],
-          ),
-          Text(
-            '${number(s['population'])} habitantes${leader == null ? '' : ' · Lidera ${leader['name']}'}',
-            style: const TextStyle(color: moss, fontSize: 12),
-          ),
-          Wrap(
-            spacing: 12,
-            runSpacing: 4,
-            children: [
-              _need('Alimento', number(resources['food']).toString(), brief.foodLow,
-                  'Reserva baja cuando cubre menos de 14 días de consumo actual. La producción puede reponerla.'),
-              _need('Agua', number(resources['water']).toString(), brief.waterLow,
-                  'Reserva de agua; el aviso compara 14 días de consumo, sin predecir producción.'),
-              _need('Plazas', '${brief.population}/${brief.housing}', brief.population > brief.housing,
-                  'Habitantes y capacidad de vivienda confirmada. Las obras pendientes aún no suman plazas.'),
-            ],
-          ),
-          const SizedBox(height: 4),
-          if(travelling)TextButton(onPressed:_journeys,child:const Text('Ver habitantes en camino')),
-          Text(focus.explanation, style: const TextStyle(fontSize: 12),
-              maxLines: 2, overflow: TextOverflow.ellipsis),
-          if (quote != null)
-            Text(quote.allowed ? _costText(quote) : quote.reason,
-              maxLines: 2, overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: gold, fontSize: 12)),
-          Row(children: [
-            Expanded(child: FilledButton(
-              onPressed: busy || advancing ? null : () => _openFocus(focus),
-              child: Text(focus.title, textAlign: TextAlign.center),
-            )),
-            IconButton(
-              tooltip: 'Guía opcional',
-              onPressed: busy || advancing ? null : _guide,
-              icon: const Icon(Icons.explore_outlined),
-            ),
-          ]),
-          ]))),
-          if (own && alive)
-            Row(
-              children: [
-                Expanded(
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                    ),
-                    onPressed: busy || advancing ? null : _build,
-                    child: const Text('Construir'),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                    ),
-                    onPressed: busy || advancing ? null : _communityActions,
-                    child: const Text('Más acciones'),
-                  ),
-                ),
-              ],
-            ),
-          if (!own && alive)
-            TextButton(
-              onPressed: busy || advancing
-                  ? null
-                  : () => _confirmCommand(
-                      'Dirigir esta comunidad',
-                      'control',
-                      target: s['id'].toString(),
-                    ),
-              child: const Text('Asumir dirección'),
-            ),
-        ],
-      ),
-    );
+    final leader = (s['people'] as List? ?? []).where((dynamic p) =>
+        p['id'] == s['leaderId'] && p['diedDay'] == null).firstOrNull;
+    final travelling = ((state['migrations'] as List?) ?? []).any((j) =>
+        ['outbound', 'returning'].contains(j['status']) &&
+        (j['from'] == s['id'] || j['to'] == s['id']));
+    return SingleChildScrollView(primary: false, child: CommunityRibbon(
+      name: '${s['name']}', leader: leader?['name']?.toString() ?? '',
+      population: brief.population, housing: brief.housing,
+      food: number(resources['food']), water: number(resources['water']),
+      foodLow: brief.foodLow, waterLow: brief.waterLow,
+      action: !own && alive ? 'Asumir dirección' : brief.focus.title,
+      enabled: !busy && !advancing, travellers: travelling,
+      onDetails: () => _details(s),
+      onFood: () => _stockDetails('Alimento', resources['food'] as num? ?? 0,
+          brief.foodLow, 'Reserva actual. Se repone con producción y disminuye con consumo, obras, viajes o intercambios.'),
+      onWater: () => _stockDetails('Agua', resources['water'] as num? ?? 0,
+          brief.waterLow, 'Reserva actual. La captación y el trabajo deben cubrir el consumo de la comunidad.'),
+      onHousing: () => _sheet('Espacio para vivir', [
+        Text('${brief.population} habitantes · ${brief.housing} plazas'),
+        const SizedBox(height: 12),
+        const Text('Las obras añaden plazas al terminar. Tener espacio permite crecer y recibir habitantes.'),
+      ]),
+      onAction: () => !own && alive
+          ? _confirmCommand('Dirigir esta comunidad', 'control', target: s['id'].toString())
+          : _openFocus(brief.focus),
+      onMore: own && alive ? _communityActions : null,
+    ));
   }
+
+  void _stockDetails(String name, num amount, bool low, String explanation) =>
+      _sheet(name, [
+        Text('$amount unidades', style: const TextStyle(color: gold, fontSize: 24)),
+        const SizedBox(height: 12),
+        Text(explanation),
+        if (low) const Padding(padding: EdgeInsets.only(top: 12),
+            child: Text('Reserva baja: menos de catorce días de consumo actual, sin descontar la producción futura.')),
+      ]);
 
   String _buildingName(dynamic id) =>
       _buildings.where((b) => b.id == id).firstOrNull?.name ?? '$id';
   String _technologyName(dynamic id) =>
       _technologies.where((t) => t.id == id).firstOrNull?.name ?? '$id';
-
-  Widget _need(String label, String value, bool warning, String explanation) =>
-      Tooltip(message: explanation, child: Text(
-        '${warning ? '⚠ ' : ''}$label $value',
-        style: TextStyle(fontSize: 12,
-            color: warning ? const Color(0xffffb199) : moss),
-      ));
 
   void _openFocus(CommunityFocus focus) {
     if (focus.action != null) {
@@ -1328,6 +1240,14 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     (((state['entities'] as Map?)?['cultures'] as List?)??[])
       .where((c)=>c['id']==id).firstOrNull?['name']?.toString()??'Sin registro';
   void _communityActions() => _sheet('Dirigir la comunidad', [
+    ListTile(leading: const Icon(Icons.construction), title: const Text('Construir'),
+      onTap: () {Navigator.pop(context);_build();}),
+    ListTile(leading: const Icon(Icons.explore_outlined), title: const Text('Guía opcional'),
+      onTap: () {Navigator.pop(context);_guide();}),
+    ListTile(leading: const Icon(Icons.map_outlined), title: const Text('Vista del mapa'),
+      onTap: () {Navigator.pop(context);_mapOptions();}),
+    if (note.isNotEmpty) ListTile(title: const Text('Último resultado'),
+      onTap: () {Navigator.pop(context);_sheet('Último resultado', [Text(note)]);}),
     if(state['migrations'] is List)ListTile(
       title:const Text('Viajes de población'),subtitle:const Text('Ver el recorrido y las provisiones de cada grupo'),
       onTap:(){Navigator.pop(context);_journeys();}),

@@ -1,0 +1,32 @@
+--------- beginning of main
+--------- beginning of system
+11-14 12:05:37.961 14271 14293 W libc    : Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+11-14 12:05:38.562 14269 14269 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 12:05:38.661 14269 14269 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 12:05:38.662 14269 14269 I AndroidRuntime: Using default boot image
+11-14 12:05:38.662 14269 14269 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 12:05:38.663 14269 14269 I AndroidRuntime: Leaving lock profiling enabled
+11-14 12:05:38.673 14269 14269 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 12:05:39.521 14271 14296 E libc    : Access denied finding property "ro.vendor.mediatek.platform"
+11-14 12:05:39.925 14271 14304 I flutter : The Dart VM service is listening on http://127.0.0.1:34245/LZmEEoEvkfs=/
+11-14 12:05:40.538 14271 14296 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+11-14 12:05:41.081 14269 14269 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 12:05:42.657 14269 14269 D AndroidRuntime: Shutting down VM
+--------- beginning of crash
+11-14 12:05:43.888 14271 14310 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 14310 (IplrVkFenceWait), pid 14271 (barriocero.eras)
+11-14 12:05:46.928 14325 14325 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 12:05:46.983 14325 14325 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 12:05:46.984 14325 14325 I AndroidRuntime: Using default boot image
+11-14 12:05:46.985 14325 14325 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 12:05:46.985 14325 14325 I AndroidRuntime: Leaving lock profiling enabled
+11-14 12:05:46.992 14325 14325 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 12:05:48.636 14325 14325 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 12:05:53.433 14325 14325 D AndroidRuntime: Shutting down VM
+11-14 12:05:56.575 14354 14354 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 12:05:56.626 14354 14354 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 12:05:56.627 14354 14354 I AndroidRuntime: Using default boot image
+11-14 12:05:56.627 14354 14354 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 12:05:56.628 14354 14354 I AndroidRuntime: Leaving lock profiling enabled
+11-14 12:05:56.630 14354 14354 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 12:05:57.975 14354 14354 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 12:05:59.916 14354 14354 D AndroidRuntime: Shutting down VM

@@ -1,5 +1,9 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.14 — lectura compacta, reglas 11 conservadas
+
+Tres indicadores y una acción reemplazan la ficha extensa. Construcción, guía y opciones avanzadas se abren expresamente; los costes continúan antes de confirmar. Los avisos no reducen el mapa; rótulos por selección/zoom, carga explícita y feedback de edificios completados mantienen el foco visual. Análisis limpio y 192 pruebas de integración. El recorrido nativo tiene evidencia propia en [pantalla compacta](validation/compact/). Los archivos de simulación y contenido coinciden con las entradas AOT congeladas: no se reinician los siglos ni se cierran E1–E6 por este cambio de interfaz.
+
 ## Actualización 0.13 — experiencia inicial, reglas 11 conservadas
 
 Ficha de necesidades y ocupación, acción sugerida con consulta transaccional, guía opcional derivada de órdenes aceptadas, acceso a funciones avanzadas y lectura local por bioma. Las marcas no confunden una orden con su resultado. Se retira la atribución visual de obras a una persona sin asignación real. La integración aprueba análisis y 191 pruebas; compilación, recorrido Android y ajuste posterior de rótulos se distinguen en [evidencia de experiencia](validation/experience/). Los 19 archivos de simulación y contenido contrastados con los binarios AOT congelados coinciden: esta presentación no reinicia la matriz larga. R1/R11 y E1 siguen parciales: el contador no demuestra las primeras diez decisiones completas, la comprensión ni el arte final.

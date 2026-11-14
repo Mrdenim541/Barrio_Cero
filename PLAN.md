@@ -21,6 +21,8 @@ La prioridad inmediata pasa a E1, para que el progreso del motor sea comprensibl
 
 Avance de E1 en 0.13: ficha de necesidades, sugerencia con validación real, guía opcional derivada de recibos, controles accesibles y primera mejora de lectura local. La integración aprueba 191 pruebas y compila APK profile conservando reglas 11; Android tiene evidencia propia. E1 permanece parcial hasta comprobar el recorrido inicial completo y su comprensión. La guía no sustituye la prueba de diez decisiones ni cierra R11. Véase [EXPERIENCE_FLOW.md](docs/EXPERIENCE_FLOW.md).
 
+Refinamiento 0.14 por petición del usuario: más superficie para observar el mundo, tres indicadores consultables y una acción, sin párrafos ni configuraciones permanentes. Costes y requisitos siguen antes de confirmar; construcción y guía se conservan bajo Más acciones. Indicador de carga, selección/zoom para rótulos y feedback de obras confirmadas mejoran la lectura. Análisis y 192 pruebas aprobados; APK y recorrido nativo tienen evidencia propia en `docs/validation/compact/`. No cambia la simulación ni se cierran los requisitos restantes de E1–E6.
+
 ## Validación proporcional al cambio
 
 - Durante el desarrollo: análisis y pruebas de comportamiento de los módulos cambiados, especialmente transacciones, población, guardado y compatibilidad. No repetir el recorrido Android completo ni los siglos por cada ajuste menor.

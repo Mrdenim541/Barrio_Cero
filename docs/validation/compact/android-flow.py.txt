@@ -1,0 +1,124 @@
+from pathlib import Path
+helper = Path('/tmp/barrio_experience_native.py').read_text().split('moved = False')[0]
+helper = helper.replace("text == label or text.startswith(label + '\\n'):",
+                        "text == label or text.startswith(label + '\\n') or text.startswith(label + ':'):")
+exec(helper)
+from PIL import Image
+import io
+
+out = root / 'docs/validation/compact/native'
+out.mkdir(parents=True, exist_ok=False)
+apk = root / 'build/deliverables/barrio-cero-eras-0.14.0-profile.apk'
+before = 'app_flutter/native_before_14_compact'
+after = 'app_flutter/native_after_14_compact'
+fixture = root / 'build/validation/experience_completed_checkpoint.json'
+initial = json.loads(fixture.read_text())['payload']['world']
+town = initial['societies'][0]
+biome = initial['tiles'][town['y'] * initial['size'] + town['x']]['biome']
+ground = [(130,147,101),(101,126,88),(182,156,108),
+          (133,136,123),(116,140,119),(108,133,128)][biome]
+result = {'version': '0.14.0+15', 'rulesVersion': 11,
+          'scope': 'Existing real prehistory save, compact ribbon, read-only resource detail, knowledge unlock, advanced build, completion and exact reopen',
+          'device': 'API29 software emulator, 320x640; not reference-phone performance'}
+
+def map_capture(name):
+    deadline = time.monotonic() + 90
+    while time.monotonic() < deadline:
+        raw = adb('exec-out', 'screencap', '-p')
+        image = Image.open(io.BytesIO(raw)).convert('RGB')
+        # This band was occupied by the old expanded information panel.
+        colors = image.crop((8,292,260,340)).getcolors(100000)
+        count = sum(n for n, c in colors
+                    if max(abs(c[i]-ground[i]) for i in range(3)) <= 14)
+        if count > 2500:
+            (out/name).write_bytes(raw)
+            result[name] = {'terrainPixelsInExpandedMapBand': count, 'band': [8,292,260,340]}
+            print('Rendered compact view: '+name, count, flush=True)
+            return
+        time.sleep(.5)
+    raise RuntimeError('Expanded map did not become visible; refusing premature screenshot')
+
+moved = False
+try:
+    assert apk.is_file()
+    stop()
+    if exists(before) or exists(after):
+        raise RuntimeError('Retained compact fixture exists; refusing overwrite')
+    original = inventory()
+    (out/'original-inventory.json').write_text(json.dumps(original,indent=2)+'\n')
+    result['installationOutput'] = adb('install','-r',str(apk)).decode()
+    result['apkSha256'] = hashlib.sha256(apk.read_bytes()).hexdigest()
+    run('mv',folder,before)
+    moved = True
+    run('mkdir',folder)
+    adb('push',str(fixture),'/data/local/tmp/barrio-compact-fixture.json')
+    run('cp','/data/local/tmp/barrio-compact-fixture.json',folder+'/world_0.json')
+    source = rawworld()
+    assert source == fixture.read_bytes()
+    adb('shell','am','start','-n',pkg+'/.MainActivity')
+    tap('Continuar historia')
+    map_capture('01-real-compact-neighborhood.png')
+    tap('Agua')
+    nodes = dump()
+    assert any('unidades' in (n.get('text') or n.get('content-desc') or '') for n in nodes)
+    assert rawworld() == source
+    capture('02-real-resource-on-demand.png')
+    result['resourceReadPreservesCheckpoint'] = True
+    adb('shell','input','keyevent','4')
+    tap('Aprender un oficio')
+    assert rawworld() == source
+    capture('03-real-research-cost.png')
+    tap('Confirmar orden')
+    learned = waitworld(lambda w: 'stone_tools' in w['societies'][0]['tech'])
+    assert abs(learned['societies'][0]['resources']['knowledge'] -
+               (town['resources']['knowledge'] - 5)) < .00001
+    assert learned['day'] == initial['day']
+    result['realKnowledgeUnlock'] = {'technology':'stone_tools','knowledgePaid':5,'noTimeAdvanced':True}
+    tap('Más acciones')
+    tap('Construir')
+    tap('Taller de talla')
+    quoted = rawworld()
+    capture('04-real-unlocked-building.png')
+    assert 'knapping_shed' not in world()['societies'][0]['built']
+    assert rawworld() == quoted
+    tap('Confirmar orden')
+    ordered = waitworld(lambda w: any(p['building']=='knapping_shed' for p in w['societies'][0]['projects']))
+    costs = next(b for b in json.loads((root/'assets/content/core.json').read_text())['buildings'] if b['id']=='knapping_shed')['costs']
+    for material, amount in costs.items():
+        assert abs(ordered['societies'][0]['resources'][material] -
+                   (learned['societies'][0]['resources'][material] - amount)) < .00001
+    result['actualBuildingCost'] = costs
+    tap('Avanzar')
+    tap('Avanzar un mes')
+    completed = waitworld(lambda w: w['societies'][0]['built'].get('knapping_shed')==1)
+    assert len(completed['societies'][0]['sites']) == len(town['sites']) + 1
+    final = rawworld()
+    result['persistentCompletion'] = {'day':completed['day'],'building':'knapping_shed','siteAdded':True}
+    map_capture('05-real-workshop-completed.png')
+    stop()
+    adb('shell','am','start','-n',pkg+'/.MainActivity')
+    tap('Continuar historia')
+    map_capture('06-real-compact-reopened.png')
+    assert rawworld() == final
+    result['forceStopReopenExact'] = True
+except Exception as error:
+    result['error'] = repr(error)
+    print(repr(error),flush=True)
+finally:
+    if moved:
+        stop()
+        if exists(after):
+            raise RuntimeError('Refusing retained fixture overwrite')
+        if exists(folder):
+            run('mv',folder,after)
+        if exists(folder):
+            raise RuntimeError('Original restoration destination still present')
+        run('mv',before,folder)
+        result['originalSavesRestoredExactly'] = inventory()==original
+        if not result['originalSavesRestoredExactly']:
+            raise RuntimeError('Original saves mismatch')
+    result['passed'] = 'error' not in result
+    (out/'results.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps(result,ensure_ascii=False),flush=True)
+if not result['passed']:
+    raise SystemExit(1)

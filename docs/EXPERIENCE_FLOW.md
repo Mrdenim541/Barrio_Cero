@@ -1,16 +1,18 @@
-# Experiencia inicial — integración 0.13
+# Experiencia inicial — integración 0.14
 
 Esta entrega forma parte de E1 y conserva reglas 11. No completa las obligaciones de E1–E6 ni la aceptación de las primeras diez decisiones.
 
 ## Acceso desde el barrio
 
-La ficha muestra habitantes, dirección, reservas de alimento y agua y ocupación de vivienda. Los avisos de reservas comparan catorce días de consumo actual: no son una predicción del agotamiento, porque la producción continúa. Las obras pendientes no suman plazas.
+La ficha compacta muestra nombre, dirigente y tres indicadores: alimento, agua y habitantes. Tocar cada indicador abre su detalle; Habitantes muestra también las plazas disponibles y ocupadas. Los avisos de reservas comparan catorce días de consumo actual: no son una predicción del agotamiento, porque la producción continúa. Las obras pendientes no suman plazas.
 
-La sugerencia prioriza una decisión pendiente, reservas bajas, una petición de convivencia, el trabajo ya comprometido, vivienda y posibilidades posteriores. Si ya se construye la mejora necesaria, conduce a la obra. En observación conduce a la ficha de la comunidad y explica que su gobierno sigue siendo autónomo.
+Una sola acción destaca la siguiente posibilidad: decisión pendiente, reservas bajas, petición de convivencia, trabajo comprometido, vivienda o progreso posterior. Si ya se construye la mejora necesaria, conduce a la obra. Al observar otra comunidad, tocar su nombre abre la ficha y Asumir dirección permite revisar el cambio de gobierno.
 
-Las sugerencias que emiten órdenes consultan `Simulation.preview`: la ficha muestra el coste o el motivo de indisponibilidad. La confirmación conserva los requisitos, personal, duración y comprobación de revisión. Leer la sugerencia, abrir la guía o mover la cámara no gasta materiales ni azar.
+Las explicaciones y los costes salen del primer plano. Al tocar una acción se consulta `Simulation.preview` y se muestran coste, requisitos, personal, duración y motivo de indisponibilidad antes de confirmar. Se conserva la comprobación de revisión. Leer indicadores, abrir la guía o mover la cámara no gasta materiales ni azar.
 
-Construir y Más acciones permanecen al pie de la ficha. Su información superior se desplaza con texto ampliado. Las funciones avanzadas continúan disponibles. La guía opcional también se abre desde Menú → Cómo empezar.
+El botón Más acciones (tres puntos) reúne Construir, guía opcional y vista del mapa, además de las funciones anteriores. La guía también se abre desde Menú → Cómo empezar. No hace falta completar la guía para acceder a las funciones avanzadas.
+
+Los resultados se muestran unos segundos sobre el mapa, sin reducir su tamaño. Pueden cerrarse o ampliarse al tocarlos, y el último permanece accesible en Más acciones → Último resultado. No son una nueva decisión ni una configuración.
 
 ## Guía libre
 
@@ -22,12 +24,14 @@ La prueba de las primeras diez decisiones de la especificación sigue pendiente:
 
 ## Lectura visual
 
-La cámara inicial se aproxima más; el botón Ver todo el asentamiento recupera el encuadre general. La selección táctil utiliza la misma transformación que el dibujo. Los rótulos de edificios utilizan las definiciones fijadas de cada mundo. El terreno local toma el bioma real de su celda; su textura y vegetación decorativa no representan inventarios adicionales.
+La cámara inicial se aproxima más; Ver todo el asentamiento recupera el encuadre general. Solo se dejan dos controles sobre la escena local. Arrastrar y pellizcar permiten recorrer y acercarse; los botones adicionales de zoom están en Vista del mapa. Los rótulos de edificios aparecen al seleccionar o acercarse suficientemente, usando las definiciones fijadas de cada mundo. La selección táctil comparte la transformación del dibujo. El terreno toma el bioma real; textura y vegetación decorativa no añaden inventarios.
+
+La carga tiene un indicador breve y el fallo de una vista ofrece acceso al detalle. Un borde de tres segundos identifica las ubicaciones realmente añadidas tras completar obras; ordenar una obra no lo activa. Reabrir o cambiar de mundo no celebra todos los edificios. El borde también caduca con movimiento reducido, sin alterar días, recursos ni azar.
 
 Se retira la animación que atribuía una obra a cualquier artesana por su oficio: la existencia de una obra no acredita una asignación personal. Las tareas y recorridos locales confirmados, el arte definitivo por era/especie y las escenas de consecuencias siguen pendientes.
 
 ## Comprobación y límites
 
-La evidencia de esta integración se conserva en `docs/validation/experience/`. Distingue análisis, pruebas, compilación y recorrido Android. La prueba Android utiliza un emulador por software, no acredita rendimiento del teléfono de referencia. Las partidas originales se apartan durante el recorrido y se restauran comprobando todos sus hashes.
+La evidencia actual está en `docs/validation/compact/` y la anterior en `docs/validation/experience/`. Se distinguen análisis, pruebas, compilación y recorrido Android. El emulador por software no acredita rendimiento del teléfono de referencia. Las partidas originales se apartan durante el recorrido y se restauran comprobando todos sus hashes.
 
 No cambian el esquema, la migración, el controlador de sesión, los paquetes fijados ni el motor. Se conservan las simulaciones AOT congeladas de reglas 11 y su procedencia; las nuevas pantallas se verifican por separado. E1 continúa abierto hasta demostrar el recorrido inicial completo, y R11 conserva la aceptación final ampliada en E5.

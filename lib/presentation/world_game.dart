@@ -20,6 +20,10 @@ class WorldGame extends FlameGame {
   Offset pan = Offset.zero;
   double zoom = 1;
   double phase = 0;
+  double _visualTime = 0;
+  Object? _generation;
+  Set<String> _knownSites = {};
+  final Map<String, double> recentSites = {};
   bool reduceMotion = false;
   bool mini = true;
   ui.Image? people, buildings, terrain;
@@ -28,6 +32,24 @@ class WorldGame extends FlameGame {
   final void Function(LocalSelection)? onLocalSelect;
   String? localSelected;
   WorldGame(this.onSelect, {this.onLocalSelect});
+
+  /// Visual feedback follows confirmed snapshots; it does not create buildings.
+  void present(Map<String, dynamic> snapshot, {required Object? generation}) {
+    final sites = <String>{
+      for (final town in snapshot['societies'] as List? ?? [])
+        for (final site in town['sites'] as List? ?? []) '${town['id']}:${site['id']}',
+    };
+    if (_generation == generation && data.isNotEmpty) {
+      for (final id in sites.difference(_knownSites)) {
+        recentSites[id] = _visualTime + 3;
+      }
+    } else {
+      recentSites.clear();
+    }
+    _generation = generation;
+    _knownSites = sites;
+    data = snapshot;
+  }
   @override
   Color backgroundColor() => const Color(0xff283d40);
   @override
@@ -48,6 +70,8 @@ class WorldGame extends FlameGame {
   @override
   void update(double dt) {
     super.update(dt);
+    _visualTime += dt;
+    recentSites.removeWhere((_, expiry) => expiry <= _visualTime);
     if (!reduceMotion) phase += dt;
   }
 
@@ -408,6 +432,10 @@ class WorldGame extends FlameGame {
         } else {
           _house(c, r.topLeft);
         }
+        if (recentSites.containsKey('${s['id']}:${e.id}')) {
+          c.drawRect(r.inflate(4), Paint()..color = gold
+            ..style = PaintingStyle.stroke..strokeWidth = 3);
+        }
       } else {
         final p = e.entity;
         final role = data['origin']=='prehistory'
@@ -462,6 +490,7 @@ class WorldGame extends FlameGame {
     final labels = <Rect>[];
     if (scale > .28) {
       for (final e in scene.entities.where((e) => e.kind == 'site')) {
+        if (e.id != localSelected && scale < .75) continue;
         final p = scene.toScreen(Offset(e.bounds.left, e.bounds.top - 22),
             Size(size.x, size.y), pan, zoom);
         if (p.dx < -90 || p.dx > size.x || p.dy < 36 || p.dy > size.y - 30) continue;
@@ -473,7 +502,7 @@ class WorldGame extends FlameGame {
           textDirection: TextDirection.ltr, maxLines: 1, ellipsis: '…',
         )..layout(maxWidth: 88);
         final box = Rect.fromLTWH(p.dx - 2, p.dy - 1, label.width + 4, label.height + 2);
-        final controls = Rect.fromLTWH(size.x - 56, 0, 56, 200);
+        final controls = Rect.fromLTWH(size.x - 56, 0, 56, 104);
         if (box.left < 4 || box.right > size.x - 4 || box.overlaps(controls) ||
             labels.any((previous) => previous.inflate(3).overlaps(box))) {
           continue;
@@ -483,20 +512,6 @@ class WorldGame extends FlameGame {
         label.paint(c, p);
       }
     }
-    _text(
-      c,
-      '${s['name']}  •  ${number(s['population'])} habitantes',
-      const Offset(14, 14),
-      color: const Color(0xfff8edd7),
-      fontSize: 12,
-    );
-    _text(
-      c,
-      'Toca para conocer · arrastra para recorrer',
-      Offset(14, size.y - 24),
-      color: const Color(0xfff8edd7),
-      fontSize: 11,
-    );
   }
 
   void _tree(Canvas c, Offset p) {

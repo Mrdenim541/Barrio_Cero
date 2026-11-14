@@ -1,0 +1,87 @@
+{
+  "recordedAt": "2026-11-14T12:12:32.632599+00:00",
+  "version": "0.14.0+15",
+  "rulesVersion": 11,
+  "batch": "E1",
+  "batchClosed": false,
+  "gameFinished": false,
+  "implemented": [
+    "Compact community ribbon with three on-demand indicators",
+    "One contextual primary action; construction/guide/advanced actions remain in overflow",
+    "Transient result overlay without scene resize",
+    "Two local-map controls; labels on selection or close zoom",
+    "Scene loading/error state and confirmed-building feedback"
+  ],
+  "integration": {
+    "passed": true,
+    "tests": 192,
+    "analysis": "clean",
+    "sourceFilesMatched": 75,
+    "sourceDifferencesSinceFullSuite": [],
+    "evidence": "integration-results.json"
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.14.0-profile.apk",
+    "sha256": "692f5bead61025a42624cf57b8274ed0e53037b0cf2158a5b7dcadf99d868860",
+    "bytes": 70040960,
+    "compiled": true,
+    "installedAndExecuted": true,
+    "mode": "profile",
+    "minSdk": 24,
+    "packageEvidence": "package.log",
+    "signatureEvidence": "signature.log"
+  },
+  "native": {
+    "resourceReadPreservesCheckpoint": true,
+    "research": {
+      "technology": "stone_tools",
+      "knowledgePaid": 5,
+      "noTimeAdvanced": true
+    },
+    "constructionCost": {
+      "wood": 4,
+      "stone": 8
+    },
+    "completion": {
+      "day": 60,
+      "building": "knapping_shed",
+      "siteAdded": true
+    },
+    "forceStopReopenExact": true,
+    "originalSavesRestoredExactly": true,
+    "coverage": "Scoped UI and causal research/build loop across preserved phases; not full game acceptance",
+    "firstFlow": "native/results.json",
+    "startupFailure": "continuation/results.json",
+    "resumedFlow": "continuation-retry/results.json",
+    "recordedFailures": [
+      "Catalog item was below visible viewport; first harness did not scroll",
+      "SIGSEGV in IplrVkFenceWait before entering the game; see vulkan-startup-crash.log"
+    ]
+  },
+  "approvedScreens": [
+    "native/01-real-compact-neighborhood.png",
+    "continuation-retry/02-real-workshop-completed.png",
+    "continuation-retry/03-real-compact-reopened.png"
+  ],
+  "manualImageReview": {
+    "passed": true,
+    "checked": [
+      "Actual Android frames",
+      "Larger visible scene area",
+      "No paragraph/configuration block on the main screen",
+      "Day 60 and visible new workshop on completed/reopened views"
+    ]
+  },
+  "simulationInputs": {
+    "rulesVersion": 11,
+    "compared": 19,
+    "differences": [],
+    "source": "build/validation/rules11-r2-aot/inputs.json"
+  },
+  "releaseAcceptanceSatisfied": false,
+  "pending": [
+    "Full first-ten-decision acceptance and comprehension review",
+    "E2-E5 systems/content/era/species/final-art scope",
+    "Physical reference-phone graphics, performance and final acceptance"
+  ]
+}
