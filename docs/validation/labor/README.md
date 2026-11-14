@@ -24,6 +24,8 @@ Las capturas proceden del APK ejecutado. El escenario es una regresión declarad
 
 Las cargas de apertura y maduras usan las mismas recetas, umbrales y muestreo diario. Sus resultados se conservan en `results.json`, diferenciando escenarios terminados y en curso. El caso de apertura 64×64, que falló con reglas 9 al caer temporalmente a 31, alcanzó ahora todo el siglo con un mínimo de 32. No se extrapola esa aprobación a mapas o baterías que aún no han terminado.
 
+La carga madura terminó en ambos tamaños: mínimo de 32 comunidades y 1.792 habitantes durante todos los 36.000 días, sin ayudas durante la ejecución. Es aprobación del escenario declarado de carga, no de toda apertura posible ni de rendimiento físico.
+
 La matriz de treinta semillas y dos milenios sigue identificada como en curso hasta obtener todos sus casos y el cierre del ejecutable. La matriz anterior completa de reglas 8 y la incompleta de reglas 9 mantienen su propia procedencia. Los tiempos y RSS de estos ejecutables corresponden a Linux compartido, no al teléfono Android 10/4 GB. FPS, latencia de controles, cancelación y memoria física de referencia siguen pendientes.
 
 R2 conserva pendientes de conservación global y contratos; R6, tránsito migratorio, territorio e instituciones. Tampoco se cierran genealogía biológica, herencia, especies, eras, narrativa completa, historia por bloques, catálogo ampliado, arte final o las diez decisiones de primera sesión.

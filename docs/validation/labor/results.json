@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-11-14T05:30:37.102025+00:00",
+  "recordedAt": "2026-11-14T05:33:37.121752+00:00",
   "version": "0.11.0+12",
   "rulesVersion": 10,
   "tests": {
@@ -67,7 +67,7 @@
     "installedAndExecuted": true
   },
   "sustained32": {
-    "state": "in_progress",
+    "state": "complete",
     "opening": [
       {
         "platform": "linux",
@@ -91,6 +91,31 @@
         "saveBytes": 2113202,
         "livingSettlements": 34,
         "historyEntries": 2157,
+        "pending": 2,
+        "measuresFps": false
+      },
+      {
+        "platform": "linux",
+        "osVersion": "Linux 6.18.57 #1 SMP Tue Oct 20 21:56:04 UTC 2026",
+        "processors": 5,
+        "dart": "3.9.2 (stable) (Wed Aug 27 03:49:40 2025 -0700) on \"linux_x64\"",
+        "map": 96,
+        "seed": 73,
+        "initialSettlements": 32,
+        "minimumLivingSettlements": 32,
+        "requestedDays": 36000,
+        "simulatedDays": 36000,
+        "terminal": "target_reached",
+        "daysWithAtLeast32LivingSettlements": 36000,
+        "sustained32SettlementScenario": true,
+        "populationSampleIntervalDays": 1,
+        "milliseconds": 454533,
+        "slowestYearMicroseconds": 6386411,
+        "rssBytes": 51347456,
+        "peakProcessRssBytes": 75419648,
+        "saveBytes": 2590767,
+        "livingSettlements": 36,
+        "historyEntries": 2360,
         "pending": 2,
         "measuresFps": false
       }
@@ -120,13 +145,38 @@
         "finalSaveBytes": 2071554,
         "referencePhonePerformance": false,
         "measuresFps": false
+      },
+      {
+        "fixture": "mature32-v1",
+        "normalOpeningBalanceTest": false,
+        "injectionsDuringRun": false,
+        "rules": 10,
+        "map": 96,
+        "seed": 73,
+        "initialSettlements": 32,
+        "initialPopulation": 1792,
+        "initialRoutes": 29,
+        "tradePolicy": "one paid starting route per origin, no autonomous new routes",
+        "technologyPrerequisitesClosed": true,
+        "minimumLivingSettlements": 32,
+        "minimumPopulation": 1792,
+        "requestedDays": 36000,
+        "actualDays": 36000,
+        "daysWith32Settlements": 36000,
+        "passedSustainedLoad": true,
+        "milliseconds": 374935,
+        "peakRssBytes": 73629696,
+        "initialSaveBytes": 1062465,
+        "finalSaveBytes": 2381463,
+        "referencePhonePerformance": false,
+        "measuresFps": false
       }
     ],
     "referencePhonePerformance": false,
-    "openingState": "in_progress",
-    "openingAccepted": false,
-    "matureState": "in_progress",
-    "matureAccepted": false
+    "openingState": "complete",
+    "openingAccepted": true,
+    "matureState": "complete",
+    "matureAccepted": true
   },
   "stability": {
     "state": "in_progress",
