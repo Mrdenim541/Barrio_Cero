@@ -40,6 +40,73 @@ void main() {
   }
 
   testWidgets(
+    'A chosen protagonist persists separately; exploration pauses only the camera',
+    (t) async {
+      size(t);
+      late dynamic screen;
+      await t.runAsync(() async {
+        await t.pumpWidget(const BarrioApp());
+        screen = t.state(find.byType(ErasScreen));
+        await screen.initialization;
+        await screen.session.createWorld(
+          seed: 17,
+          size: 64,
+          origin: 'prehistory',
+        );
+      });
+      await t.pump();
+      final before = screen.world.canonical();
+      final person = screen.world.societies[1].people.last;
+      await t.tap(find.text('MENÚ'));
+      await animate(t);
+      await t.tap(find.text('Elegir protagonista'));
+      await animate(t);
+      await t.ensureVisible(find.text(person.name));
+      await t.runAsync(() async {
+        await t.tap(find.text(person.name));
+        await screen.viewStore.read('view_0');
+      });
+      await animate(t);
+      expect(screen.selected, 's1');
+      expect(screen.game.followedIndividualId, person.id);
+      expect(find.text('Siguiendo a ${person.name}'), findsOneWidget);
+      expect(screen.world.canonical(), before);
+
+      await t.pumpWidget(const SizedBox.shrink());
+      await t.runAsync(() async {
+        await t.pumpWidget(const BarrioApp());
+        screen = t.state(find.byType(ErasScreen));
+        await screen.initialization;
+        await screen.session.loadSlot(0);
+        await screen.viewStore.read('view_0');
+      });
+      await animate(t);
+      expect(screen.game.followedIndividualId, person.id);
+      expect(screen.world.canonical(), before);
+      final map = t.getRect(find.byWidgetPredicate((w) => w is GameWidget));
+      await t.runAsync(() async {
+        await t.dragFrom(map.center, const Offset(48, 30));
+        await screen.viewStore.read('view_0');
+      });
+      await t.pump();
+      expect(screen.following, isFalse);
+      expect(screen.protagonist.individualId, person.id);
+      expect(screen.game.followedIndividualId, isNull);
+      await t.runAsync(() async {
+        await t.tap(find.text('Seguir'));
+        await screen.viewStore.read('view_0');
+      });
+      await t.pump();
+      expect(screen.game.followedIndividualId, person.id);
+      expect(screen.selected, 's1');
+      expect(screen.world.canonical(), before);
+      expect(screen.world.controlledId, isNull);
+      expect(t.takeException(), isNull);
+      await t.pumpWidget(const SizedBox.shrink());
+    },
+  );
+
+  testWidgets(
     'A pinch reaches the real selected settlement and returns to the planet without a command',
     (t) async {
       size(t);
@@ -79,6 +146,23 @@ void main() {
       await t.pump();
       await left.up();
       await right.up();
+      expect(screen.game.mode, 'Región');
+      final nearerLeft = await t.startGesture(
+        center - const Offset(25, 0),
+        pointer: 5,
+      );
+      final nearerRight = await t.startGesture(
+        center + const Offset(25, 0),
+        pointer: 6,
+      );
+      await nearerLeft.moveTo(center - const Offset(80, 0));
+      await nearerRight.moveTo(center + const Offset(80, 0));
+      await t.pump();
+      await nearerLeft.moveTo(center - const Offset(155, 0));
+      await nearerRight.moveTo(center + const Offset(155, 0));
+      await t.pump();
+      await nearerLeft.up();
+      await nearerRight.up();
       expect(screen.game.mode, 'Asentamiento');
       expect(screen.selected, 's0');
       expect(screen.world.canonical(), before);
@@ -139,7 +223,7 @@ void main() {
       expect(find.text('Intervenir'), findsOneWidget);
       await t.tap(find.byTooltip('Cerrar mensaje'));
       await t.pump();
-      await t.tap(find.text('Barrio'));
+      await t.tap(find.text('Seguir'));
       await t.pump();
       await t.tap(find.byTooltip('Ver todo el asentamiento'));
       await t.pump();
@@ -149,12 +233,7 @@ void main() {
       final map = t.getRect(find.byWidgetPredicate((w) => w is GameWidget));
       final scene = SettlementScene(screen.world.societies.first.toJson());
       final person = scene.entities.firstWhere((e) => e.kind == 'person');
-      final point = scene.toScreen(
-        person.bounds.center,
-        map.size,
-        screen.game.pan,
-        screen.game.zoom,
-      );
+      final point = screen.game.entityScreenPosition('s0', person);
       await t.tapAt(map.topLeft + point);
       await t.pump();
       await t.pump(const Duration(milliseconds: 200));

@@ -261,7 +261,7 @@ void main() {
     expect(find.text('Intervenir'), findsOneWidget);
     // Essential time controls must remain readable on the smallest phone.
     expect(tester.getSize(find.text('Avanzar')).height, lessThan(24));
-    expect(find.text('Barrio'), findsOneWidget);
+    expect(find.text('Seguir'), findsOneWidget);
     expect(find.text('Mundo'), findsOneWidget);
     expect(find.text('Historia'), findsOneWidget);
     final initialMap = tester.getRect(find.byWidgetPredicate((w) => w is GameWidget));
@@ -274,7 +274,7 @@ void main() {
     await tester.tap(find.text('Historia'));
     await tester.pump();
     expect(find.text('La memoria del mundo'), findsOneWidget);
-    await tester.tap(find.text('Barrio'));
+    await tester.tap(find.text('Seguir'));
     await tester.pump();
     expect(
       session.world.toJson(),
@@ -439,7 +439,7 @@ void main() {
         await screen.session.createWorld(seed: 42, size: 64);
       });
       await tester.pump();
-      await tester.tap(find.text('Barrio'));
+      await tester.tap(find.text('Seguir'));
       await tester.pump(const Duration(milliseconds: 500));
       expect(tester.takeException(), isNull);
       final mapBounds = tester.getRect(find.byWidgetPredicate((w) => w is GameWidget));
@@ -474,7 +474,7 @@ void main() {
       await tester.pump();
       expect(find.text('La memoria del mundo'), findsOneWidget);
       expect(tester.takeException(), isNull);
-      await tester.tap(find.text('Barrio'));
+      await tester.tap(find.text('Seguir'));
       await tester.pump();
       await tester.ensureVisible(find.byTooltip('Comunidad'));
       await tester.tap(find.byTooltip('Comunidad'));
@@ -500,7 +500,7 @@ void main() {
         await screen.session.createWorld(seed: 42, size: 64);
       });
       await tester.pump();
-      await tester.tap(find.text('Barrio'));
+      await tester.tap(find.text('Seguir'));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.byTooltip('Ver todo el asentamiento'));
       await tester.pump();
@@ -511,12 +511,7 @@ void main() {
       final scene = SettlementScene(screen.world.societies.first.toJson());
       for (final kind in ['site', 'person']) {
         final entity = scene.entities.firstWhere((e) => e.kind == kind);
-        final point = scene.toScreen(
-          entity.bounds.center,
-          map.size,
-          screen.game.pan,
-          screen.game.zoom,
-        );
+        final point = screen.game.entityScreenPosition('s0', entity);
         await tester.tapAt(map.topLeft + point);
         await tester.pump(const Duration(milliseconds: 500));
         expect(
@@ -552,7 +547,7 @@ void main() {
         await screen.session.loadSlot(0);
       });
       await tester.pump();
-      await tester.tap(find.text('Barrio'));
+      await tester.tap(find.text('Seguir'));
       await tester.pump(const Duration(milliseconds: 500));
       Future<void> openUpgrade() async {
         await tester.tap(find.text('MENÚ'));

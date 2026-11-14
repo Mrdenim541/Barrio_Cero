@@ -1,0 +1,7 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/follow_target_test.dart
+00:00 +0: /workspace/Barrio_Cero/test/follow_target_test.dart: Following survives relocation and reload without acquiring authority
+00:00 +1: /workspace/Barrio_Cero/test/follow_target_test.dart: Camera preference rejects corruption and another world or identity
+00:00 +2: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:02 +3: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A pinch reaches the real selected settlement and returns to the planet without a command
+00:03 +4: /workspace/Barrio_Cero/test/observer_presentation_test.dart: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it
+00:05 +5: All tests passed!

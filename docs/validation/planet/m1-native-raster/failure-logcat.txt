@@ -1,0 +1,402 @@
+--------- beginning of main
+11-14 16:03:59.216  6713  6713 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:03:59.844  6331  6331 I flutter : BARRIO_SCENE_STATS {"sceneProfile":"planet-camera-v1","map":96,"lod":"Asentamiento","zoom":139.94666666666666,"frames":60,"renderedFramesPerSecond":11.011355693850717,"buildP90Micros":35702,"rasterP90Micros":103083,"visibleSettlements":1,"visibleSites":7,"visiblePeople":3,"terrainBlocks":2,"pictureCacheBytes":11157112,"scope":"profile whole-UI frames; host/device identity supplied by harness"}
+11-14 16:04:00.018  2063  2063 D KeyguardClockSwitch: Updating clock: 404
+11-14 16:04:00.409  6713  6713 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:04:00.559  6713  6713 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:04:00.597  6713  6713 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:00.929  6713  6713 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:04:01.062  6713  6713 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+11-14 16:04:01.238  6713  6713 D AndroidRuntime: Shutting down VM
+11-14 16:04:01.405  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3898304 , only wrote 3897917
+11-14 16:04:01.512  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3902659 , only wrote 3902544
+11-14 16:04:01.534  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3903486 , only wrote 3903205
+11-14 16:04:01.553  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3904073 , only wrote 3903866
+11-14 16:04:01.572  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3904698 , only wrote 3904527
+11-14 16:04:01.589  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3905244 , only wrote 3904527
+11-14 16:04:01.649  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3907182 , only wrote 3907171
+11-14 16:04:01.681  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3908601 , only wrote 3908493
+11-14 16:04:01.702  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3909406 , only wrote 3909154
+11-14 16:04:01.721  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3909983 , only wrote 3909154
+11-14 16:04:01.742  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3910105 , only wrote 3909815
+11-14 16:04:01.754  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3910344 , only wrote 3909815
+11-14 16:04:01.766  6331  6331 I Choreographer: Skipped 30 frames!  The application may be doing too much work on its main thread.
+11-14 16:04:01.787  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3911239 , only wrote 3911137
+11-14 16:04:01.802  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3911829 , only wrote 3911798
+11-14 16:04:01.820  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3912574 , only wrote 3912459
+11-14 16:04:01.846  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3913598 , only wrote 3913120
+11-14 16:04:01.862  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3913850 , only wrote 3913781
+11-14 16:04:01.909  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3915822 , only wrote 3915764
+11-14 16:04:02.003  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3919940 , only wrote 3919730
+11-14 16:04:02.007  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3919886 , only wrote 3919730
+11-14 16:04:02.037  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3921046 , only wrote 3920391
+11-14 16:04:02.058  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3921321 , only wrote 3921052
+11-14 16:04:02.068  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3921517 , only wrote 3921052
+11-14 16:04:02.097  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3922327 , only wrote 3921713
+11-14 16:04:02.113  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3922423 , only wrote 3922374
+11-14 16:04:02.173  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3925016 , only wrote 3923035
+11-14 16:04:02.191  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3923821 , only wrote 3923696
+11-14 16:04:02.272  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3927273 , only wrote 3927001
+11-14 16:04:02.278  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3927241 , only wrote 3927001
+11-14 16:04:02.302  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3928089 , only wrote 3927662
+11-14 16:04:02.435  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3933524 , only wrote 3932950
+11-14 16:04:02.452  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3933699 , only wrote 3933611
+11-14 16:04:02.572  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3938905 , only wrote 3938899
+11-14 16:04:02.586  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3939493 , only wrote 3938899
+11-14 16:04:02.676  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3942884 , only wrote 3942865
+11-14 16:04:02.723  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3944914 , only wrote 3944848
+11-14 16:04:02.755  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3946274 , only wrote 3946170
+11-14 16:04:02.797  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3948029 , only wrote 3947492
+11-14 16:04:02.835  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3949174 , only wrote 3948153
+11-14 16:04:02.840  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3948335 , only wrote 3948153
+11-14 16:04:02.872  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3949569 , only wrote 3949475
+11-14 16:04:02.898  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3950649 , only wrote 3950136
+11-14 16:04:02.959  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3952800 , only wrote 3952780
+11-14 16:04:02.989  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3954126 , only wrote 3954102
+11-14 16:04:03.230  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3964722 , only wrote 3964678
+11-14 16:04:03.254  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3965718 , only wrote 3965339
+11-14 16:04:03.279  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3966447 , only wrote 3966000
+11-14 16:04:03.294  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3966664 , only wrote 3966661
+11-14 16:04:03.564  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3978578 , only wrote 3978559
+11-14 16:04:03.596  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3979979 , only wrote 3979881
+11-14 16:04:03.809  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3989260 , only wrote 3989135
+11-14 16:04:03.825  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3989825 , only wrote 3989796
+11-14 16:04:03.905  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3993351 , only wrote 3993101
+11-14 16:04:03.970  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3995951 , only wrote 3995745
+11-14 16:04:03.985  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 3996426 , only wrote 3996406
+11-14 16:04:04.137  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 4003069 , only wrote 4003016
+11-14 16:04:04.154  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 4003788 , only wrote 4003677
+11-14 16:04:04.170  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 4004380 , only wrote 4004338
+11-14 16:04:04.292  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 4009737 , only wrote 4009626
+11-14 16:04:04.324  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 4011020 , only wrote 4010948
+11-14 16:04:04.370  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 4012976 , only wrote 4012931
+11-14 16:04:04.471  1697  3332 W audio_hw_generic: Not supplying enough data to HAL, expected position 4017377 , only wrote 4016236
+11-14 16:04:04.532  1697  1848 W audio_hw_generic: Not supplying enough data to HAL, expected position 4021437 , only wrote 4018880
+--------- beginning of system
+11-14 16:04:05.679  1928  2205 I ActivityManager: Force stopping com.barriocero.eras appid=10116 user=0: from pid 6736
+11-14 16:04:05.705  1928  2205 I ActivityManager: Killing 6331:com.barriocero.eras/u0a116 (adj 0): stop com.barriocero.eras
+11-14 16:04:05.727  1928  2205 W ActivityTaskManager: Force removing ActivityRecord{1393831 u0 com.barriocero.eras/.MainActivity t81 f}: app died, no saved state
+11-14 16:04:05.848  1928  2205 W InputReader: Device has associated, but no associated display id.
+11-14 16:04:05.848  1928  2205 I chatty  : uid=1000(system) Binder:1928_5 identical 8 lines
+11-14 16:04:05.848  1928  2205 W InputReader: Device has associated, but no associated display id.
+11-14 16:04:05.997  1928  1956 I libprocessgroup: Successfully killed process cgroup uid 10116 pid 6331 in 285ms
+11-14 16:04:05.992  1688  1688 I Zygote  : Process 6331 exited due to signal 9 (Killed)
+11-14 16:04:06.086  1928  1946 W system_server: Long monitor contention with owner Binder:1928_5 (2205) at void com.android.server.am.ActivityManagerService.forceStopPackage(java.lang.String, int)(ActivityManagerService.java:4245) waiters=0 in void com.android.server.am.ActivityManagerService.dispatchUidsChanged() for 404ms
+11-14 16:04:06.130  2247  2247 D CarrierSvcBindHelper: No carrier app for: 0
+11-14 16:04:06.177  1928  1948 W ActivityManager: setHasOverlayUi called on unknown pid: 6331
+11-14 16:04:06.218  1928  1946 W Looper  : Slow dispatch took 536ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=null m=53
+11-14 16:04:06.219  1928  1946 W Looper  : Slow delivery took 495ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=null m=32
+11-14 16:04:06.283  1928  1946 W Looper  : Drained
+11-14 16:04:06.303  1711  1764 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 16:04:06.424  1711  1764 I chatty  : uid=1000(system) HwBinder:1711_2 identical 1 line
+11-14 16:04:06.426  1711  1764 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 16:04:06.448  2336  2615 D EGL_emulation: eglMakeCurrent: 0x7f3bf6af6bc0: ver 3 0 (tinfo 0x7f3c41da11e0)
+11-14 16:04:06.789  1928  2205 W system_server: Long monitor contention with owner android.bg (1953) at boolean com.android.server.inputmethod.InputMethodManagerService$MyPackageMonitor.onHandleForceStop(android.content.Intent, java.lang.String[], int, boolean)(InputMethodManagerService.java:1140) waiters=0 in com.android.internal.view.InputBindResult com.android.server.inputmethod.InputMethodManagerService.startInputOrWindowGainedFocus(int, com.android.internal.view.IInputMethodClient, android.os.IBinder, int, int, int, android.view.inputmethod.EditorInfo, com.android.internal.view.IInputContext, int, int) for 178ms
+11-14 16:04:07.395  1928  4798 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.barriocero.eras/.MainActivity} from uid 2000
+11-14 16:04:07.848  1711  1764 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 16:04:08.106  1688  1688 D Zygote  : Forked child process 6746
+11-14 16:04:08.239  6746  6746 I barriocero.era: Late-enabling -Xcheck:jni
+11-14 16:04:08.299  1928  1955 W ActivityManager: Slow operation: 640ms so far, now at startProcess: returned from zygote!
+11-14 16:04:08.300  1928  1955 W ActivityManager: Slow operation: 640ms so far, now at startProcess: done updating battery stats
+11-14 16:04:08.300  1928  1955 W ActivityManager: Slow operation: 641ms so far, now at startProcess: building log message
+11-14 16:04:08.301  1928  1955 I ActivityManager: Start proc 6746:com.barriocero.eras/u0a116 for activity {com.barriocero.eras/com.barriocero.eras.MainActivity}
+11-14 16:04:08.301  1928  1955 W ActivityManager: Slow operation: 641ms so far, now at startProcess: starting to update pids map
+11-14 16:04:08.313  1928  1955 W ActivityManager: Slow operation: 654ms so far, now at startProcess: done updating pids map
+11-14 16:04:08.382  6746  6746 E barriocero.era: Unknown bits set in runtime_flags: 0x8000
+11-14 16:04:08.416  6746  6746 W barriocero.era: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:04:08.645  1928  3290 W InputReader: Device has associated, but no associated display id.
+11-14 16:04:08.645  1928  3290 I chatty  : uid=1000(system) Binder:1928_C identical 8 lines
+11-14 16:04:08.645  1928  3290 W InputReader: Device has associated, but no associated display id.
+11-14 16:04:09.155  2336  2615 D EGL_emulation: eglMakeCurrent: 0x7f3bf6af6bc0: ver 3 0 (tinfo 0x7f3c41da11e0)
+11-14 16:04:10.124  1928  2532 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+11-14 16:04:10.269  1735  2332 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 16:04:10.284  1735  2332 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+11-14 16:04:10.290  6746  6769 D libEGL  : Emulator has host GPU support, qemu.gles is set to 1.
+11-14 16:04:10.309  6746  6769 W libc    : Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+11-14 16:04:10.279  6746  6746 W RenderThread: type=1400 audit(0.0:434): avc: denied { write } for name="property_service" dev="tmpfs" ino=7846 scontext=u:r:untrusted_app:s0:c116,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=com.barriocero.eras
+11-14 16:04:10.704  6746  6769 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+11-14 16:04:10.710  6746  6769 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+11-14 16:04:10.773  6746  6769 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+11-14 16:04:11.979  6746  6746 W barriocero.eras: type=1400 audit(0.0:435): avc: denied { read } for name="max_map_count" dev="proc" ino=28628 scontext=u:r:untrusted_app:s0:c116,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=com.barriocero.eras
+11-14 16:04:12.138  6746  6746 D HostConnection: HostConnection::get() New Host Connection established 0x7f3bf6d93ec0, tid 6746
+11-14 16:04:12.226  6746  6746 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-14 16:04:12.310  6746  6746 D EGL_emulation: eglCreateContext: 0x7f3bf6ddcb40: maj 3 min 0 rcv 3
+11-14 16:04:12.316  6746  6746 D EGL_emulation: eglCreateContext: 0x7f3bf6ddcbe0: maj 3 min 0 rcv 3
+11-14 16:04:12.334  6746  6773 D HostConnection: HostConnection::get() New Host Connection established 0x7f3bf6ddcd20, tid 6773
+11-14 16:04:12.376  6746  6773 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-14 16:04:12.377  6746  6773 D EGL_emulation: eglMakeCurrent: 0x7f3bf6ddcbe0: ver 3 0 (tinfo 0x7f3bf6de1c80)
+11-14 16:04:12.525  6746  6779 I flutter : The Dart VM service is listening on http://127.0.0.1:42911/5fVZD084gSM=/
+11-14 16:04:12.846  6746  6746 W barriocero.era: Accessing hidden method Landroid/view/WindowInsets$Type;->systemBars()I (blacklist, linking, denied)
+11-14 16:04:12.847  6746  6746 I chatty  : uid=10116(com.barriocero.eras) identical 1 line
+11-14 16:04:12.848  6746  6746 W barriocero.era: Accessing hidden method Landroid/view/WindowInsets$Type;->systemBars()I (blacklist, linking, denied)
+11-14 16:04:13.049  6746  6746 W barriocero.era: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (greylist, reflection, allowed)
+11-14 16:04:13.050  6746  6746 W barriocero.era: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (greylist, reflection, allowed)
+11-14 16:04:13.050  6746  6746 W barriocero.era: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (greylist, reflection, allowed)
+11-14 16:04:13.051  6746  6746 W barriocero.era: Accessing hidden method Landroid/util/LongArray;->get(I)J (greylist, reflection, allowed)
+11-14 16:04:13.757  6746  6746 I Choreographer: Skipped 213 frames!  The application may be doing too much work on its main thread.
+11-14 16:04:14.606  6746  6767 D HostConnection: HostConnection::get() New Host Connection established 0x7f3c41e1aca0, tid 6767
+11-14 16:04:14.606  6746  6767 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-14 16:04:14.620  6746  6767 D EGL_emulation: eglCreateContext: 0x7f3c41e1ae80: maj 3 min 0 rcv 3
+11-14 16:04:14.643  6746  6767 D EGL_emulation: eglMakeCurrent: 0x7f3c41e1ae80: ver 3 0 (tinfo 0x7f3c41e20680)
+11-14 16:04:14.727  1711  1764 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 16:04:14.748  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+11-14 16:04:14.754  6746  6767 W Gralloc3: mapper 3.x is not supported
+11-14 16:04:14.807  1711  1764 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 16:04:14.814  6746  6767 D HostConnection: createUnique: call
+11-14 16:04:14.815  6746  6767 D HostConnection: HostConnection::get() New Host Connection established 0x7f3bf6ddfde0, tid 6767
+11-14 16:04:14.818  6746  6767 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-14 16:04:17.553  1928  1948 W ActivityTaskManager: Launch timeout has expired, giving up wake lock!
+11-14 16:04:18.874  1928  1953 E memtrack: Couldn't load memtrack module
+11-14 16:04:18.875  1928  1953 W android.os.Debug: failed to get memory consumption info: -1
+11-14 16:04:21.363  6782  6782 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:04:21.419  6782  6782 W app_process: type=1400 audit(0.0:436): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:21.441  6782  6782 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:04:21.442  6782  6782 I AndroidRuntime: Using default boot image
+11-14 16:04:21.444  6782  6782 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:04:21.444  6782  6782 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:04:21.429  6782  6782 W app_process: type=1400 audit(0.0:437): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:21.454  6782  6782 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:04:21.429  6782  6782 W app_process: type=1400 audit(0.0:438): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:21.651  6782  6782 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:04:23.751  6782  6782 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:04:24.033  6782  6782 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:04:24.129  6782  6782 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:24.178  6782  6782 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:24.541  6782  6782 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:04:24.829  6782  6782 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:04:25.303  1928  1928 W Looper  : Slow dispatch took 147ms main h=com.android.server.accessibility.AccessibilityManagerService$MainHandler c=com.android.server.accessibility.-$$Lambda$UiAutomationManager$UiAutomationService$z2oxrodQt4ZxyzsfB6p_GYgwxqk@f6e9ec9 m=0
+11-14 16:04:25.338  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:04:25.387  1928  1928 W Looper  : Slow delivery took 214ms main h=com.android.server.accessibility.AccessibilityManagerService$MainHandler c=<recycled PooledLambda@3ee33ef> m=0
+11-14 16:04:25.389  1928  1928 W Looper  : Drained
+11-14 16:04:26.482  1928  4798 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@c2d2e93
+11-14 16:04:26.517  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:04:26.659  6782  6782 D AndroidRuntime: Shutting down VM
+11-14 16:04:26.708  1928  1928 W Looper  : Slow dispatch took 115ms main h=com.android.server.accessibility.AccessibilityManagerService$MainHandler c=com.android.server.accessibility.-$$Lambda$AccessibilityManagerService$RFkfb_W9wnTTs_gy8Dg3k2uQOYQ@717f4da m=0
+11-14 16:04:30.165  6796  6796 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:04:30.236  6796  6796 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:04:30.237  6796  6796 I AndroidRuntime: Using default boot image
+11-14 16:04:30.246  6796  6796 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:04:30.246  6796  6796 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:04:30.249  6796  6796 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:04:30.209  6796  6796 W app_process: type=1400 audit(0.0:439): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:30.219  6796  6796 I chatty  : uid=2000(shell) app_process identical 1 line
+11-14 16:04:30.229  6796  6796 W app_process: type=1400 audit(0.0:441): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:31.118  6796  6796 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:04:33.662  6796  6796 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:04:34.050  6796  6796 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:04:34.138  6796  6796 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:34.191  6796  6796 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:34.703  6796  6796 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:04:35.000  6796  6796 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:04:35.707  1928  1928 W Looper  : Slow dispatch took 257ms main h=com.android.server.accessibility.AccessibilityManagerService$MainHandler c=com.android.server.accessibility.-$$Lambda$UiAutomationManager$UiAutomationService$z2oxrodQt4ZxyzsfB6p_GYgwxqk@a9084a6 m=0
+11-14 16:04:35.848  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:04:35.849  1928  1928 W Looper  : Slow dispatch took 107ms main h=com.android.providers.settings.SettingsProvider$SettingsRegistry$MyHandler c=null m=1
+11-14 16:04:35.878  1928  1928 W Looper  : Slow delivery took 216ms main h=com.android.server.accessibility.AccessibilityManagerService$MainHandler c=<recycled PooledLambda@6573ee7> m=0
+11-14 16:04:35.979  1928  1928 W Looper  : Drained
+11-14 16:04:37.048  1928  4798 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@beea7e8
+11-14 16:04:37.085  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:04:37.429  6796  6796 D AndroidRuntime: Shutting down VM
+11-14 16:04:41.906  1742  1742 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+11-14 16:04:43.301  6810  6810 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:04:43.446  6810  6810 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:04:43.447  6810  6810 I AndroidRuntime: Using default boot image
+11-14 16:04:43.467  6810  6810 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:04:43.467  6810  6810 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:04:43.477  6810  6810 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:04:43.409  6810  6810 W app_process: type=1400 audit(0.0:442): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:43.429  6810  6810 I chatty  : uid=2000(shell) app_process identical 1 line
+11-14 16:04:43.459  6810  6810 W app_process: type=1400 audit(0.0:444): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:44.086  6810  6810 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:04:44.956  1801  1801 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+11-14 16:04:46.545  6810  6810 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:04:46.975  6810  6810 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:04:47.184  6810  6810 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:47.220  6810  6810 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:47.997  6810  6810 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:04:48.232  6810  6810 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:04:48.448  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:04:49.809  1928  3290 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@6dfcc39
+11-14 16:04:49.869  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:04:49.997  1928  1928 W Looper  : Slow dispatch took 119ms main h=com.android.providers.settings.SettingsProvider$SettingsRegistry$MyHandler c=null m=2
+11-14 16:04:50.150  6810  6810 D AndroidRuntime: Shutting down VM
+11-14 16:04:55.340  6824  6824 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:04:55.439  6824  6824 W app_process: type=1400 audit(0.0:445): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:55.448  6824  6824 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:04:55.449  6824  6824 I AndroidRuntime: Using default boot image
+11-14 16:04:55.452  6824  6824 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:04:55.439  6824  6824 W app_process: type=1400 audit(0.0:446): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:55.476  6824  6824 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:04:55.459  6824  6824 W app_process: type=1400 audit(0.0:447): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:04:55.480  6824  6824 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:04:55.877  6824  6824 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:04:58.334  6824  6824 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:04:58.662  6824  6824 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:04:58.761  6824  6824 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:58.806  6824  6824 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:04:59.327  6824  6824 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:04:59.707  6824  6824 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:00.130  2063  2063 D KeyguardClockSwitch: Updating clock: 405
+11-14 16:05:00.548  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:01.436  2063  2415 I OpenGLRenderer: Davey! duration=1163ms; Flags=0, IntendedVsync=4073153770486, Vsync=4073153770486, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=4073164475719, AnimationStart=4073172005680, PerformTraversalsStart=4073172019623, DrawStart=4073742699700, SyncQueued=4073796783329, SyncStart=4073822784739, IssueDrawCommandsStart=4073879090163, SwapBuffers=4074301951535, FrameCompleted=4074343736164, DequeueBufferDuration=3082000, QueueBufferDuration=11704000,
+11-14 16:05:01.899  1928  6739 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@b0fdb18
+11-14 16:05:01.985  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:02.234  6824  6824 D AndroidRuntime: Shutting down VM
+11-14 16:05:07.208  6838  6838 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:05:07.259  6838  6838 W app_process: type=1400 audit(0.0:448): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:07.269  6838  6838 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:05:07.271  6838  6838 I AndroidRuntime: Using default boot image
+11-14 16:05:07.259  6838  6838 W app_process: type=1400 audit(0.0:449): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:07.276  6838  6838 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:05:07.276  6838  6838 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:05:07.269  6838  6838 W app_process: type=1400 audit(0.0:450): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:07.278  6838  6838 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:05:07.401  6838  6838 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:05:08.336  6838  6838 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:05:08.540  6838  6838 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:05:08.575  6838  6838 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:08.591  6838  6838 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:08.786  6838  6838 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:05:08.978  6838  6838 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:09.114  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:10.299  1928  3290 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@dfd7273
+11-14 16:05:10.325  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:10.458  6838  6838 D AndroidRuntime: Shutting down VM
+11-14 16:05:13.459  6852  6852 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:05:13.549  6852  6852 W app_process: type=1400 audit(0.0:451): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:13.566  6852  6852 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:05:13.567  6852  6852 I AndroidRuntime: Using default boot image
+11-14 16:05:13.549  6852  6852 W app_process: type=1400 audit(0.0:452): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:13.574  6852  6852 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:05:13.574  6852  6852 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:05:13.585  6852  6852 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:05:13.579  6852  6852 W app_process: type=1400 audit(0.0:453): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:13.821  6852  6852 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:05:15.196  6852  6852 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:05:15.349  6852  6852 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:05:15.400  6852  6852 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:15.430  6852  6852 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:15.748  6852  6852 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:05:15.965  6852  6852 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:16.133  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:17.375  1928  4798 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@38ae83a
+11-14 16:05:17.379  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:17.490  6852  6852 D AndroidRuntime: Shutting down VM
+11-14 16:05:19.872  6866  6866 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:05:19.899  6866  6866 W app_process: type=1400 audit(0.0:454): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:19.909  6866  6866 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:05:19.909  6866  6866 I AndroidRuntime: Using default boot image
+11-14 16:05:19.899  6866  6866 W app_process: type=1400 audit(0.0:455): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:19.911  6866  6866 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:05:19.911  6866  6866 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:05:19.909  6866  6866 W app_process: type=1400 audit(0.0:456): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:19.927  6866  6866 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:05:20.030  6866  6866 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:05:20.895  6866  6866 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:05:21.042  6866  6866 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:05:21.078  6866  6866 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:21.101  6866  6866 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:21.593  6866  6866 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:05:21.812  6866  6866 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:22.030  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:23.175  1928  6739 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@bb0ba1d
+11-14 16:05:23.187  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:23.267  6866  6866 D AndroidRuntime: Shutting down VM
+11-14 16:05:27.282  6880  6880 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:05:27.319  6880  6880 W app_process: type=1400 audit(0.0:457): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:27.345  6880  6880 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:05:27.345  6880  6880 I AndroidRuntime: Using default boot image
+11-14 16:05:27.363  6880  6880 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:05:27.363  6880  6880 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:05:27.366  6880  6880 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:05:27.329  6880  6880 W app_process: type=1400 audit(0.0:458): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:27.359  6880  6880 W app_process: type=1400 audit(0.0:459): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:27.597  6880  6880 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:05:29.048  6880  6880 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:05:29.298  6880  6880 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:05:29.378  6880  6880 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:29.400  6880  6880 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:29.724  6880  6880 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:05:29.925  6880  6880 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:30.136  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:31.301  1928  6739 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@c796c8c
+11-14 16:05:31.317  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:31.400  6880  6880 D AndroidRuntime: Shutting down VM
+11-14 16:05:34.019  6894  6894 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:05:34.049  6894  6894 W app_process: type=1400 audit(0.0:460): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:34.070  6894  6894 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:05:34.071  6894  6894 I AndroidRuntime: Using default boot image
+11-14 16:05:34.049  6894  6894 W app_process: type=1400 audit(0.0:461): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:34.078  6894  6894 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:05:34.078  6894  6894 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:05:34.049  6894  6894 W app_process: type=1400 audit(0.0:462): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:34.081  6894  6894 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:05:34.217  6894  6894 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:05:35.166  6894  6894 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:05:35.329  6894  6894 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:05:35.407  6894  6894 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:35.426  6894  6894 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:35.689  6894  6894 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:05:35.835  6894  6894 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:36.019  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:37.217  1928  6739 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@839e5b7
+11-14 16:05:37.286  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:37.447  1928  1928 W Looper  : Slow dispatch took 125ms main h=com.android.server.accessibility.AccessibilityManagerService$MainHandler c=<recycled PooledLambda@6573ee7> m=0
+11-14 16:05:37.458  6894  6894 D AndroidRuntime: Shutting down VM
+11-14 16:05:40.094  6908  6908 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:05:40.119  6908  6908 W app_process: type=1400 audit(0.0:463): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:40.127  6908  6908 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:05:40.128  6908  6908 I AndroidRuntime: Using default boot image
+11-14 16:05:40.129  6908  6908 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:05:40.129  6908  6908 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:05:40.119  6908  6908 W app_process: type=1400 audit(0.0:464): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:40.119  6908  6908 W app_process: type=1400 audit(0.0:465): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:40.153  6908  6908 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:05:40.314  6908  6908 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:05:41.365  6908  6908 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:05:41.532  6908  6908 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:05:41.595  6908  6908 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:41.615  6908  6908 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:41.855  6908  6908 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:05:41.971  1742  1742 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+11-14 16:05:41.995  6908  6908 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:42.147  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:43.312  1928  3290 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@92c348e
+11-14 16:05:43.344  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:43.427  6908  6908 D AndroidRuntime: Shutting down VM
+11-14 16:05:43.651  6908  6908 W app_process: Suspending all threads took: 13.971ms
+11-14 16:05:44.332  1812  1812 W livelock: sample 1.570s
+11-14 16:05:45.023  1801  1801 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+11-14 16:05:47.549  6922  6922 W app_process: type=1400 audit(0.0:466): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:47.579  6922  6922 I chatty  : uid=2000(shell) app_process identical 1 line
+11-14 16:05:47.599  6922  6922 W app_process: type=1400 audit(0.0:468): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7752 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+11-14 16:05:47.499  6922  6922 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-14 16:05:47.584  6922  6922 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+11-14 16:05:47.585  6922  6922 I AndroidRuntime: Using default boot image
+11-14 16:05:47.585  6922  6922 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+11-14 16:05:47.586  6922  6922 I AndroidRuntime: Leaving lock profiling enabled
+11-14 16:05:47.625  6922  6922 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+11-14 16:05:47.865  6922  6922 I app_process: Core platform API reporting enabled, enforcing=false
+11-14 16:05:49.000  6922  6922 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+11-14 16:05:49.178  6922  6922 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+11-14 16:05:49.229  6922  6922 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:49.248  6922  6922 I app_process: The ClassLoaderContext is a special shared library.
+11-14 16:05:49.568  6922  6922 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+11-14 16:05:49.745  6922  6922 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-14 16:05:49.949  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:51.144  1928  4798 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@cfa73c1
+11-14 16:05:51.156  1928  1928 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+11-14 16:05:51.239  6922  6922 D AndroidRuntime: Shutting down VM
+11-14 16:05:51.321  6922  6922 W app_process: Suspending all threads took: 7.368ms
+11-14 16:05:53.103  1711  1764 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 823296
+11-14 16:05:53.266  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+11-14 16:05:53.283  6938  6938 W Gralloc3: mapper 3.x is not supported
+11-14 16:05:53.384  6938  6938 D HostConnection: createUnique: call
+11-14 16:05:53.411  6938  6938 D HostConnection: HostConnection::get() New Host Connection established 0x7db9454745a0, tid 6938
+11-14 16:05:53.424  6938  6938 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-14 16:05:53.428  6938  6938 D eglCodecCommon: allocate: Ask for block of size 0x1000
+11-14 16:05:53.428  6938  6938 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffff8000 size 0x2000
+11-14 16:05:53.445  6938  6938 D eglCodecCommon: allocate: Ask for block of size 0xc9000
+11-14 16:05:53.445  6938  6938 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffe60000 size 0xca000
+11-14 16:05:55.436  1928  4338 E memtrack: Couldn't load memtrack module
+11-14 16:05:55.436  1928  4338 W android.os.Debug: failed to get memory consumption info: -1
+11-14 16:05:55.747  6746  6762 I barriocero.era: Explicit concurrent copying GC freed 8396(1196KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 1577KB/3154KB, paused 608us total 228.157ms

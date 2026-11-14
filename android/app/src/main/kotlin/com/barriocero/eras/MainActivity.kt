@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.os.Build
+import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
@@ -33,6 +35,17 @@ class MainActivity : FlutterActivity() {
     private var channel: MethodChannel? = null
     private var pending: Pending? = null
     private var destroyed = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // The API29 software emulator hangs before its first Vulkan frame.
+        // Keep physical devices and explicit renderer diagnostics unchanged.
+        if (Build.VERSION.SDK_INT <= 29 &&
+            Build.HARDWARE in setOf("ranchu", "goldfish") &&
+            !intent.hasExtra("enable-impeller")) {
+            intent.putExtra("enable-impeller", false)
+        }
+        super.onCreate(savedInstanceState)
+    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)

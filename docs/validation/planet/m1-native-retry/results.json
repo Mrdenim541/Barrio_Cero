@@ -1,0 +1,16 @@
+{
+  "scope": "Continuous camera and 32-settlement profile fixture; not phone acceptance",
+  "apkSha256": "f0f2f5daedab4abec47b0176a03a9077cc518552e74bcd8d714df203f3294bac",
+  "installation": "Performing Streamed Install\nSuccess\n",
+  "fixture": {
+    "size": 96,
+    "settlements": 32,
+    "normalOpening": false,
+    "day": 0,
+    "runtimeInjections": false
+  },
+  "launchOutput": "Starting: Intent { cmp=com.barriocero.eras/.MainActivity }\nStatus: timeout\nLaunchState: UNKNOWN (-1)\nActivity: com.barriocero.eras/.MainActivity\nWaitTime: 11225\nComplete\n",
+  "error": "RuntimeError('No fresh UI hierarchy')",
+  "originalSavesRestoredExactly": true,
+  "passed": false
+}

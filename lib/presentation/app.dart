@@ -16,6 +16,7 @@ import 'world_game.dart';
 import 'settlement_scene.dart';
 import 'community_brief.dart';
 import 'community_ribbon.dart';
+import 'follow_target.dart';
 
 class BarrioApp extends StatelessWidget {
   const BarrioApp({super.key});
@@ -65,6 +66,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   WorldState? get world => session.worldCopy();
   late WorldGame game;
   final store = SaveStore();
+  // Camera preferences must never hold up the checkpoint writer.
+  final viewStore = SaveStore();
   final documents = DocumentExchange();
   Map<String, dynamic> state = {};
   RuleCatalog? _catalog;
@@ -73,7 +76,12 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   String? selected;
   int preferredSlot = 0;
   int get slot => session.snapshot?.slot ?? preferredSlot;
-  int section = 0;
+  int section = 1;
+  FollowTarget? protagonist;
+  bool following = false;
+  int? _followGeneration;
+  int _followToken = 0;
+  TrackedIndividual? get tracked => protagonist?.resolve(state);
   Timer? timer;
   bool get reduceMotion => session.settings['reduceMotion'] ?? false;
   bool get sound => session.settings['sound'] ?? false;
@@ -146,7 +154,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       if (mounted) {
         setState(() {
           selected = game.selected;
-          section = game.mode == 'Asentamiento' ? 0 : 1;
+          if (section != 2) section = following ? 0 : 1;
         });
       }
     });
@@ -179,7 +187,122 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     game.present(state, generation: session.snapshot?.generation);
     game.selected = selected;
     game.reduceMotion = reduceMotion;
+    final generation = session.snapshot?.generation;
+    if (generation != null && generation != _followGeneration) {
+      _followGeneration = generation;
+      protagonist = null;
+      following = false;
+      final token = ++_followToken;
+      unawaited(_restoreProtagonist(token, generation, slot));
+    } else if (following) {
+      final person = tracked;
+      if (person == null || !person.alive) {
+        following = false;
+        game.stopFollowing();
+        unawaited(_saveProtagonist());
+      } else {
+        selected = person.actorId;
+        game.followIndividual(protagonist!.individualId, focus: false);
+      }
+    }
   }
+
+  Future<void> _restoreProtagonist(int token, int generation, int savedSlot) async {
+    try {
+      final saved = FollowTarget.decode(await viewStore.read('view_$savedSlot'));
+      if (!mounted || token != _followToken ||
+          session.snapshot?.generation != generation || saved == null ||
+          saved.target.resolve(state) == null) {
+        return;
+      }
+      setState(() {
+        protagonist = saved.target;
+        following = saved.active && tracked!.alive;
+        if (following) {
+          selected = tracked!.actorId;
+          game.followIndividual(protagonist!.individualId);
+          section = 0;
+        }
+      });
+    } catch (_) {
+      // A missing/corrupt camera preference cannot prevent loading a world.
+    }
+  }
+
+  Future<void> _saveProtagonist() async {
+    final target = protagonist;
+    if (target == null) return;
+    try {
+      await viewStore.write('view_$slot', target.encode(active: following));
+    } catch (_) {
+      if (mounted) _message('No se pudo guardar el seguimiento de cámara.');
+    }
+  }
+
+  void _pauseFollowing() {
+    if (!following) return;
+    setState(() {
+      following = false;
+      game.stopFollowing();
+      if (section != 2) section = 1;
+    });
+    unawaited(_saveProtagonist());
+  }
+
+  void _followPerson(Map<String, dynamic> person) {
+    final next = FollowTarget.person(state, person);
+    final current = next.resolve(state);
+    if (current == null || !current.alive) {
+      _message('Esta persona ya no está disponible para seguirla. Su historia permanece.');
+      return;
+    }
+    ++_followToken;
+    setState(() {
+      protagonist = next;
+      following = true;
+      selected = tracked!.actorId;
+      section = 0;
+      game.followIndividual(protagonist!.individualId);
+    });
+    unawaited(_saveProtagonist());
+  }
+
+  void _followProtagonist() {
+    final person = tracked;
+    if (person != null && !person.alive) {
+      _sheet('El legado de ${person.name}', [
+        Text('Falleció en ${date(number(person.person['diedDay']))}. Su historia y sus vínculos permanecen.'),
+        FilledButton(onPressed: () {
+          Navigator.pop(context);
+          _chooseProtagonist();
+        }, child: const Text('Elegir otro protagonista')),
+      ]);
+      return;
+    }
+    final candidate = person?.person ??
+        ((society?['people'] as List? ?? []).where((p) => p['diedDay'] == null).firstOrNull);
+    if (candidate == null) {
+      _chooseProtagonist();
+    } else {
+      _followPerson(Map<String, dynamic>.from(candidate));
+    }
+  }
+
+  void _chooseProtagonist() => _sheet('Elegir protagonista', [
+    const Text('Observa su vida sin dirigir sus decisiones.'),
+    for (final s in societies)
+      for (final p in s['people'] as List? ?? [])
+        if (p['diedDay'] == null)
+          ListTile(
+            leading: const Icon(Icons.person_outline),
+            title: Text('${p['name']}'),
+            subtitle: Text('${p['role']} · ${s['name']}'),
+            onTap: () {
+              Navigator.pop(context);
+              _followPerson(Map<String, dynamic>.from(p));
+            },
+          ),
+  ]);
 
   void _focusHome() {
     selected = controlled.isNotEmpty
@@ -837,20 +960,18 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ),
   );
   void _navigate(int value) {
+    if (value == 0) {
+      _followProtagonist();
+      return;
+    }
+    if (value == 1) _pauseFollowing();
     setState(() {
       section = value;
-      if (value == 0) {
-        if (controlled.isNotEmpty) selected = controlled;
-        game.mode = 'Asentamiento';
-        game.zoom = 2.2;
-      } else if (value == 1) {
-        game.mode = 'Mundo';
-        game.zoom = 1;
-        game.pan = Offset.zero;
+      if (value == 1) {
+        game.fitWorld();
       }
       if (selected != null) {
         game.selected = selected;
-        if (value == 0) game.locate(selected!);
       }
     });
   }
@@ -875,7 +996,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                     ),
                   ),
                   Text(
-                    controlled.isEmpty
+                    following && tracked != null
+                        ? 'Siguiendo a ${tracked!.name}'
+                        : controlled.isEmpty
                         ? 'Mundo autónomo'
                         : 'Diriges ${societies.where((s) => s['id'] == controlled).firstOrNull?['name'] ?? controlled}',
                     maxLines: 1,
@@ -904,18 +1027,14 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                           child: GestureDetector(
                             dragStartBehavior: DragStartBehavior.down,
                             onScaleStart: (d) {
+                              _pauseFollowing();
                               gesturePan = game.pan;
                               gestureZoom = game.zoom;
                             },
                             onScaleUpdate: (d) {
                               game.pan = gesturePan + d.focalPointDelta;
-                              final beforeMode = game.mode;
                               game.zoomAt(gestureZoom * d.scale, d.localFocalPoint);
                               gesturePan = game.pan;
-                              if (game.mode != beforeMode) {
-                                gestureZoom = game.zoom / d.scale;
-                                gesturePan = game.pan;
-                              }
                             },
                             onTapUp: (d) => game.touch(d.localPosition),
                             child: ClipRect(child: GameWidget(game: game,
@@ -941,13 +1060,14 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                                 Icons.my_location,
                                 'Centrar comunidad',
                                 () {
+                                  _pauseFollowing();
                                   if (selected != null) game.locate(selected!);
                                 },
                               ),
-                              if (section == 0)
+                              if (game.mode == 'Asentamiento')
                                 _mapButton(Icons.fit_screen, 'Ver todo el asentamiento', () {
-                                  game.zoom = 1.7;
-                                  if (selected != null) game.locate(selected!);
+                                  _pauseFollowing();
+                                  if (selected != null) game.focusSettlement(selected!);
                                 }),
                             ],
                           ),
@@ -963,16 +1083,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                                   TextButton(
                                     onPressed: () {
                                       setState(() {
-                                        game.mode = game.mode == 'Región'
-                                            ? 'Mundo'
-                                            : 'Región';
-                                        game.zoom = game.mode == 'Región'
-                                            ? 3
-                                            : 1;
-                                        if (game.mode == 'Mundo') {
-                                          game.pan = Offset.zero;
-                                        } else if (selected != null) {
-                                          game.locate(selected!);
+                                        if (game.mode == 'Región') {
+                                          game.fitWorld();
+                                        } else {
+                                          game.focusRegion(selected);
                                         }
                                       });
                                     },
@@ -1071,9 +1185,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         onDestinationSelected: _navigate,
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Barrio',
+            icon: Icon(Icons.person_pin_circle_outlined),
+            selectedIcon: Icon(Icons.person_pin_circle),
+            label: 'Seguir',
           ),
           NavigationDestination(icon: Icon(Icons.public), label: 'Mundo'),
           NavigationDestination(icon: Icon(Icons.history), label: 'Historia'),
@@ -1093,9 +1207,15 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   );
   void _mapOptions() => _sheet('Leer el mundo', [
     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      _mapButton(Icons.remove, 'Alejar', () => game.zoomAt(game.zoom / 1.4, game.center)),
+      _mapButton(Icons.remove, 'Alejar', () {
+        _pauseFollowing();
+        game.zoomAt(game.zoom / 1.4, game.center);
+      }),
       const Padding(padding: EdgeInsets.symmetric(horizontal: 12), child: Text('Zoom')),
-      _mapButton(Icons.add, 'Acercar', () => game.zoomAt(game.zoom * 1.4, game.center)),
+      _mapButton(Icons.add, 'Acercar', () {
+        _pauseFollowing();
+        game.zoomAt(game.zoom * 1.4, game.center);
+      }),
     ]),
     if(state['migrations'] is List)ListTile(
       title:const Text('Viajes de población'),
@@ -1490,6 +1610,14 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         if(population!=null)Text('Cultura: ${_cultureName(population['culture'])}'),
         if(p['birthEstimated']==true)const Text('Su fecha de nacimiento procede de la estimación inicial de su grupo de población.'),
         const SizedBox(height: 16),
+        FilledButton.icon(
+          onPressed: () {
+            Navigator.pop(context);
+            _followPerson(p);
+          },
+          icon: const Icon(Icons.person_pin_circle_outlined),
+          label: const Text('Seguir su vida'),
+        ),
         OutlinedButton(
           onPressed: () {
             Navigator.pop(context);
@@ -2185,7 +2313,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         if(j.active&&!j.blocked)Text('${j.path.length-1-j.progress} pasos del recorrido actual. Los cortes pueden cambiar la duración.'),
         Text('Provisiones restantes: alimento ${amount(j.carried['food']!)} · agua ${amount(j.carried['water']!)}'),
         if(!j.active)Text('${j.arrived} llegadas · ${j.deaths} bajas · ${date(j.resolvedDay!)}'),
-        if(j.active)TextButton(onPressed:(){Navigator.pop(context);setState((){section=1;game.mode='Mundo';game.zoom=3;game.pan=Offset((game.extent/2-j.cell%game.extent-.5)*game.unit,(game.extent/2-j.cell~/game.extent-.5)*game.unit);});},child:const Text('Localizar en el mundo')),
+        if(j.active)TextButton(onPressed:(){Navigator.pop(context);_pauseFollowing();setState((){section=1;game.locateCell(j.cell);});},child:const Text('Localizar en el mundo')),
       ]))),
       if(page>0)TextButton(onPressed:(){Navigator.pop(context);_journeys(history:history,page:page-1);},child:const Text('Página anterior')),
       if((page+1)*20<all.length)TextButton(onPressed:(){Navigator.pop(context);_journeys(history:history,page:page+1);},child:const Text('Página siguiente')),
@@ -2342,6 +2470,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           ),
           onTap: () {
             if (id != null) {
+              _pauseFollowing();
               setState(() => selected = id);
               game.locate(id);
             }
@@ -2416,6 +2545,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       return;
     }
     _sheet('Tu mundo, tus reglas', [
+      ListTile(leading: const Icon(Icons.person_pin_circle_outlined),
+        title: const Text('Elegir protagonista'),
+        subtitle: Text(tracked?.name ?? 'Seguir una vida en este mundo'),
+        onTap: () {Navigator.pop(context);_chooseProtagonist();}),
       ListTile(leading: const Icon(Icons.public), title: const Text('Observar el planeta'),
         onTap: () {Navigator.pop(context);if (controlled.isEmpty) {_navigate(1);} else {_observeWorld();}}),
       ListTile(

@@ -5,7 +5,7 @@ class SaveStore {
   Future<void> _queue = Future.value();
   void _check(String slot) {
     if (!RegExp(
-      r'^(packages|(world|branch|legacy)_[0-2]|rules_[0-2]_[a-f0-9]{64})$',
+      r'^(packages|(world|branch|legacy|view)_[0-2]|rules_[0-2]_[a-f0-9]{64})$',
     ).hasMatch(slot)) {
       throw const FormatException('Espacio de guardado inválido');
     }

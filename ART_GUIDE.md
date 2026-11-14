@@ -54,6 +54,8 @@ Los 18 identificadores de edificio canónicos del motor coinciden directamente c
 
 ## Diseño objetivo de la versión completa
 
+La dirección vigente del planeta continuo añade `docs/design/planet-continuity-target.png` y `docs/design/eras-and-species-target.png`. Su alcance y límites están en [planet-models.md](docs/design/planet-models.md). Son modelos generados para guiar composición, densidad y producción; no capturas del APK ni recursos ejecutables. Las anotaciones de tareas no se trasladan como textos permanentes y las eras no dependen de las fechas ilustradas. Las láminas anteriores se conservan como historial de diseño.
+
 El usuario solicitó visualizar la versión final prevista para guiar la implementación. Las láminas `docs/design/world-and-settlement-target.png` y `docs/design/decisions-and-history-target.png` definen la dirección de composición, paleta, jerarquía de interfaz y densidad de pixel art. Son ilustraciones de diseño objetivo, no capturas ejecutadas ni evidencia de aceptación. Los números e historia representan una partida ilustrativa; el juego debe obtenerlos de la simulación real. Conservar controles táctiles legibles al trasladar cada panel a una pantalla vertical individual.
 
 ## Carga Android comprobada

@@ -56,6 +56,7 @@ available = [
  ('requirements', ['python3', 'tool/verify_requirements.py'], None),
  ('redesign', ['python3', 'tool/verify_redesign_requirements.py'], None),
  ('execution-coverage', ['python3', 'tool/verify_execution_batches.py'], None),
+ ('planet-traceability', ['python3', 'tool/verify_planet_plan.py'], None),
  ('catalog-source', ['python3', 'tool/generate_catalog.py', '--check'], None),
  ('content', ['python3', 'tool/validate_content.py'], None),
  ('analyze', [flutter, 'analyze'], None if flutter_ready else 'Flutter Dart SDK is unavailable'),
@@ -65,7 +66,7 @@ available = [
  ('mature-benchmark', [dart or 'dart', 'run', 'tool/sustained_benchmark.dart'], None if dart else 'Dart SDK is unavailable'),
  ('android_build', [flutter, 'build', 'apk', '--profile'], None if flutter_ready else 'Flutter Dart SDK is unavailable'),
 ]
-static_ids = {'requirements', 'redesign', 'execution-coverage', 'catalog-source', 'content', 'analyze'}
+static_ids = {'requirements', 'redesign', 'execution-coverage', 'planet-traceability', 'catalog-source', 'content', 'analyze'}
 selected = static_ids | ({'flutter_tests', 'android_build'} if args.profile == 'integration' else set())
 if args.profile == 'release':
     selected = {name for name, _, _ in available}

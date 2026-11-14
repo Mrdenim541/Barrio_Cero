@@ -1,0 +1,3 @@
+--------- beginning of main
+--------- beginning of system
+BARRIO_SCENE_STATS {"sceneProfile":"planet-camera-v1","map":96,"lod":"Asentamiento","zoom":139.94666666666666,"frames":60,"renderedFramesPerSecond":2.0453752989801344,"buildP90Micros":68466,"rasterP90Micros":756761,"visibleSettlements":1,"visibleSites":7,"visiblePeople":3,"terrainBlocks":2,"pictureCacheBytes":591536,"scope":"profile whole-UI frames; host/device identity supplied by harness"}

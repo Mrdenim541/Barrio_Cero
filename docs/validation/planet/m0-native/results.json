@@ -1,0 +1,11 @@
+{
+  "version": "0.16.0+17",
+  "rulesVersion": 11,
+  "device": "API29 software emulator,320x640;not reference-phone performance",
+  "scope": "Zero-order native year versus exact reference,connected zoom,optional policy intervention,continued autonomy and exact reopen",
+  "installationOutput": "Performing Streamed Install\nSuccess\n",
+  "apkSha256": "69015c134bd010120277ac4f7f1783b5c157be651dafce1c77927d55f86ffd9f",
+  "error": "RuntimeError('Control not visible: Continuar historia;[\"System UI isn\\'t responding\", \\'Close app\\', \\'Wait\\']')",
+  "originalSavesRestoredExactly": true,
+  "passed": false
+}

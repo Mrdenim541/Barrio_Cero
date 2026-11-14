@@ -1,5 +1,17 @@
 # Estado de BARRIO CERO: ERAS
 
+## Plan del planeta — M0 y M1 funcionales comprobados (0.17)
+
+El plan vigente está en [PLANET_PLAN](docs/PLANET_PLAN.md) y conserva los 174 IDs en [la matriz](docs/planet_requirements.json). M0 comprobó 0.16 en Android API29: un año autónomo, intervención sin recursos gratuitos, salto cancelado al día 630 con objetivo 36.390 y reapertura exacta. Se restauraron los guardados originales. [Resultado](docs/validation/planet/m0-native-retry/results.json).
+
+M1 sustituye las escenas separadas por una cámara planetaria común, detalle según escala y dibujo acotado por visibilidad. **Seguir · Mundo · Historia** permite elegir una persona real, resolver su identidad al cambiar de comunidad, pausar la cámara al explorar y recuperar la selección al reabrir. No asigna autoridad ni modifica la simulación. Hay 211 pruebas aprobadas; el análisis final está limpio. El APK 0.17 final fue instalado en API29: recuperó a Ana tras terminar el proceso y conservó el checkpoint exacto. Se restauraron todos los originales. [Evidencia y límites](docs/validation/planet/README.md).
+
+La caché rasterizada redujo el coste de dibujo: la ventana planetaria del emulador pasó de 1,14 a 10,45 FPS; la prueba final registró 9,62 FPS. No acredita 30 FPS ni memoria máxima del teléfono. Se conserva un fallo intermitente de inicio en pantalla blanca en el paquete de benchmark anterior, seguido por la prueba corta aprobada del paquete final. Las posiciones locales actuales proceden de la proyección existente; viajes de personajes, trabajos y recorridos reales siguen en M3/M6. El siguiente bloque es M2: migración explícita y geografía versionada, sin cambiar partidas antiguas al leerlas.
+
+Las láminas aprobadas en `docs/design/` son objetivos de producción, no capturas ni aceptación. La [ampliación de protagonista](docs/PLAYER_FOCUS.md) conserva los tres modos autorizados: Normal, Sin envejecimiento e Inmortalidad total. La cámara no implementa esos modos: faltan su integración biológica, protección frente a todas las bajas, persistencia y pruebas. Fauna individual y especies alternativas siguen pendientes de M8.
+
+La batería congelada de reglas 11 terminó: treinta semillas alcanzaron doscientos años. Los dos escenarios de mil años acabaron por extinción en los días 142.860 y 150.450; **no acreditan milenios activos**, aunque el indicador agregado acepte esos finales. Este resultado histórico no valida las funciones nuevas. M2–M11 y la aceptación final siguen pendientes.
+
 ## Referencias ampliadas y avance histórico 0.16 en integración
 
 REA 6.9.0 instalado por CLI aislado en `/workspace/toolchains/rea`, sin registrar MCP ni publicar configuración. El paquete oficial Mindustry v160.7 se inventarió estáticamente; se inspeccionaron fuentes de Mindustry, Unciv, Widelands, Freeciv y OpenTTD. El [catálogo de 34 referencias](docs/REFERENCE_GAMES_AUDIT.md) distingue fuentes inspeccionadas, metadatos comprobados y candidatos de diseño sin ejecución directa. No se incorporaron recursos ni código de terceros al juego.

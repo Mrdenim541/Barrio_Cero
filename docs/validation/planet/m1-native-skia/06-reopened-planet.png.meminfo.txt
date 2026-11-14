@@ -1,0 +1,53 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 2378028 Realtime: 2378028
+
+** MEMINFO in pid 6023 [com.barriocero.eras] **
+                   Pss  Private  Private     Swap     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap    37454    37312        0        0    42808    39807     3000
+  Dalvik Heap     2181     2084        0        0     3282     1641     1641
+ Dalvik Other     3486     3288        0        0
+        Stack      116      116        0        0
+       Ashmem        8        0        0        0
+    Other dev       16        0       16        0
+     .so mmap     2945      164      276        0
+    .jar mmap     2379        0      152        0
+    .apk mmap    17081      404    15700        0
+    .ttf mmap     3970        0      460        0
+    .dex mmap     6749     6744        0        0
+    .oat mmap      110        0        0        0
+    .art mmap     5943     5516        0        0
+   Other mmap     2280       24       92        0
+      Unknown    38066    38020        0        0
+        TOTAL   122784    93672    16696        0    46090    41448     4641
+
+ App Summary
+                       Pss(KB)
+                        ------
+           Java Heap:     7600
+         Native Heap:    37312
+                Code:    23900
+               Stack:      116
+            Graphics:        0
+       Private Other:    41440
+              System:    12416
+
+               TOTAL:   122784      TOTAL SWAP (KB):        0
+
+ Objects
+               Views:        7         ViewRootImpl:        1
+         AppContexts:        6           Activities:        1
+              Assets:        3        AssetManagers:        0
+       Local Binders:       13        Proxy Binders:       31
+       Parcel memory:        4         Parcel count:       19
+    Death Recipients:        0      OpenSSL Sockets:        0
+            WebViews:        0
+
+ SQL
+         MEMORY_USED:        0
+  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:        0
+
+
+ Asset Allocations
+    : 4K

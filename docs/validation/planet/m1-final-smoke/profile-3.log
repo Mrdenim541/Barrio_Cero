@@ -1,0 +1,2 @@
+--------- beginning of main
+BARRIO_SCENE_STATS {"sceneProfile":"planet-camera-v1","map":96,"lod":"Mundo","zoom":1.0,"frames":62,"renderedFramesPerSecond":10.95054893665682,"buildP90Micros":34365,"rasterP90Micros":83488,"visibleSettlements":32,"visibleSites":0,"visiblePeople":0,"terrainBlocks":1,"pictureCacheBytes":4556520,"scope":"profile whole-UI frames; host/device identity supplied by harness"}
