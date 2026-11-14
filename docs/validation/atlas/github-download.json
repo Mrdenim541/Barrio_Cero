@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-14T17:27:09.198404+00:00",
+  "url": "https://raw.githubusercontent.com/Mrdenim541/Barrio_Cero/downloads/android-test-0.18.0/Barrio-Cero-Eras-0.18.0.apk",
+  "anonymousRequest": true,
+  "status": 200,
+  "bytes": 89869607,
+  "sha256": "b7016a3deeb94339350b7dc6cb2acca80aa2a47704be596556d06ef72ad95368",
+  "matchesInstalledTestArtifact": true,
+  "distribution": "Public download branch; Release upload service returned HTTP 401, so the release page links this verified raw file."
+}

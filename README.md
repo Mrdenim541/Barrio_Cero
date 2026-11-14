@@ -3,7 +3,7 @@
 
 ## APK de prueba 0.18
 
-[Descargar para Android](https://github.com/Mrdenim541/Barrio_Cero/releases/download/v0.18.0-test/Barrio-Cero-Eras-0.18.0.apk) · [Notas y capturas reales](https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.18.0-test)
+[Descargar para Android](https://raw.githubusercontent.com/Mrdenim541/Barrio_Cero/downloads/android-test-0.18.0/Barrio-Cero-Eras-0.18.0.apk) · [Notas y capturas reales](https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.18.0-test)
 
 Android 7 o posterior. Nuevos continentes, texturas, edificios e interfaz del atlas. Crea un mundo nuevo para ver los continentes; las partidas anteriores conservan su mapa y posiciones. El mismo certificado permite instalar como actualización.
 

@@ -39,3 +39,7 @@ La nueva prueba de capturas tuvo fallos del arnés de I/O asíncrono y una expec
 Esta versión prioriza presentación y mapas nuevos. Mundo 2/checkpoint 4, trabajos y desplazamientos locales, instituciones completas, eras, equinos, fauna individual, modos de vida y catálogo ampliado siguen pendientes en M2–M11. Las baterías largas no se repitieron por esta entrega gráfica. La aceptación de milenios activos y rendimiento físico continúa abierta.
 
 Compilación, instalación, recuperación y descarga pública se documentan por separado. La publicación usa únicamente el APK final; el candidato con fallo de GPU queda como diagnóstico local. Las copias textuales de logs normalizan espacios finales y saltos de línea; los checkpoints se compararon por bytes sin esa normalización.
+
+## Descarga pública
+
+`github-download.json` y `github-download-http.log` acreditan una petición pública sin autenticación: HTTP 200, 89.869.607 bytes y SHA-256 idéntico al paquete instalado. La carga de assets de Release devolvió HTTP 401 en `uploads.github.com`; se distribuye el APK y sus capturas desde la rama pública `downloads/android-test-0.18.0`, como en la versión anterior. La página de Release enlaza ese archivo verificado.
