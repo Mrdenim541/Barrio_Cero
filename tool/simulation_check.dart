@@ -5,17 +5,20 @@ import 'package:barrio_cero_eras/simulation/engine.dart';
 void check(bool ok,String message){if(!ok)throw StateError(message);}
 void main(List<String> arguments){
  final filters=arguments.where((a)=>a.startsWith('--filter=')).toList();
- if(arguments.length!=filters.length||filters.length>1)throw ArgumentError('Only --filter=<group substring> is supported');
+ final origins=arguments.where((a)=>a.startsWith('--origin=')).toList();
+ if(arguments.length!=filters.length+origins.length||filters.length>1||origins.length>1)throw ArgumentError('Supported: --filter=<group> and --origin=<prehistory|reconstruction> for the century group');
  final filter=filters.isEmpty?null:filters.single.substring(9);
+ final origin=origins.isEmpty?'reconstruction':origins.single.substring(9);
+ if(!['prehistory','reconstruction'].contains(origin)||origins.isNotEmpty&&(filter==null||!filter.startsWith('full-content 100-year')))throw ArgumentError('Origin selection requires the full-content 100-year group');
  if(filter!=null)stdout.writeln('PARTIAL RUN: group filter "$filter"; not full acceptance');
  final watch=Stopwatch()..start();
  var count=0;
  void test(String name,void Function() fn){if(filter!=null&&!name.contains(filter))return;stdout.writeln('RUN $name');final groupWatch=Stopwatch()..start();fn();groupWatch.stop();count++;stdout.writeln('PASS $name (${groupWatch.elapsedMilliseconds} ms)');}
  test('full-content 100-year daily/decade/whole/save equivalence',(){
   WorldState initial(List<String> trace){
-   final w=WorldState.generate(seed:17,size:64);
+   final w=WorldState.generate(seed:17,size:64,origin:origin);
    final e=withContent(w,trace:trace);
-   check(e.command('build',target:'farm').ok,'dated initial construction rejected');
+   check(e.command('build',target:origin=='prehistory'?'shelter':'farm').ok,'dated initial construction rejected');
    check(e.command('policy',target:'food').ok,'dated initial policy rejected');
    check(e.command('delegate').ok,'initial delegation rejected');
    return w;
@@ -50,7 +53,7 @@ void main(List<String> arguments){
   check(sequence==jsonEncode(traceB)&&sequence==jsonEncode(traceC)&&sequence==jsonEncode(traceD),'complete event sequence differs (including pruned entries)');
   // A terminal run is reported explicitly; it does not establish century coverage.
   check(a.day==36000,'equivalence scenario became extinct before a century; choose an additional viable fixture, do not count as century coverage');
-  stdout.writeln(jsonEncode({'check':'temporal_equivalence','seed':17,'days':a.day,'catalogEvents':(catalog['events'] as List).length,'retainedChronicleEntries':a.chronicle.length,'totalRecordedEvents':traceA.length}));
+  stdout.writeln(jsonEncode({'check':'temporal_equivalence','origin':origin,'seed':17,'days':a.day,'catalogEvents':(catalog['events'] as List).length,'retainedChronicleEntries':a.chronicle.length,'totalRecordedEvents':traceA.length}));
  });
  test('dated orders and observation do not depend on batching',(){
   Map<String,dynamic> run(int batch,{bool save=false,bool observe=false}){
@@ -116,7 +119,7 @@ void main(List<String> arguments){
  for(final event in events){for(final option in event['options'] as List){
   final w=WorldState.generate(seed:42,size:64);final s=w.controlled;final e=Simulation(w)..registerContent(pack);
   // Fixture meets every declared precondition while testing actual effects.
-  final c=Map<String,dynamic>.from(event['conditions']??{});if(c['facilityFound']!=null)s.facilityFound=c['facilityFound'];w.day=(c['minDay']??1) as int;
+  if(event['origins'] is List)w.origin=event['origins'].contains('reconstruction')?'reconstruction':event['origins'].first;final c=Map<String,dynamic>.from(event['conditions']??{});if(c['facilityFound']!=null)s.facilityFound=c['facilityFound'];w.day=(c['minDay']??1) as int;
   for(final r in resourceIds) {
     s.resources[r]=1000;
   }

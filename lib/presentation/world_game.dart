@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flame/game.dart';
@@ -22,6 +23,7 @@ class WorldGame extends FlameGame {
   bool reduceMotion = false;
   bool mini = true;
   ui.Image? people, buildings, terrain;
+  AtlasLayout? peopleLayout,buildingLayout,terrainLayout;
   final void Function(String) onSelect;
   final void Function(LocalSelection)? onLocalSelect;
   String? localSelected;
@@ -31,24 +33,13 @@ class WorldGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     images.prefix = 'assets/';
-    people = await loadArtPixels(
-      rootBundle,
-      'assets/art/characters.rgba',
-      128,
-      2304,
-    );
-    buildings = await loadArtPixels(
-      rootBundle,
-      'assets/art/buildings.rgba',
-      384,
-      192,
-    );
-    terrain = await loadArtPixels(
-      rootBundle,
-      'assets/art/terrain.rgba',
-      192,
-      32,
-    );
+    final manifest=jsonDecode(await rootBundle.loadString('assets/art/atlas.json')) as Map;
+    peopleLayout=AtlasLayout.fromJson(Map<String,dynamic>.from(manifest['characters']));
+    buildingLayout=AtlasLayout.fromJson(Map<String,dynamic>.from(manifest['buildings']));
+    terrainLayout=AtlasLayout.fromJson(Map<String,dynamic>.from(manifest['terrain']));
+    Future<ui.Image> load(AtlasLayout atlas)=>loadArtPixels(rootBundle,
+      'assets/art/${atlas.pixels}',atlas.pixelWidth,atlas.pixelHeight);
+    people=await load(peopleLayout!);buildings=await load(buildingLayout!);terrain=await load(terrainLayout!);
     images.add('art/characters.png', people!);
     images.add('art/buildings.png', buildings!);
     images.add('art/terrain.png', terrain!);
@@ -390,35 +381,15 @@ class WorldGame extends FlameGame {
         c.drawRect(Rect.fromLTWH(r.left + 20, r.bottom, 24, 28), paint);
         paint.color = const Color(0x55000000);
         c.drawOval(Rect.fromLTWH(r.left + 6, r.bottom - 8, 64, 16), paint);
-        const order = [
-          'farm',
-          'well',
-          'house',
-          'sawmill',
-          'quarry',
-          'workshop',
-          'clinic',
-          'school',
-          'market',
-          'wall',
-          'mine',
-          'laboratory',
-          'generator',
-          'loom',
-          'granary',
-          'recycler',
-          'observatory',
-          'habitat',
-        ];
-        final index = order.indexOf(e.entity['building'].toString());
-        if (buildings != null && index >= 0) {
+        final source=buildingLayout?.frame(e.entity['building'].toString());
+        if (buildings != null && source != null) {
           paint.color = Colors.white;
           paint.colorFilter = s['extinct'] == true
               ? const ColorFilter.mode(Color(0xff80766b), BlendMode.saturation)
               : null;
           c.drawImageRect(
             buildings!,
-            Rect.fromLTWH(index % 6 * 64.0, index ~/ 6 * 64.0, 64, 64),
+            source,
             r,
             paint,
           );
@@ -428,7 +399,9 @@ class WorldGame extends FlameGame {
         }
       } else {
         final p = e.entity;
-        final role = p['name'] == 'Ana' || p['role'] == 'técnica'
+        final role = data['origin']=='prehistory'
+            ? peopleLayout!.roles.indexOf(p['role']=='artesana'?'ancestral_artisan':p['role']=='explorador'?'ancestral_scout':'ancestral_elder')
+            : p['name'] == 'Ana' || p['role'] == 'técnica'
             ? 0
             : p['name'] == 'Leo' || p['role'] == 'explorador'
             ? 1
@@ -437,7 +410,7 @@ class WorldGame extends FlameGame {
             : 3;
         final action = number(s['health'], 100) < 35
             ? 6
-            : projects.isNotEmpty && role == 0
+            : projects.isNotEmpty && (role == 0 || role == 6)
             ? 2
             : 0;
         paint.color = const Color(0x66000000);
@@ -447,7 +420,7 @@ class WorldGame extends FlameGame {
           final frame = reduceMotion ? 0 : (phase * 4).floor() % 4;
           c.drawImageRect(
             people!,
-            Rect.fromLTWH(frame * 32.0, (role * 8 + action) * 48.0, 32, 48),
+            peopleLayout!.cell(role*peopleLayout!.actions.length+action,frame),
             r,
             paint,
           );

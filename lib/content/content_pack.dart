@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'rule_catalog.dart';
+import 'starting_scenario.dart';
 
 /// Immutable declarative package. Bytes are hashed before parsing so worlds pin
 /// exactly the shipped/imported content, including its original serialization.
@@ -17,6 +18,7 @@ class ContentPack {
     'minHousing', 'maxHousing', 'minMorale', 'maxMorale', 'minRelation',
     'maxRelation', 'minHealth', 'maxHealth', 'minDay', 'maxDay',
     'technologies', 'missingTechnologies', 'flags', 'flagsMissing', 'facilityFound',
+    'originCapabilities',
   };
   static const effects = {
     'resource', 'population', 'health', 'morale', 'environment', 'relation',
@@ -40,7 +42,7 @@ class ContentPack {
     }
     final known = <String, Set<String>>{};
     for (final kind in ['resources', 'biomes', 'buildings', 'technologies', 'traits',
-      'profiles', 'characters', 'families', 'events', 'arcs', 'templates']) {
+      'profiles', 'characters', 'families', 'events', 'arcs', 'templates','origins']) {
       final raw = pack[kind] ?? <dynamic>[];
       if (raw is! List || raw.length > 1000) throw FormatException('Tamaño inválido: $kind');
       final ids = <String>{};
@@ -83,7 +85,12 @@ class ContentPack {
       for (final entry in raw.entries) {
         final key = entry.key as String;
         final value = entry.value;
-        if (key == 'resource_min' || key == 'resource_max') {
+        if(key=='originCapabilities') {
+          if(value is! Map || value.keys.any((k)=>!['prehistory','reconstruction'].contains(k)) ||
+              value.values.any((v)=>v is! List || v.any((c)=>!RuleCatalog.capabilities.contains(c)))) {
+            throw const FormatException('Capacidades del origen inválidas');
+          }
+        } else if (key == 'resource_min' || key == 'resource_max') {
           costs(value);
         } else if (key == 'facilityFound') {
           if (value is! bool) throw const FormatException('Condición booleana inválida');
@@ -149,6 +156,11 @@ class ContentPack {
       }
     }
     for (final event in (pack['events'] as List?) ?? []) {
+      if(event['origins']!=null && (event['origins'] is! List ||
+          (event['origins'] as List).isEmpty ||
+          (event['origins'] as List).any((id)=>!['prehistory','reconstruction'].contains(id)))) {
+        throw const FormatException('Origen narrativo desconocido');
+      }
       if (event['body'] is! String || (event['body'] as String).length < 30 ||
           !['director', 'scheduled'].contains(event['trigger'])) {
         throw const FormatException('Evento incompleto');
@@ -264,7 +276,7 @@ class ContentPack {
     }
     // Validate executable definitions at import, before persisting a package
     // that the simulation would otherwise accept and then silently ignore.
-    RuleCatalog.fromContent({
+    final rules=RuleCatalog.fromContent({
       'buildings': [
         ...((base?.data['buildings'] as List?) ?? []),
         ...((pack['buildings'] as List?) ?? []),
@@ -274,6 +286,9 @@ class ContentPack {
         ...((pack['technologies'] as List?) ?? []),
       ],
     });
+    for(final origin in (pack['origins'] as List?)??[]) {
+      StartingScenario.fromJson(Map<String,dynamic>.from(origin),rules);
+    }
     dynamic freeze(dynamic value) {
       if (value is Map) {
         return Map<String, dynamic>.unmodifiable(value.map((key, item) => MapEntry(key as String, freeze(item))));

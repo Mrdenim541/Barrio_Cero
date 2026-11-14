@@ -1,0 +1,2 @@
+Running Gradle task 'assembleProfile'...                         2,082ms
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (86.0MB)

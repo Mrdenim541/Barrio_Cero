@@ -63,3 +63,7 @@ Las capturas de `docs/validation/android/` proceden de la aplicación instalada;
 `SettlementScene` obtiene geometría exclusivamente de los edificios y habitantes vivos confirmados. La cámara y la selección usan las mismas transformaciones. La textura del suelo, sombras y entradas son elementos visuales; no acreditan rutas ni trabajos simulados. Los nombres identifican personajes existentes. El renderizador muestra reposo cuando no puede deducir una tarea, sin recorridos aleatorios de transporte.
 
 Los planos nuevos usan `siteLayout: 2`, con sectores y huellas de 2×2 sin solapes. Los antiguos mantienen sus coordenadas y transmiten su versión de plano a sus colonias. No se regeneran para conseguir una imagen distinta. Las capturas de `docs/validation/r1-scene/` proceden del APK ejecutado; los atlas siguen siendo los recursos originales. La dirección artística completa de las láminas objetivo sigue pendiente.
+
+## Recursos ancestrales de 0.6
+
+El generador añade siete puestos/refugios y tres apariencias ancestrales, con ocho actividades cada una. El atlas de personajes es 128×3456; edificios, 384×320. La presentación obtiene dimensiones e índices de `assets/art/atlas.json`. Las pruebas cotejan PNG y RGBA y verifican que cada edificio publicado tenga píxeles en su celda. Las capturas de `docs/validation/prehistory/` son del APK; la hoja de contacto sigue siendo un inventario de recursos, no una captura del juego. No se considera completo el arte por especie, era, conflictos y transformaciones.

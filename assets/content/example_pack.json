@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "barrio.senderos",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "language": "es",
   "requires": {
-    "barrio.core": "2.0.0"
+    "barrio.core": "2.1.0"
   },
   "events": [
     {

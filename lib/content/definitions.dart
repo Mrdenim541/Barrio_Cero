@@ -5,6 +5,9 @@ class BuildingDefinition {
   final int days;
   final String? technology;
   final int housingCapacity, defense;
+  final Map<String, String> scenarioRequirements;
+  final Set<int> allowedBiomes;
+  final int minimumRichness, capacityPerRichness;
   const BuildingDefinition(
     this.id,
     this.name,
@@ -16,6 +19,10 @@ class BuildingDefinition {
     this.housingCapacity = 0,
     this.defense = 0,
     this.dailyInputs = const {},
+    this.scenarioRequirements = const {},
+    this.allowedBiomes = const {0, 1, 2, 3, 4, 5},
+    this.minimumRichness = 0,
+    this.capacityPerRichness = 0,
   ]);
 }
 

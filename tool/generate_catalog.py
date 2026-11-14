@@ -66,6 +66,7 @@ if __name__ == '__main__':
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
     generated = compile_catalog(json.loads(SOURCE.read_text()))
+    generated += 'const baseScenarioData = ' + literal(json.loads((ROOT / 'content/scenarios.json').read_text())) + ';\n'
     if args.check:
         if not TARGET.exists() or TARGET.read_text() != generated:
             raise SystemExit('Generated catalog differs: run python3 tool/generate_catalog.py')

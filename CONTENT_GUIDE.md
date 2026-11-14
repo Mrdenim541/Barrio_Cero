@@ -36,3 +36,9 @@ python3 tool/validate_content.py
 El validador verifica mínimos, ocho categorías independientes, ocho familias, referencias, DAG, alcance de arcos, firmas mecánicas de desenlaces, hashes y diez casos negativos (operación prohibida, ciclo, referencia ausente, coste negativo, id duplicado, condición desconocida, programación inválida y banderas mal formadas). Estas son comprobaciones del catálogo; no sustituyen ejecutar las decisiones en la simulación ni la prueba de interfaz.
 
 Al añadir un arco: redacte su tensión, defina costes materiales, agregue una rama de compromiso y otra divergente, programe al menos dos finales con huellas mecánicas distintas y pruebe ambos con una semilla conocida. La crónica debe enlazar al id de la decisión anterior y registrar una cancelación si una guerra, muerte o destrucción vuelve inválida la consecuencia.
+
+## Fuente de la apertura 0.6
+
+`content/catalog.json` gobierna las definiciones ejecutables; `content/scenarios.json` declara las dos aperturas. `python3 tool/generate_catalog.py` genera la copia de arranque y `--check` detecta divergencias. `python3 tool/build_content.py` produce el paquete 2.1.0 y el inventario. `originCapabilities` condiciona un acontecimiento a capacidades según el origen; el ejecutor valida y aplica sus listas. La prehistoria no queda excluida para siempre de crónicas posteriores. Las partidas fijan sus fuentes exactas y los ejecutores antiguos conservan sus tablas.
+
+Hay 25 construcciones, 32 conocimientos y 104 sucesos independientes: estos conteos no acreditan diferenciación mecánica completa ni cumplen aún los objetivos ampliados. Validación: `docs/validation/prehistory/`.

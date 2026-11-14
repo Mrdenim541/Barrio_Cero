@@ -94,6 +94,10 @@ void main() {
       'type': 'housing',
       'value': 8,
     };
+    // The declared opening remains viable while testing a later world's capacity.
+    (pack['origins'] as List).firstWhere(
+      (o) => o['id'] == 'reconstruction',
+    )['buildings']['house'] = 8;
     final generated = WorldState.generate(size: 64);
     generated.contentVersions = {'core': '1.1.0'};
     final checkpoint = Checkpoint.create(

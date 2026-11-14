@@ -19,7 +19,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "agriculture"
+      }
     },
     {
       "id": "well",
@@ -39,7 +42,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "house",
@@ -57,7 +63,10 @@
         "type": "housing",
         "value": 18
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "sawmill",
@@ -77,7 +86,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "engineering"
+      }
     },
     {
       "id": "quarry",
@@ -97,7 +109,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "workshop",
@@ -119,6 +134,9 @@
       },
       "dailyInputs": {
         "metal": 0.04
+      },
+      "scenarioRequirements": {
+        "prehistory": "metallurgy"
       }
     },
     {
@@ -161,7 +179,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "writing"
+      }
     },
     {
       "id": "market",
@@ -179,7 +200,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "trade"
+      }
     },
     {
       "id": "wall",
@@ -197,7 +221,10 @@
         "type": "defense",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "mine",
@@ -285,7 +312,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "handcraft"
+      }
     },
     {
       "id": "granary",
@@ -303,7 +333,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "agriculture"
+      }
     },
     {
       "id": "recycler",
@@ -370,6 +403,213 @@
         "value": 50
       },
       "dailyInputs": {}
+    },
+    {
+      "id": "foraging_camp",
+      "name": "Zona de recolección",
+      "description": "Recolecta alimento silvestre; su capacidad depende de la riqueza del lugar.",
+      "costs": {
+        "wood": 4,
+        "stone": 2
+      },
+      "dailyYield": {
+        "food": 1.5
+      },
+      "days": 6,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        4
+      ],
+      "minimumRichness": 2,
+      "capacityPerRichness": 1
+    },
+    {
+      "id": "water_collect",
+      "name": "Puesto de agua",
+      "description": "Recoge agua superficial en praderas, bosques y humedales ricos.",
+      "costs": {
+        "wood": 6,
+        "stone": 2
+      },
+      "dailyYield": {
+        "water": 1.4
+      },
+      "days": 6,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        4
+      ],
+      "minimumRichness": 3,
+      "capacityPerRichness": 1
+    },
+    {
+      "id": "shelter",
+      "name": "Refugio de pieles",
+      "description": "Ocho plazas habitables, sin necesitar albañilería.",
+      "costs": {
+        "wood": 8,
+        "stone": 2
+      },
+      "dailyYield": {},
+      "days": 10,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "housing",
+        "value": 8
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
+    },
+    {
+      "id": "surface_stone",
+      "name": "Piedras de superficie",
+      "description": "Reúne piedra sin una mina ni herramientas metálicas.",
+      "costs": {
+        "wood": 6
+      },
+      "dailyYield": {
+        "stone": 0.45
+      },
+      "days": 6,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 2,
+      "capacityPerRichness": 1
+    },
+    {
+      "id": "knapping_shed",
+      "name": "Taller de talla",
+      "description": "Convierte piedra y madera en herramientas de lasca.",
+      "costs": {
+        "wood": 4,
+        "stone": 8
+      },
+      "dailyYield": {
+        "tools": 0.12
+      },
+      "days": 8,
+      "workers": 4,
+      "requires": [
+        "stone_tools"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {
+        "stone": 0.06,
+        "wood": 0.01
+      },
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
+    },
+    {
+      "id": "oral_circle",
+      "name": "Círculo de memoria",
+      "description": "Conserva y comparte conocimientos sin escritura.",
+      "costs": {
+        "wood": 5,
+        "stone": 5
+      },
+      "dailyYield": {
+        "knowledge": 0.12
+      },
+      "days": 8,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
+    },
+    {
+      "id": "fiber_weave",
+      "name": "Trenzado vegetal",
+      "description": "Trabaja fibras de la madera para fabricar tejidos y equipar intercambios.",
+      "costs": {
+        "wood": 6,
+        "stone": 2
+      },
+      "dailyYield": {
+        "textiles": 0.12
+      },
+      "days": 8,
+      "workers": 4,
+      "requires": [
+        "stone_tools"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {
+        "wood": 0.03
+      },
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
     }
   ],
   "technologies": [
@@ -827,6 +1067,32 @@
         {
           "type": "flag",
           "value": "technology_synthesis"
+        }
+      ]
+    },
+    {
+      "id": "stone_tools",
+      "name": "Talla de piedra",
+      "requires": [],
+      "knowledgeCost": 5,
+      "description": "Habilita talleres de talla y el trenzado de fibras; produce herramientas sin metal.",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_handcraft"
+        }
+      ]
+    },
+    {
+      "id": "oral_tradition",
+      "name": "Tradición oral",
+      "requires": [],
+      "knowledgeCost": 7,
+      "description": "Mejora en un 40 % la transmisión del círculo de memoria.",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_oral_teaching"
         }
       ]
     }

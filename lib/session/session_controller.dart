@@ -237,6 +237,7 @@ class SessionController {
     int size = 96,
     String intensity = 'normal',
     bool extraordinary = true,
+    String origin='reconstruction',
     int? slot,
   }) => _enqueue(() async {
     final destination = slot ?? _slot;
@@ -247,6 +248,7 @@ class SessionController {
         size: size,
         intensity: intensity,
         extraordinary: extraordinary,
+        origin:origin,
       ),
       coreSource: _installedCore!,
       additionalSources: _available,

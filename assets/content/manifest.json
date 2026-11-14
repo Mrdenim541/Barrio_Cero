@@ -3,15 +3,15 @@
   "packages": [
     {
       "id": "barrio.core",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "file": "core.json",
-      "sha256": "344c40c3441a6da8f78540c191fefce1974abdd9da412236d7e82b57883a43ca"
+      "sha256": "8546af4aee82ec56b3d042c3ee6b555e8b8203b9cdd5dc85b772ca84417b4742"
     },
     {
       "id": "barrio.senderos",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "file": "example_pack.json",
-      "sha256": "16d020c8c1efb0fcd7999fa00699b9da69b82e20449bd22ee2df7913a3374217"
+      "sha256": "f55fdf556405517973fd9506b7fab2c3675ed51ba7b966b5084cb3ffbe04d7fb"
     }
   ]
 }

@@ -37,7 +37,10 @@
       "tito",
       "farmer",
       "guard",
-      "medic"
+      "medic",
+      "ancestral_artisan",
+      "ancestral_scout",
+      "ancestral_elder"
     ],
     "actions": [
       "idle",
@@ -54,7 +57,7 @@
     "pixelDataFile": "characters.rgba",
     "pixelFormat": "premultipliedRGBA8888",
     "pixelWidth": 128,
-    "pixelHeight": 2304
+    "pixelHeight": 3456
   },
   "buildings": {
     "file": "buildings.png",
@@ -79,12 +82,19 @@
       "granary",
       "recycler",
       "observatory",
-      "habitat"
+      "habitat",
+      "foraging_camp",
+      "water_collect",
+      "shelter",
+      "surface_stone",
+      "knapping_shed",
+      "oral_circle",
+      "fiber_weave"
     ],
     "pixelDataFile": "buildings.rgba",
     "pixelFormat": "premultipliedRGBA8888",
     "pixelWidth": 384,
-    "pixelHeight": 192
+    "pixelHeight": 320
   },
   "terrain": {
     "file": "terrain.png",

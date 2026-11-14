@@ -76,12 +76,16 @@
     "tool/generate_catalog.py": "9ad1af66494242e667a9959e52fabe34c4837a25d14f7507d3ee10e88d3be645",
     "tool/verify_redesign_requirements.py": "0828744477d97f290da88f01079f05114167f3195d9328aa23eff0b5503759dc"
   },
-  "native": "pending update smoke test",
+  "native": {
+    "updatePreservesOriginalBytes": true,
+    "legacyWorldOpensWithArchivedContent": true
+  },
   "limits": [
     "R2/R3 partial",
     "No prehistory origin yet",
     "No complete global material ledger",
     "No full population reconciliation, families, territory, species or eras",
     "No active millennium or reference-phone performance acceptance"
-  ]
+  ],
+  "knownNativeFailure": "Initial API29 software-emulator launch crashed with SIGSEGV in bionic malloc on DartWorker; default-renderer retry opened the old world with exact original bytes. Native stability is not certified."
 }

@@ -1,0 +1,25 @@
+11-13 23:02:43.287  4621  4655 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 4655 (DartWorker), pid 4621 (barriocero.eras)
+11-13 23:02:43.864  4658  4658 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 23:02:43.865  4658  4658 F DEBUG   : Build fingerprint: 'Android/sdk_phone_x86_64/generic_x86_64:10/QSR1.210820.001/7663313:userdebug/test-keys'
+11-13 23:02:43.865  4658  4658 F DEBUG   : Revision: '0'
+11-13 23:02:43.865  4658  4658 F DEBUG   : ABI: 'x86_64'
+11-13 23:02:43.871  4658  4658 F DEBUG   : Timestamp: 2026-11-13 23:02:43+0000
+11-13 23:02:43.871  4658  4658 F DEBUG   : pid: 4621, tid: 4655, name: DartWorker  >>> com.barriocero.eras <<<
+11-13 23:02:43.871  4658  4658 F DEBUG   : uid: 10116
+11-13 23:02:43.871  4658  4658 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
+11-13 23:02:43.871  4658  4658 F DEBUG   : Cause: null pointer dereference
+11-13 23:02:43.872  4658  4658 F DEBUG   :     rax 0000000000000000  rbx 0000000000001000  rcx 0000000000000000  rdx 0000001800100000
+11-13 23:02:43.872  4658  4658 F DEBUG   :     r8  00000000fffffffd  r9  7000000000000000  r10 0000000000000001  r11 0000000000000010
+11-13 23:02:43.872  4658  4658 F DEBUG   :     r12 00007ee431802538  r13 00007ee431810a00  r14 0000000000000014  r15 00007ee3e6634808
+11-13 23:02:43.872  4658  4658 F DEBUG   :     rdi 00007ee431802640  rsi 000000000000000c
+11-13 23:02:43.873  4658  4658 F DEBUG   :     rbp 0000000000000014  rsp 00007ee3db784a00  rip 00007ee4bfb7b2c5
+11-13 23:02:44.113  4658  4658 F DEBUG   : 
+11-13 23:02:44.113  4658  4658 F DEBUG   : backtrace:
+11-13 23:02:44.114  4658  4658 F DEBUG   :       #00 pc 00000000000702c5  /apex/com.android.runtime/lib64/bionic/libc.so (extent_recycle+1429) (BuildId: b5c6019a3b4ea61b5e9a2f56319b584e)
+11-13 23:02:44.114  4658  4658 F DEBUG   :       #01 pc 000000000006fd28  /apex/com.android.runtime/lib64/bionic/libc.so (je_extents_alloc+56) (BuildId: b5c6019a3b4ea61b5e9a2f56319b584e)
+11-13 23:02:44.114  4658  4658 F DEBUG   :       #02 pc 0000000000059c3c  /apex/com.android.runtime/lib64/bionic/libc.so (arena_bin_malloc_hard+316) (BuildId: b5c6019a3b4ea61b5e9a2f56319b584e)
+11-13 23:02:44.114  4658  4658 F DEBUG   :       #03 pc 00000000000598b3  /apex/com.android.runtime/lib64/bionic/libc.so (je_arena_tcache_fill_small+323) (BuildId: b5c6019a3b4ea61b5e9a2f56319b584e)
+11-13 23:02:44.115  4658  4658 F DEBUG   :       #04 pc 0000000000086f01  /apex/com.android.runtime/lib64/bionic/libc.so (je_tcache_alloc_small_hard+17) (BuildId: b5c6019a3b4ea61b5e9a2f56319b584e)
+11-13 23:02:44.115  4658  4658 F DEBUG   :       #05 pc 000000000004dfb5  /apex/com.android.runtime/lib64/bionic/libc.so (je_malloc+1189) (BuildId: b5c6019a3b4ea61b5e9a2f56319b584e)
+11-13 23:02:44.115  4658  4658 F DEBUG   :       #06 pc 000000000004a37a  /apex/com.android.runtime/lib64/bionic/libc.so (malloc+26) (BuildId: b5c6019a3b4ea61b5e9a2f56319b584e)
+11-13 23:02:44.115  4658  4658 F DEBUG   :       #07 pc 000000000001e179  /data/app/com.barriocero.eras-mQV8LNocb1RYgMRTJP9O3Q==/base.apk

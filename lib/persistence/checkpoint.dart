@@ -284,6 +284,7 @@ class Checkpoint {
         event['data'] = data;
       }
     }
+    raw['origin']??='reconstruction';
     raw['catalog']=RuleCatalog.fromContent(previous.content).toJson();
     raw['rulesVersion'] = WorldState.currentRules;
     raw['randomAlgorithm'] = RandomState.algorithm;
@@ -405,6 +406,7 @@ class Checkpoint {
             return id;
           }),
     );
+    if(candidate.rulesVersion>=5&&candidate.origin=='prehistory'&&!((content['origins'] as List?)??[]).any((o)=>o['id']=='prehistory'))throw const FormatException('Falta el origen fijado de esta partida');
     if(candidate.rulesVersion>=4&&!candidate.catalog!.matches(RuleCatalog.fromContent(content))){
       throw const FormatException('Las reglas guardadas no coinciden con el contenido exacto');
     }

@@ -1,0 +1,38 @@
+{
+  "mode": "profile",
+  "android": "API29 software emulator",
+  "isolation": "Empty save directory; original directory preserved by rename",
+  "defaultOpening": {
+    "seed": 25945,
+    "population": 24,
+    "core": "2.1.0"
+  },
+  "previewHasNoEffects": true,
+  "realCommittedCost": {
+    "woodMillis": 8000,
+    "stoneMillis": 2000,
+    "work": 40
+  },
+  "refugeCompletesAndPersists": true,
+  "forceStopReopenPreservesWorld": true,
+  "originalDataRestoredExactly": true,
+  "originalFileInventory": {
+    "rules_0_bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e.json": {
+      "bytes": 925714,
+      "sha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e"
+    },
+    "world_0.backup.json": {
+      "bytes": 935325,
+      "sha256": "524898d7dc69155593d9101e32a15f4df5480b25a4d263d9e4084d12086f3aa3"
+    },
+    "world_0.json": {
+      "bytes": 925714,
+      "sha256": "bb563f9abebaa951292ebb414508ff0af3b0dfba5a26e09c8098bb2608457e2e"
+    },
+    "world_2.json": {
+      "bytes": 925434,
+      "sha256": "ac72a289a62eddc8098edfd636efc3ae5449e8d346679f897cb364e0e39d52d1"
+    }
+  },
+  "harnessCorrection": "Android has no standalone test executable for run-as. The existence check returned false, so restoration nested the original folder. No original files were overwritten; the audit detected it and the original folder was moved back, with every byte hash verified."
+}

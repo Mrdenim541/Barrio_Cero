@@ -49,6 +49,13 @@
           "result": "passed",
           "command": "flutter test --no-pub --reporter expanded; flutter test test/presentation_test.dart --no-pub",
           "scope": "Consultas sin mutación, confirmación de órdenes, autoridad de sesión, navegación y regresiones de guardado; no acredita el rediseño artístico final."
+        },
+        {
+          "path": "docs/validation/prehistory/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; flutter analyze; century group for each origin; Android API29 isolated save directory",
+          "scope": "116 pruebas, dos aperturas, refugio con costes y trabajo, terreno, talla, crónica diferida; cien años equivalentes por origen. No completa R4/R11 ni la aceptación global."
         }
       ]
     },
@@ -121,8 +128,16 @@
       "dependencies": [
         "R3"
       ],
-      "state": "pending",
-      "evidence": []
+      "state": "partial",
+      "evidence": [
+        {
+          "path": "docs/validation/prehistory/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; flutter analyze; century group for each origin; Android API29 isolated save directory",
+          "scope": "116 pruebas, dos aperturas, refugio con costes y trabajo, terreno, talla, crónica diferida; cien años equivalentes por origen. No completa R4/R11 ni la aceptación global."
+        }
+      ]
     },
     {
       "id": "R5",

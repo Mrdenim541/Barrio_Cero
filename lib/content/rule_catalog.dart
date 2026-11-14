@@ -52,6 +52,8 @@ class RuleCatalog {
     'xenology',
     'orbital',
     'synthesis',
+    'handcraft',
+    'oral_teaching',
   };
 
   static const resources = {
@@ -201,6 +203,10 @@ class RuleCatalog {
               'requires',
               'effect',
               'dailyInputs',
+              'scenarioRequirements',
+              'allowedBiomes',
+              'minimumRichness',
+              'capacityPerRichness',
             }.contains(k),
           ) ||
           b['requires'] is! List ||
@@ -224,6 +230,29 @@ class RuleCatalog {
           'Función o personal de edificio no implementados',
         );
       }
+      final requirements = b['scenarioRequirements'] ?? <String, String>{};
+      final biomes = b['allowedBiomes'] ?? [0, 1, 2, 3, 4, 5];
+      final richness = b['minimumRichness'] ?? 0;
+      final capacity = b['capacityPerRichness'] ?? 0;
+      if (requirements is! Map ||
+          requirements.entries.any(
+            (e) =>
+                !['prehistory', 'reconstruction'].contains(e.key) ||
+                !capabilities.contains(e.value),
+          ) ||
+          biomes is! List ||
+          biomes.isEmpty ||
+          biomes.any((b) => b is! int || b < 0 || b > 5) ||
+          richness is! int ||
+          richness < 0 ||
+          richness > 5 ||
+          capacity is! int ||
+          capacity < 0 ||
+          capacity > 10) {
+        throw const FormatException(
+          'Condición territorial o de origen inválida',
+        );
+      }
       definitions.add(
         BuildingDefinition(
           text(b['id']),
@@ -243,6 +272,10 @@ class RuleCatalog {
                     ? {'metal': .04}
                     : <String, num>{}),
           ),
+          Map.unmodifiable(Map<String, String>.from(requirements)),
+          Set.unmodifiable(Set<int>.from(biomes)),
+          richness,
+          capacity,
         ),
       );
     }

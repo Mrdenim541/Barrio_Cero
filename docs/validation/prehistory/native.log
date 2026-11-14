@@ -1,0 +1,15 @@
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: CREAR UN MUNDO
+Tap: Fundar Barrio Cero
+Tap: Construir
+Tap: Refugio de pieles
+Tap: Confirmar orden
+Tap: Avanzar
+Tap: Avanzar un mes
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Traceback (most recent call last):
+  File "/tmp/barrio_prehistory_native.py", line 47, in <module>
+    if not results['originalDataRestoredExactly']:raise RuntimeError('Original data differs after native fixture')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Original data differs after native fixture

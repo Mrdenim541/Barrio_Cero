@@ -1,0 +1,118 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/checkpoint_test.dart
+00:00 +0: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +1: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +2: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +3: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +4: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +5: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +6: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +7: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:00 +8: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:01 +9: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:01 +10: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:01 +11: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:01 +12: /workspace/Barrio_Cero/test/commands_test.dart: repair rejects undamaged targets and preserves positive capacity bonuses
+00:01 +13: /workspace/Barrio_Cero/test/checkpoint_test.dart: creating a bound snapshot does not mutate the running world
+00:01 +14: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:01 +15: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:02 +16: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:02 +17: /workspace/Barrio_Cero/test/content_test.dart: rejects forbidden operations, unknown conditions and malformed effects
+00:02 +18: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:02 +19: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:02 +20: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:02 +21: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:02 +22: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:02 +23: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:02 +24: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:03 +25: /workspace/Barrio_Cero/test/document_exchange_test.dart: export enforces byte limit before native invocation
+00:03 +26: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:04 +27: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:04 +28: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:04 +29: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:05 +30: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:05 +31: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 360.0
+00:05 +32: /workspace/Barrio_Cero/test/work_transport_test.dart: Construction pauses without adults and resumes using real work
+00:05 +33: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 412.0
+00:05 +34: /workspace/Barrio_Cero/test/work_transport_test.dart: Workers finishing construction cannot also produce that day
+00:06 +35: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:06 +36: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:06 +37: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:06 +38: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:06 +39: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:06 +40: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:08 +41: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:08 +42: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:09 +43: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +44: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +45: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:15 +46: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:15 +47: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:15 +48: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:17 +49: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:17 +50: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:17 +51: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:17 +52: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:17 +53: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:17 +54: /workspace/Barrio_Cero/test/settlement_scene_test.dart: New local layouts fit 196 distinct 2x2 footprints and round trip
+00:17 +55: /workspace/Barrio_Cero/test/settlement_scene_test.dart: Legacy layout preserves bytes, positions and future placement rule
+00:17 +56: /workspace/Barrio_Cero/test/settlement_scene_test.dart: Picking uses camera transform at several screen sizes and ignores dead people
+00:17 +57: /workspace/Barrio_Cero/test/settlement_scene_test.dart: Invalid layout versions and overlapping new footprints are rejected
+00:18 +58: /workspace/Barrio_Cero/test/settlement_scene_test.dart: Legacy colonies inherit legacy placement rules
+00:18 +59: /workspace/Barrio_Cero/test/material_ledger_test.dart: Exact quantities and range checks
+00:18 +60: /workspace/Barrio_Cero/test/material_ledger_test.dart: Multi-resource rejection is atomic and idempotent transfer charges once
+00:18 +61: /workspace/Barrio_Cero/test/material_ledger_test.dart: Reservation, cancellation and consumption preserve every material
+00:18 +62: /workspace/Barrio_Cero/test/material_ledger_test.dart: Corrupt material creation and reverse causal transfers rejected
+00:18 +63: /workspace/Barrio_Cero/test/material_ledger_test.dart: Balanced forgery and fabricated receipts fail journal replay
+00:18 +64: /workspace/Barrio_Cero/test/material_ledger_test.dart: Calculated decimal costs tolerate floating noise but never charge zero for positive fractions
+00:18 +65: /workspace/Barrio_Cero/test/storage_native_test.dart: queued writes retain the last confirmed value and its predecessor
+00:18 +66: /workspace/Barrio_Cero/test/storage_native_test.dart: uncommitted temporary files never replace a confirmed save
+00:18 +67: /workspace/Barrio_Cero/test/storage_native_test.dart: failed temporary write preserves both saves and does not poison queue
+00:18 +68: /workspace/Barrio_Cero/test/storage_native_test.dart: slot validation rejects paths outside the defined archive
+00:18 +69: /workspace/Barrio_Cero/test/prehistory_test.dart: Thirty seeds start with viable terrain and real primitive inventories
+00:19 +70: /workspace/Barrio_Cero/test/prehistory_test.dart: Primitive survival, a persistent refuge and actual crafted tools
+00:19 +71: /workspace/Barrio_Cero/test/prehistory_test.dart: Primitive survival, a persistent refuge and actual crafted tools
+00:19 +72: /workspace/Barrio_Cero/test/world_entities_test.dart: Capital relocation retains government, stocks and identities through save
+00:20 +73: /workspace/Barrio_Cero/test/world_entities_test.dart: Capital relocation retains government, stocks and identities through save
+00:20 +74: /workspace/Barrio_Cero/test/world_entities_test.dart: Capital relocation retains government, stocks and identities through save
+00:20 +75: /workspace/Barrio_Cero/test/world_entities_test.dart: Capital relocation retains government, stocks and identities through save
+00:20 +76: /workspace/Barrio_Cero/test/prehistory_test.dart: Origins keep their narrative contexts and saved rules
+00:20 +77: /workspace/Barrio_Cero/test/prehistory_test.dart: Origins keep their narrative contexts and saved rules
+00:20 +78: /workspace/Barrio_Cero/test/prehistory_test.dart: Origins keep their narrative contexts and saved rules
+00:20 +79: /workspace/Barrio_Cero/test/prehistory_test.dart: Origins keep their narrative contexts and saved rules
+00:20 +80: /workspace/Barrio_Cero/test/prehistory_test.dart: Origins keep their narrative contexts and saved rules
+00:20 +81: /workspace/Barrio_Cero/test/prehistory_test.dart: Origins keep their narrative contexts and saved rules
+00:20 +82: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Conversion preserves identities, PRNG, population, pins and records rounding
+00:21 +83: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Conversion preserves identities, PRNG, population, pins and records rounding
+00:22 +84: /workspace/Barrio_Cero/test/session_controller_test.dart: failed import preserves world and slot; queued save cannot overwrite imported world
+00:23 +85: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Cancel has no writes; upgrade keeps exact bytes; restore reactivates old rules
+00:23 +86: /workspace/Barrio_Cero/test/session_controller_test.dart: loads switch slot and world together and recover valid backup
+00:23 +87: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Failure after backup leaves committed world and session untouched
+00:24 +88: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Failure after backup leaves committed world and session untouched
+00:24 +89: /workspace/Barrio_Cero/test/session_controller_test.dart: package import commits registry before exposing it and never changes active pins
+00:24 +90: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Impossible reconciliation rejects and retains original rules
+00:24 +91: /workspace/Barrio_Cero/test/session_controller_test.dart: history rejects stale revisions and foreign sessions; failed writes preserve last commit
+00:25 +92: /workspace/Barrio_Cero/test/session_controller_test.dart: history rejects stale revisions and foreign sessions; failed writes preserve last commit
+00:25 +93: /workspace/Barrio_Cero/test/session_controller_test.dart: history rejects stale revisions and foreign sessions; failed writes preserve last commit
+00:25 +94: /workspace/Barrio_Cero/test/command_preview_test.dart: quotes and submit agree on materials, workers, prerequisites and invalid targets
+00:26 +95: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:26 +96: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:26 +97: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:26 +98: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:26 +99: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:26 +100: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:26 +101: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:26 +102: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:27 +103: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Pinned definitions drive actual costs, completion and production
+00:27 +104: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Pinned definitions drive actual costs, completion and production
+00:28 +105: /workspace/Barrio_Cero/test/session_controller_test.dart: Legacy prototype resolves its exact archived core after a catalog update
+00:28 +106: /workspace/Barrio_Cero/test/session_controller_test.dart: Legacy prototype resolves its exact archived core after a catalog update
+00:28 +107: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Declared capacities and technology effects change actual behavior
+00:28 +108: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Declared capacities and technology effects change actual behavior
+00:28 +109: /workspace/Barrio_Cero/test/session_controller_test.dart: worker cancellation does not acknowledge pending batch and final batch waits for ack
+00:28 +110: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Legacy rules use frozen tables and retain exact serialization
+00:28 +111: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Production consumes declared inputs and stops without labor or supplies
+00:28 +112: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Insufficient input permits only proportional output
+00:28 +113: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Unknown executable fields, material precision and cycles are rejected
+00:29 +114: /workspace/Barrio_Cero/test/art_assets_test.dart: original atlases decode from bounded platform buffer views
+00:29 +115: /workspace/Barrio_Cero/test/art_assets_test.dart: Every shipped building and primitive role has an atlas frame
+00:29 +116: All tests passed!

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "barrio.core",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "language": "es",
   "title": "BARRIO CERO: ERAS — Crónicas de reconstrucción",
   "resources": [
@@ -159,7 +159,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "agriculture"
+      }
     },
     {
       "id": "well",
@@ -179,7 +182,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "house",
@@ -197,7 +203,10 @@
         "type": "housing",
         "value": 18
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "sawmill",
@@ -217,7 +226,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "engineering"
+      }
     },
     {
       "id": "quarry",
@@ -237,7 +249,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "workshop",
@@ -259,6 +274,9 @@
       },
       "dailyInputs": {
         "metal": 0.04
+      },
+      "scenarioRequirements": {
+        "prehistory": "metallurgy"
       }
     },
     {
@@ -301,7 +319,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "writing"
+      }
     },
     {
       "id": "market",
@@ -319,7 +340,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "trade"
+      }
     },
     {
       "id": "wall",
@@ -337,7 +361,10 @@
         "type": "defense",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "masonry"
+      }
     },
     {
       "id": "mine",
@@ -425,7 +452,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "handcraft"
+      }
     },
     {
       "id": "granary",
@@ -443,7 +473,10 @@
         "type": "production",
         "value": 1
       },
-      "dailyInputs": {}
+      "dailyInputs": {},
+      "scenarioRequirements": {
+        "prehistory": "agriculture"
+      }
     },
     {
       "id": "recycler",
@@ -510,6 +543,213 @@
         "value": 50
       },
       "dailyInputs": {}
+    },
+    {
+      "id": "foraging_camp",
+      "name": "Zona de recolección",
+      "description": "Recolecta alimento silvestre; su capacidad depende de la riqueza del lugar.",
+      "costs": {
+        "wood": 4,
+        "stone": 2
+      },
+      "dailyYield": {
+        "food": 1.5
+      },
+      "days": 6,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        4
+      ],
+      "minimumRichness": 2,
+      "capacityPerRichness": 1
+    },
+    {
+      "id": "water_collect",
+      "name": "Puesto de agua",
+      "description": "Recoge agua superficial en praderas, bosques y humedales ricos.",
+      "costs": {
+        "wood": 6,
+        "stone": 2
+      },
+      "dailyYield": {
+        "water": 1.4
+      },
+      "days": 6,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        4
+      ],
+      "minimumRichness": 3,
+      "capacityPerRichness": 1
+    },
+    {
+      "id": "shelter",
+      "name": "Refugio de pieles",
+      "description": "Ocho plazas habitables, sin necesitar albañilería.",
+      "costs": {
+        "wood": 8,
+        "stone": 2
+      },
+      "dailyYield": {},
+      "days": 10,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "housing",
+        "value": 8
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
+    },
+    {
+      "id": "surface_stone",
+      "name": "Piedras de superficie",
+      "description": "Reúne piedra sin una mina ni herramientas metálicas.",
+      "costs": {
+        "wood": 6
+      },
+      "dailyYield": {
+        "stone": 0.45
+      },
+      "days": 6,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 2,
+      "capacityPerRichness": 1
+    },
+    {
+      "id": "knapping_shed",
+      "name": "Taller de talla",
+      "description": "Convierte piedra y madera en herramientas de lasca.",
+      "costs": {
+        "wood": 4,
+        "stone": 8
+      },
+      "dailyYield": {
+        "tools": 0.12
+      },
+      "days": 8,
+      "workers": 4,
+      "requires": [
+        "stone_tools"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {
+        "stone": 0.06,
+        "wood": 0.01
+      },
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
+    },
+    {
+      "id": "oral_circle",
+      "name": "Círculo de memoria",
+      "description": "Conserva y comparte conocimientos sin escritura.",
+      "costs": {
+        "wood": 5,
+        "stone": 5
+      },
+      "dailyYield": {
+        "knowledge": 0.12
+      },
+      "days": 8,
+      "workers": 4,
+      "requires": [],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {},
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
+    },
+    {
+      "id": "fiber_weave",
+      "name": "Trenzado vegetal",
+      "description": "Trabaja fibras de la madera para fabricar tejidos y equipar intercambios.",
+      "costs": {
+        "wood": 6,
+        "stone": 2
+      },
+      "dailyYield": {
+        "textiles": 0.12
+      },
+      "days": 8,
+      "workers": 4,
+      "requires": [
+        "stone_tools"
+      ],
+      "effect": {
+        "type": "production",
+        "value": 1
+      },
+      "dailyInputs": {
+        "wood": 0.03
+      },
+      "scenarioRequirements": {},
+      "allowedBiomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "minimumRichness": 0,
+      "capacityPerRichness": 0
     }
   ],
   "technologies": [
@@ -969,6 +1209,32 @@
           "value": "technology_synthesis"
         }
       ]
+    },
+    {
+      "id": "stone_tools",
+      "name": "Talla de piedra",
+      "requires": [],
+      "knowledgeCost": 5,
+      "description": "Habilita talleres de talla y el trenzado de fibras; produce herramientas sin metal.",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_handcraft"
+        }
+      ]
+    },
+    {
+      "id": "oral_tradition",
+      "name": "Tradición oral",
+      "requires": [],
+      "knowledgeCost": 7,
+      "description": "Mejora en un 40 % la transmisión del círculo de memoria.",
+      "effects": [
+        {
+          "type": "flag",
+          "value": "technology_oral_teaching"
+        }
+      ]
     }
   ],
   "traits": [
@@ -1288,6 +1554,11 @@
       "conditions": {
         "resource_max": {
           "food": 160
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08,
@@ -1333,6 +1604,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1348,6 +1623,11 @@
       "conditions": {
         "resource_max": {
           "water": 100
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.083,
@@ -1393,6 +1673,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1406,7 +1690,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 20
+        "minPopulation": 20,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.08600000000000001,
       "conditionalProbability": [
@@ -1450,6 +1739,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1465,6 +1758,11 @@
       "conditions": {
         "resource_min": {
           "food": 30
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.089,
@@ -1509,6 +1807,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1522,7 +1824,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxHealth": 90
+        "maxHealth": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.092,
       "conditionalProbability": [
@@ -1566,6 +1873,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1579,7 +1890,12 @@
         "living_society"
       ],
       "conditions": {
-        "minHousing": 0
+        "minHousing": 0,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.095,
       "conditionalProbability": [
@@ -1624,6 +1940,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1637,7 +1957,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 15
+        "minPopulation": 15,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.098,
       "conditionalProbability": [
@@ -1681,6 +2006,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1696,6 +2025,11 @@
       "conditions": {
         "resource_min": {
           "textiles": 12
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.101,
@@ -1740,6 +2074,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1755,6 +2093,11 @@
       "conditions": {
         "resource_max": {
           "food": 70
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.10400000000000001,
@@ -1799,6 +2142,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1812,7 +2159,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxHealth": 85
+        "maxHealth": 85,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.107,
       "conditionalProbability": [
@@ -1856,6 +2208,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1869,7 +2225,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 35
+        "minPopulation": 35,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.11,
       "conditionalProbability": [
@@ -1913,6 +2274,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1926,7 +2291,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 360
+        "minDay": 360,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.113,
       "conditionalProbability": [
@@ -1970,6 +2340,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -1983,7 +2357,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.08,
       "conditionalProbability": [
@@ -2027,6 +2406,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2042,6 +2425,11 @@
       "conditions": {
         "resource_min": {
           "tools": 6
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.083,
@@ -2086,6 +2474,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2099,7 +2491,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxMorale": 80
+        "maxMorale": 80,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.08600000000000001,
       "conditionalProbability": [
@@ -2143,6 +2540,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2158,6 +2559,11 @@
       "conditions": {
         "resource_min": {
           "food": 40
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.089,
@@ -2202,6 +2608,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2217,6 +2627,11 @@
       "conditions": {
         "resource_max": {
           "water": 120
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.092,
@@ -2261,6 +2676,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2276,6 +2695,11 @@
       "conditions": {
         "resource_min": {
           "wood": 10
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.095,
@@ -2320,6 +2744,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2335,6 +2763,11 @@
       "conditions": {
         "resource_min": {
           "medicine": 4
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.098,
@@ -2380,6 +2813,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2395,6 +2832,11 @@
       "conditions": {
         "resource_min": {
           "metal": 8
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.101,
@@ -2439,6 +2881,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2454,6 +2900,11 @@
       "conditions": {
         "resource_min": {
           "food": 60
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.10400000000000001,
@@ -2498,6 +2949,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2511,7 +2966,12 @@
         "living_society"
       ],
       "conditions": {
-        "minHousing": 3
+        "minHousing": 3,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.107,
       "conditionalProbability": [
@@ -2555,6 +3015,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2568,7 +3032,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxMorale": 90
+        "maxMorale": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.11,
       "conditionalProbability": [
@@ -2612,6 +3081,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2627,6 +3100,11 @@
       "conditions": {
         "resource_min": {
           "knowledge": 10
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.113,
@@ -2672,6 +3150,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2685,7 +3167,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 10
+        "minDay": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.08,
       "conditionalProbability": [
@@ -2731,6 +3218,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2744,7 +3235,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 30
+        "minDay": 30,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.083,
       "conditionalProbability": [
@@ -2789,6 +3285,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2804,6 +3304,11 @@
       "conditions": {
         "resource_min": {
           "tools": 5
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08600000000000001,
@@ -2850,6 +3355,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2863,7 +3372,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 40
+        "minDay": 40,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.089,
       "conditionalProbability": [
@@ -2908,6 +3422,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2923,6 +3441,11 @@
       "conditions": {
         "resource_min": {
           "food": 20
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.092,
@@ -2969,6 +3492,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -2984,6 +3511,11 @@
       "conditions": {
         "resource_min": {
           "textiles": 9
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.095,
@@ -3030,6 +3562,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3045,6 +3581,11 @@
       "conditions": {
         "resource_min": {
           "wood": 15
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.098,
@@ -3091,6 +3632,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3106,6 +3651,11 @@
       "conditions": {
         "resource_min": {
           "fuel": 9
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.101,
@@ -3152,6 +3702,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3165,7 +3719,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 60
+        "minDay": 60,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.10400000000000001,
       "conditionalProbability": [
@@ -3210,6 +3769,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3225,6 +3788,11 @@
       "conditions": {
         "resource_min": {
           "tools": 4
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.107,
@@ -3271,6 +3839,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3284,7 +3856,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 20
+        "minDay": 20,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.11,
       "conditionalProbability": [
@@ -3330,6 +3907,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3345,6 +3926,11 @@
       "conditions": {
         "resource_min": {
           "wood": 16
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.113,
@@ -3391,6 +3977,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3406,6 +3996,11 @@
       "conditions": {
         "resource_min": {
           "metal": 6
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08,
@@ -3451,6 +4046,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3466,6 +4065,11 @@
       "conditions": {
         "resource_max": {
           "food": 150
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.083,
@@ -3511,6 +4115,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3526,6 +4134,11 @@
       "conditions": {
         "resource_min": {
           "metal": 14
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08600000000000001,
@@ -3572,6 +4185,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3587,6 +4204,11 @@
       "conditions": {
         "resource_min": {
           "fuel": 5
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.089,
@@ -3631,6 +4253,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3644,7 +4270,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 20
+        "minPopulation": 20,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.092,
       "conditionalProbability": [
@@ -3689,6 +4320,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3704,6 +4339,11 @@
       "conditions": {
         "resource_min": {
           "energy": 5
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.095,
@@ -3750,6 +4390,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3765,6 +4409,11 @@
       "conditions": {
         "resource_max": {
           "stone": 100
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.098,
@@ -3811,6 +4460,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3826,6 +4479,11 @@
       "conditions": {
         "resource_min": {
           "wood": 16
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.101,
@@ -3871,6 +4529,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3886,6 +4548,11 @@
       "conditions": {
         "resource_min": {
           "food": 50
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.10400000000000001,
@@ -3931,6 +4598,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -3946,6 +4617,11 @@
       "conditions": {
         "resource_min": {
           "tools": 4
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.107,
@@ -3991,6 +4667,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4004,7 +4684,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxMorale": 75
+        "maxMorale": 75,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.11,
       "conditionalProbability": [
@@ -4048,6 +4733,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4063,6 +4752,11 @@
       "conditions": {
         "resource_min": {
           "water": 80
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.113,
@@ -4108,6 +4802,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4121,7 +4819,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 25
+        "minPopulation": 25,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.08,
       "conditionalProbability": [
@@ -4165,6 +4868,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4178,7 +4885,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 60
+        "minDay": 60,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.083,
       "conditionalProbability": [
@@ -4222,6 +4934,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4235,7 +4951,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 720
+        "minDay": 720,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.08600000000000001,
       "conditionalProbability": [
@@ -4280,6 +5001,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4295,6 +5020,11 @@
       "conditions": {
         "resource_max": {
           "food": 120
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.089,
@@ -4339,6 +5069,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4352,7 +5086,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxMorale": 75
+        "maxMorale": 75,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.092,
       "conditionalProbability": [
@@ -4397,6 +5136,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4412,6 +5155,11 @@
       "conditions": {
         "resource_min": {
           "knowledge": 20
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.095,
@@ -4456,6 +5204,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4469,7 +5221,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 35
+        "minPopulation": 35,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.098,
       "conditionalProbability": [
@@ -4513,6 +5270,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4526,7 +5287,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxMorale": 85
+        "maxMorale": 85,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.101,
       "conditionalProbability": [
@@ -4570,6 +5336,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4585,6 +5355,11 @@
       "conditions": {
         "resource_min": {
           "stone": 22
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.10400000000000001,
@@ -4629,6 +5404,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4642,7 +5421,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 360
+        "minDay": 360,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.107,
       "conditionalProbability": [
@@ -4686,6 +5470,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4701,6 +5489,11 @@
       "conditions": {
         "resource_min": {
           "knowledge": 15
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.11,
@@ -4746,6 +5539,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4759,7 +5556,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxHealth": 70
+        "maxHealth": 70,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.113,
       "conditionalProbability": [
@@ -4803,6 +5605,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4818,6 +5624,11 @@
       "conditions": {
         "resource_min": {
           "metal": 10
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08,
@@ -4864,6 +5675,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4877,7 +5692,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxHealth": 90
+        "maxHealth": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.083,
       "conditionalProbability": [
@@ -4922,6 +5742,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4937,6 +5761,11 @@
       "conditions": {
         "resource_min": {
           "food": 60
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08600000000000001,
@@ -4983,6 +5812,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -4998,6 +5831,11 @@
       "conditions": {
         "resource_min": {
           "energy": 10
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.089,
@@ -5043,6 +5881,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5058,6 +5900,11 @@
       "conditions": {
         "resource_min": {
           "tools": 5
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.092,
@@ -5104,6 +5951,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5119,6 +5970,11 @@
       "conditions": {
         "resource_min": {
           "wood": 24
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.095,
@@ -5164,6 +6020,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5179,6 +6039,11 @@
       "conditions": {
         "resource_min": {
           "stone": 15
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.098,
@@ -5225,6 +6090,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5240,6 +6109,11 @@
       "conditions": {
         "resource_min": {
           "knowledge": 80
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.101,
@@ -5285,6 +6159,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5300,6 +6178,11 @@
       "conditions": {
         "resource_min": {
           "metal": 20
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.10400000000000001,
@@ -5346,6 +6229,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5361,6 +6248,11 @@
       "conditions": {
         "resource_min": {
           "fuel": 8
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.107,
@@ -5406,6 +6298,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5421,6 +6317,11 @@
       "conditions": {
         "resource_min": {
           "knowledge": 40
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.11,
@@ -5467,6 +6368,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5482,6 +6387,11 @@
       "conditions": {
         "resource_min": {
           "tools": 12
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.113,
@@ -5527,6 +6437,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5542,6 +6456,11 @@
       "conditions": {
         "resource_min": {
           "food": 35
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08,
@@ -5586,6 +6505,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5599,7 +6522,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 25
+        "minPopulation": 25,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.083,
       "conditionalProbability": [
@@ -5643,6 +6571,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5656,7 +6588,12 @@
         "living_society"
       ],
       "conditions": {
-        "minHousing": 3
+        "minHousing": 3,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.08600000000000001,
       "conditionalProbability": [
@@ -5700,6 +6637,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5715,6 +6656,11 @@
       "conditions": {
         "resource_min": {
           "water": 40
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.089,
@@ -5760,6 +6706,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5775,6 +6725,11 @@
       "conditions": {
         "resource_min": {
           "wood": 20
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.092,
@@ -5820,6 +6775,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5833,7 +6792,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxRelation": 0
+        "maxRelation": 0,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.095,
       "conditionalProbability": [
@@ -5877,6 +6841,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5892,6 +6860,11 @@
       "conditions": {
         "resource_min": {
           "stone": 24
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.098,
@@ -5936,6 +6909,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -5949,7 +6926,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 15
+        "minPopulation": 15,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.101,
       "conditionalProbability": [
@@ -5993,6 +6975,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6008,6 +6994,11 @@
       "conditions": {
         "resource_min": {
           "metal": 15
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.10400000000000001,
@@ -6052,6 +7043,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6067,6 +7062,11 @@
       "conditions": {
         "resource_min": {
           "food": 50
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.107,
@@ -6111,6 +7111,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6124,7 +7128,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxRelation": 10
+        "maxRelation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.11,
       "conditionalProbability": [
@@ -6168,6 +7177,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6181,7 +7194,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 120
+        "minDay": 120,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.113,
       "conditionalProbability": [
@@ -6226,6 +7244,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6241,6 +7263,11 @@
       "conditions": {
         "resource_max": {
           "water": 150
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08,
@@ -6287,6 +7314,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6300,7 +7331,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.083,
       "conditionalProbability": [
@@ -6345,6 +7381,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6360,6 +7400,11 @@
       "conditions": {
         "resource_min": {
           "food": 40
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.08600000000000001,
@@ -6406,6 +7451,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6421,6 +7470,11 @@
       "conditions": {
         "resource_min": {
           "stone": 22
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.089,
@@ -6465,6 +7519,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6478,7 +7536,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 180
+        "minDay": 180,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.092,
       "conditionalProbability": [
@@ -6522,6 +7585,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6537,6 +7604,11 @@
       "conditions": {
         "resource_min": {
           "wood": 35
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.095,
@@ -6582,6 +7654,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6597,6 +7673,11 @@
       "conditions": {
         "resource_min": {
           "food": 35
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.098,
@@ -6642,6 +7723,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6657,6 +7742,11 @@
       "conditions": {
         "resource_min": {
           "stone": 20
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.101,
@@ -6701,6 +7791,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6714,7 +7808,12 @@
         "living_society"
       ],
       "conditions": {
-        "maxHealth": 90
+        "maxHealth": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.10400000000000001,
       "conditionalProbability": [
@@ -6758,6 +7857,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6773,6 +7876,11 @@
       "conditions": {
         "resource_min": {
           "food": 70
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.107,
@@ -6818,6 +7926,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6833,6 +7945,11 @@
       "conditions": {
         "resource_max": {
           "water": 100
+        },
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
         }
       },
       "baseProbability": 0.11,
@@ -6879,6 +7996,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6892,7 +8013,12 @@
         "living_society"
       ],
       "conditions": {
-        "minPopulation": 20
+        "minPopulation": 20,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.113,
       "conditionalProbability": [
@@ -6936,6 +8062,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -6950,7 +8080,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7000,7 +8135,11 @@
           ]
         }
       ],
-      "family": "disaster"
+      "family": "disaster",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "canal_cooperation",
@@ -7016,7 +8155,12 @@
       "conditions": {
         "flags": [
           "canal_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7066,7 +8210,11 @@
           ]
         }
       ],
-      "family": "disaster"
+      "family": "disaster",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "canal_pressure",
@@ -7082,7 +8230,12 @@
       "conditions": {
         "flags": [
           "canal_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7132,7 +8285,11 @@
           ]
         }
       ],
-      "family": "disaster"
+      "family": "disaster",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "canal_legacy",
@@ -7145,7 +8302,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -7172,7 +8335,11 @@
           "followUps": []
         }
       ],
-      "family": "disaster"
+      "family": "disaster",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "canal_fracture",
@@ -7185,7 +8352,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -7211,7 +8384,11 @@
           "followUps": []
         }
       ],
-      "family": "disaster"
+      "family": "disaster",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "fever_opening",
@@ -7225,7 +8402,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7275,7 +8457,11 @@
           ]
         }
       ],
-      "family": "epidemic"
+      "family": "epidemic",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "fever_cooperation",
@@ -7291,7 +8477,12 @@
       "conditions": {
         "flags": [
           "fever_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7341,7 +8532,11 @@
           ]
         }
       ],
-      "family": "epidemic"
+      "family": "epidemic",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "fever_pressure",
@@ -7357,7 +8552,12 @@
       "conditions": {
         "flags": [
           "fever_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7407,7 +8607,11 @@
           ]
         }
       ],
-      "family": "epidemic"
+      "family": "epidemic",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "fever_legacy",
@@ -7420,7 +8624,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -7446,7 +8656,11 @@
           "followUps": []
         }
       ],
-      "family": "epidemic"
+      "family": "epidemic",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "fever_fracture",
@@ -7459,7 +8673,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -7485,7 +8705,11 @@
           "followUps": []
         }
       ],
-      "family": "epidemic"
+      "family": "epidemic",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "machine_opening",
@@ -7499,7 +8723,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7549,7 +8778,11 @@
           ]
         }
       ],
-      "family": "autonomous"
+      "family": "autonomous",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "machine_cooperation",
@@ -7565,7 +8798,12 @@
       "conditions": {
         "flags": [
           "machine_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7615,7 +8853,11 @@
           ]
         }
       ],
-      "family": "autonomous"
+      "family": "autonomous",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "machine_pressure",
@@ -7631,7 +8873,12 @@
       "conditions": {
         "flags": [
           "machine_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7681,7 +8928,11 @@
           ]
         }
       ],
-      "family": "autonomous"
+      "family": "autonomous",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "machine_legacy",
@@ -7694,7 +8945,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -7721,7 +8978,11 @@
           "followUps": []
         }
       ],
-      "family": "autonomous"
+      "family": "autonomous",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "machine_fracture",
@@ -7734,7 +8995,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -7760,7 +9027,11 @@
           "followUps": []
         }
       ],
-      "family": "autonomous"
+      "family": "autonomous",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "seed_opening",
@@ -7774,7 +9045,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7824,7 +9100,11 @@
           ]
         }
       ],
-      "family": "transformation"
+      "family": "transformation",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "seed_cooperation",
@@ -7840,7 +9120,12 @@
       "conditions": {
         "flags": [
           "seed_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7890,7 +9175,11 @@
           ]
         }
       ],
-      "family": "transformation"
+      "family": "transformation",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "seed_pressure",
@@ -7906,7 +9195,12 @@
       "conditions": {
         "flags": [
           "seed_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -7956,7 +9250,11 @@
           ]
         }
       ],
-      "family": "transformation"
+      "family": "transformation",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "seed_legacy",
@@ -7969,7 +9267,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -7996,7 +9300,11 @@
           "followUps": []
         }
       ],
-      "family": "transformation"
+      "family": "transformation",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "seed_fracture",
@@ -8009,7 +9317,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -8035,7 +9349,11 @@
           "followUps": []
         }
       ],
-      "family": "transformation"
+      "family": "transformation",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "comet_opening",
@@ -8049,7 +9367,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8099,7 +9422,11 @@
           ]
         }
       ],
-      "family": "planetary"
+      "family": "planetary",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "comet_cooperation",
@@ -8115,7 +9442,12 @@
       "conditions": {
         "flags": [
           "comet_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8165,7 +9497,11 @@
           ]
         }
       ],
-      "family": "planetary"
+      "family": "planetary",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "comet_pressure",
@@ -8181,7 +9517,12 @@
       "conditions": {
         "flags": [
           "comet_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8231,7 +9572,11 @@
           ]
         }
       ],
-      "family": "planetary"
+      "family": "planetary",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "comet_legacy",
@@ -8244,7 +9589,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -8270,7 +9621,11 @@
           "followUps": []
         }
       ],
-      "family": "planetary"
+      "family": "planetary",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "comet_fracture",
@@ -8283,7 +9638,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -8309,7 +9670,11 @@
           "followUps": []
         }
       ],
-      "family": "planetary"
+      "family": "planetary",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "council_opening",
@@ -8323,7 +9688,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8373,7 +9743,11 @@
           ]
         }
       ],
-      "family": "political"
+      "family": "political",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "council_cooperation",
@@ -8389,7 +9763,12 @@
       "conditions": {
         "flags": [
           "council_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8439,7 +9818,11 @@
           ]
         }
       ],
-      "family": "political"
+      "family": "political",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "council_pressure",
@@ -8455,7 +9838,12 @@
       "conditions": {
         "flags": [
           "council_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8505,7 +9893,11 @@
           ]
         }
       ],
-      "family": "political"
+      "family": "political",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "council_legacy",
@@ -8518,7 +9910,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -8544,7 +9942,11 @@
           "followUps": []
         }
       ],
-      "family": "political"
+      "family": "political",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "council_fracture",
@@ -8557,7 +9959,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -8583,7 +9991,11 @@
           "followUps": []
         }
       ],
-      "family": "political"
+      "family": "political",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "aquifer_opening",
@@ -8597,7 +10009,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8647,7 +10064,11 @@
           ]
         }
       ],
-      "family": "scarcity"
+      "family": "scarcity",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "aquifer_cooperation",
@@ -8663,7 +10084,12 @@
       "conditions": {
         "flags": [
           "aquifer_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8713,7 +10139,11 @@
           ]
         }
       ],
-      "family": "scarcity"
+      "family": "scarcity",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "aquifer_pressure",
@@ -8729,7 +10159,12 @@
       "conditions": {
         "flags": [
           "aquifer_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8779,7 +10214,11 @@
           ]
         }
       ],
-      "family": "scarcity"
+      "family": "scarcity",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "aquifer_legacy",
@@ -8792,7 +10231,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -8819,7 +10264,11 @@
           "followUps": []
         }
       ],
-      "family": "scarcity"
+      "family": "scarcity",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "aquifer_fracture",
@@ -8832,7 +10281,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -8858,7 +10313,11 @@
           "followUps": []
         }
       ],
-      "family": "scarcity"
+      "family": "scarcity",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "visitors_opening",
@@ -8872,7 +10331,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8922,7 +10386,11 @@
           ]
         }
       ],
-      "family": "contact"
+      "family": "contact",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "visitors_cooperation",
@@ -8938,7 +10406,12 @@
       "conditions": {
         "flags": [
           "visitors_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -8988,7 +10461,11 @@
           ]
         }
       ],
-      "family": "contact"
+      "family": "contact",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "visitors_pressure",
@@ -9004,7 +10481,12 @@
       "conditions": {
         "flags": [
           "visitors_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9054,7 +10536,11 @@
           ]
         }
       ],
-      "family": "contact"
+      "family": "contact",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "visitors_legacy",
@@ -9067,7 +10553,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9094,7 +10586,11 @@
           "followUps": []
         }
       ],
-      "family": "contact"
+      "family": "contact",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "visitors_fracture",
@@ -9107,7 +10603,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9133,7 +10635,11 @@
           "followUps": []
         }
       ],
-      "family": "contact"
+      "family": "contact",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "caravan_opening",
@@ -9147,7 +10653,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9196,6 +10707,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9212,7 +10727,12 @@
       "conditions": {
         "flags": [
           "caravan_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9261,6 +10781,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9277,7 +10801,12 @@
       "conditions": {
         "flags": [
           "caravan_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9326,6 +10855,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9339,7 +10872,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9365,6 +10904,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9378,7 +10921,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9403,6 +10952,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9417,7 +10970,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9466,6 +11024,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9482,7 +11044,12 @@
       "conditions": {
         "flags": [
           "heirs_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9531,6 +11098,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9547,7 +11118,12 @@
       "conditions": {
         "flags": [
           "heirs_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9596,6 +11172,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9609,7 +11189,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9635,6 +11221,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9648,7 +11238,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9673,6 +11269,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9687,7 +11287,12 @@
         "living_society"
       ],
       "conditions": {
-        "minDay": 90
+        "minDay": 90,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9736,6 +11341,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9752,7 +11361,12 @@
       "conditions": {
         "flags": [
           "island_cooperation"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9801,6 +11415,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9817,7 +11435,12 @@
       "conditions": {
         "flags": [
           "island_control"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -9866,6 +11489,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9879,7 +11506,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9904,6 +11537,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9917,7 +11554,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -9942,6 +11585,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -9960,7 +11607,12 @@
         "facilityFound": true,
         "flagsMissing": [
           "facility_committed"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -10054,6 +11706,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -10070,7 +11726,12 @@
       "conditions": {
         "flags": [
           "facility_closed"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -10100,6 +11761,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -10116,7 +11781,12 @@
       "conditions": {
         "flags": [
           "facility_dismantled"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -10148,6 +11818,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -10164,7 +11838,12 @@
       "conditions": {
         "flags": [
           "facility_shared"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -10195,6 +11874,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -10211,7 +11894,12 @@
       "conditions": {
         "flags": [
           "facility_studied"
-        ]
+        ],
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "baseProbability": 0.04,
       "conditionalProbability": [],
@@ -10263,6 +11951,10 @@
             }
           ]
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -10276,7 +11968,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -10306,6 +12004,10 @@
           ],
           "followUps": []
         }
+      ],
+      "origins": [
+        "prehistory",
+        "reconstruction"
       ]
     },
     {
@@ -10319,7 +12021,13 @@
       "participants": [
         "living_society"
       ],
-      "conditions": {},
+      "conditions": {
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
+      },
       "baseProbability": 0.04,
       "conditionalProbability": [],
       "deadlineDays": 90,
@@ -10374,7 +12082,438 @@
           "followUps": []
         }
       ],
-      "family": "contact"
+      "family": "contact",
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
+    },
+    {
+      "id": "prehistoric_reserves",
+      "title": "Guardar o compartir",
+      "category": "needs",
+      "body": "La recolección ha dejado unas raciones de sobra. Compartirlas anima a la comunidad; reservarlas conserva margen para una expedición.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {},
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_reserves",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "share",
+          "label": "Compartir una comida",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "food": 6
+          },
+          "effects": [
+            {
+              "type": "morale",
+              "value": 5
+            }
+          ],
+          "followUps": []
+        },
+        {
+          "id": "store",
+          "label": "Conservar las raciones",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "flag",
+              "value": "prehistoric_reserved"
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    },
+    {
+      "id": "prehistoric_roof",
+      "title": "Una cubierta que cede",
+      "category": "needs",
+      "body": "Una cubierta deja entrar agua. Nadie ha muerto: reparar ahora consume madera y evita que el problema reduzca el ánimo.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {},
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_roof",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "repair",
+          "label": "Rehacer la cubierta",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "wood": 4
+          },
+          "effects": [
+            {
+              "type": "morale",
+              "value": 3
+            }
+          ],
+          "followUps": []
+        },
+        {
+          "id": "wait",
+          "label": "Esperar un tiempo",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "morale",
+              "value": -3
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    },
+    {
+      "id": "prehistoric_story",
+      "title": "Lo que recuerdan los mayores",
+      "category": "technology",
+      "body": "Los mayores ofrecen transmitir una técnica durante una reunión. Dedicar provisiones al encuentro deja un conocimiento que sobrevivirá a la jornada.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {},
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_story",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "label": "Reunirse y aprender",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "food": 4
+          },
+          "effects": [
+            {
+              "type": "resource",
+              "value": 2,
+              "resource": "knowledge"
+            },
+            {
+              "type": "flag",
+              "value": "prehistoric_story_heard"
+            }
+          ],
+          "followUps": []
+        },
+        {
+          "id": "work",
+          "label": "Mantener el trabajo diario",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "resource",
+              "value": 2,
+              "resource": "wood"
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    },
+    {
+      "id": "prehistoric_lascas",
+      "title": "Una prueba de talla",
+      "category": "technology",
+      "body": "Una artesana propone probar una forma de sujetar la piedra. Necesita material real y dos semanas antes de poder entregar las herramientas.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {},
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_lascas",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "trial",
+          "label": "Financiar la prueba",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "stone": 3,
+            "wood": 1
+          },
+          "effects": [
+            {
+              "type": "flag",
+              "value": "prehistoric_trial"
+            }
+          ],
+          "followUps": [
+            {
+              "eventId": "prehistoric_lascas_result",
+              "delayDays": 14,
+              "probability": 1
+            }
+          ]
+        },
+        {
+          "id": "decline",
+          "label": "Conservar el material",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "morale",
+              "value": 1
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    },
+    {
+      "id": "prehistoric_lascas_result",
+      "title": "Las primeras lascas probadas",
+      "category": "technology",
+      "body": "La prueba financiada ha terminado. Las piezas utilizables se incorporan a las reservas y el intento queda escrito en la crónica de sus causas.",
+      "trigger": "scheduled",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {
+        "flags": [
+          "prehistoric_trial"
+        ]
+      },
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_lascas_result",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "receive",
+          "label": "Recibir el resultado",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "resource",
+              "value": 2,
+              "resource": "tools"
+            },
+            {
+              "type": "resource",
+              "value": 1,
+              "resource": "knowledge"
+            },
+            {
+              "type": "flag",
+              "value": "prehistoric_trial_finished"
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    },
+    {
+      "id": "prehistoric_water",
+      "title": "Cuidar el agua común",
+      "category": "environment",
+      "body": "El puesto de agua necesita limpieza. El trabajo puede sostener la salud sin conceder agua ni vivienda que todavía no existen.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {},
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_water",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "clean",
+          "label": "Aportar materiales de limpieza",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "wood": 2,
+            "water": 3
+          },
+          "effects": [
+            {
+              "type": "health",
+              "value": 3
+            }
+          ],
+          "followUps": []
+        },
+        {
+          "id": "wait",
+          "label": "Posponer la limpieza",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "health",
+              "value": -2
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    },
+    {
+      "id": "prehistoric_tracks",
+      "title": "Huellas hacia otra loma",
+      "category": "exploration",
+      "body": "Exploradores identifican huellas lejos de los refugios. Registrar su dirección ayuda a preparar un viaje, pero no sustituye el coste de una expedición.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {},
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_tracks",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "mark",
+          "label": "Registrar las señales",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "food": 3
+          },
+          "effects": [
+            {
+              "type": "resource",
+              "value": 2,
+              "resource": "knowledge"
+            },
+            {
+              "type": "flag",
+              "value": "prehistoric_tracks_marked"
+            }
+          ],
+          "followUps": []
+        },
+        {
+          "id": "return",
+          "label": "Regresar a los refugios",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "morale",
+              "value": 1
+            }
+          ],
+          "followUps": []
+        }
+      ]
+    },
+    {
+      "id": "prehistoric_fibers",
+      "title": "Fibras junto al hogar",
+      "category": "economy",
+      "body": "Un pequeño lote de fibras puede convertirse en equipo. La comunidad debe decidir entre conservar la madera o comprometerla en el trabajo de trenzado.",
+      "trigger": "director",
+      "location": "settlement",
+      "participants": [
+        "living_society"
+      ],
+      "conditions": {},
+      "baseProbability": 0.15,
+      "conditionalProbability": [],
+      "repeatable": false,
+      "cooldownDays": 36000,
+      "exclusionGroup": "prehistoric_fibers",
+      "deadlineDays": 30,
+      "origins": [
+        "prehistory"
+      ],
+      "options": [
+        {
+          "id": "weave",
+          "label": "Trenzar el lote",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {
+            "wood": 4
+          },
+          "effects": [
+            {
+              "type": "resource",
+              "value": 2,
+              "resource": "textiles"
+            }
+          ],
+          "followUps": []
+        },
+        {
+          "id": "keep",
+          "label": "Conservar la madera",
+          "description": "Los costes se reservan al decidir; las consecuencias se revalidan en su fecha.",
+          "costs": {},
+          "effects": [
+            {
+              "type": "flag",
+              "value": "prehistoric_fibers_saved"
+            }
+          ],
+          "followUps": []
+        }
+      ]
     }
   ],
   "arcs": [
@@ -10651,7 +12790,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -10684,7 +12828,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "ore_vein",
@@ -10697,7 +12845,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -10730,7 +12883,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "crop_blight",
@@ -10743,7 +12900,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -10776,7 +12938,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "water_exchange",
@@ -10789,7 +12955,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -10822,7 +12993,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "road_repair",
@@ -10835,7 +13010,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -10868,7 +13048,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "guest_lesson",
@@ -10881,7 +13065,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -10914,7 +13103,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "roof_storm",
@@ -10927,7 +13120,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -10960,7 +13158,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "market_fair",
@@ -10973,7 +13175,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11006,7 +13213,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "ruin_survey",
@@ -11019,7 +13230,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11052,7 +13268,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "border_mediation",
@@ -11065,7 +13285,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11098,7 +13323,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "clinic_supply",
@@ -11111,7 +13340,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11144,7 +13378,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "salvage_contract",
@@ -11157,7 +13395,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11190,7 +13433,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "defense_drill",
@@ -11203,7 +13450,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11236,7 +13488,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "seed_exchange",
@@ -11249,7 +13505,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11282,7 +13543,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "battery_repair",
@@ -11295,7 +13560,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11328,7 +13598,11 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
     },
     {
       "id": "refuge_outpost",
@@ -11341,7 +13615,12 @@
         "maximum": 8
       },
       "conditions": {
-        "minPopulation": 10
+        "minPopulation": 10,
+        "originCapabilities": {
+          "prehistory": [
+            "writing"
+          ]
+        }
       },
       "options": [
         {
@@ -11374,7 +13653,127 @@
           ]
         }
       ],
-      "cooldownDays": 180
+      "cooldownDays": 180,
+      "origins": [
+        "prehistory",
+        "reconstruction"
+      ]
+    }
+  ],
+  "origins": [
+    {
+      "id": "prehistory",
+      "name": "Prehistoria",
+      "description": "Una comunidad de 24 habitantes aprende a sostenerse con recolección, refugios y transmisión oral. No empieza con metal, electricidad ni agricultura.",
+      "population": {
+        "children": 6,
+        "adults": 16,
+        "elders": 2
+      },
+      "minRichness": 3,
+      "biomes": [
+        0,
+        1,
+        4
+      ],
+      "stocks": {
+        "food": 60,
+        "wood": 30,
+        "stone": 16,
+        "metal": 0,
+        "water": 60,
+        "medicine": 0,
+        "tools": 0,
+        "energy": 0,
+        "knowledge": 3,
+        "textiles": 0,
+        "crystal": 0,
+        "fuel": 0
+      },
+      "buildings": {
+        "foraging_camp": 2,
+        "water_collect": 1,
+        "shelter": 3,
+        "oral_circle": 1
+      },
+      "knowledge": [],
+      "people": [
+        {
+          "name": "Ama",
+          "role": "artesana",
+          "age": 28,
+          "trait": "inventive"
+        },
+        {
+          "name": "Ilo",
+          "role": "explorador",
+          "age": 24,
+          "trait": "bold"
+        },
+        {
+          "name": "Tara",
+          "role": "consejera",
+          "age": 42,
+          "trait": "prudent"
+        }
+      ]
+    },
+    {
+      "id": "reconstruction",
+      "name": "Reconstrucción",
+      "description": "56 habitantes recuperan un asentamiento junto a vestigios antiguos. Conservan huertos, pozos y materiales del mundo anterior.",
+      "population": {
+        "children": 12,
+        "adults": 38,
+        "elders": 6
+      },
+      "minRichness": 1,
+      "biomes": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "stocks": {
+        "food": 260,
+        "wood": 100,
+        "stone": 75,
+        "metal": 25,
+        "water": 250,
+        "medicine": 12,
+        "tools": 20,
+        "energy": 5,
+        "knowledge": 35,
+        "textiles": 20,
+        "crystal": 5,
+        "fuel": 30
+      },
+      "buildings": {
+        "farm": 2,
+        "well": 1,
+        "house": 4
+      },
+      "knowledge": [],
+      "people": [
+        {
+          "name": "Ana",
+          "role": "técnica",
+          "age": 28,
+          "trait": "inventive"
+        },
+        {
+          "name": "Leo",
+          "role": "explorador",
+          "age": 24,
+          "trait": "bold"
+        },
+        {
+          "name": "Tito",
+          "role": "suministros",
+          "age": 42,
+          "trait": "prudent"
+        }
+      ]
     }
   ]
 }

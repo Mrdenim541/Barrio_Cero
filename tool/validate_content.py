@@ -4,7 +4,7 @@ No package expression is evaluated. Test data never changes the real pack.
 """
 import json, hashlib, pathlib, re, sys, copy
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-CONDITIONS={'resource_min','resource_max','minPopulation','maxPopulation','minHousing','maxHousing','minMorale','maxMorale','minRelation','maxRelation','minHealth','maxHealth','minDay','maxDay','technologies','missingTechnologies','flags','flagsMissing','facilityFound'}
+CONDITIONS={'resource_min','resource_max','minPopulation','maxPopulation','minHousing','maxHousing','minMorale','maxMorale','minRelation','maxRelation','minHealth','maxHealth','minDay','maxDay','technologies','missingTechnologies','flags','flagsMissing','facilityFound','originCapabilities'}
 ALLOWED={'resource','population','health','morale','environment','relation','housing','defense','flag','technology','schedule'}
 def validate(pack, base=None):
  assert pack['schemaVersion']==1,'unsupported schema'
@@ -33,6 +33,11 @@ def validate(pack, base=None):
   if e['type']=='flag':assert isinstance(e['value'],str) and re.fullmatch(r'[a-z][a-z0-9_]{1,80}',e['value'])
  def condition(c):
   assert isinstance(c,dict) and set(c)<=CONDITIONS,'unknown condition'
+  if 'originCapabilities' in c:
+   context=c['originCapabilities']
+   caps={e['value'][11:] for t in (base or {}).get('technologies',[])+pack.get('technologies',[]) for e in t.get('effects',[]) if e.get('type')=='flag' and e.get('value','').startswith('technology_')}
+   assert isinstance(context,dict) and set(context)<={'prehistory','reconstruction'},'unknown origin'
+   assert all(isinstance(v,list) and set(v)<=caps for v in context.values()),'unknown origin capability'
   for op in ['resource_min','resource_max']:
    if op in c:costs(c[op])
   for op in ['technologies','missingTechnologies']:
@@ -121,9 +126,10 @@ def main():
  bad=copy.deepcopy(core);bad['events'][0]['options'][0]['effects']=[{'type':'schedule','eventId':'facility_energy','delayDays':0}];probes.append(bad)
  bad=copy.deepcopy(core);bad['events'][0]['options'][0]['effects']=[{'type':'flag','value':9}];probes.append(bad)
  bad=copy.deepcopy(core);bad['events'][0]['conditions']['technologies']=['absent'];probes.append(bad)
+ bad=copy.deepcopy(core);bad['events'][0]['conditions']['originCapabilities']={'prehistory':['not_supported']};probes.append(bad)
  for bad in probes:
   try:validate(bad)
   except (AssertionError,KeyError):continue
   raise AssertionError('corrupt package accepted')
- print('PASS: 158 events / 96 independent / 12 arcs and distinct reachable endings / 16 templates / technology DAG / 2 SHA-256 packages / 10 rejection tests')
+ print(f"PASS: {len(core['events'])} events / {sum('arcId' not in e for e in core['events'])} independent / {len(core['arcs'])} arcs and distinct reachable endings / {len(core['templates'])} templates / technology DAG / {len(manifest['packages'])} SHA-256 packages / {len(probes)} rejection tests")
 if __name__=='__main__':main()

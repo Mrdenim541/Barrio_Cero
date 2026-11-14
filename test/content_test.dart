@@ -12,10 +12,10 @@ void main() {
     final extra = ContentPack.parse(example, base: core);
     final registry = ContentRegistry()..importPack(core)..importPack(extra);
     final combined = registry.compose([core.pin, extra.pin]);
-    expect(combined['events'].length, 159);
+    expect(combined['events'].length, 167);
     expect(core.data['arcs'].length, 12);
     expect(core.data['templates'].length, 16);
-    expect(registry.prepareMigration(pins: [core.pin], pendingEventIds: ['facility_energy'])['events'].length, 158);
+    expect(registry.prepareMigration(pins: [core.pin], pendingEventIds: ['facility_energy'])['events'].length, 166);
     expect(() => registry.prepareMigration(pins: [core.pin], pendingEventIds: ['absent']), throwsFormatException);
   });
   test('rejects changed bytes and same-version replacement', () {

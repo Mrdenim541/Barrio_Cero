@@ -1,0 +1,116 @@
+[
+  {
+    "id": "prehistory",
+    "name": "Prehistoria",
+    "description": "Una comunidad de 24 habitantes aprende a sostenerse con recolección, refugios y transmisión oral. No empieza con metal, electricidad ni agricultura.",
+    "population": {
+      "children": 6,
+      "adults": 16,
+      "elders": 2
+    },
+    "minRichness": 3,
+    "biomes": [
+      0,
+      1,
+      4
+    ],
+    "stocks": {
+      "food": 60,
+      "wood": 30,
+      "stone": 16,
+      "metal": 0,
+      "water": 60,
+      "medicine": 0,
+      "tools": 0,
+      "energy": 0,
+      "knowledge": 3,
+      "textiles": 0,
+      "crystal": 0,
+      "fuel": 0
+    },
+    "buildings": {
+      "foraging_camp": 2,
+      "water_collect": 1,
+      "shelter": 3,
+      "oral_circle": 1
+    },
+    "knowledge": [],
+    "people": [
+      {
+        "name": "Ama",
+        "role": "artesana",
+        "age": 28,
+        "trait": "inventive"
+      },
+      {
+        "name": "Ilo",
+        "role": "explorador",
+        "age": 24,
+        "trait": "bold"
+      },
+      {
+        "name": "Tara",
+        "role": "consejera",
+        "age": 42,
+        "trait": "prudent"
+      }
+    ]
+  },
+  {
+    "id": "reconstruction",
+    "name": "Reconstrucción",
+    "description": "56 habitantes recuperan un asentamiento junto a vestigios antiguos. Conservan huertos, pozos y materiales del mundo anterior.",
+    "population": {
+      "children": 12,
+      "adults": 38,
+      "elders": 6
+    },
+    "minRichness": 1,
+    "biomes": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "stocks": {
+      "food": 260,
+      "wood": 100,
+      "stone": 75,
+      "metal": 25,
+      "water": 250,
+      "medicine": 12,
+      "tools": 20,
+      "energy": 5,
+      "knowledge": 35,
+      "textiles": 20,
+      "crystal": 5,
+      "fuel": 30
+    },
+    "buildings": {
+      "farm": 2,
+      "well": 1,
+      "house": 4
+    },
+    "knowledge": [],
+    "people": [
+      {
+        "name": "Ana",
+        "role": "técnica",
+        "age": 28,
+        "trait": "inventive"
+      },
+      {
+        "name": "Leo",
+        "role": "explorador",
+        "age": 24,
+        "trait": "bold"
+      },
+      {
+        "name": "Tito",
+        "role": "suministros",
+        "age": 42,
+        "trait": "prudent"
+      }
+    ]
+  }
+]

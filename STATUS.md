@@ -10,6 +10,14 @@ La línea base de 39 pruebas pasó antes de modificarla. La batería integrada p
 
 Próxima prioridad dentro del rediseño: una escena local legible con escala útil, composición del asentamiento e interacción contextual vinculadas al estado real; contrastarla con `docs/design/world-and-settlement-target.png` mediante capturas ejecutadas. Los caminos, puestos de trabajo, recorridos y edificios nuevos que requieran modelo local se integrarán con R2–R4; no se dibujarán como simulación funcional sin sus reglas. R2 está iniciado; R3–R13 y el alcance original continúan sujetos a sus criterios pendientes.
 
+## Integración 0.6 — apertura prehistórica
+
+Prehistoria es ahora la elección predeterminada al crear partida: 24 habitantes, refugios, recolección, agua y memoria oral, sin reservas avanzadas. Reconstrucción conserva su apertura de 56 habitantes. Siete construcciones y dos conocimientos añaden funciones de supervivencia y fabricación; el terreno limita el agua y la recolección. Los sprites ancestrales y los puestos tienen atlas reales con dimensiones declaradas. La interfaz oculta inicialmente las opciones bloqueadas sin retirar su consulta.
+
+Pasaron 116 pruebas y el análisis limpio. Ambos orígenes alcanzaron cien años equivalentes por cuatro recorridos, con catálogo real y secuencia causal completa. Android profile comprobó inicio prehistórico, coste y finalización de un refugio, mes guardado y reapertura. Se restauraron los cuatro archivos originales del emulador con hashes exactos tras corregir un fallo de ruta del guion. [Evidencia, capturas y límites](docs/validation/prehistory/README.md).
+
+R4 pasa a parcial, no a terminado. Hay 25 construcciones, 32 conocimientos y 104 sucesos independientes; faltan los mínimos ampliados y su validación funcional completa. Siguen pendientes cohortes reconciliadas, familias, instituciones, territorio, especies, eras, narrativa instanciada, historia durable y aceptación final. La siguiente integración aborda población y personajes sin duplicar habitantes ni permitir fallecidos activos.
+
 ## Integración 0.5 — catálogo ejecutable por mundo
 
 Las definiciones declarativas ya gobiernan los costes, duración, rendimientos, vivienda y capacidades tecnológicas de las reglas nuevas. Generadores y talleres consumen suministros según su actividad efectiva; sin trabajadores o entradas no producen. Se retiró la bonificación genérica por número de tecnologías. Cada mundo fija sus reglas al contenido exacto; una discrepancia se rechaza.

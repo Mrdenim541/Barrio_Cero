@@ -58,6 +58,72 @@ void main() {
       },
     );
   }
+  testWidgets(
+    'Default opening creates and saves a real prehistoric community',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 640);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      late dynamic screen;
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const BarrioApp());
+        screen = tester.state(find.byType(ErasScreen));
+        await screen.initialization;
+      });
+      await tester.pumpAndSettle();
+      await tester.runAsync(() => tester.tap(find.text('CREAR UN MUNDO')));
+      await tester.pumpAndSettle();
+      expect(find.text('Prehistoria'), findsOneWidget);
+      await tester.enterText(find.byType(TextField), '17');
+      Future<void> commit(String text, bool Function() done) async {
+        await tester.runAsync(() async {
+          await tester.tap(find.text(text));
+          final end = DateTime.now().add(const Duration(seconds: 15));
+          while (!done()) {
+            if (DateTime.now().isAfter(end)) {
+              fail('No confirmed $text: ${screen.note}');
+            }
+            await Future<void>.delayed(const Duration(milliseconds: 10));
+          }
+        });
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+      }
+
+      await commit(
+        'Fundar Barrio Cero',
+        () => screen.world != null && !screen.advancing,
+      );
+      expect(screen.world.origin, 'prehistory');
+      expect(screen.world.controlled.population, 24);
+      expect(screen.world.controlled.resources['metal'], 0);
+      expect(find.textContaining('Lidera Tara'), findsOneWidget);
+      await tester.tap(find.text('Construir'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.text('Huerto'), findsNothing);
+      expect(find.text('Refugio de pieles'), findsOneWidget);
+      await tester.tap(find.text('Refugio de pieles'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await commit(
+        'Confirmar orden',
+        () => screen.world.controlled.projects.length == 1 && !screen.advancing,
+      );
+      expect(screen.world.controlled.resources['wood'], 22);
+      await commit('+ Día', () => screen.world.day == 1 && !screen.advancing);
+      final checkpoint = Checkpoint.decode(
+        File('${documents.path}/barrio_cero/world_0.json').readAsStringSync(),
+      );
+      expect(checkpoint.world.origin, 'prehistory');
+      expect(checkpoint.world.controlled.projects.single.work!.remaining, 36);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(milliseconds: 50));
+    },
+  );
+
   testWidgets('Create, order, advance and reload a committed world at 320x640', (
     tester,
   ) async {
@@ -73,6 +139,10 @@ void main() {
     });
     await tester.pumpAndSettle();
     await tester.runAsync(() => tester.tap(find.text('CREAR UN MUNDO')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Prehistoria').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Reconstrucción').last);
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), '42');
     Future<void> commitTap(String label, bool Function() committed) async {

@@ -284,6 +284,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     timer = null;
     var seed = '${DateTime.now().millisecondsSinceEpoch % 100000}';
     String intensity = 'normal';
+    String origin='prehistory';
     int size = 96;
     bool extraordinary = true;
     final create = await showDialog<bool>(
@@ -301,6 +302,22 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                   style: TextStyle(color: earth),
                 ),
                 const SizedBox(height: 20),
+                DropdownButtonFormField<String>(
+                  initialValue:origin,
+                  isExpanded:true,
+                  decoration:const InputDecoration(labelText:'Origen'),
+                  items:const [
+                    DropdownMenuItem(value:'prehistory',child:Text('Prehistoria')),
+                    DropdownMenuItem(value:'reconstruction',child:Text('Reconstrucción')),
+                  ],
+                  onChanged:(v)=>change(()=>origin=v!),
+                ),
+                const SizedBox(height:8),
+                Text(origin=='prehistory'
+                  ?'24 habitantes, refugios y recolección. Aprende a tallar y a cultivar sin empezar con metal ni electricidad.'
+                  :'56 habitantes recuperan huertos, pozos y materiales del mundo anterior.',
+                  style:const TextStyle(color:earth)),
+                const SizedBox(height:12),
                 TextFormField(
                   initialValue: seed,
                   onChanged: (value) => seed = value,
@@ -368,6 +385,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         size: size,
         intensity: intensity,
         extraordinary: extraordinary,
+        origin:origin,
         slot: slot,
       );
       if (!mounted) return;
@@ -1079,6 +1097,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         ? 'Observas una comunidad autónoma. Consultar su ficha no cambia su gobierno.'
         : projects.isNotEmpty
         ? 'Trabajo en marcha: ${_buildingName(projects.first['building'])}. Termina en ${date(number(projects.first['finish']))}.'
+        : state['origin']=='prehistory'
+        ? 'Primer paso: un refugio añade ocho plazas. Revisa el coste y elige dónde invertir.'
         : 'Una oportunidad: amplía tus reservas con un huerto o mejora los hogares.';
     return Container(
       width: double.infinity,
@@ -1116,8 +1136,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             style: const TextStyle(color: earth, fontSize: 12),
           ),
           const SizedBox(height: 4),
-          if (!alive || !own || projects.isNotEmpty)
-            Text(
+          Text(
               projects.isNotEmpty &&
                       (projects.first['work'] as Map?)?['paused'] == true
                   ? 'Obra detenida: faltan trabajadores disponibles.'
@@ -1396,6 +1415,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       Text(
         '${number(s['population'])} habitantes · Salud ${number(s['health'])}% · Ánimo ${number(s['morale'])}%',
       ),
+      Text('${_housing(s)} plazas habitables · ${state['origin']=='prehistory'?'Origen prehistórico':'Origen de reconstrucción'}'),
       if (_polity(s['id']) != null)
         Text(
           'Sociedad: ${_polity(s['id'])?['name']}',
@@ -1579,13 +1599,33 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ]);
   }
 
-  void _build() {
+  int _housing(Map<String,dynamic> s) {
+    final built=s['built'] as Map? ?? {};
+    final known=Set<String>.from(s['tech']??[]);
+    if(_catalog==null) {
+      return number(built['house'])*(known.contains('masonry')?22:18)+number(built['habitat'])*50+number(s['housingModifier']);
+    }
+    return _catalog!.buildings.fold<int>(number(s['housingModifier']),
+      (n,b)=>n+number(built[b.id])*b.housingCapacity)+
+      (_catalog!.provides(known,'masonry')?number(built['house'])*4:0);
+  }
+
+  void _build({bool showLocked=false}) {
     final sim = _sim();
+    final recommended=state['origin']=='prehistory'&&society!=null&&
+        _housing(society!)<=number(society!['population'])?'shelter':'farm';
     final entries = _buildings
         .map((b) => (b, sim.preview(_queryCommand('build', target: b.id))))
         .toList();
     entries.sort(
-      (a, b) => (a.$2.allowed ? 0 : 1).compareTo(b.$2.allowed ? 0 : 1),
+      (a, b) {
+        final availability=(a.$2.allowed?0:1).compareTo(b.$2.allowed?0:1);
+        if(availability!=0)return availability;
+        final suggestion=(a.$1.id==recommended?0:1).compareTo(b.$1.id==recommended?0:1);
+        if(suggestion!=0)return suggestion;
+        final duration=a.$1.days.compareTo(b.$1.days);
+        return duration==0?a.$1.id.compareTo(b.$1.id):duration;
+      },
     );
     _sheet('Construir con propósito', [
       const Text(
@@ -1593,7 +1633,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         style: TextStyle(color: earth),
       ),
       const SizedBox(height: 12),
-      ...entries.map((entry) {
+      if(entries.every((e)=>!e.$2.allowed))const Text('Ahora falta algún material, conocimiento o personal. Consulta los requisitos para elegir el siguiente paso.'),
+      ...entries.where((e)=>showLocked||e.$2.allowed).map((entry) {
         final b = entry.$1;
         final p = entry.$2;
         return ListTile(
@@ -1612,10 +1653,13 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           },
         );
       }),
+      if(!showLocked&&entries.any((e)=>!e.$2.allowed))TextButton(
+        onPressed:(){Navigator.pop(context);_build(showLocked:true);},
+        child:Text('Ver construcciones y requisitos (${entries.where((e)=>!e.$2.allowed).length} bloqueadas)')),
     ]);
   }
 
-  void _research() {
+  void _research({bool showLocked=false}) {
     final sim = _sim();
     final entries = _technologies
         .map((t) => (t, sim.preview(_queryCommand('research', target: t.id))))
@@ -1628,7 +1672,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         'Cada conocimiento requiere reservas y conocimientos anteriores. Consulta sus efectos antes de adoptarlo.',
         style: TextStyle(color: earth),
       ),
-      ...entries.map((entry) {
+      if(entries.every((e)=>!e.$2.allowed))const Text('Todavía necesitas conocimientos o cumplir algún requisito. El círculo de memoria y el trabajo diario permiten aprender.'),
+      ...entries.where((e)=>showLocked||e.$2.allowed).map((entry) {
         final t = entry.$1;
         final p = entry.$2;
         return ListTile(
@@ -1644,17 +1689,21 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           },
         );
       }),
+      if(!showLocked&&entries.any((e)=>!e.$2.allowed))TextButton(
+        onPressed:(){Navigator.pop(context);_research(showLocked:true);},
+        child:const Text('Ver conocimientos y requisitos')),
     ]);
   }
 
-  void _stories() {
+  void _stories({bool showAll=false}) {
     if (selected != controlled) {
       _message(
         'Asume la dirección desde la ficha antes de resolver sus decisiones.',
       );
       return;
     }
-    final events = _sim().eligibleEvents(selected).take(8).toList();
+    final all = _sim().eligibleEvents(selected);
+    final events = all.take(showAll?1000:3).toList();
     _sheet('Decisiones de la comunidad', [
       if (events.isEmpty)
         const Text(
@@ -1704,6 +1753,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           ),
         ),
       ),
+      if(!showAll&&all.length>3)TextButton(
+        onPressed:(){Navigator.pop(context);_stories(showAll:true);},
+        child:Text('Ver las ${all.length} oportunidades disponibles')),
     ]);
   }
 

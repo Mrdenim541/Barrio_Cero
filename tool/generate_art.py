@@ -16,10 +16,10 @@ P = dict(ink='#25282b', shadow='#414445', stone='#777c78', pale='#b5b6a2',
          sky='#829c9d', skin='#b98361', light='#d2a577', hair='#554139',
          rust='#925847', red='#aa614e', gold='#d0ab57', cream='#d8cfad',
          white='#e4dfcd', teal='#428780', darkBlue='#3c5269')
-ROLES = ['ana', 'leo', 'tito', 'farmer', 'guard', 'medic']
+ROLES = ['ana', 'leo', 'tito', 'farmer', 'guard', 'medic', 'ancestral_artisan', 'ancestral_scout', 'ancestral_elder']
 ACTIONS = ['idle', 'walk', 'work', 'carry', 'rest', 'celebrate', 'danger', 'loss']
 BUILDINGS = ['farm','well','house','sawmill','quarry','workshop','clinic','school','market',
-             'wall','mine','laboratory','generator','loom','granary','recycler','observatory','habitat']
+             'wall','mine','laboratory','generator','loom','granary','recycler','observatory','habitat','foraging_camp','water_collect','shelter','surface_stone','knapping_shed','oral_circle','fiber_weave']
 
 def box(d, xy, color, outline=None):
     d.rectangle(xy, fill=P.get(color,color), outline=P.get(outline,outline))
@@ -36,7 +36,7 @@ def person(role, action, frame):
     d.ellipse((7,42,26,46),fill=(25,28,30,70))
     def b(xy,c,o=None): box(d, tuple(v+(ox if i%2==0 else oy) for i,v in enumerate(xy)),c,o)
     def l(xy,c,w=1): line(d,[(x+ox,y+oy) for x,y in xy],c,w)
-    shirt=['blue','earth','teal','leaf','darkBlue','cream'][role]
+    shirt=['blue','earth','teal','leaf','darkBlue','cream','earth','leaf','sand'][role]
     step=2 if action=='walk' and frame%2 else 0
     b((10-step,34,14-step,42),'shadow','ink'); b((18+step,34,22+step,42),'shadow','ink')
     b((9-step,41,15-step,44),'ink'); b((18+step,41,24+step,44),'ink')
@@ -47,7 +47,11 @@ def person(role, action, frame):
     b((11,9,22,21),'light'); b((8,9,24,12),'hair'); b((10,7,22,10),'hair')
     b((9,11,11,17),'hair'); b((19,14,20,15),'ink'); b((15,14,16,15),'ink')
     b((17,19,20,19),'hair'); b((12,22,20,24),'skin')
-    if role==0: # Ana: goggles, cable pouch, wrench
+    if role>=6:
+        b((10,24,23,35),'earth' if role==6 else 'leaf' if role==7 else 'sand','ink')
+        b((12,25,20,28),'cream');b((8,9,11,24),'hair');b((21,9,24,24),'hair')
+        l([(12,30),(21,32)],'hair',2)
+    elif role==0: # Ana: goggles, cable pouch, wrench
         b((8,9,24,11),'blue'); b((12,10,16,13),'ink'); b((18,10,22,13),'ink')
         b((13,11,15,12),'sky'); b((19,11,21,12),'sky'); b((9,29,12,33),'gold','ink')
     elif role==1: # Leo: hood, backpack, scouting pole
@@ -72,7 +76,9 @@ def person(role, action, frame):
         b((8,28,27,37),'earth','ink'); b((9,30,26,31),'sand'); l([(10,29),(24,36)],'hair')
         b((7,29,10,32),'skin'); b((25,29,28,32),'skin')
     elif action not in ('rest','celebrate','loss'):
-        if role==0:
+        if role>=6:
+            l([(27,29),(28,42)],'hair',2);b((26,26,30,30),'stone','ink')
+        elif role==0:
             l([(26,31),(29,22 if work else 28)],'pale',2); b((27,20 if work else 26,30,23 if work else 29),'stone','ink')
         elif role==1:
             l([(27,24),(27,43)],'earth',2); b((26,21,29,25),'pale','ink')
@@ -102,7 +108,47 @@ def building(kind):
     d.ellipse((3,48,61,61),fill=(25,28,30,65))
     def b(xy,c,o=None):box(d,xy,c,o)
     def l(xy,c,w=1):line(d,xy,c,w)
-    if kind=='quarry':
+    if kind=='shelter':
+        d.polygon([(5,53),(19,17),(35,8),(59,53)],fill=P['earth'],outline=P['ink'])
+        d.polygon([(19,17),(35,8),(38,51),(8,51)],fill=P['sand'],outline=P['ink'])
+        d.polygon([(28,52),(36,29),(44,52)],fill=P['ink'])
+        for x,y in [(17,28),(13,40),(41,23),(48,39)]:l([(x,y),(x+4,y+3)],'hair',2)
+        l([(34,8),(31,57)],'hair',2);l([(20,14),(58,56)],'hair',2)
+    elif kind=='foraging_camp':
+        for x,y in [(8,29),(24,23),(41,32)]:
+            d.ellipse((x,y,x+16,y+18),fill=P['leaf'],outline=P['ink'])
+            for dx,dy in [(3,5),(10,4),(7,12)]:b((x+dx,y+dy,x+dx+2,y+dy+2),'red')
+        b((13,48,32,57),'earth','ink');l([(15,51),(30,51)],'sand',2)
+        b((39,47,52,57),'sand','ink')
+    elif kind=='water_collect':
+        d.ellipse((4,33,59,57),fill=P['water'],outline=P['ink'])
+        for x,y in [(7,32),(20,29),(38,31),(49,41),(18,53)]:b((x,y,x+10,y+6),'stone','ink')
+        for x in [22,34,45]:l([(x,38),(x+6,38)],'sky')
+        b((42,44,52,56),'earth','ink');l([(43,43),(50,43)],'sand',2)
+    elif kind=='surface_stone':
+        for x,y in [(9,35),(25,28),(42,37),(20,47)]:
+            d.polygon([(x,y+12),(x+3,y),(x+13,y-3),(x+17,y+10)],fill=P['stone'],outline=P['ink'])
+            l([(x+5,y+2),(x+12,y)],'pale',2)
+        b((44,49,57,56),'earth','ink')
+    elif kind=='knapping_shed':
+        b((9,30,15,54),'hair','ink');b((47,30,53,54),'hair','ink')
+        d.polygon([(6,30),(20,13),(48,16),(58,31)],fill=P['sand'],outline=P['ink'])
+        b((16,42,48,49),'earth','ink');b((22,36,34,42),'stone','ink')
+        d.polygon([(38,38),(45,32),(42,43)],fill=P['pale'],outline=P['ink'])
+        l([(26,34),(33,27)],'hair',3)
+    elif kind=='oral_circle':
+        for x,y in [(8,39),(18,51),(39,51),(48,36),(28,27)]:
+            b((x,y,x+10,y+5),'stone','ink')
+        l([(24,46),(39,36)],'hair',3);l([(25,37),(39,46)],'hair',3)
+        d.polygon([(27,42),(28,25),(33,30),(36,18),(41,38),(36,45)],fill=P['rust'],outline=P['ink'])
+        d.polygon([(31,40),(34,29),(38,40)],fill=P['gold'])
+    elif kind=='fiber_weave':
+        b((11,21,16,55),'hair','ink');b((46,21,51,55),'hair','ink');b((11,20,51,25),'earth','ink')
+        for x in range(19,45,4):l([(x,25),(x+2,47)],'sand',2)
+        b((20,37,45,49),'earth','ink')
+        for y in [39,43,47]:l([(21,y),(44,y)],'cream')
+        d.ellipse((4,47,17,58),fill=P['leaf'],outline=P['ink'])
+    elif kind=='quarry':
         d.polygon([(5,49),(15,24),(45,21),(59,48),(48,56),(14,56)],fill=P['stone'],outline=P['ink'])
         for y in (31,39,47):l([(13,y),(49,y)],'shadow',2)
         for x,y in ((10,47),(41,41),(28,30)):b((x,y,x+10,y+6),'pale','ink')
@@ -226,7 +272,7 @@ def building(kind):
             d.polygon([(30,17),(45,5),(51,9),(36,22)],fill=P['pale'],outline=P['ink'])
     return im
 
-buildings=Image.new('RGBA',(6*64,3*64))
+buildings=Image.new('RGBA',(6*64,((len(BUILDINGS)+5)//6)*64))
 for i,name in enumerate(BUILDINGS): buildings.paste(building(name),((i%6)*64,(i//6)*64))
 buildings.save(OUT/'buildings.png')
 
@@ -309,11 +355,11 @@ for image_name in ('characters', 'buildings', 'terrain'):
     manifest[image_name].update(pixelDataFile=f'{image_name}.rgba', pixelFormat='premultipliedRGBA8888', pixelWidth=size[0], pixelHeight=size[1])
 (OUT/'atlas.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 # Inspectable nearest-neighbor production contact sheet, not an application capture.
-preview=Image.new('RGBA',(576,520),P['soil'])
-for role in range(6):
-    preview.paste(person(role,'idle',0).resize((64,96),Image.Resampling.NEAREST),(role*88+20,12),person(role,'idle',0).resize((64,96),Image.Resampling.NEAREST))
-preview.paste(buildings.resize((576,288),Image.Resampling.NEAREST),(0,120),buildings.resize((576,288),Image.Resampling.NEAREST))
-preview.paste(terrain.resize((576,96),Image.Resampling.NEAREST),(0,420))
+preview=Image.new('RGBA',(576,160+buildings.height*3//2+96),P['soil'])
+for role in range(len(ROLES)):
+    preview.paste(person(role,'idle',0).resize((64,96),Image.Resampling.NEAREST),(role*64,12),person(role,'idle',0).resize((64,96),Image.Resampling.NEAREST))
+preview.paste(buildings.resize((576,buildings.height*3//2),Image.Resampling.NEAREST),(0,120),buildings.resize((576,buildings.height*3//2),Image.Resampling.NEAREST))
+preview.paste(terrain.resize((576,96),Image.Resampling.NEAREST),(0,140+buildings.height*3//2))
 preview.convert('RGB').save(OUT/'contact_sheet.png')
 # App icon is original art too; integer enlargement, then a native-size frame.
 launcher=Image.new('RGBA',(48,48),P['deep']);ld=ImageDraw.Draw(launcher)

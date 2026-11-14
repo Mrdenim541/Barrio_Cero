@@ -1,0 +1,7 @@
+{'updatePreservesOriginalBytes': True, 'error': 'RuntimeError("No control Continuar historia; visible [\'Apps list\', \'Search\', \'Email\', \'Gallery\', \'Phone\', \'Messaging\', \'WebView Browser Tester\', \'Camera\']")'}
+Traceback (most recent call last):
+  File "/tmp/barrio_catalog_native.py", line 7, in <module>
+    tap('Continuar historia');capture('01-old-world-reopened.png');assert readworld()==original
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 20, in tap
+RuntimeError: No control Continuar historia; visible ['Apps list', 'Search', 'Email', 'Gallery', 'Phone', 'Messaging', 'WebView Browser Tester', 'Camera']
