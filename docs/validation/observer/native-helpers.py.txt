@@ -1,0 +1,90 @@
+import hashlib, json, pathlib, re, subprocess, time
+
+root = pathlib.Path('/workspace/Barrio_Cero')
+out = root / 'docs/validation/experience/native'
+out.mkdir(parents=True, exist_ok=True)
+pkg = 'com.barriocero.eras'
+folder = 'app_flutter/barrio_cero'
+before = 'app_flutter/native_before_13_experience_retry'
+after = 'app_flutter/native_after_13_experience_retry'
+apk = root / 'build/deliverables/barrio-cero-eras-0.13.0-profile.apk'
+result = {'version': '0.13.0+14', 'rulesVersion': 11,
+          'device': 'Android API29 software emulator, 320x640',
+          'scope': 'Fresh prehistory UI, optional guide, quoted building, completion, navigation and exact reopening. Not full first-ten or reference-phone acceptance.'}
+
+def adb(*args):
+    return subprocess.check_output(['adb', *args], timeout=120)
+
+def run(*args):
+    return adb('shell', 'run-as', pkg, *args)
+
+def exists(path):
+    return subprocess.run(['adb', 'shell', 'run-as', pkg, 'ls', '-d', path], capture_output=True, timeout=40).returncode == 0
+
+def stop():
+    adb('shell', 'am', 'force-stop', pkg)
+    deadline = time.monotonic() + 30
+    while subprocess.run(['adb', 'shell', 'pidof', pkg], capture_output=True, timeout=10).stdout.strip():
+        if time.monotonic() > deadline:
+            raise RuntimeError('Application did not stop')
+        time.sleep(.2)
+
+def inventory():
+    result = {}
+    for name in run('ls', '-1', folder).decode().splitlines():
+        if not re.fullmatch(r'[A-Za-z0-9_.-]+', name):
+            raise RuntimeError('Unexpected save filename')
+        raw = adb('exec-out', 'run-as', pkg, 'cat', folder + '/' + name)
+        result[name] = {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+    return result
+
+def dump():
+    for _ in range(8):
+        response = adb('shell', 'uiautomator', 'dump', '/sdcard/barrio-experience.xml')
+        if b'dumped to:' not in response:
+            continue
+        raw = adb('exec-out', 'cat', '/sdcard/barrio-experience.xml')
+        import xml.etree.ElementTree as ET
+        (out / 'last-window.xml').write_bytes(raw)
+        return list(ET.fromstring(raw).iter('node'))
+    raise RuntimeError('No fresh Android UI hierarchy')
+
+def tap(label, scroll=False):
+    for attempt in range(5 if scroll else 2):
+        nodes = dump()
+        for node in nodes:
+            text = node.get('text') or node.get('content-desc') or ''
+            if text == label or text.startswith(label + '\n'):
+                x1, y1, x2, y2 = map(int, re.findall(r'\d+', node.get('bounds')))
+                x, y = (x1 + x2) // 2, (y1 + y2) // 2
+                if x2 > x1 and y2 > y1 and 20 <= y < 610:
+                    adb('shell', 'input', 'tap', str(x), str(y))
+                    print('Tap: ' + label, flush=True)
+                    return
+        if scroll:
+            adb('shell', 'input', 'swipe', '252', '481', '252', '350', '350')
+        else:
+            time.sleep(.5)
+    raise RuntimeError('Missing control ' + label + ': ' + repr([(n.get('text') or n.get('content-desc')) for n in nodes if n.get('text') or n.get('content-desc')]))
+
+def capture(name):
+    time.sleep(.5)
+    (out / name).write_bytes(adb('exec-out', 'screencap', '-p'))
+
+def rawworld():
+    return adb('exec-out', 'run-as', pkg, 'cat', folder + '/world_0.json')
+
+def world():
+    return json.loads(rawworld())['payload']['world']
+
+def waitworld(predicate):
+    deadline = time.monotonic() + 45
+    while time.monotonic() < deadline:
+        try:
+            value = world()
+            if predicate(value):
+                return value
+        except (subprocess.CalledProcessError, json.JSONDecodeError):
+            pass
+        time.sleep(.25)
+    raise RuntimeError('World never reached the required confirmed state')

@@ -1,8 +1,18 @@
 # Estado de BARRIO CERO: ERAS
 
-## Aclaración principal pendiente de implementar: planeta autónomo
+## Integración 0.15 — observar e intervenir sin dirigir
 
-El usuario confirma que quiere acercarse desde el planeta hasta territorios, comunidades y habitantes, que deciden y evolucionan sin depender de sus órdenes. Intervenir será opcional y no debe apagar su autonomía. La revisión de 0.14 encuentra zoom por vistas y autonomía parcial; la sociedad controlada aún queda excluida de varias decisiones automáticas. La conexión de zoom entre escalas, los territorios políticos completos y la autoridad de intervención independiente requieren implementación. Se registra el criterio y el próximo orden de trabajo en [WORLD_AUTONOMY.md](docs/WORLD_AUTONOMY.md). Esta actualización no cambia código, reglas ni APK ni acredita esos comportamientos como completos.
+Los mundos nuevos empiezan autónomos y la pantalla inicial muestra el mundo. Las comunidades construyen, investigan y resuelven acontecimientos sin esperar órdenes. Intervenir utiliza sus recursos y reservas y conserva el gobierno autónomo después. Las partidas manuales se cargan intactas y pueden cambiar mediante Dejar actuar al mundo, que entrega también sus decisiones pendientes a los consejos. No se cambian reglas físicas ni esquema de guardado.
+
+El zoom enlaza mundo, región y asentamiento y permite volver al planeta sin cambiar el estado. Las pruebas de gestos detectaron y corrigieron un anclaje incorrecto de la cámara. Consultar habitantes conserva la reproducción; al cerrar una intervención se recupera la reproducción anterior si la sesión sigue activa. La guía se presenta como opcional, no como requisito de evolución.
+
+202 pruebas aprobadas y APK profile compilado. El primer análisis señaló dos importaciones relativas del generador de escenarios; se corrigieron y el análisis final quedó limpio sin repetir la suite ni la compilación por ese cambio ajeno al APK. El año de referencia sin órdenes pasa de 42 a 69 sitios y de 0 a 27 tecnologías. Android alcanzó el mismo estado completo, no solo los mismos contadores. El recorrido nativo también aprobó zoom sin escritura, intervención de política sin asumir el gobierno, otro mes autónomo y cierre/reapertura exactos; los guardados originales se restauraron por hash. [Evidencia de observación](docs/validation/observer/).
+
+Las fronteras reales, instituciones y sociedades de varias ciudades, familias y viajes completos, seis eras funcionales, equinos, catálogo/director ampliados, historia por bloques, arte final y aceptación física/final siguen pendientes. No se presenta el cambio de modo ni la referencia de un año como juego terminado. El motor y contenido comparados con los binarios de reglas 11 permanecen iguales; sus ejecuciones largas conservan versión y procedencia.
+
+## Aclaración que motivó 0.15: planeta autónomo
+
+El usuario confirma que quiere acercarse desde el planeta hasta territorios, comunidades y habitantes, que deciden y evolucionan sin depender de sus órdenes. La revisión original de 0.14 encontró zoom por vistas y una sociedad controlada excluida de varias decisiones automáticas. La integración 0.15 aborda entrada autónoma, intervención y conexión de escalas; los territorios políticos y sistemas completos continúan pendientes. [Criterios y límites vigentes](docs/WORLD_AUTONOMY.md).
 
 ## Organización vigente por petición del usuario
 

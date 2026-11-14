@@ -218,7 +218,7 @@ class CommunityGuideGoal {
         'Reservar para el futuro',
         'Elige una prioridad de gobierno y revisa sus efectos.',
         'policy',
-        did('policy'),
+        did('policy', {'food'}),
       ),
       CommunityGuideGoal(
         'Cuidar el agua',
@@ -269,10 +269,10 @@ class CommunityGuideGoal {
         did('research'),
       ),
       CommunityGuideGoal(
-        'Delegar con intención',
-        'Fija prioridades, delega y observa las consecuencias en Historia.',
+        'Orientar el futuro',
+        'Elige una orientación y observa cómo la aplica el gobierno por su cuenta.',
         'policy',
-        did('delegate'),
+        did('delegate') || did('policy', {'balanced', 'science', 'trade', 'defense', 'expansion', 'isolation'}),
       ),
     ];
   }

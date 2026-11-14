@@ -1,0 +1,34 @@
+
+00:00 +0: loading /workspace/Barrio_Cero/test/observer_session_test.dart
+00:01 +0: loading /workspace/Barrio_Cero/test/observer_session_test.dart
+00:02 +0: loading /workspace/Barrio_Cero/test/observer_session_test.dart
+00:02 +0: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:02 +1: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:02 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:03 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:04 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:05 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:06 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:06 +3: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:07 +3: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:08 +3: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:09 +3: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:09 +4: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:10 +4: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:11 +4: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:11 +5: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:11 +5: /workspace/Barrio_Cero/test/observer_session_test.dart: Intervention pays only its actor, preserves autonomous government and replays once
+00:12 +5: /workspace/Barrio_Cero/test/observer_session_test.dart: Intervention pays only its actor, preserves autonomous government and replays once
+00:12 +6: /workspace/Barrio_Cero/test/observer_session_test.dart: Intervention pays only its actor, preserves autonomous government and replays once
+00:12 +6: /workspace/Barrio_Cero/test/observer_session_test.dart: Invalid, stale, conflicting and takeover interventions cannot change state
+00:12 +7: /workspace/Barrio_Cero/test/observer_session_test.dart: Invalid, stale, conflicting and takeover interventions cannot change state
+00:12 +7: /workspace/Barrio_Cero/test/observer_session_test.dart: A failed durable intervention leaves no receipt, payment or takeover
+00:13 +7: /workspace/Barrio_Cero/test/observer_session_test.dart: A failed durable intervention leaves no receipt, payment or takeover
+00:13 +8: /workspace/Barrio_Cero/test/observer_session_test.dart: A failed durable intervention leaves no receipt, payment or takeover
+00:13 +8: /workspace/Barrio_Cero/test/observer_session_test.dart: A queued intervention cannot cross into a different imported world
+00:13 +9: /workspace/Barrio_Cero/test/observer_session_test.dart: A queued intervention cannot cross into a different imported world
+00:13 +9: /workspace/Barrio_Cero/test/observer_session_test.dart: Loading preserves a manual save; explicit observation returns its pending decision exactly once
+00:14 +9: /workspace/Barrio_Cero/test/observer_session_test.dart: Loading preserves a manual save; explicit observation returns its pending decision exactly once
+00:15 +9: /workspace/Barrio_Cero/test/observer_session_test.dart: Loading preserves a manual save; explicit observation returns its pending decision exactly once
+00:15 +10: /workspace/Barrio_Cero/test/observer_session_test.dart: Loading preserves a manual save; explicit observation returns its pending decision exactly once
+00:15 +10: All tests passed!

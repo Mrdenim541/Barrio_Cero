@@ -1,5 +1,9 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.15 — autonomía predeterminada e intervención puntual
+
+La sesión crea mundos con `controlledId=null` y sin parada obligatoria por crisis. La nueva frontera transaccional de intervención aplica validación/costes/reservas y restaura la autonomía antes de persistir, con protección ante revisiones antiguas e importaciones en cola. La carga antigua es fiel; la entrega de gobierno es una acción explícita que devuelve pendientes al consejo. Zoom conectado y navegación no cambian el mundo; inspección y cierre de una confirmación conservan reproducción. Análisis final limpio, 202 pruebas y APK profile compilado. El año Android sin órdenes coincide con la referencia completa (42→69 sitios, 0→27 tecnologías); también aprobaron intervención puntual, otro mes autónomo y reapertura exacta en [observer](validation/observer/). Las áreas dibujadas no son fronteras políticas implementadas. E1–E6 mantienen sus obligaciones pendientes.
+
 ## Actualización 0.14 — lectura compacta, reglas 11 conservadas
 
 Tres indicadores y una acción reemplazan la ficha extensa. Construcción, guía y opciones avanzadas se abren expresamente; los costes continúan antes de confirmar. Los avisos no reducen el mapa; rótulos por selección/zoom, carga explícita y feedback de edificios completados mantienen el foco visual. Análisis limpio y 192 pruebas de integración. El recorrido nativo tiene evidencia propia en [pantalla compacta](validation/compact/). Los archivos de simulación y contenido coinciden con las entradas AOT congeladas: no se reinician los siglos ni se cierran E1–E6 por este cambio de interfaz.

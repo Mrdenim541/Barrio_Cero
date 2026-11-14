@@ -1,0 +1,125 @@
+from pathlib import Path
+exec(Path('/tmp/barrio_experience_native.py').read_text().split('moved = False')[0])
+from PIL import Image
+import io
+
+out=root/'docs/validation/observer/native';out.mkdir(parents=True,exist_ok=False)
+apk=root/'build/deliverables/barrio-cero-eras-0.15.0-profile.apk'
+before='app_flutter/native_before_15_observer';after='app_flutter/native_after_15_observer'
+scenario=root/'build/validation/observer-scenario'
+fixture=scenario/'initial.checkpoint.json'
+initial=json.loads(fixture.read_text())['payload']['world']
+reference=json.loads((scenario/'one-year-world.json').read_text())
+result={'version':'0.15.0+16','rulesVersion':11,
+        'device':'API29 software emulator,320x640;not reference-phone performance',
+        'scope':'Zero-order native year versus exact reference,connected zoom,optional policy intervention,continued autonomy and exact reopen'}
+
+def label(node):return node.get('text') or node.get('content-desc') or ''
+def match(text,name):return text==name or text.startswith(name+'\n') or text.startswith(name+':')
+def tap_control(name,scroll=False):
+    for attempt in range(6 if scroll else 3):
+        nodes=dump()
+        for node in nodes:
+            if match(label(node),name):
+                x1,y1,x2,y2=map(int,re.findall(r'\d+',node.get('bounds')))
+                if x2>x1 and y2>y1 and 20<(y1+y2)//2<610:
+                    point=((x1+x2)//2,(y1+y2)//2)
+                    adb('shell','input','tap',str(point[0]),str(point[1]))
+                    print('Tap: '+name,flush=True)
+                    return point
+        if scroll:
+            boxes=[tuple(map(int,re.findall(r'\d+',n.get('bounds')))) for n in nodes if n.get('scrollable')=='true']
+            x1,y1,x2,y2=max(boxes,key=lambda b:(b[2]-b[0])*(b[3]-b[1])) if boxes else (20,130,300,610)
+            adb('shell','input','swipe',str((x1+x2)//2),str(min(575,y2-40)),str((x1+x2)//2),str(max(y1+40,165)),'350')
+        else:time.sleep(.5)
+    raise RuntimeError('Control not visible: '+name+';'+repr([label(n) for n in nodes if label(n)]))
+
+def wait_world(predicate,timeout=180):
+    deadline=time.monotonic()+timeout
+    while time.monotonic()<deadline:
+        w=world()
+        if predicate(w):return w
+        time.sleep(1)
+    raise RuntimeError('Native world did not reach the required state')
+
+def map_capture(name):
+    colors=[(126,148,96),(64,91,71),(182,156,108),(118,120,117),
+            (140,155,135),(66,108,117),(130,147,101),(101,126,88),
+            (133,136,123),(116,140,119),(108,133,128)]
+    deadline=time.monotonic()+90
+    while time.monotonic()<deadline:
+        raw=adb('exec-out','screencap','-p')
+        im=Image.open(io.BytesIO(raw)).convert('RGB').crop((8,120,260,350))
+        count=sum(n for n,c in im.getcolors(100000)
+                  if any(max(abs(c[i]-g[i]) for i in range(3))<=12 for g in colors))
+        if count>6000:
+            (out/name).write_bytes(raw);print('Rendered: '+name,flush=True);return
+        time.sleep(.5)
+    raise RuntimeError('No actual terrain; refusing premature capture')
+
+def metrics(w):return {'day':w['day'],'sites':sum(len(s['sites']) for s in w['societies']),
+    'technologies':sum(len(s['tech']) for s in w['societies']),'playerOrders':len(w['commandReceipts'])}
+
+moved=False
+try:
+    stop()
+    if exists(before) or exists(after):raise RuntimeError('Retained observer fixture exists; refusing overwrite')
+    original=inventory();(out/'original-inventory.json').write_text(json.dumps(original,indent=2)+'\n')
+    result['installationOutput']=adb('install','-r',str(apk)).decode()
+    result['apkSha256']=hashlib.sha256(apk.read_bytes()).hexdigest()
+    run('mv',folder,before);moved=True;run('mkdir',folder)
+    adb('push',str(fixture),'/data/local/tmp/barrio-observer-initial.json')
+    run('cp','/data/local/tmp/barrio-observer-initial.json',folder+'/world_0.json')
+    assert rawworld()==fixture.read_bytes()
+    adb('shell','am','start','-n',pkg+'/.MainActivity')
+    tap_control('Continuar historia');map_capture('01-real-autonomous-planet.png')
+    assert world()['controlledId'] is None
+    tap_control('Avanzar');tap_control('Años y delegación');tap_control('Avanzar 1 año')
+    advanced=wait_world(lambda w:w['day']==360)
+    assert advanced==reference,'Native year differs from the exact complete-content reference'
+    assert not advanced['commandReceipts'] and advanced['controlledId'] is None
+    result['zeroOrderYear']={'initial':metrics(initial),'final':metrics(advanced),'exactReferenceMatch':True}
+    print('Native zero-order year matches reference',flush=True)
+    # The final report can appear after the last acknowledged world write.
+    tap_control('Una nueva era');capture('02-real-unmanaged-year-report.png')
+    adb('shell','input','keyevent','4')
+    source=rawworld()
+    tap_control('Centrar comunidad');tap_control('Intervenir');tap_control('Vista del mapa')
+    point=tap_control('Acercar')
+    for _ in range(7):adb('shell','input','tap',str(point[0]),str(point[1]))
+    adb('shell','input','keyevent','4')
+    map_capture('03-real-zoomed-settlement.png')
+    assert rawworld()==source
+    result['zoomPreservesCompleteCheckpoint']=True
+    tap_control('Intervenir');tap_control('Políticas y delegación',scroll=True)
+    tap_control('Reservas y alimentación');capture('04-real-optional-policy-quote.png')
+    assert rawworld()==source
+    tap_control('Confirmar orden')
+    intervened=wait_world(lambda w:len(w['commandReceipts'])==1)
+    assert intervened['controlledId'] is None and intervened['societies'][0]['policy']['reserve']==240
+    assert intervened['day']==360 and intervened['rng']==advanced['rng']
+    for a,b in zip(intervened['societies'],advanced['societies']):assert a['resources']==b['resources']
+    result['optionalIntervention']={'actor':'s0','policy':'food','reserve':240,'resourcesNotCreatedOrSpent':True,'autonomyRetained':True}
+    tap_control('Avanzar');tap_control('Avanzar un mes')
+    final=wait_world(lambda w:w['day']==390)
+    assert final['controlledId'] is None and len(final['commandReceipts'])==1
+    confirmed=rawworld();map_capture('05-real-world-continues.png')
+    stop();adb('shell','am','start','-n',pkg+'/.MainActivity');tap_control('Continuar historia')
+    map_capture('06-real-reopened-planet.png')
+    assert rawworld()==confirmed
+    result['forceStopReopenExact']=True
+except Exception as error:
+    result['error']=repr(error);print(repr(error),flush=True)
+finally:
+    if moved:
+        stop()
+        if exists(after):raise RuntimeError('Refusing retained observer fixture overwrite')
+        if exists(folder):run('mv',folder,after)
+        if exists(folder):raise RuntimeError('Restoration destination still exists')
+        run('mv',before,folder)
+        result['originalSavesRestoredExactly']=inventory()==original
+        if not result['originalSavesRestoredExactly']:raise RuntimeError('Original saves mismatch')
+    result['passed']='error' not in result
+    (out/'results.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps(result,ensure_ascii=False),flush=True)
+if not result['passed']:raise SystemExit(1)

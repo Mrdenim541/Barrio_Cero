@@ -1,6 +1,8 @@
-# Experiencia inicial — integración 0.14
+# Experiencia inicial — observación en 0.15
 
-Este documento describe la interfaz implementada en 0.14. La aclaración posterior [WORLD_AUTONOMY.md](WORLD_AUTONOMY.md) establece el siguiente cambio: observar el planeta e intervenir opcionalmente sin frenar sociedades. No se considera ya implementado por disponer de un botón de delegación.
+El ciclo principal de 0.15 es observar el mundo, acercarse a una comunidad e intervenir opcionalmente. [WORLD_AUTONOMY.md](WORLD_AUTONOMY.md) detalla implementación, compatibilidad y límites. Las secciones siguientes conservan los detalles de la ficha compacta de 0.14; en el modo autónomo la acción principal es Intervenir y no una instrucción obligatoria de construcción o investigación.
+
+Los mundos nuevos abren el mapa mundial, con el tiempo inicialmente en pausa y gobiernos autónomos. Reproducir o avanzar permite que actúen. El zoom conecta mundo, región y asentamiento, y alejarse vuelve al planeta. Elegir o inspeccionar una comunidad no toma su gobierno. Las partidas manuales conservan su estado hasta elegir Dejar actuar al mundo; no cambian al cargarlas.
 
 Esta entrega forma parte de E1 y conserva reglas 11. No completa las obligaciones de E1–E6 ni la aceptación de las primeras diez decisiones.
 

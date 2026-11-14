@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Simulation;
 import 'package:flutter/services.dart';
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import '../simulation/engine.dart';
 import '../content/content_pack.dart';
 import 'storage.dart';
@@ -104,7 +105,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   ContentPack? get basePack => session.basePack;
   List<String> get availablePackSources => session.availablePackSources;
   Simulation _sim() {
-    final value = Simulation(session.worldCopy()!);
+    final copy = session.worldCopy()!;
+    // This detached copy is for quotes/inspection only. Actual authority is
+    // validated and restored by SessionController's intervention boundary.
+    copy.controlledId ??= selected;
+    final value = Simulation(copy);
     if (core != null) value.registerContent(core!);
     return value;
   }
@@ -120,6 +125,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   Map<String, dynamic>? get society =>
       societies.where((s) => s['id'] == selected).firstOrNull;
   String get controlled => '${state['controlledId'] ?? ''}';
+  String get acting => controlled.isEmpty ? (selected ?? '') : controlled;
+  bool _canAct(Map<String, dynamic> s) => s['extinct'] != true &&
+      number(s['population']) > 0 && (controlled.isEmpty || s['id'] == controlled);
   String date(int d) =>
       'Año ${d ~/ 360 + 1} · mes ${(d % 360) ~/ 30 + 1} · día ${d % 30 + 1}';
   @override
@@ -133,7 +141,14 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           game.selected = id;
         });
       }
-    }, onLocalSelect: _inspectLocal);
+    }, onLocalSelect: _inspectLocal, onViewChanged: () {
+      if (mounted) {
+        setState(() {
+          selected = game.selected;
+          section = game.mode == 'Asentamiento' ? 0 : 1;
+        });
+      }
+    });
     session = SessionController(
       read: store.read,
       write: store.write,
@@ -169,7 +184,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     selected = controlled.isNotEmpty
         ? controlled
         : societies.firstOrNull?['id']?.toString();
-    _navigate(0);
+    _navigate(controlled.isEmpty ? 1 : 0);
   }
 
   @override
@@ -383,7 +398,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Fundar Barrio Cero'),
+              child: const Text('Crear planeta'),
             ),
           ],
         ),
@@ -409,18 +424,19 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   Future<void> _command(String action, {String? target, String? choice}) async {
     if (busy || session.snapshot == null || advancing) return;
-    if (!['control', 'delegate'].contains(action) && selected != controlled) {
+    if (!['control', 'delegate'].contains(action) &&
+        (selected == null || (controlled.isNotEmpty && selected != controlled))) {
       _message(
         'Asume la dirección de esta comunidad desde su ficha para darle órdenes.',
       );
       return;
     }
     try {
-      final result = await session.command(
-        action,
-        target: target,
-        choice: choice,
-      );
+      final result = controlled.isEmpty && !['control', 'delegate'].contains(action)
+          ? await session.intervene(selected!, action, target: target, choice: choice,
+              expectedGeneration: session.snapshot!.generation,
+              expectedRevision: session.snapshot!.revision)
+          : await session.command(action, target: target, choice: choice);
       if (result.ok) {
         if (action == 'control' && mounted) _focusHome();
         if (vibration) HapticFeedback.lightImpact();
@@ -429,6 +445,35 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       _message(result.message);
     } catch (e) {
       _message('La orden no pudo aplicarse: $e');
+    }
+  }
+
+  Future<void> _observeWorld() async {
+    if (busy || advancing) return;
+    final resume = timer != null;
+    final generation = session.snapshot?.generation;
+    timer?.cancel();
+    timer = null;
+    try {
+      await session.observe();
+      if (mounted) {
+        _navigate(1);
+        _message('Sus gobiernos seguirán decidiendo. Puedes observar o intervenir cuando quieras.');
+      }
+    } catch (error) {
+      _message('No se pudo cambiar de modo: $error');
+    } finally {
+      await _resumePlayback(resume, generation);
+    }
+  }
+
+  Future<void> _resumePlayback(bool resume, int? generation) async {
+    if (!resume) return;
+    if (session.busy) await session.idle;
+    if (mounted && timer == null && !busy && !advancing &&
+        session.snapshot?.generation == generation &&
+        WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed) {
+      _play();
     }
   }
 
@@ -800,10 +845,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       } else if (value == 1) {
         game.mode = 'Mundo';
         game.zoom = 1;
+        game.pan = Offset.zero;
       }
       if (selected != null) {
         game.selected = selected;
-        game.locate(selected!);
+        if (value == 0) game.locate(selected!);
       }
     });
   }
@@ -829,7 +875,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                   ),
                   Text(
                     controlled.isEmpty
-                        ? 'Observando · gobiernos autónomos'
+                        ? 'Mundo autónomo'
                         : 'Diriges ${societies.where((s) => s['id'] == controlled).firstOrNull?['name'] ?? controlled}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -855,16 +901,20 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                       children: [
                         Positioned.fill(
                           child: GestureDetector(
+                            dragStartBehavior: DragStartBehavior.down,
                             onScaleStart: (d) {
                               gesturePan = game.pan;
                               gestureZoom = game.zoom;
                             },
                             onScaleUpdate: (d) {
                               game.pan = gesturePan + d.focalPointDelta;
+                              final beforeMode = game.mode;
+                              game.zoomAt(gestureZoom * d.scale, d.localFocalPoint);
                               gesturePan = game.pan;
-                              game.zoom = (gestureZoom * d.scale)
-                                  .clamp(.6, 9)
-                                  .toDouble();
+                              if (game.mode != beforeMode) {
+                                gestureZoom = game.zoom / d.scale;
+                                gesturePan = game.pan;
+                              }
                             },
                             onTapUp: (d) => game.touch(d.localPosition),
                             child: ClipRect(child: GameWidget(game: game,
@@ -918,7 +968,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                                         game.zoom = game.mode == 'Región'
                                             ? 3
                                             : 1;
-                                        if (selected != null) {
+                                        if (game.mode == 'Mundo') {
+                                          game.pan = Offset.zero;
+                                        } else if (selected != null) {
                                           game.locate(selected!);
                                         }
                                       });
@@ -1040,9 +1092,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   );
   void _mapOptions() => _sheet('Leer el mundo', [
     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      _mapButton(Icons.remove, 'Alejar', () => game.zoom = (game.zoom / 1.4).clamp(.6, 9).toDouble()),
+      _mapButton(Icons.remove, 'Alejar', () => game.zoomAt(game.zoom / 1.4, game.center)),
       const Padding(padding: EdgeInsets.symmetric(horizontal: 12), child: Text('Zoom')),
-      _mapButton(Icons.add, 'Acercar', () => game.zoom = (game.zoom * 1.4).clamp(.6, 9).toDouble()),
+      _mapButton(Icons.add, 'Acercar', () => game.zoomAt(game.zoom * 1.4, game.center)),
     ]),
     if(state['migrations'] is List)ListTile(
       title:const Text('Viajes de población'),
@@ -1120,7 +1172,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       population: brief.population, housing: brief.housing,
       food: number(resources['food']), water: number(resources['water']),
       foodLow: brief.foodLow, waterLow: brief.waterLow,
-      action: !own && alive ? 'Asumir dirección' : brief.focus.title,
+      action: alive ? (controlled.isEmpty ? 'Intervenir' : 'Dejar actuar al mundo') : brief.focus.title,
       enabled: !busy && !advancing, travellers: travelling,
       onDetails: () => _details(s),
       onFood: () => _stockDetails('Alimento', resources['food'] as num? ?? 0,
@@ -1132,9 +1184,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         const SizedBox(height: 12),
         const Text('Las obras añaden plazas al terminar. Tener espacio permite crecer y recibir habitantes.'),
       ]),
-      onAction: () => !own && alive
-          ? _confirmCommand('Dirigir esta comunidad', 'control', target: s['id'].toString())
-          : _openFocus(brief.focus),
+      onAction: () {
+        if (!alive) {_openFocus(brief.focus);}
+        else if (controlled.isEmpty) {_communityActions();}
+        else {_observeWorld();}
+      },
       onMore: own && alive ? _communityActions : null,
     ));
   }
@@ -1196,22 +1250,20 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   void _guide() {
     if (society == null) return;
-    timer?.cancel();
-    setState(() => timer = null);
     final goals = CommunityGuideGoal.read(state, society!['id'].toString());
-    final own = society!['id'] == controlled;
-    _sheet('Tu comunidad, paso a paso', [
-      Text('${goals.where((g) => g.decided).length} de ${goals.length} decisiones registradas',
+    final own = controlled.isEmpty || society!['id'] == controlled;
+    _sheet('Intervenir sin dirigir', [
+      Text('${goals.where((g) => g.decided).length} de ${goals.length} intervenciones registradas',
           style: const TextStyle(color: gold)),
       OutlinedButton(onPressed: () => Navigator.pop(context),
           child: const Text('Seguir libremente')),
-      const Text('Observa una necesidad, decide cómo actuar y avanza para ver las consecuencias. Puedes seguir estos objetivos en cualquier orden o jugar libremente.',
+      const Text('Estas intervenciones son opcionales. Sus gobiernos continuarán actuando aunque no completes la guía.',
           style: TextStyle(height: 1.5)),
       const SizedBox(height: 12),
       const Text('La marca indica una orden confirmada; una obra, un viaje o un aprendizaje pueden seguir en curso.',
           style: TextStyle(color: earth, fontSize: 12)),
       if (!own) const Padding(padding: EdgeInsets.symmetric(vertical: 12),
-          child: Text('Estás observando. Asume la dirección desde la ficha para dar órdenes; el gobierno autónomo sigue actuando.')),
+          child: Text('Deja actuar al mundo para intervenir sin tomar su dirección.')),
       for (var i = 0; i < goals.length; i++)
         ListTile(
           contentPadding: EdgeInsets.zero,
@@ -1239,7 +1291,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   String _cultureName(dynamic id)=>
     (((state['entities'] as Map?)?['cultures'] as List?)??[])
       .where((c)=>c['id']==id).firstOrNull?['name']?.toString()??'Sin registro';
-  void _communityActions() => _sheet('Dirigir la comunidad', [
+  void _communityActions() => _sheet('Intervenir en ${society?['name'] ?? 'la comunidad'}', [
+    if (controlled.isEmpty) const Text('Seguirán tomando sus propias decisiones.', style: TextStyle(color: earth)),
     ListTile(leading: const Icon(Icons.construction), title: const Text('Construir'),
       onTap: () {Navigator.pop(context);_build();}),
     ListTile(leading: const Icon(Icons.explore_outlined), title: const Text('Guía opcional'),
@@ -1414,8 +1467,6 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         ),
       );
   void _inspectLocal(LocalSelection hit) {
-    timer?.cancel();
-    timer = null;
     final s = society;
     if (s == null) return;
     if (hit.kind == 'person') {
@@ -1434,7 +1485,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         ),
         Text('Experiencia: ${((p['skill'] as num? ?? 1) * 100).round()}%'),
         for(final c in courses)if(((p['skills'] as Map?)?[c.id] as int? ??0)>0)Text('${c.name}: ${((p['skills'][c.id] as int)/10).round()}%'),
-        if(s['id']==controlled&&state['populationState']!=null)OutlinedButton(onPressed:(){Navigator.pop(context);_learning(target:p['id'].toString());},child:const Text('Aprender un oficio')),
+        if(_canAct(s)&&state['populationState']!=null)OutlinedButton(onPressed:(){Navigator.pop(context);_learning(target:p['id'].toString());},child:const Text('Aprender un oficio')),
         if(population!=null)Text('Cultura: ${_cultureName(population['culture'])}'),
         if(p['birthEstimated']==true)const Text('Su fecha de nacimiento procede de la estimación inicial de su grupo de población.'),
         const SizedBox(height: 16),
@@ -1460,7 +1511,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         'Hay ${(s['built'] as Map? ?? {})[definition.id] ?? 0} en la comunidad.',
       ),
       const SizedBox(height: 16),
-      if (s['id'] == controlled)
+      if (_canAct(s))
         FilledButton(
           onPressed: () {
             Navigator.pop(context);
@@ -1519,7 +1570,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           style: const TextStyle(color: gold),
         ),
       Text(
-        s['id'] == controlled
+        _canAct(s)
             ? 'Diriges esta comunidad.'
             : 'Su gobierno decide de forma autónoma.',
         style: const TextStyle(color: moss),
@@ -1555,7 +1606,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                 ? 'Sin trabajadores disponibles'
                 : 'En construcción · termina ${date(number(p['finish']))}',
           ),
-          trailing: p['work'] is Map && s['id'] == controlled
+          trailing: p['work'] is Map && _canAct(s)
               ? TextButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -1588,19 +1639,16 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             : tech.map(_technologyName).join(' · '),
       ),
       const SizedBox(height: 18),
-      if (s['id'] != controlled && s['extinct'] != true)
+      if (s['extinct'] != true)
         FilledButton(
           onPressed: () {
             Navigator.pop(context);
-            _confirmCommand(
-              'Dirigir esta comunidad',
-              'control',
-              target: s['id'].toString(),
-            );
+            setState(() {selected = s['id'].toString();game.selected = selected;});
+            if (controlled.isEmpty) {_communityActions();} else {_observeWorld();}
           },
-          child: const Text('Asumir dirección de esta comunidad'),
+          child: Text(controlled.isEmpty ? 'Intervenir' : 'Dejar actuar al mundo'),
         ),
-      if (s['id'] == controlled)
+      if (_canAct(s))
         OutlinedButton(
           onPressed: () {
             Navigator.pop(context);
@@ -1634,7 +1682,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   }) => Command(
     id: 'preview-${session.snapshot?.generation}-${session.snapshot?.revision}',
     action: action,
-    actorId: controlled.isEmpty ? null : controlled,
+    actorId: acting.isEmpty ? null : acting,
     issuedDay: day,
     target: target,
     choice: choice,
@@ -1653,14 +1701,23 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     String? target,
     String? choice,
   }) async {
-    if (session.snapshot == null || busy || advancing) return;
+    if (session.snapshot == null || busy) return;
+    final resume = timer != null;
+    final generation = session.snapshot!.generation;
+    final actor = acting;
     timer?.cancel();
-    timer = null;
+    setState(() => timer = null);
+    if (session.busy) await session.idle;
+    if (!mounted || session.snapshot?.generation != generation || acting != actor) {
+      await _resumePlayback(resume, generation);
+      return;
+    }
+    try {
     final revision = session.snapshot!.revision;
-    final preview = _sim().preview(
-      _queryCommand(action, target: target, choice: choice),
-    );
-    await _sheet(title, [
+    final request = _queryCommand(action, target: target, choice: choice);
+    final preview = controlled.isEmpty && !['control', 'delegate'].contains(action)
+        ? session.previewIntervention(request) : _sim().preview(request);
+      await _sheet(title, [
       Text(preview.outcome, style: const TextStyle(height: 1.5)),
       const SizedBox(height: 14),
       Text(_costText(preview), style: const TextStyle(color: gold)),
@@ -1683,7 +1740,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         onPressed: preview.allowed
             ? () async {
                 Navigator.pop(context);
-                if (session.snapshot?.revision != revision) {
+                if (session.snapshot?.revision != revision || acting != actor) {
                   _message(
                     'La situación cambió. Revisa la orden de nuevo antes de confirmar.',
                   );
@@ -1694,7 +1751,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             : null,
         child: const Text('Confirmar orden'),
       ),
-    ]);
+      ]);
+    } finally {
+      await _resumePlayback(resume, generation);
+    }
   }
 
   int _housing(Map<String,dynamic> s) {
@@ -1851,7 +1911,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   }
 
   void _stories({bool showAll=false}) {
-    if (selected != controlled) {
+    if (selected == null || (controlled.isNotEmpty && selected != controlled)) {
       _message(
         'Asume la dirección desde la ficha antes de resolver sus decisiones.',
       );
@@ -2031,7 +2091,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   void _diplomacy() => _sheet('Más allá del barrio', [
     ...societies.where((s) => s['id'] != selected).map((s) {
-      final own = _ownerOf(controlled), other = _ownerOf(s['id']);
+      final own = _ownerOf(acting), other = _ownerOf(s['id']);
       final internal = own != null && own == other;
       return Card(
         child: Padding(
@@ -2052,7 +2112,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               ),
               if (!internal)
                 Text(
-                  'Confianza: ${number((society?['relations'] as Map?)?[s['id']])} / ${number((s['relations'] as Map?)?[controlled])}',
+                  'Confianza: ${number((society?['relations'] as Map?)?[s['id']])} / ${number((s['relations'] as Map?)?[acting])}',
                 ),
               Wrap(
                 children: [
@@ -2157,8 +2217,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                 'Alimento a bordo: ${r['cargo']} · Metal a bordo: ${number(r['metalMillis']) / 1000}',
               ),
               if (r['transportRules'] == 2 &&
-                  (r['from'] == controlled ||
-                      _ownerOf(r['from']) == _ownerOf(controlled)))
+                  (r['from'] == acting ||
+                      _ownerOf(r['from']) == _ownerOf(acting)))
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -2201,12 +2261,12 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
           },
         ),
       ),
-      OutlinedButton(
+      if (controlled.isNotEmpty) OutlinedButton(
         onPressed: () {
           Navigator.pop(context);
-          _confirmCommand('Delegar y observar', 'delegate');
+          _observeWorld();
         },
-        child: const Text('Delegar todas y observar'),
+        child: const Text('Dejar actuar al mundo'),
       ),
     ]);
   }
@@ -2355,6 +2415,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       return;
     }
     _sheet('Tu mundo, tus reglas', [
+      ListTile(leading: const Icon(Icons.public), title: const Text('Observar el planeta'),
+        onTap: () {Navigator.pop(context);if (controlled.isEmpty) {_navigate(1);} else {_observeWorld();}}),
       ListTile(
         title: const Text('Guardar ahora'),
         onTap: () async {

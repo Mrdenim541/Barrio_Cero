@@ -1,0 +1,95 @@
+
+00:00 +0: loading /workspace/Barrio_Cero/test/observer_session_test.dart
+00:01 +0: loading /workspace/Barrio_Cero/test/observer_session_test.dart
+00:02 +0: loading /workspace/Barrio_Cero/test/observer_session_test.dart
+00:02 +0: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:03 +0: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:03 +1: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:03 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:04 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:05 +2: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:05 +3: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:06 +3: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:07 +3: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:07 +4: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:08 +4: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:08 +5: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:08 +6: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:09 +6: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:09 +7: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:10 +7: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:10 +8: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:11 +8: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:11 +9: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:12 +9: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:12 +10: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+00:12 +11: /workspace/Barrio_Cero/test/observer_session_test.dart: Invalid, stale, conflicting and takeover interventions cannot change state
+00:12 +12: /workspace/Barrio_Cero/test/session_controller_test.dart: legacy conversion requires consent and preserves exact original
+00:12 +13: /workspace/Barrio_Cero/test/session_controller_test.dart: legacy conversion requires consent and preserves exact original
+00:13 +13: /workspace/Barrio_Cero/test/session_controller_test.dart: legacy conversion requires consent and preserves exact original
+00:13 +14: /workspace/Barrio_Cero/test/observer_session_test.dart: Loading preserves a manual save; explicit observation returns its pending decision exactly once
+00:13 +15 -1: /workspace/Barrio_Cero/test/session_controller_test.dart: Legacy prototype resolves its exact archived core after a catalog update
+00:13 +15 -1: /workspace/Barrio_Cero/test/session_controller_test.dart: initialization caches source load and reports invalid registry without editing it
+00:13 +16 -1: /workspace/Barrio_Cero/test/session_controller_test.dart: initialization caches source load and reports invalid registry without editing it
+00:13 +16 -1: /workspace/Barrio_Cero/test/session_controller_test.dart: worker cancellation does not acknowledge pending batch and final batch waits for ack
+00:13 +16 -1: /workspace/Barrio_Cero/test/observer_session_test.dart: Loading preserves a manual save; explicit observation returns its pending decision exactly once [E]
+  Expected: true
+    Actual: <false>
+
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/observer_session_test.dart 257:7               main.<fn>
+
+
+To run this test again: /workspace/toolchains/flutter/bin/cache/dart-sdk/bin/dart test /workspace/Barrio_Cero/test/observer_session_test.dart -p vm --plain-name 'Loading preserves a manual save; explicit observation returns its pending decision exactly once'
+
+00:14 +17 -1: /workspace/Barrio_Cero/test/session_controller_test.dart: worker cancellation does not acknowledge pending batch and final batch waits for ack
+00:14 +17 -1: loading /workspace/Barrio_Cero/test/presentation_test.dart
+00:14 +17 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:14 +18 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:15 +18 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:15 +19 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:15 +20 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:15 +21 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:15 +22 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:15 +22 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 360.0
+00:16 +22 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 360.0
+00:16 +23 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 360.0
+00:16 +23 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 412.0
+00:16 +24 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 412.0
+00:16 +24 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:17 +24 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:18 +24 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:19 +24 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:19 +25 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:19 +25 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Learning previews, commits and reopens at 320 with enlarged text
+00:20 +25 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Learning previews, commits and reopens at 320 with enlarged text
+00:21 +25 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Learning previews, commits and reopens at 320 with enlarged text
+00:21 +26 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Learning previews, commits and reopens at 320 with enlarged text
+00:21 +26 -1: /workspace/Barrio_Cero/test/presentation_test.dart: In-flight residents and supplies remain inspectable at 320 with enlarged text
+00:21 +27 -1: /workspace/Barrio_Cero/test/presentation_test.dart: In-flight residents and supplies remain inspectable at 320 with enlarged text
+00:21 +27 -1: /workspace/Barrio_Cero/test/presentation_test.dart: A real pending invitation appears before generic opportunities and previews its actual source
+00:22 +27 -1: /workspace/Barrio_Cero/test/presentation_test.dart: A real pending invitation appears before generic opportunities and previews its actual source
+00:22 +28 -1: /workspace/Barrio_Cero/test/presentation_test.dart: A real pending invitation appears before generic opportunities and previews its actual source
+00:22 +28 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:23 +28 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:24 +28 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:25 +28 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:26 +28 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:27 +28 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:27 +29 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:27 +29 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 320.0 with enlarged text
+00:27 +30 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 320.0 with enlarged text
+00:27 +30 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 360.0 with enlarged text
+00:28 +30 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 360.0 with enlarged text
+00:28 +31 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 360.0 with enlarged text
+00:28 +31 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 412.0 with enlarged text
+00:28 +32 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 412.0 with enlarged text
+00:28 +32 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Tap real local building and person without changing simulation
+00:29 +32 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Tap real local building and person without changing simulation
+00:29 +33 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Tap real local building and person without changing simulation
+00:29 +33 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:30 +33 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:31 +33 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:31 +34 -1: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:31 +34 -1: Some tests failed.

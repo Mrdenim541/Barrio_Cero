@@ -6,6 +6,7 @@ import '../content/content_pack.dart';
 import '../persistence/checkpoint.dart';
 import '../simulation/engine.dart';
 import '../simulation/v2/materials.dart';
+import 'intervention.dart';
 
 typedef SessionRead = Future<String?> Function(String slot, {bool backup});
 typedef SessionWrite = Future<void> Function(String slot, String value);
@@ -238,22 +239,25 @@ class SessionController {
     String intensity = 'normal',
     bool extraordinary = true,
     String origin='reconstruction',
+    bool autonomous = true,
     int? slot,
   }) => _enqueue(() async {
     final destination = slot ?? _slot;
     _checkSlot(destination);
-    final candidate = Checkpoint.create(
-      world: WorldState.generate(
+    final generated = WorldState.generate(
         seed: seed,
         size: size,
         intensity: intensity,
         extraordinary: extraordinary,
         origin:origin,
-      ),
+      );
+    if (autonomous) generated.controlledId = null;
+    final candidate = Checkpoint.create(
+      world: generated,
       coreSource: _installedCore!,
       additionalSources: _available,
       settings: _settings,
-      stopCrisis: _stopCrisis,
+      stopCrisis: autonomous ? false : _stopCrisis,
     );
     await _commit(candidate, destination: destination, replace: true);
   });
@@ -439,6 +443,70 @@ class SessionController {
 
   Future<CommandResult> submit(Command request) =>
       _enqueue(() => _submit(request));
+
+  CommandPreview previewIntervention(Command request) {
+    final copy = worldCopy() ?? (throw StateError('No hay una partida activa'));
+    return Intervention.preview(copy, _current().content, request);
+  }
+
+  Future<CommandResult> submitIntervention(Command request) => _enqueue(() async {
+    _requireNoWorker();
+    final copy = worldCopy() ?? (throw StateError('No hay una partida activa'));
+    final result = Intervention.submit(copy, _current().content, request);
+    if (result.ok && !result.replayed) {
+      copy.validate();
+      await _commit(_candidate(copy, target: _current().target));
+    }
+    return result;
+  });
+
+  Future<CommandResult> intervene(String actor, String action,
+      {String? target, String? choice, int? expectedGeneration, int? expectedRevision}) => _enqueue(() async {
+    _requireNoWorker();
+    if ((expectedGeneration != null && expectedGeneration != _generation) ||
+        (expectedRevision != null && expectedRevision != _revision)) {
+      return const CommandResult(false, 'La partida cambió. Revisa la intervención.', code: 'stale_session');
+    }
+    final copy = worldCopy() ?? (throw StateError('No hay una partida activa'));
+    final request = Command(
+      id: 'intervention-$_generation-$_revision-${copy.day}-${copy.commandReceipts.length}',
+      action: action, actorId: actor, issuedDay: copy.day, target: target, choice: choice);
+    final result = Intervention.submit(copy, _current().content, request);
+    if (result.ok && !result.replayed) {
+      copy.validate();
+      await _commit(_candidate(copy, target: _current().target));
+    }
+    return result;
+  });
+
+  /// Explicit transition for an old manually directed save. Loading alone is
+  /// unchanged. Existing waiting decisions are handed back to their councils.
+  Future<void> observe() => _enqueue(() async {
+    _requireNoWorker();
+    final copy = worldCopy() ?? (throw StateError('No hay una partida activa'));
+    if (copy.controlledId == null &&
+        !copy.pending.any((e) => e.type == 'content_choice')) {
+      return;
+    }
+    final sim = Simulation(copy)..registerContent(_current().content);
+    if (copy.controlledId != null) {
+      final prior = copy.society(copy.controlledId)!;
+      final result = sim.submit(Command(
+        id: 'observe-$_generation-$_revision-${copy.day}', action: 'delegate',
+        actorId: copy.controlledId, issuedDay: copy.day));
+      if (!result.ok) throw StateError(result.message);
+      sim.record(prior, 'El consejo decide',
+          'Sus gobiernos retoman las decisiones cotidianas; las intervenciones serán puntuales.', 'autonomía');
+    }
+    copy.pending = [for (final event in copy.pending)
+      if (event.type == 'content_choice')
+        ScheduledEvent(event.id, 'content', event.societyId, copy.day + 1,
+          cause: event.cause, data: {...event.data,
+            'previousChoiceDay': event.day, 'delegatedOn': copy.day})
+      else event];
+    copy.validate();
+    await _commit(_candidate(copy, target: _current().target, stopCrisis: false));
+  });
   Future<CommandResult> command(
     String action, {
     String? target,

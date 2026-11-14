@@ -53,7 +53,7 @@ void main() {
       store.gate = Completer();
       store.entered = Completer();
       final entered = store.entered!.future;
-      final operation = session.createWorld(seed: 11, size: 64, slot: 2);
+      final operation = session.createWorld(autonomous: false, seed: 11, size: 64, slot: 2);
       await entered;
       expect(session.busy, isTrue);
       expect(session.snapshot, isNull);
@@ -75,7 +75,7 @@ void main() {
   test(
     'failed import preserves world and slot; queued save cannot overwrite imported world',
     () async {
-      await session.createWorld(seed: 11, size: 64);
+      await session.createWorld(autonomous: false, seed: 11, size: 64);
       final before = session.snapshot;
       store.fail = true;
       await expectLater(
@@ -103,7 +103,7 @@ void main() {
   test(
     'loads switch slot and world together and recover valid backup',
     () async {
-      await session.createWorld(seed: 11, size: 64);
+      await session.createWorld(autonomous: false, seed: 11, size: 64);
       store.values['world_2'] = 'corrupt';
       store.values['world_2.backup'] = fixture(33).encode();
       final result = await session.loadSlot(2);
@@ -124,7 +124,7 @@ void main() {
   test(
     'rejection does not persist and replay does not double-charge',
     () async {
-      await session.createWorld(seed: 11, size: 64);
+      await session.createWorld(autonomous: false, seed: 11, size: 64);
       final count = store.writes.length;
       final rejected = await session.command('build', target: 'missing');
       expect(rejected.ok, isFalse);
@@ -149,7 +149,7 @@ void main() {
   test(
     'package import commits registry before exposing it and never changes active pins',
     () async {
-      await session.createWorld(seed: 11, size: 64);
+      await session.createWorld(autonomous: false, seed: 11, size: 64);
       final pins = Map.of(session.worldCopy()!.contentVersions);
       store.fail = true;
       await expectLater(
@@ -169,7 +169,7 @@ void main() {
   test(
     'history rejects stale revisions and foreign sessions; failed writes preserve last commit',
     () async {
-      await session.createWorld(seed: 11, size: 64);
+      await session.createWorld(autonomous: false, seed: 11, size: 64);
       final lease = await session.beginHistory(1);
       final candidate = WorldState.fromJson(lease.snapshot.world);
       Simulation(candidate).advanceDays(1);
@@ -198,7 +198,7 @@ void main() {
       expect(session.snapshot!.target, 360);
       expect(session.busy, isFalse);
       final resumed = await session.beginHistory(1, resume: true);
-      await session.createWorld(seed: 44, size: 64, slot: 1);
+      await session.createWorld(autonomous: false, seed: 44, size: 64, slot: 1);
       await expectLater(
         session.commitHistoryBatch(resumed, candidate.toJson(), done: true),
         throwsStateError,
@@ -210,7 +210,7 @@ void main() {
   test(
     'settings and advances are confirmed together; previous branch is recoverable',
     () async {
-      await session.createWorld(seed: 11, size: 64);
+      await session.createWorld(autonomous: false, seed: 11, size: 64);
       await session.updateSettings(sound: true, stopCrisis: false);
       expect(await session.advance(1), 1);
       final saved = Checkpoint.decode(await session.exportCurrent());

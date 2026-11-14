@@ -30,8 +30,56 @@ class WorldGame extends FlameGame {
   AtlasLayout? peopleLayout,buildingLayout,terrainLayout;
   final void Function(String) onSelect;
   final void Function(LocalSelection)? onLocalSelect;
+  final void Function()? onViewChanged;
   String? localSelected;
-  WorldGame(this.onSelect, {this.onLocalSelect});
+  WorldGame(this.onSelect, {this.onLocalSelect, this.onViewChanged});
+
+  /// Semantic zoom changes presentation only. A settlement is entered only
+  /// when the zoom focus actually reaches its world position.
+  void zoomAt(double value, Offset focus) {
+    final previous = mode;
+    value = value.clamp(.6, 9).toDouble();
+    if (mode == 'Asentamiento') {
+      final town = societies.where((s) => s['id'] == selected).firstOrNull;
+      if (value < .95) {
+        mode = 'Región';
+        zoom = 5;
+        pan = Offset.zero;
+        if (selected != null) locate(selected!);
+        pan += focus - center;
+        localSelected = null;
+      } else {
+        if (town != null) {
+          final scene = SettlementScene(town);
+          final local = scene.toLocal(focus, Size(size.x, size.y), pan, zoom);
+          pan = focus - center - (local - scene.bounds.center) * scene.scale(Size(size.x, size.y), value);
+        }
+        zoom = value;
+      }
+    } else {
+      final anchor = (focus - center - pan) / unit + Offset(extent / 2, extent / 2);
+      zoom = value;
+      pan = focus - center - (anchor - Offset(extent / 2, extent / 2)) * unit;
+      if (zoom >= 6) {
+        final point = (focus - center - pan) / unit + Offset(extent / 2, extent / 2);
+        final nearby = societies.where((s) => (position(s) - point).distance <= 2.5).toList()
+          ..sort((a, b) => (position(a) - point).distance.compareTo((position(b) - point).distance));
+        if (nearby.isNotEmpty) {
+          selected = nearby.first['id'].toString();
+          mode = 'Asentamiento';
+          zoom = 1.15;
+          pan = focus - center;
+          localSelected = null;
+        }
+      }
+      if (mode != 'Asentamiento') {
+        if (mode == 'Mundo' && zoom > 2.8) mode = 'Región';
+        if (mode == 'Región' && zoom < 2.2) mode = 'Mundo';
+        if (zoom <= 1) pan = Offset.zero;
+      }
+    }
+    if (mode != previous) onViewChanged?.call();
+  }
 
   /// Visual feedback follows confirmed snapshots; it does not create buildings.
   void present(Map<String, dynamic> snapshot, {required Object? generation}) {

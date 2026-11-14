@@ -1,0 +1,34 @@
+{
+  "version": "0.15.0+16",
+  "rulesVersion": 11,
+  "device": "API29 software emulator,320x640;not reference-phone performance",
+  "scope": "Zero-order native year versus exact reference,connected zoom,optional policy intervention,continued autonomy and exact reopen",
+  "installationOutput": "Performing Streamed Install\nSuccess\n",
+  "apkSha256": "2a914b513590fab90ddafe86425819ec57d0112c0286d50e1ac09b533401da57",
+  "zeroOrderYear": {
+    "initial": {
+      "day": 0,
+      "sites": 42,
+      "technologies": 0,
+      "playerOrders": 0
+    },
+    "final": {
+      "day": 360,
+      "sites": 69,
+      "technologies": 27,
+      "playerOrders": 0
+    },
+    "exactReferenceMatch": true
+  },
+  "zoomPreservesCompleteCheckpoint": true,
+  "optionalIntervention": {
+    "actor": "s0",
+    "policy": "food",
+    "reserve": 240,
+    "resourcesNotCreatedOrSpent": true,
+    "autonomyRetained": true
+  },
+  "forceStopReopenExact": true,
+  "originalSavesRestoredExactly": true,
+  "passed": true
+}

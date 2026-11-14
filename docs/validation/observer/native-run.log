@@ -1,0 +1,25 @@
+/workspace/Barrio_Cero/build/validation/observer-scenario/initial.checkpoint.json: 1 file pushed, 0 skipped. 915.9 MB/s (697065 bytes in 0.001s)
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Rendered: 01-real-autonomous-planet.png
+Tap: Avanzar
+Tap: Años y delegación
+Tap: Avanzar 1 año
+Native zero-order year matches reference
+Tap: Una nueva era
+Tap: Centrar comunidad
+Tap: Intervenir
+Tap: Vista del mapa
+Tap: Acercar
+Rendered: 03-real-zoomed-settlement.png
+Tap: Intervenir
+Tap: Políticas y delegación
+Tap: Reservas y alimentación
+Tap: Confirmar orden
+Tap: Avanzar
+Tap: Avanzar un mes
+Rendered: 05-real-world-continues.png
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Rendered: 06-real-reopened-planet.png
+{"version": "0.15.0+16", "rulesVersion": 11, "device": "API29 software emulator,320x640;not reference-phone performance", "scope": "Zero-order native year versus exact reference,connected zoom,optional policy intervention,continued autonomy and exact reopen", "installationOutput": "Performing Streamed Install\nSuccess\n", "apkSha256": "2a914b513590fab90ddafe86425819ec57d0112c0286d50e1ac09b533401da57", "zeroOrderYear": {"initial": {"day": 0, "sites": 42, "technologies": 0, "playerOrders": 0}, "final": {"day": 360, "sites": 69, "technologies": 27, "playerOrders": 0}, "exactReferenceMatch": true}, "zoomPreservesCompleteCheckpoint": true, "optionalIntervention": {"actor": "s0", "policy": "food", "reserve": 240, "resourcesNotCreatedOrSpent": true, "autonomyRetained": true}, "forceStopReopenExact": true, "originalSavesRestoredExactly": true, "passed": true}

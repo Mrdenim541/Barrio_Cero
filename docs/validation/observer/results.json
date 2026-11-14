@@ -1,0 +1,100 @@
+{
+  "version": "0.15.0+16",
+  "rulesVersion": 11,
+  "scope": "E1 partial: autonomous observation, connected zoom and optional interventions",
+  "gameFinished": false,
+  "releaseAcceptanceSatisfied": false,
+  "integration": {
+    "flutterTestsPassed": 202,
+    "initialAnalysis": "two relative-import lint findings in scenario generator; preserved in integration-analyze.log",
+    "finalAnalysis": "passed after package imports; analyze-final.log",
+    "runtimeSourcesUnchangedAfterSuiteAndBuild": true,
+    "sourceDifferencesAfterIntegration": {
+      "tool/build_observer_scenario.dart": "08b7f7ec2d5ff95333a51617b50856e152396b84edb952804b81ef9ef288e572"
+    },
+    "repeatScope": "Final analysis and scenario generator only; no repeated suite/build for tool import correction"
+  },
+  "frozenRules11Provenance": {
+    "matchingEngineAndContentFiles": 19,
+    "sources": {
+      "lib/content/content_pack.dart": "847cedbe88be7707e9b828850ad447fb866494dcb6efb9f101b08e541d73cd94",
+      "lib/content/legacy_catalog.dart": "a3cab708e0cb85ae84ff17738f76c989ac7d82aa87ef15e7e94fbc3ad337ca98",
+      "lib/content/starting_scenario.dart": "4ef5c2fb5d09434b367c4ab05f309c67e462f2afb6246de34dc9c6fb42da6e74",
+      "lib/content/definitions.dart": "41a54be472334f90a79abe329d1c303a51cd79dbc01a843471f1d23eeff32b62",
+      "lib/content/rule_catalog.dart": "c31c5443c71f242ba8416c8642ac057823369d0f54d917c7b01a9b1fa28151c0",
+      "lib/content/catalog_generated.dart": "5caf2ba0252ebd20d98dc9d3dfd8365f4305c27ccd1d43af36b5b5d25ab91e31",
+      "lib/simulation/engine.dart": "b5b65d2969d042aa4c6c1a574a19581d3ce63303f4f038fb230444ee201622be",
+      "lib/simulation/advance.dart": "f53fa31e37a7d5d0e77f01a4fe5a43fe58c6a73f005caed2405daa40e2738644",
+      "lib/simulation/v2/migration.dart": "fe452a3d186e9d4256610ab39b7326e31f5b3674c27e4986cf3c5b0115dc745c",
+      "lib/simulation/v2/world_entities.dart": "0300192e654bdc155c9076f10a1663be6c08fa9f8e80b2e40a899f81835d54ab",
+      "lib/simulation/v2/opening_placement.dart": "457590142e7ef168f53ffa9faea148bce02e3a73c8693a1b9110445620fc3a09",
+      "lib/simulation/v2/work_order.dart": "92c7f7f0b1949566b6851a3b5e646483dc99556896f67d237f27aa7e9f0939cd",
+      "lib/simulation/v2/population.dart": "1fd64ef3559f94897f776227d262ea855b4b0ff0988782076a83afa2900887ed",
+      "lib/simulation/v2/operating_plan.dart": "bec70d2b5e77c7af98f421c478f44dadd362b4b5de5e883a2723aa12c67d0aa5",
+      "lib/simulation/v2/social.dart": "5e9f30ef3ed7e08a3a6c66046c2361d9d3836f76d4d124603b9cd7f1aefcc007",
+      "lib/simulation/v2/materials.dart": "e36d1420cb3f3cee06bb2eea0b3e93eddabffc58aa99d1bb22da0406ca89c441",
+      "lib/simulation/v2/learning.dart": "227a3c1c412c5c5650c6f4415a5f1452e4637341073c88c1b57d2eb590bfcaf7",
+      "lib/simulation/v2/inventory.dart": "ead0ce9fbe0f839a9fa52431275b62e852cb7aa2dce1e3de50a275a816127e0e",
+      "assets/content/core.json": "8546af4aee82ec56b3d042c3ee6b555e8b8203b9cdd5dc85b772ca84417b4742"
+    },
+    "longMatrixRerun": false,
+    "limits": "Historical long-run results retain their own version and scope; not full acceptance of 0.15"
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.15.0-profile.apk",
+    "sha256": "2a914b513590fab90ddafe86425819ec57d0112c0286d50e1ac09b533401da57",
+    "bytes": 70122876,
+    "minimumApi": 24,
+    "buildMode": "profile",
+    "signature": "debug certificate for testing; signature.log"
+  },
+  "native": {
+    "version": "0.15.0+16",
+    "rulesVersion": 11,
+    "device": "API29 software emulator,320x640;not reference-phone performance",
+    "scope": "Zero-order native year versus exact reference,connected zoom,optional policy intervention,continued autonomy and exact reopen",
+    "installationOutput": "Performing Streamed Install\nSuccess\n",
+    "apkSha256": "2a914b513590fab90ddafe86425819ec57d0112c0286d50e1ac09b533401da57",
+    "zeroOrderYear": {
+      "initial": {
+        "day": 0,
+        "sites": 42,
+        "technologies": 0,
+        "playerOrders": 0
+      },
+      "final": {
+        "day": 360,
+        "sites": 69,
+        "technologies": 27,
+        "playerOrders": 0
+      },
+      "exactReferenceMatch": true
+    },
+    "zoomPreservesCompleteCheckpoint": true,
+    "optionalIntervention": {
+      "actor": "s0",
+      "policy": "food",
+      "reserve": 240,
+      "resourcesNotCreatedOrSpent": true,
+      "autonomyRetained": true
+    },
+    "forceStopReopenExact": true,
+    "originalSavesRestoredExactly": true,
+    "passed": true
+  },
+  "manuallyReviewedCaptures": [
+    "native/01-real-autonomous-planet.png",
+    "native/02-real-unmanaged-year-report.png",
+    "native/03-real-zoomed-settlement.png",
+    "native/06-real-reopened-planet.png"
+  ],
+  "remainingMandatoryAreas": [
+    "First ten meaningful outcomes and comprehension",
+    "Real political territories, multiple settlements per society and complete institutions/conflicts",
+    "Reconciled families, inheritance and character journeys",
+    "Six functional eras, differentiated equine civilization and expanded economy",
+    "Instantiated declarative director, expanded catalog and complete narrative branches",
+    "Chunked history, complete recovery and final art",
+    "Full millennium/seed acceptance with final rules and physical Android performance"
+  ]
+}

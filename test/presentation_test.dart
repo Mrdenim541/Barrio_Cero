@@ -11,8 +11,12 @@ import 'package:barrio_cero_eras/content/content_pack.dart';
 import 'package:barrio_cero_eras/simulation/engine.dart' show WorldState, ScheduledEvent, Simulation, Command;
 
 Future<void> openCommunityActions(WidgetTester tester) async {
-  await tester.ensureVisible(find.byTooltip('Más acciones'));
-  await tester.tap(find.byTooltip('Más acciones'));
+  if (find.text('Intervenir').evaluate().isNotEmpty) {
+    await tester.tap(find.text('Intervenir'));
+  } else {
+    await tester.ensureVisible(find.byTooltip('Más acciones'));
+    await tester.tap(find.byTooltip('Más acciones'));
+  }
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 500));
 }
@@ -59,7 +63,7 @@ void main() {
         await tester.runAsync(() => tester.tap(find.text('CREAR UN MUNDO')));
         await tester.pumpAndSettle();
         expect(find.text('Semilla reproducible'), findsOneWidget);
-        expect(find.text('Fundar Barrio Cero'), findsOneWidget);
+        expect(find.text('Crear planeta'), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.tap(find.text('Volver'));
         await tester.pumpAndSettle();
@@ -101,7 +105,7 @@ void main() {
       }
 
       await commit(
-        'Fundar Barrio Cero',
+        'Crear planeta',
         () => screen.world != null && !screen.advancing,
       );
       expect(screen.world.origin, 'prehistory');
@@ -146,7 +150,7 @@ void main() {
     });
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     final before=screen.world.canonical();
-    await tester.ensureVisible(find.byTooltip('Más acciones'));await tester.tap(find.byTooltip('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await openCommunityActions(tester);
     await tester.scrollUntilVisible(find.text('Formar aprendices'),100,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.ensureVisible(find.text('Formar aprendices'));await tester.pump();await tester.tap(find.text('Formar aprendices'));
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     await tester.scrollUntilVisible(find.text('Oficios técnicos'),140,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.pump(const Duration(milliseconds:500));await tester.ensureVisible(find.text('Oficios técnicos'));await tester.pump();await tester.tap(find.text('Oficios técnicos'));
@@ -201,7 +205,7 @@ void main() {
     late dynamic screen;
     await tester.runAsync(() async {await tester.pumpWidget(const BarrioApp());screen=tester.state(find.byType(ErasScreen));await screen.initialization;await screen.session.importCheckpoint(source);});
     await tester.pump();await tester.pump(const Duration(milliseconds:500));final before=screen.world.canonical();
-    await tester.ensureVisible(find.byTooltip('Más acciones'));await tester.pump();await tester.tap(find.byTooltip('Más acciones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    await openCommunityActions(tester);
     await tester.scrollUntilVisible(find.text('Decisiones'),120,scrollable:find.byType(Scrollable).last);await tester.pump();await tester.ensureVisible(find.text('Decisiones'));await tester.pump();await tester.tap(find.text('Decisiones'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
     expect(find.text('Carta de refugio'),findsOneWidget);expect(tester.getTopLeft(find.text('Carta de refugio')).dy,lessThan(400));
     await tester.tap(find.widgetWithText(OutlinedButton,'Organizar la respuesta').first);await tester.pump();await tester.pump(const Duration(milliseconds:500));
@@ -249,19 +253,20 @@ void main() {
     }
 
     await commitTap(
-      'Fundar Barrio Cero',
+      'Crear planeta',
       () => session.world != null && !session.advancing,
     );
     expect(find.text('Año 1 · mes 1 · día 1'), findsOneWidget);
     expect(find.text('Construir'), findsNothing);
-    expect(find.byTooltip('Más acciones'), findsOneWidget);
+    expect(find.text('Intervenir'), findsOneWidget);
     // Essential time controls must remain readable on the smallest phone.
     expect(tester.getSize(find.text('Avanzar')).height, lessThan(24));
     expect(find.text('Barrio'), findsOneWidget);
     expect(find.text('Mundo'), findsOneWidget);
     expect(find.text('Historia'), findsOneWidget);
     final initialMap = tester.getRect(find.byWidgetPredicate((w) => w is GameWidget));
-    expect(session.game.mode, 'Asentamiento');
+    expect(session.game.mode, 'Mundo');
+    expect(session.world.controlledId, isNull);
     final beforeNavigation = session.world.toJson();
     await tester.tap(find.text('Mundo'));
     await tester.pump();
@@ -295,7 +300,7 @@ void main() {
         greaterThanOrEqualTo(initialMap.height),
         reason: 'A result message overlays the world instead of taking permanent scene space');
     expect(
-      session.world.society(session.world.controlledId).projects.length,
+      session.world.societies.first.projects.length,
       1,
     );
     await commitTap(
@@ -313,7 +318,7 @@ void main() {
     expect(checkpoint.world.day, 1);
     expect(checkpoint.world.commandReceipts.length, 1);
     expect(
-      checkpoint.world.society(checkpoint.world.controlledId)!.projects.length,
+      checkpoint.world.societies.first.projects.length,
       1,
     );
 
@@ -455,8 +460,8 @@ void main() {
       await tester.tap(find.text('Guía opcional'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
-      expect(find.text('Tu comunidad, paso a paso'), findsOneWidget);
-      expect(find.text('0 de 10 decisiones registradas'), findsOneWidget);
+      expect(find.text('Intervenir sin dirigir'), findsOneWidget);
+      expect(find.text('0 de 10 intervenciones registradas'), findsOneWidget);
       await tester.ensureVisible(find.text('Seguir libremente'));
       await tester.tap(find.text('Seguir libremente'));
       await tester.pump();

@@ -1,0 +1,78 @@
+
+00:00 +0: loading /workspace/Barrio_Cero/test/observer_presentation_test.dart
+00:01 +0: loading /workspace/Barrio_Cero/test/observer_presentation_test.dart
+00:02 +0: loading /workspace/Barrio_Cero/test/observer_presentation_test.dart
+00:02 +0: A pinch reaches the real selected settlement and returns to the planet without a command
+00:03 +0: A pinch reaches the real selected settlement and returns to the planet without a command
+00:04 +0: A pinch reaches the real selected settlement and returns to the planet without a command
+00:05 +0: A pinch reaches the real selected settlement and returns to the planet without a command
+00:05 +0: A pinch reaches the real selected settlement and returns to the planet without a command
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: 'Asentamiento'
+  Actual: 'Región'
+   Which: is different.
+          Expected: Asentamien ...
+            Actual: Región
+                    ^
+           Differ at offset 0
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/Barrio_Cero/test/observer_presentation_test.dart:81:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/Barrio_Cero/test/observer_presentation_test.dart line 81
+The test description was:
+  A pinch reaches the real selected settlement and returns to the planet without a command
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+00:05 +0 -1: A pinch reaches the real selected settlement and returns to the planet without a command [E]
+  Test failed. See exception logs above.
+  The test description was: A pinch reaches the real selected settlement and returns to the planet without a command
+
+
+To run this test again: /workspace/toolchains/flutter/bin/cache/dart-sdk/bin/dart test /workspace/Barrio_Cero/test/observer_presentation_test.dart -p vm --plain-name 'A pinch reaches the real selected settlement and returns to the planet without a command'
+
+00:05 +0 -1: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it
+00:06 +0 -1: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it
+00:07 +0 -1: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it
+00:08 +0 -1: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it
+00:08 +0 -1: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <null>
+Cancelling an optional quote must restore playback
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/Barrio_Cero/test/observer_presentation_test.dart:195:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/Barrio_Cero/test/observer_presentation_test.dart line 195
+The test description was:
+  Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes
+  it
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+00:08 +0 -2: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it [E]
+  Test failed. See exception logs above.
+  The test description was: Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it
+
+
+To run this test again: /workspace/toolchains/flutter/bin/cache/dart-sdk/bin/dart test /workspace/Barrio_Cero/test/observer_presentation_test.dart -p vm --plain-name 'Old direction is changed explicitly; inspecting inhabitants preserves playback and a quote resumes it'
+
+00:08 +0 -2: Some tests failed.
