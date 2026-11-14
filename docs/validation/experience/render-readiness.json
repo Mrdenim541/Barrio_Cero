@@ -1,0 +1,65 @@
+{
+  "scope": "Terrain presence on declared API29 capture crop; not complete visual/game acceptance",
+  "checkpointSha256": "a5a617c708e5e661f7032d7e9d2f2420431df7074945cd7bf13ab310ec0c0a62",
+  "biome": 1,
+  "groundColor": [
+    101,
+    126,
+    88
+  ],
+  "crop": [
+    8,
+    95,
+    260,
+    230
+  ],
+  "captures": [
+    {
+      "path": "docs/validation/experience/final-native/03-final-real-reopened.png",
+      "sha256": "f9f0119ff24fe64f4a132e8a4e1608d42b747b956cbb7c8ae6e9a3a1ade83607",
+      "terrainPixels": 23824,
+      "uniqueColors": 1177,
+      "terrainPresent": true,
+      "expectedTerrain": true,
+      "passed": true
+    },
+    {
+      "path": "docs/validation/experience/visual-ready/02-ready-real-whole-settlement.png",
+      "sha256": "74153fd30792995d892d764facd3bd1e6b7a3bf276bbb8905987bb50e58eb548",
+      "terrainPixels": 25329,
+      "uniqueColors": 828,
+      "terrainPresent": true,
+      "expectedTerrain": true,
+      "passed": true
+    },
+    {
+      "path": "docs/validation/experience/final-native/01-final-real-neighborhood.png",
+      "sha256": "cca42c2df61709e3b05ee8bb0f4ea6e0cf95ac5a4ecafcd39f6d3cedf37e8634",
+      "terrainPixels": 0,
+      "uniqueColors": 1,
+      "terrainPresent": false,
+      "expectedTerrain": false,
+      "passed": true
+    },
+    {
+      "path": "docs/validation/experience/final-native/02-final-real-whole-settlement.png",
+      "sha256": "06cc9a0005f43380d75f59ebb9dafbe0d466c480fe2670ed6d9ca0c039912684",
+      "terrainPixels": 0,
+      "uniqueColors": 1,
+      "terrainPresent": false,
+      "expectedTerrain": false,
+      "passed": true
+    },
+    {
+      "path": "docs/validation/experience/visual-ready/01-ready-real-neighborhood.png",
+      "sha256": "25c4d6700648272f83ba1b73776f8e0009a521a29649508905067ae64015066f",
+      "terrainPixels": 35,
+      "uniqueColors": 440,
+      "terrainPresent": false,
+      "expectedTerrain": false,
+      "passed": true
+    }
+  ],
+  "changedPixelsBetweenApprovedFrames": 13839,
+  "passed": true
+}

@@ -1,0 +1,66 @@
+from pathlib import Path
+exec(Path('/tmp/barrio_experience_native.py').read_text().split('moved = False')[0])
+out = root / 'docs/validation/experience/final-native'
+out.mkdir(exist_ok=False)
+before = 'app_flutter/native_before_13_final'
+after = 'app_flutter/native_after_13_final'
+fixture = 'app_flutter/native_after_13_experience_retry'
+prior = json.loads((root / 'docs/validation/experience/native/results.json').read_text())
+assert prior['passed'] and prior['originalSavesRestoredExactly']
+result = {'version': '0.13.0+14', 'rulesVersion': 11,
+          'device': 'Android API29 software emulator, 320x640',
+          'scope': 'Final label-only correction: install, open the naturally completed first-flow checkpoint, inspect close/general views, reopen exact. Prior full native flow preserved separately.'}
+moved = False
+try:
+    stop()
+    if exists(before) or exists(after):
+        raise RuntimeError('Retained final fixture exists; refusing overwrite')
+    assert exists(fixture)
+    original = inventory()
+    (out / 'original-inventory.json').write_text(json.dumps(original, indent=2) + '\n')
+    result['installationOutput'] = adb('install', '-r', str(apk)).decode()
+    result['apkSha256'] = hashlib.sha256(apk.read_bytes()).hexdigest()
+    run('mv', folder, before)
+    moved = True
+    run('cp', '-R', fixture, folder)
+    saved = rawworld()
+    w = world()
+    assert w['day'] >= 10 and w['societies'][0]['built']['shelter'] == 4
+    result['checkpointSha256'] = hashlib.sha256(saved).hexdigest()
+    result['sourceCheckpoint'] = fixture
+    adb('shell', 'am', 'start', '-n', pkg + '/.MainActivity')
+    tap('Continuar historia')
+    dump()
+    capture('01-final-real-neighborhood.png')
+    tap('Ver todo el asentamiento')
+    capture('02-final-real-whole-settlement.png')
+    assert rawworld() == saved
+    stop()
+    adb('shell', 'am', 'start', '-n', pkg + '/.MainActivity')
+    tap('Continuar historia')
+    dump()
+    assert rawworld() == saved
+    capture('03-final-real-reopened.png')
+    result['exactCheckpointPreserved'] = True
+    result['forceStopReopened'] = True
+except Exception as error:
+    result['error'] = repr(error)
+    print(repr(error), flush=True)
+finally:
+    if moved:
+        stop()
+        if exists(after):
+            raise RuntimeError('Refusing retained fixture overwrite')
+        if exists(folder):
+            run('mv', folder, after)
+        if exists(folder):
+            raise RuntimeError('Restoration destination still exists')
+        run('mv', before, folder)
+        result['originalSavesRestoredExactly'] = inventory() == original
+        if not result['originalSavesRestoredExactly']:
+            raise RuntimeError('Original saves mismatch')
+    result['passed'] = 'error' not in result
+    (out / 'results.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+    print(json.dumps(result, ensure_ascii=False), flush=True)
+if not result['passed']:
+    raise SystemExit(1)

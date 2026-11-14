@@ -1,5 +1,9 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.13 — experiencia inicial, reglas 11 conservadas
+
+Ficha de necesidades y ocupación, acción sugerida con consulta transaccional, guía opcional derivada de órdenes aceptadas, acceso a funciones avanzadas y lectura local por bioma. Las marcas no confunden una orden con su resultado. Se retira la atribución visual de obras a una persona sin asignación real. La integración aprueba análisis y 191 pruebas; compilación, recorrido Android y ajuste posterior de rótulos se distinguen en [evidencia de experiencia](validation/experience/). Los 19 archivos de simulación y contenido contrastados con los binarios AOT congelados coinciden: esta presentación no reinicia la matriz larga. R1/R11 y E1 siguen parciales: el contador no demuestra las primeras diez decisiones completas, la comprensión ni el arte final.
+
 ## Actualización 0.12 — reglas 11
 
 187 pruebas y análisis limpio. Los grupos de adultos comunes tienen residencia en tránsito, provisiones pagadas, posición diaria, desvíos, espera, regreso, bajas y entrega única. El coste total se consulta antes de confirmar. Se preservan fechas/culturas, plazas comprometidas, balance de viaje y reglas antiguas. Los dos siglos equivalentes y el trabajador con checkpoint en tránsito aprobaron. Android final comprobó salida, coste, cierre en camino, llegada y reapertura; originales restaurados por hash. La primera variante falló la validación mensual anterior al paso de viajeros y se conserva como fallo, junto con su corrección reproducida. [Resultados y variantes](validation/transit/results.json). Territorio, instituciones, familias/colonización en tránsito y demás obligaciones de R6 siguen pendientes.

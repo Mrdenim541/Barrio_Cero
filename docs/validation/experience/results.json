@@ -1,0 +1,80 @@
+{
+  "recordedAt": "2026-11-14T11:30:53.689348+00:00",
+  "version": "0.13.0+14",
+  "rulesVersion": 11,
+  "batch": "E1",
+  "batchClosed": false,
+  "gameFinished": false,
+  "implemented": [
+    "Needs and confirmed housing capacity",
+    "Contextual focus with transactional quotes",
+    "Optional guide from accepted command receipts",
+    "Fixed advanced-action access with enlarged text",
+    "Biome ground, camera fit and collision-free labels"
+  ],
+  "fullFastSuite": {
+    "passed": true,
+    "cases": 191,
+    "scope": "Before label-only correction",
+    "evidence": "integration-results.json"
+  },
+  "finalCorrection": {
+    "analysis": "clean",
+    "compiled": true,
+    "changedSinceFullSuite": [
+      "lib/presentation/world_game.dart"
+    ],
+    "scope": "Label collision/controls avoidance only; final APK checked on Android",
+    "sources": "final-sources.json"
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.13.0-profile.apk",
+    "sha256": "1e061eff8608e4f0f507f6154d966b3b9fad2a11fba9a22218fc11c6e864f886",
+    "bytes": 89033838,
+    "mode": "profile",
+    "minSdk": 24,
+    "signatureVerified": true
+  },
+  "nativeFullFlow": {
+    "passed": true,
+    "scope": "Candidate before label-only correction; quoted build, completion, navigation, exact restart",
+    "evidence": "native/results.json",
+    "retainedApk": "build/deliverables/barrio-cero-eras-0.13.0-before-label-fix.apk"
+  },
+  "finalApkNative": {
+    "passed": true,
+    "scope": "Install and exact reopen; visual approval uses only captures below",
+    "evidence": "final-native/results.json"
+  },
+  "visualReview": {
+    "passed": true,
+    "manualReviewPassed": true,
+    "approved": [
+      "final-native/03-final-real-reopened.png",
+      "visual-ready/02-ready-real-whole-settlement.png"
+    ],
+    "rejectedPrematureFrames": [
+      "final-native/01-final-real-neighborhood.png",
+      "final-native/02-final-real-whole-settlement.png",
+      "visual-ready/01-ready-real-neighborhood.png"
+    ],
+    "evidence": "render-readiness.json",
+    "automaticColorOnlyCheckInvalidated": true
+  },
+  "originalSavesRestoredExactly": true,
+  "simulationInputs": {
+    "frozenInputManifest": "build/validation/rules11-r2-aot/inputs.json",
+    "rulesVersion": 11,
+    "comparedFiles": 19,
+    "differences": [],
+    "scope": "Simulation and content inputs only. UI, session orchestration and worker behavior require their own tests."
+  },
+  "pending": [
+    "Complete first-ten-decision behavioral run",
+    "Comprehension review",
+    "Visible map-loading indicator and measured loading budget",
+    "Full E2-E5 systems and final art",
+    "E6 complete acceptance and physical reference-phone performance"
+  ],
+  "releaseAcceptanceSatisfied": false
+}

@@ -1,0 +1,73 @@
+from pathlib import Path
+exec(Path('/tmp/barrio_experience_native.py').read_text().split('moved = False')[0])
+from PIL import Image, ImageChops
+import io
+out = root / 'docs/validation/experience/visual-ready'
+out.mkdir(exist_ok=False)
+before = 'app_flutter/native_before_13_visual'
+after = 'app_flutter/native_after_13_visual'
+fixture = 'app_flutter/native_after_13_final'
+result = {'version': '0.13.0+14', 'rulesVersion': 11,
+          'scope': 'Wait for actual rendered terrain and a visible change after camera fit; capture direct Android frames, no image editing.',
+          'apkSha256': hashlib.sha256(apk.read_bytes()).hexdigest()}
+crop = (8, 95, 260, 230)
+
+def rendered(name, different=None):
+    deadline = time.monotonic() + 90
+    attempts = 0
+    while time.monotonic() < deadline:
+        raw = adb('exec-out', 'screencap', '-p')
+        im = Image.open(io.BytesIO(raw)).convert('RGB').crop(crop)
+        colors = len(im.getcolors(100000) or [])
+        attempts += 1
+        changed = None if different is None else sum(
+            1 for p in ImageChops.difference(im, different).getdata() if max(p) > 5)
+        if colors > 100 and (different is None or changed > 2000):
+            (out / name).write_bytes(raw)
+            print('Rendered: ' + name, colors, changed, flush=True)
+            result[name] = {'attempts': attempts, 'uniqueColorsInMapCrop': colors,
+                            'changedMapPixels': changed}
+            return im
+        time.sleep(.5)
+    raise RuntimeError('Map rendering or camera change did not become visible')
+
+moved = False
+try:
+    stop()
+    if exists(before) or exists(after):
+        raise RuntimeError('Retained visual fixture exists; refusing overwrite')
+    assert exists(fixture)
+    original = inventory()
+    (out / 'original-inventory.json').write_text(json.dumps(original, indent=2) + '\n')
+    run('mv', folder, before)
+    moved = True
+    run('cp', '-R', fixture, folder)
+    saved = rawworld()
+    adb('shell', 'am', 'start', '-n', pkg + '/.MainActivity')
+    tap('Continuar historia')
+    near = rendered('01-ready-real-neighborhood.png')
+    tap('Ver todo el asentamiento')
+    rendered('02-ready-real-whole-settlement.png', different=near)
+    assert rawworld() == saved
+    result['checkpointPreservedExactly'] = True
+except Exception as error:
+    result['error'] = repr(error)
+    print(repr(error), flush=True)
+finally:
+    if moved:
+        stop()
+        if exists(after):
+            raise RuntimeError('Refusing retained visual fixture overwrite')
+        if exists(folder):
+            run('mv', folder, after)
+        if exists(folder):
+            raise RuntimeError('Restoration destination still exists')
+        run('mv', before, folder)
+        result['originalSavesRestoredExactly'] = inventory() == original
+        if not result['originalSavesRestoredExactly']:
+            raise RuntimeError('Original saves mismatch')
+    result['passed'] = 'error' not in result
+    (out / 'results.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+    print(json.dumps(result, ensure_ascii=False), flush=True)
+if not result['passed']:
+    raise SystemExit(1)

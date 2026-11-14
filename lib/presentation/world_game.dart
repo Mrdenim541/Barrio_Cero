@@ -342,6 +342,13 @@ class WorldGame extends FlameGame {
     c.scale(scale);
     c.translate(-scene.bounds.center.dx, -scene.bounds.center.dy);
     final area = scene.bounds.inflate(320);
+    final tiles = data['tiles'] as List? ?? [];
+    final tileIndex = number(s['y']) * extent + number(s['x']);
+    final tile = tileIndex >= 0 && tileIndex < tiles.length ? tiles[tileIndex] : null;
+    final biome = (tile is Map ? number(tile['biome']) : 0).clamp(0, 5);
+    final ground = const [Color(0xff829365), Color(0xff657e58),
+      Color(0xffb69c6c), Color(0xff85887b), Color(0xff748c77),
+      Color(0xff6c8580)][biome];
     // Ground texture and worn entrances are presentation, not transport routes.
     for (
       var y = math.max(0, area.top ~/ 32);
@@ -354,15 +361,9 @@ class WorldGame extends FlameGame {
         x++
       ) {
         final shade = (x * 17 + y * 31) % 5;
-        paint.color = [
-          const Color(0xff829365),
-          const Color(0xff86986b),
-          const Color(0xff899b6c),
-          const Color(0xff7e9064),
-          const Color(0xff8c9d70),
-        ][shade];
+        paint.color = Color.lerp(ground, const Color(0xff405345), shade * .025)!;
         c.drawRect(Rect.fromLTWH(x * 32.0, y * 32.0, 32, 32), paint);
-        paint.color = const Color(0xffa4ae7d);
+        paint.color = Color.lerp(ground, const Color(0xffd8cfad), .25)!;
         c.drawRect(
           Rect.fromLTWH(
             x * 32.0 + (x * 7 + y * 3) % 26,
@@ -372,7 +373,7 @@ class WorldGame extends FlameGame {
           ),
           paint,
         );
-        if ((x * 13 + y * 7) % 19 == 0 &&
+        if ([0, 1, 4].contains(biome) && (x * 13 + y * 7) % (biome == 1 ? 11 : 23) == 0 &&
             !scene.entities.any(
               (e) => e.bounds
                   .inflate(26)
@@ -382,7 +383,6 @@ class WorldGame extends FlameGame {
         }
       }
     }
-    final projects = s['projects'] as List? ?? [];
     for (final e in scene.entities) {
       final r = e.bounds;
       if (e.kind == 'site') {
@@ -419,11 +419,9 @@ class WorldGame extends FlameGame {
             : p['name'] == 'Tito'
             ? 2
             : 3;
-        final action = number(s['health'], 100) < 35
-            ? 6
-            : projects.isNotEmpty && (role == 0 || role == 6)
-            ? 2
-            : 0;
+        // A project does not assign a named person as its builder. Named work
+        // animations need an actual assignment, not an inference from their role.
+        final action = number(s['health'], 100) < 35 ? 6 : 0;
         paint.color = const Color(0x66000000);
         c.drawOval(Rect.fromLTWH(r.left + 4, r.bottom - 5, 28, 9), paint);
         paint.color = Colors.white;
@@ -458,6 +456,33 @@ class WorldGame extends FlameGame {
       }
     }
     c.restore();
+    // Labels stay readable while geometry and picking retain confirmed positions.
+    final catalog = data['catalog'] as Map?;
+    final definitions = catalog?['buildings'] as List? ?? [];
+    final labels = <Rect>[];
+    if (scale > .28) {
+      for (final e in scene.entities.where((e) => e.kind == 'site')) {
+        final p = scene.toScreen(Offset(e.bounds.left, e.bounds.top - 22),
+            Size(size.x, size.y), pan, zoom);
+        if (p.dx < -90 || p.dx > size.x || p.dy < 36 || p.dy > size.y - 30) continue;
+        final definition = definitions.where((b) => b['id'] == e.entity['building']).firstOrNull;
+        final label = TextPainter(
+          text: TextSpan(text: definition?['name']?.toString() ?? 'Edificio',
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700,
+                  color: Color(0xfff8edd7))),
+          textDirection: TextDirection.ltr, maxLines: 1, ellipsis: '…',
+        )..layout(maxWidth: 88);
+        final box = Rect.fromLTWH(p.dx - 2, p.dy - 1, label.width + 4, label.height + 2);
+        final controls = Rect.fromLTWH(size.x - 56, 0, 56, 200);
+        if (box.left < 4 || box.right > size.x - 4 || box.overlaps(controls) ||
+            labels.any((previous) => previous.inflate(3).overlaps(box))) {
+          continue;
+        }
+        labels.add(box);
+        c.drawRect(box, Paint()..color = ink.withValues(alpha: .8));
+        label.paint(c, p);
+      }
+    }
     _text(
       c,
       '${s['name']}  •  ${number(s['population'])} habitantes',
@@ -467,7 +492,7 @@ class WorldGame extends FlameGame {
     );
     _text(
       c,
-      'Toca un edificio o habitante',
+      'Toca para conocer · arrastra para recorrer',
       Offset(14, size.y - 24),
       color: const Color(0xfff8edd7),
       fontSize: 11,

@@ -1,0 +1,7 @@
+{
+  "frozenInputManifest": "build/validation/rules11-r2-aot/inputs.json",
+  "rulesVersion": 11,
+  "comparedFiles": 19,
+  "differences": [],
+  "scope": "Simulation and content inputs only. UI, session orchestration and worker behavior require their own tests."
+}

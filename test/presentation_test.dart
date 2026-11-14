@@ -177,6 +177,7 @@ void main() {
     await tester.runAsync(() async {await tester.pumpWidget(const BarrioApp());screen=tester.state(find.byType(ErasScreen));await screen.initialization;await screen.session.importCheckpoint(source);});
     await tester.pump();await tester.pump(const Duration(milliseconds:500));
     final before=screen.world.canonical();
+    await tester.ensureVisible(find.text('Ver habitantes en camino'));
     await tester.tap(find.text('Ver habitantes en camino'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
     expect(find.textContaining('5 habitantes en tránsito'),findsOneWidget);expect(find.textContaining('Provisiones restantes'),findsOneWidget);
     expect(screen.world.canonical(),before);expect(tester.takeException(),isNull);
@@ -422,6 +423,19 @@ void main() {
       await tester.tap(find.text('Barrio'));
       await tester.pump(const Duration(milliseconds: 500));
       expect(tester.takeException(), isNull);
+      final unchanged = screen.world.canonical();
+      await tester.ensureVisible(find.byTooltip('Guía opcional'));
+      await tester.tap(find.byTooltip('Guía opcional'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.text('Tu comunidad, paso a paso'), findsOneWidget);
+      expect(find.text('0 de 10 decisiones registradas'), findsOneWidget);
+      await tester.ensureVisible(find.text('Seguir libremente'));
+      await tester.tap(find.text('Seguir libremente'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(screen.world.canonical(), unchanged);
+      expect(tester.takeException(), isNull);
       await tester.tap(find.text('Mundo'));
       await tester.pump();
       await tester.tap(find.text('Historia'));
@@ -456,6 +470,8 @@ void main() {
       await tester.pump();
       await tester.tap(find.text('Barrio'));
       await tester.pump(const Duration(milliseconds: 500));
+      await tester.tap(find.byTooltip('Ver todo el asentamiento'));
+      await tester.pump();
       final before = screen.world.toJson();
       final map = tester.getRect(
         find.byWidgetPredicate((widget) => widget is GameWidget),

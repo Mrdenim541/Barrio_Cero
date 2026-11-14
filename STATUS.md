@@ -8,6 +8,16 @@ Durante el desarrollo se comprueba el módulo cambiado. La suite rápida y un AP
 
 ## Rediseño actual — R0 registrado; R1–R6 parciales
 
+## Integración 0.13 — necesidades, acciones contextuales y guía opcional
+
+La ficha del barrio muestra reservas y ocupación de vivienda y sugiere una acción según necesidades, decisiones pendientes, peticiones, obras y conocimientos. Su coste o requisito procede del mismo evaluador que confirma la orden. Construir y Más acciones permanecen accesibles al ampliar el texto. La guía lee diez tipos de decisiones confirmadas de la comunidad seleccionada, permite seguir libremente y no confunde ordenar con terminar una obra. El mapa local añade encuadre cercano, vista general, rótulos de edificios y terreno del bioma real; no atribuye obras a personajes sin asignación.
+
+Análisis limpio, 17 pruebas focalizadas y una integración completa de 191 pruebas aprobadas; APK profile 0.13 compilado y firmado para pruebas, API mínima 24. Se conservan sin cambios los 19 archivos de simulación y contenido comparados con la ejecución AOT congelada de reglas 11. No se reinicia la matriz larga por este cambio de presentación.
+
+Android comprobó creación prehistórica, guía sin mutación, coste real, obra terminada, navegación y reapertura exacta. El APK final con rótulos corregidos se instaló y abrió el checkpoint producido por ese recorrido; se aprobaron capturas del barrio y de su encuadre general. Se restauraron las partidas originales por hash en cada proceso. Se conservan el arranque inicial que agotó su espera y las capturas prematuras: no cuentan como evidencia visual aprobada. La revisión rechazó también un falso positivo de una comprobación basada solo en variedad de colores; el contraste posterior reconoce terreno del bioma real y separa capturas válidas de pantallas vacías/inicio. [Evidencia y procedencia de cada comprobación](docs/validation/experience/).
+
+E1 sigue parcial: faltan el recorrido completo de diez decisiones con sus resultados y la aceptación de comprensión. La guía y su contador no acreditan ese recorrido. El arte definitivo, las actividades locales, los sistemas completos de E2–E5 y la aceptación física/final de E6 continúan pendientes. [Flujo y límites de esta integración](docs/EXPERIENCE_FLOW.md).
+
 ## Integración 0.12 — población y provisiones en tránsito
 
 187 pruebas y análisis limpio. Los adultos comunes salen de una población real, reservan provisiones pagadas y recorren una celda diaria. Se cuentan fuera de las ciudades mientras viajan; las llegadas reservan vivienda. Cortes, desvíos, espera, regreso, privación y llegada única conservan población y materiales. La ficha muestra posición, provisiones y estado; el mapa localiza el grupo. Las partidas anteriores mantienen sus reglas y no se inventan viajes para traslados ya terminados.

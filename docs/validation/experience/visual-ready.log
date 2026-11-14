@@ -1,0 +1,8 @@
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Rendered: 01-ready-real-neighborhood.png 440 None
+Tap: Ver todo el asentamiento
+/tmp/barrio_experience_visual_ready.py:24: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  1 for p in ImageChops.difference(im, different).getdata() if max(p) > 5)
+Rendered: 02-ready-real-whole-settlement.png 828 34014
+{"version": "0.13.0+14", "rulesVersion": 11, "scope": "Wait for actual rendered terrain and a visible change after camera fit; capture direct Android frames, no image editing.", "apkSha256": "1e061eff8608e4f0f507f6154d966b3b9fad2a11fba9a22218fc11c6e864f886", "01-ready-real-neighborhood.png": {"attempts": 1, "uniqueColorsInMapCrop": 440, "changedMapPixels": null}, "02-ready-real-whole-settlement.png": {"attempts": 1, "uniqueColorsInMapCrop": 828, "changedMapPixels": 34014}, "checkpointPreservedExactly": true, "originalSavesRestoredExactly": true, "passed": true}

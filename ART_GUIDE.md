@@ -8,6 +8,8 @@ Ejecutar desde la raíz `python3 tool/generate_art.py` con Python 3 y Pillow. El
 
 `contact_sheet.png` es una lámina de producción para inspeccionar los recursos, **no una captura de la aplicación ni evidencia de ejecución**.
 
+La integración 0.13 conserva estos atlas. El terreno de la vista local toma el bioma de la celda real, añade rótulos de edificios desde el catálogo fijado y ofrece encuadre cercano o general. Los rótulos evitan superponerse entre sí y a los controles. La decoración no añade recursos y la existencia de una obra no permite atribuírsela visualmente a una persona sin asignación. Esta mejora de lectura no completa el arte por era/especie, los recorridos ni las actividades confirmadas. Las capturas de ejecución están en `docs/validation/experience/`; las láminas objetivo continúan siendo diseños, no evidencia de esas funciones.
+
 ## Personajes y animación
 
 `characters.png`: celdas de 32 × 48; cuatro columnas de fotogramas; 48 filas. Orden de roles: Ana, Leo, Tito, agricultor, guardia, sanitario. Cada rol ocupa ocho filas, en orden: reposo, caminar, trabajar, transportar, descansar, celebrar, peligro, pérdida. La fila es `rol * 8 + acción`. El tiempo recomendado por fotograma es 0,18 segundos. Las acciones tranquilas reutilizan celdas idénticas cuando el movimiento no aporta información.

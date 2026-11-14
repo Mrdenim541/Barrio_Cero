@@ -1,0 +1,25 @@
+{
+  "version": "0.13.0+14",
+  "rulesVersion": 11,
+  "scope": "Wait for actual rendered terrain and a visible change after camera fit; capture direct Android frames, no image editing.",
+  "apkSha256": "1e061eff8608e4f0f507f6154d966b3b9fad2a11fba9a22218fc11c6e864f886",
+  "01-ready-real-neighborhood.png": {
+    "attempts": 1,
+    "uniqueColorsInMapCrop": 440,
+    "changedMapPixels": null
+  },
+  "02-ready-real-whole-settlement.png": {
+    "attempts": 1,
+    "uniqueColorsInMapCrop": 828,
+    "changedMapPixels": 34014
+  },
+  "checkpointPreservedExactly": true,
+  "originalSavesRestoredExactly": true,
+  "passed": true,
+  "manualCaptureReview": {
+    "01-ready-real-neighborhood.png": "Rejected: welcome screen, color-count false positive",
+    "02-ready-real-whole-settlement.png": "Manually approved: actual world at day 30, four shelters, general framing"
+  },
+  "automaticReadinessAcceptanceSatisfied": false,
+  "supersededBy": "../render-readiness.json plus explicit manual review"
+}

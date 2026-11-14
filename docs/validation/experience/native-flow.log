@@ -1,0 +1,17 @@
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: CREAR UN MUNDO
+Tap: Fundar Barrio Cero
+Tap: Guía opcional
+Tap: Seguir libremente
+Tap: Ampliar refugios
+Tap: Confirmar orden
+Tap: Avanzar
+Tap: Avanzar un mes
+Tap: Guía opcional
+Tap: Seguir libremente
+Tap: Mundo
+Tap: Historia
+Tap: Barrio
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+{"version": "0.13.0+14", "rulesVersion": 11, "device": "Android API29 software emulator, 320x640", "scope": "Fresh prehistory UI, optional guide, quoted building, completion, navigation and exact reopening. Not full first-ten or reference-phone acceptance.", "installationOutput": "Performing Streamed Install\nSuccess\n", "apkSha256": "2155bef3e20fbf0f6bf40ce7812153600b17329fe69cb35f15f0c9a1dcbeb83c", "freshOrigin": "prehistory", "seed": 13575, "quotePreservedCheckpoint": true, "actualBuildingCost": {"wood": 8, "stone": 2}, "persistentCompletion": {"day": 30, "shelters": 4, "actualSiteAdded": true}, "forceStopReopenExact": true, "navigationPreservedWorld": true, "originalSavesRestoredExactly": true, "passed": true}

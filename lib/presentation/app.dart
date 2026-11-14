@@ -12,6 +12,7 @@ import '../session/session_controller.dart';
 import '../session/history_worker.dart';
 import 'world_game.dart';
 import 'settlement_scene.dart';
+import 'community_brief.dart';
 
 class BarrioApp extends StatelessWidget {
   const BarrioApp({super.key});
@@ -64,6 +65,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   final documents = DocumentExchange();
   Map<String, dynamic> state = {};
   RuleCatalog? _catalog;
+  String? _briefQuoteKey;
+  CommandPreview? _briefQuote;
   List<BuildingDefinition> get _buildings=>_catalog?.buildings??buildings;
   List<Technology> get _technologies=>_catalog?.technologies??technologies;
   String? selected;
@@ -769,7 +772,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       if (value == 0) {
         if (controlled.isNotEmpty) selected = controlled;
         game.mode = 'Asentamiento';
-        game.zoom = 1.7;
+        game.zoom = 2.2;
       } else if (value == 1) {
         game.mode = 'Mundo';
         game.zoom = 1;
@@ -867,6 +870,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                                   if (selected != null) game.locate(selected!);
                                 },
                               ),
+                              if (section == 0)
+                                _mapButton(Icons.fit_screen, 'Ver todo el asentamiento', () {
+                                  game.zoom = 1.7;
+                                  if (selected != null) game.locate(selected!);
+                                }),
                             ],
                           ),
                         ),
@@ -913,7 +921,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                     constraints: BoxConstraints(
                       maxHeight: MediaQuery.sizeOf(context).height * .40,
                     ),
-                    child: SingleChildScrollView(child: _selection()),
+                    child: _selection(),
                   ),
                 ],
               ),
@@ -975,7 +983,15 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                     : 'Pausar tiempo',
                 child: TextButton(
                   onPressed: busy || advancing ? null : _play,
-                  child: Icon(timer == null ? Icons.play_arrow : Icons.pause),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Icon(timer == null ? Icons.play_arrow : Icons.pause),
+                      Text(timer == null ? 'Pausa' : 'Activo',
+                          style: const TextStyle(fontSize: 12)),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -1091,24 +1107,21 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     }
     final resources = s['resources'] as Map? ?? {};
     final own = s['id'] == controlled;
-    final projects = s['projects'] as List? ?? [];
     final alive = s['extinct'] != true && number(s['population']) > 0;
+    final brief = CommunityBrief.read(state, s, _catalog);
+    final focus = brief.focus;
+    final quoteKey = '${session.snapshot?.generation}:${session.snapshot?.revision}:${s['id']}:${focus.action}:${focus.target}';
+    if (_briefQuoteKey != quoteKey) {
+      _briefQuoteKey = quoteKey;
+      _briefQuote = own && focus.action != null
+          ? _sim().preview(_queryCommand(focus.action!, target: focus.target, choice: focus.choice))
+          : null;
+    }
+    final quote = _briefQuote;
     final travelling=((state['migrations'] as List?)??[]).any((j)=>['outbound','returning'].contains(j['status'])&&(j['from']==s['id']||j['to']==s['id']));
     final leader = (s['people'] as List? ?? [])
         .where((dynamic p) => p['id'] == s['leaderId'] && p['diedDay'] == null)
         .firstOrNull;
-    final familyRequest=(((state['socialState'] as Map?)?['requests'] as List?)??[]).where((r)=>r['settlement']==s['id']&&r['status']=='pending').firstOrNull;
-    final suggestion = !alive
-        ? 'Esta comunidad dejó un legado. Puedes revisar su historia.'
-        : !own
-        ? 'Observas una comunidad autónoma. Consultar su ficha no cambia su gobierno.'
-        : projects.isNotEmpty
-        ? 'Trabajo en marcha: ${_buildingName(projects.first['building'])}. Termina en ${date(number(projects.first['finish']))}.'
-        : familyRequest!=null
-        ? 'Dos residentes solicitan organizar un hogar. Revisa su petición antes de ${date(number(familyRequest['expires']))}.'
-        : state['origin']=='prehistory'
-        ? _primitiveSuggestion(s)
-        : 'Una oportunidad: amplía tus reservas con un huerto o mejora los hogares.';
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
@@ -1117,8 +1130,12 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         border: Border(top: BorderSide(color: Color(0xff47514b))),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Flexible(child: SingleChildScrollView(primary: false, child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           Row(
             children: [
               Expanded(
@@ -1140,20 +1157,38 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             '${number(s['population'])} habitantes${leader == null ? '' : ' · Lidera ${leader['name']}'}',
             style: const TextStyle(color: moss, fontSize: 12),
           ),
-          Text(
-            'Alimento ${number(resources['food'])} · Agua ${number(resources['water'])} · Salud ${number(s['health'])}%',
-            style: const TextStyle(color: earth, fontSize: 12),
+          Wrap(
+            spacing: 12,
+            runSpacing: 4,
+            children: [
+              _need('Alimento', number(resources['food']).toString(), brief.foodLow,
+                  'Reserva baja cuando cubre menos de 14 días de consumo actual. La producción puede reponerla.'),
+              _need('Agua', number(resources['water']).toString(), brief.waterLow,
+                  'Reserva de agua; el aviso compara 14 días de consumo, sin predecir producción.'),
+              _need('Plazas', '${brief.population}/${brief.housing}', brief.population > brief.housing,
+                  'Habitantes y capacidad de vivienda confirmada. Las obras pendientes aún no suman plazas.'),
+            ],
           ),
           const SizedBox(height: 4),
-          if(travelling)TextButton(onPressed:_journeys,child:const Text('Ver habitantes en camino'))
-          else Text(
-              projects.isNotEmpty &&
-                      (projects.first['work'] as Map?)?['paused'] == true
-                  ? 'Obra detenida: faltan trabajadores disponibles.'
-                  : suggestion,
-              style: const TextStyle(fontSize: 12),
+          if(travelling)TextButton(onPressed:_journeys,child:const Text('Ver habitantes en camino')),
+          Text(focus.explanation, style: const TextStyle(fontSize: 12),
+              maxLines: 2, overflow: TextOverflow.ellipsis),
+          if (quote != null)
+            Text(quote.allowed ? _costText(quote) : quote.reason,
+              maxLines: 2, overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: gold, fontSize: 12)),
+          Row(children: [
+            Expanded(child: FilledButton(
+              onPressed: busy || advancing ? null : () => _openFocus(focus),
+              child: Text(focus.title, textAlign: TextAlign.center),
+            )),
+            IconButton(
+              tooltip: 'Guía opcional',
+              onPressed: busy || advancing ? null : _guide,
+              icon: const Icon(Icons.explore_outlined),
             ),
-          if(own&&alive&&familyRequest!=null)TextButton(onPressed:_families,child:const Text('Revisar petición de hogar')),
+          ]),
+          ]))),
           if (own && alive)
             Row(
               children: [
@@ -1198,18 +1233,87 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       _buildings.where((b) => b.id == id).firstOrNull?.name ?? '$id';
   String _technologyName(dynamic id) =>
       _technologies.where((t) => t.id == id).firstOrNull?.name ?? '$id';
-  String _primitiveSuggestion(Map<String,dynamic> s) {
-    if(_housing(s)<=number(s['population']))return 'Primer paso: un refugio añade ocho plazas. Revisa el coste y elige dónde invertir.';
-    final known=Set<String>.from(s['tech']??[]);
-    final resources=s['resources'] as Map? ?? {};
-    if(!(_catalog?.provides(known,'handcraft')??false)) {
-      final technique=_technologies.where((t)=>t.capabilities.contains('handcraft')).firstOrNull;
-      if(technique!=null&&(resources['knowledge'] as num? ??0)>=technique.cost&&technique.requires.every(known.contains))return 'Ya puedes aprender ${technique.name.toLowerCase()}: Más acciones → Investigar.';
-      return 'El círculo de memoria sigue aprendiendo. Protege las reservas mientras reúnes conocimientos.';
+
+  Widget _need(String label, String value, bool warning, String explanation) =>
+      Tooltip(message: explanation, child: Text(
+        '${warning ? '⚠ ' : ''}$label $value',
+        style: TextStyle(fontSize: 12,
+            color: warning ? const Color(0xffffb199) : moss),
+      ));
+
+  void _openFocus(CommunityFocus focus) {
+    if (focus.action != null) {
+      _confirmCommand(focus.title, focus.action!, target: focus.target, choice: focus.choice);
+      return;
     }
-    if(number((s['built'] as Map?)?['knapping_shed'])==0)return 'Consulta el taller de talla para convertir piedra y madera en herramientas.';
-    if((resources['tools'] as num? ??0)>=2&&s['facilityFound']!=true)return 'Las herramientas permiten preparar una expedición desde Más acciones → Explorar.';
-    return 'Observa a otras comunidades y revisa sus necesidades antes de comprometer un intercambio.';
+    _openGuideDestination(focus.destination);
+  }
+
+  void _openGuideDestination(String destination) {
+    switch (destination) {
+      case 'details':
+        if (society != null) _details(society!);
+      case 'history':
+        _navigate(2);
+      case 'stories':
+        _stories();
+      case 'families':
+        _families();
+      case 'research':
+        _research();
+      case 'facility':
+        _facility();
+      case 'diplomacy':
+        _diplomacy();
+      case 'policy':
+        _policies();
+      case 'learning':
+        _learning();
+      case 'explore':
+        _confirmCommand('Preparar expedición', 'explore');
+      case 'water':
+      case 'housing':
+        final known = Set<String>.from(society?['tech'] ?? []);
+        final primitive = state['origin'] == 'prehistory' &&
+            !(_catalog?.provides(known, 'masonry') ?? false);
+        _confirmCommand(destination == 'water' ? 'Cuidar el agua' : 'Crear espacio',
+          'build', target: destination == 'water'
+              ? (primitive ? 'water_collect' : 'well') : (primitive ? 'shelter' : 'house'));
+    }
+  }
+
+  void _guide() {
+    if (society == null) return;
+    timer?.cancel();
+    setState(() => timer = null);
+    final goals = CommunityGuideGoal.read(state, society!['id'].toString());
+    final own = society!['id'] == controlled;
+    _sheet('Tu comunidad, paso a paso', [
+      Text('${goals.where((g) => g.decided).length} de ${goals.length} decisiones registradas',
+          style: const TextStyle(color: gold)),
+      OutlinedButton(onPressed: () => Navigator.pop(context),
+          child: const Text('Seguir libremente')),
+      const Text('Observa una necesidad, decide cómo actuar y avanza para ver las consecuencias. Puedes seguir estos objetivos en cualquier orden o jugar libremente.',
+          style: TextStyle(height: 1.5)),
+      const SizedBox(height: 12),
+      const Text('La marca indica una orden confirmada; una obra, un viaje o un aprendizaje pueden seguir en curso.',
+          style: TextStyle(color: earth, fontSize: 12)),
+      if (!own) const Padding(padding: EdgeInsets.symmetric(vertical: 12),
+          child: Text('Estás observando. Asume la dirección desde la ficha para dar órdenes; el gobierno autónomo sigue actuando.')),
+      for (var i = 0; i < goals.length; i++)
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: Icon(goals[i].decided ? Icons.check_circle_outline : Icons.radio_button_unchecked,
+              color: goals[i].decided ? moss : earth),
+          title: Text('${i + 1}. ${goals[i].title}'),
+          subtitle: Text(goals[i].explanation),
+          trailing: own ? const Icon(Icons.chevron_right) : null,
+          onTap: own ? () {
+            Navigator.pop(context);
+            _openGuideDestination(goals[i].destination);
+          } : null,
+        ),
+    ]);
   }
 
   Map<String,dynamic>? _personPopulation(String id) {
@@ -1306,6 +1410,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         .take(180)
         .toList();
     return ListView(
+      primary: false,
       padding: const EdgeInsets.all(14),
       children: [
         const Text(
@@ -1369,6 +1474,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               maxHeight: MediaQuery.sizeOf(context).height * .82,
             ),
             child: ListView(
+              primary: false,
               shrinkWrap: true,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
               children: [
@@ -1837,6 +1943,11 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     all.sort((a,b){final priority=(waiting.contains(a['id'])?0:1).compareTo(waiting.contains(b['id'])?0:1);return priority==0?order[a['id']]!.compareTo(order[b['id']]!):priority;});
     final events = all.take(showAll?1000:3).toList();
     _sheet('Decisiones de la comunidad', [
+      Text(waiting.isEmpty
+          ? 'No hay decisiones con plazo pendientes. Estas son oportunidades compatibles que puedes consultar libremente.'
+          : '${waiting.length} decisiones pendientes aparecen primero. Las demás tarjetas son oportunidades disponibles.',
+          style: const TextStyle(color: earth)),
+      const SizedBox(height: 12),
       if (events.isEmpty)
         const Text(
           'No hay decisiones compatibles ahora. Explora, construye y deja pasar el tiempo.',
@@ -2466,12 +2577,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         title: const Text('Cómo empezar'),
         onTap: () {
           Navigator.pop(context);
-          _sheet('Tus primeras decisiones', [
-            const Text(
-              'Barrio: tu comunidad y sus obras. Abre Comunidad para conocer a sus habitantes.\n\nConstruir: elige una mejora, revisa coste y duración, y confirma. Avanzar permite observar cómo termina.\n\nMás acciones: investiga, explora, negocia o define prioridades. Delegar deja las decisiones al gobierno autónomo.\n\nMundo: observa otras comunidades sin cambiar quién diriges.\n\nHistoria: consulta consecuencias y localiza sus protagonistas.\n\nEl tiempo empieza en pausa y no avanza al cerrar. El calendario tiene 12 meses de 30 días.',
-              style: TextStyle(height: 1.8, color: earth),
-            ),
-          ]);
+          _guide();
         },
       ),
       ListTile(

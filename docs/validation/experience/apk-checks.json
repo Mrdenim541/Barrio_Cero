@@ -1,0 +1,20 @@
+{
+  "package": {
+    "command": [
+      "/workspace/toolchains/android/build-tools/35.0.0/aapt",
+      "dump",
+      "badging",
+      "build/deliverables/barrio-cero-eras-0.13.0-profile.apk"
+    ],
+    "exitCode": 0
+  },
+  "signature": {
+    "command": [
+      "/workspace/toolchains/android/build-tools/35.0.0/apksigner",
+      "verify",
+      "--verbose",
+      "build/deliverables/barrio-cero-eras-0.13.0-profile.apk"
+    ],
+    "exitCode": 0
+  }
+}

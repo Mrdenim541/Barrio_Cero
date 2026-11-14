@@ -1,0 +1,7 @@
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Ver todo el asentamiento
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+{"version": "0.13.0+14", "rulesVersion": 11, "device": "Android API29 software emulator, 320x640", "scope": "Final label-only correction: install, open the naturally completed first-flow checkpoint, inspect close/general views, reopen exact. Prior full native flow preserved separately.", "installationOutput": "Performing Streamed Install\nSuccess\n", "apkSha256": "1e061eff8608e4f0f507f6154d966b3b9fad2a11fba9a22218fc11c6e864f886", "checkpointSha256": "a5a617c708e5e661f7032d7e9d2f2420431df7074945cd7bf13ab310ec0c0a62", "sourceCheckpoint": "app_flutter/native_after_13_experience_retry", "exactCheckpointPreserved": true, "forceStopReopened": true, "originalSavesRestoredExactly": true, "passed": true}
