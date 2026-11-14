@@ -1,0 +1,429 @@
+Resolving dependencies...
+Downloading packages...
+  characters 1.4.0 (1.4.1 available)
+  clock 1.1.2 (1.1.3 available)
+  crypto 3.0.6 (3.0.8 available)
+  flame 1.32.0 (1.38.2 available)
+  flutter_lints 5.0.0 (6.0.0 available)
+  lints 5.1.1 (6.1.0 available)
+  matcher 0.12.17 (0.12.20 available)
+  material_color_utilities 0.11.1 (0.13.1 available)
+  meta 1.16.0 (1.19.0 available)
+  package_config 2.2.0 (3.0.0 available)
+  path_provider 2.1.5 (2.1.6 available)
+  path_provider_foundation 2.5.1 (2.6.0 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  platform 3.1.6 (3.2.0 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.6 (0.7.15 available)
+  vector_math 2.2.0 (2.4.4 available)
+Got dependencies!
+18 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+
+00:00 +0: loading /workspace/Barrio_Cero/test/art_assets_test.dart
+00:01 +0: loading /workspace/Barrio_Cero/test/art_assets_test.dart
+00:01 +0: /workspace/Barrio_Cero/test/art_assets_test.dart: original atlases decode from bounded platform buffer views
+00:01 +1: /workspace/Barrio_Cero/test/art_assets_test.dart: original atlases decode from bounded platform buffer views
+00:01 +1: /workspace/Barrio_Cero/test/art_assets_test.dart: Every shipped building and primitive role has an atlas frame
+00:01 +2: /workspace/Barrio_Cero/test/art_assets_test.dart: Every shipped building and primitive role has an atlas frame
+00:01 +2: loading /workspace/Barrio_Cero/test/checkpoint_test.dart
+00:01 +2: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:02 +2: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:02 +3: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:02 +4: /workspace/Barrio_Cero/test/checkpoint_test.dart: roundtrip retains world, target, settings and complete exact sources
+00:02 +5: /workspace/Barrio_Cero/test/command_preview_test.dart: quotes and submit agree on materials, workers, prerequisites and invalid targets
+00:03 +5: /workspace/Barrio_Cero/test/command_preview_test.dart: quotes and submit agree on materials, workers, prerequisites and invalid targets
+00:03 +6: /workspace/Barrio_Cero/test/command_preview_test.dart: quotes and submit agree on materials, workers, prerequisites and invalid targets
+00:03 +7: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:03 +8: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:03 +9: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:03 +10: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:03 +11: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:04 +11: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:04 +12: /workspace/Barrio_Cero/test/checkpoint_test.dart: target, crisis policy, settings and packages are inside integrity hash
+00:04 +13: /workspace/Barrio_Cero/test/command_preview_test.dart: already confirmed IDs quote no second payment and conflicts remain rejected
+00:04 +14: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:04 +15: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +15: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +16: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +17: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +18: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +19: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +20: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +21: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +22: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +23: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +24: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +25: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +26: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:05 +27: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:06 +27: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:06 +28: /workspace/Barrio_Cero/test/checkpoint_test.dart: rehashed invalid dates, types and unknown envelope fields are rejected
+00:06 +28: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:06 +29: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:06 +30: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:06 +31: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:06 +32: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:07 +32: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:07 +33: /workspace/Barrio_Cero/test/checkpoint_test.dart: package drops, extra pins, missing core and replacement bytes rejected
+00:07 +33: /workspace/Barrio_Cero/test/checkpoint_test.dart: content pending references must exist in exact packaged versions
+00:07 +34: /workspace/Barrio_Cero/test/content_test.dart: pinned core and importable example validate
+00:07 +35: /workspace/Barrio_Cero/test/checkpoint_test.dart: legacy migration is explicit, retains old world and validates core bytes
+00:07 +36: /workspace/Barrio_Cero/test/checkpoint_test.dart: legacy migration is explicit, retains old world and validates core bytes
+00:07 +37: /workspace/Barrio_Cero/test/checkpoint_test.dart: legacy migration is explicit, retains old world and validates core bytes
+00:07 +38: /workspace/Barrio_Cero/test/checkpoint_test.dart: legacy migration is explicit, retains old world and validates core bytes
+00:08 +38: /workspace/Barrio_Cero/test/checkpoint_test.dart: legacy migration is explicit, retains old world and validates core bytes
+00:08 +39: /workspace/Barrio_Cero/test/checkpoint_test.dart: legacy migration is explicit, retains old world and validates core bytes
+00:08 +39: /workspace/Barrio_Cero/test/checkpoint_test.dart: checkpoint retains embedded base when installed base later changes
+00:08 +40: /workspace/Barrio_Cero/test/checkpoint_test.dart: checkpoint retains embedded base when installed base later changes
+00:08 +40: loading /workspace/Barrio_Cero/test/document_exchange_test.dart
+00:08 +40: /workspace/Barrio_Cero/test/document_exchange_test.dart: export sends exact UTF-8 text and returns document URI
+00:08 +41: /workspace/Barrio_Cero/test/document_exchange_test.dart: export sends exact UTF-8 text and returns document URI
+00:08 +41: /workspace/Barrio_Cero/test/document_exchange_test.dart: import returns raw text for caller validation and cancellation returns null
+00:08 +42: /workspace/Barrio_Cero/test/document_exchange_test.dart: import returns raw text for caller validation and cancellation returns null
+00:08 +42: /workspace/Barrio_Cero/test/document_exchange_test.dart: native failure propagates and releases operation guard
+00:08 +43: /workspace/Barrio_Cero/test/document_exchange_test.dart: native failure propagates and releases operation guard
+00:08 +43: /workspace/Barrio_Cero/test/document_exchange_test.dart: concurrent picker is rejected without starting another native operation
+00:08 +44: /workspace/Barrio_Cero/test/document_exchange_test.dart: concurrent picker is rejected without starting another native operation
+00:08 +44: /workspace/Barrio_Cero/test/document_exchange_test.dart: unsupported platform never invokes Android channel
+00:08 +45: /workspace/Barrio_Cero/test/document_exchange_test.dart: unsupported platform never invokes Android channel
+00:08 +45: /workspace/Barrio_Cero/test/document_exchange_test.dart: export enforces byte limit before native invocation
+00:09 +45: /workspace/Barrio_Cero/test/document_exchange_test.dart: export enforces byte limit before native invocation
+00:09 +46: /workspace/Barrio_Cero/test/document_exchange_test.dart: export enforces byte limit before native invocation
+00:09 +47: /workspace/Barrio_Cero/test/document_exchange_test.dart: export enforces byte limit before native invocation
+00:09 +48: /workspace/Barrio_Cero/test/economy_allocation_test.dart: Existing rules7 worlds retain their previous labor semantics
+00:09 +49: /workspace/Barrio_Cero/test/economy_allocation_test.dart: Existing rules7 worlds retain their previous labor semantics
+00:09 +49: /workspace/Barrio_Cero/test/economy_allocation_test.dart: Autonomy repairs missing water capacity before chasing a nearly full food reserve
+00:09 +50: /workspace/Barrio_Cero/test/economy_allocation_test.dart: Autonomy repairs missing water capacity before chasing a nearly full food reserve
+00:09 +50: /workspace/Barrio_Cero/test/economy_allocation_test.dart: An autonomous water emergency reserves an ordinary paid project on the first day
+00:09 +51: /workspace/Barrio_Cero/test/economy_allocation_test.dart: An autonomous water emergency reserves an ordinary paid project on the first day
+00:10 +51: /workspace/Barrio_Cero/test/economy_allocation_test.dart: An autonomous water emergency reserves an ordinary paid project on the first day
+00:10 +51: loading /workspace/Barrio_Cero/test/integrated_materials_test.dart
+00:10 +51: /workspace/Barrio_Cero/test/integrated_materials_test.dart: New inventory stores integers, payments survive checkpoint and replay once
+00:10 +52: /workspace/Barrio_Cero/test/integrated_materials_test.dart: New inventory stores integers, payments survive checkpoint and replay once
+00:10 +53: /workspace/Barrio_Cero/test/integrated_materials_test.dart: New inventory stores integers, payments survive checkpoint and replay once
+00:10 +54: /workspace/Barrio_Cero/test/labor_priority_test.dart: Autonomy orders a physical return without refunding cargo from afar
+00:11 +54: /workspace/Barrio_Cero/test/labor_priority_test.dart: Autonomy orders a physical return without refunding cargo from afar
+00:11 +55: /workspace/Barrio_Cero/test/labor_priority_test.dart: Autonomy orders a physical return without refunding cargo from afar
+00:11 +56: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:11 +57: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +57: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +58: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +59: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +60: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +61: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +62: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +63: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +64: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:12 +65: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:13 +65: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:13 +66: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:13 +67: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:13 +68: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:13 +69: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:13 +70: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:13 +71: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +71: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +72: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +73: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +74: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +75: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +76: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +77: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:14 +78: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:15 +78: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:16 +78: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:16 +79: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:17 +79: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:17 +80: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:17 +81: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:18 +82: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:18 +83: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:18 +84: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:18 +85: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:18 +86: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:19 +86: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:19 +87: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:19 +88: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:19 +89: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:20 +89: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:20 +90: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:20 +91: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:20 +92: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:21 +92: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:21 +93: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:21 +94: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:22 +94: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:22 +95: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:23 +95: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:24 +95: /workspace/Barrio_Cero/test/integrated_materials_test.dart: Integer resources remain canonical across daily, batches and saves
+00:24 +96: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:24 +97: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:24 +98: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:24 +99: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:24 +100: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:25 +100: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:26 +100: /workspace/Barrio_Cero/test/observer_presentation_test.dart: A chosen protagonist persists separately; exploration pauses only the camera
+00:26 +101: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:27 +101: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:27 +102: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:28 +102: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:28 +103: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:29 +103: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:29 +104: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:29 +105: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:29 +106: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:29 +107: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:29 +108: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:30 +108: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:30 +109: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:30 +110: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:30 +111: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:30 +112: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:30 +113: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:31 +113: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:31 +114: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:32 +114: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:33 +114: /workspace/Barrio_Cero/test/observer_session_test.dart: A year with zero player orders builds and researches; inspecting every community changes nothing
+00:33 +115: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:34 +115: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:34 +116: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:35 +116: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:35 +117: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:35 +118: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:35 +119: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:36 +119: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:36 +120: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +120: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +121: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +122: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +123: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +124: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +125: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +126: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:37 +127: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:38 +127: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:38 +128: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:39 +128: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:39 +129: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:39 +130: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:39 +131: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:39 +132: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:40 +132: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:40 +133: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:41 +133: /workspace/Barrio_Cero/test/population_engine_test.dart: Generations survive checkpoint recovery with the same causal sequence
+00:41 +134: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:42 +134: /workspace/Barrio_Cero/test/presentation_test.dart: Start screen and world configuration remain usable at 320.0
+00:42 +135: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Pinned definitions drive actual costs, completion and production
+00:43 +135: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Pinned definitions drive actual costs, completion and production
+00:43 +136: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Pinned definitions drive actual costs, completion and production
+00:43 +137: /workspace/Barrio_Cero/test/rule_catalog_test.dart: Pinned definitions drive actual costs, completion and production
+00:43 +138: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:44 +138: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:44 +139: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:44 +140: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:45 +140: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:45 +141: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:45 +142: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:45 +143: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:45 +144: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:46 +144: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:47 +144: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:47 +145: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:48 +145: /workspace/Barrio_Cero/test/presentation_test.dart: Default opening creates and saves a real prehistoric community
+00:48 +146: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Rules 6 conversion preserves exact cohorts and skills without inventing families
+00:48 +147: /workspace/Barrio_Cero/test/presentation_test.dart: Learning previews, commits and reopens at 320 with enlarged text
+00:49 +147: /workspace/Barrio_Cero/test/presentation_test.dart: Learning previews, commits and reopens at 320 with enlarged text
+00:49 +148: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Cancel has no writes; upgrade keeps exact bytes; restore reactivates old rules
+00:50 +148: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Cancel has no writes; upgrade keeps exact bytes; restore reactivates old rules
+00:50 +149: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Cancel has no writes; upgrade keeps exact bytes; restore reactivates old rules
+00:50 +150: /workspace/Barrio_Cero/test/presentation_test.dart: A real pending invitation appears before generic opportunities and previews its actual source
+00:51 +150: /workspace/Barrio_Cero/test/presentation_test.dart: A real pending invitation appears before generic opportunities and previews its actual source
+00:51 +151: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Failure after backup leaves committed world and session untouched
+00:52 +151: /workspace/Barrio_Cero/test/rules_upgrade_test.dart: Failure after backup leaves committed world and session untouched
+00:52 +152: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:52 +153: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:53 +153: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:53 +154: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:54 +154: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:54 +155: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:55 +155: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:56 +155: /workspace/Barrio_Cero/test/presentation_test.dart: Create, order, advance and reload a committed world at 320x640
+00:56 +156: /workspace/Barrio_Cero/test/session_controller_test.dart: failed import preserves world and slot; queued save cannot overwrite imported world
+00:56 +157: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 320.0 with enlarged text
+00:56 +157: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 320.0 with enlarged text
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" (ignoring all but first): [
+  Scrollable(axisDirection: down, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#b6219]], state: ScrollableState#daa8f(position: ScrollPositionWithSingleContext#96f19(offset: 0.0, range: 0.0..1503.6, viewport: 524.8, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#d2355, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(160.0, 950.4)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(160.0, 950.4) is outside the bounds of the root of the render tree, Size(320.0, 640.0).
+The finder corresponds to this RenderBox: RenderClipRect#26ffb relayoutBoundary=up11
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#680a5(_ReusableRenderView#714f7), HitTestEntry<HitTestTarget>#09c7a(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2077:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1537:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2388:17)
+#4      _rootRun (dart:async/zone.dart:1525:13)
+#5      _CustomZone.run (dart:async/zone.dart:1422:19)
+#6      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#7      WidgetController.dragUntilVisible (package:flutter_test/src/controller.dart:2381:27)
+#8      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2351:13)
+#9      _rootRun (dart:async/zone.dart:1525:13)
+#10     _CustomZone.run (dart:async/zone.dart:1422:19)
+#11     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#12     WidgetController.scrollUntilVisible (package:flutter_test/src/controller.dart:2339:27)
+#13     main.<anonymous closure> (file:///workspace/Barrio_Cero/test/presentation_test.dart:483:20)
+<asynchronous suspension>
+#14     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#15     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+#16     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" (ignoring all but first): [
+  Scrollable(axisDirection: down, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#b6219]], state: ScrollableState#daa8f(position: ScrollPositionWithSingleContext#96f19(offset: 0.0, range: 0.0..1503.6, viewport: 524.8, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#d2355, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(160.0, 664.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(160.0, 664.0) is outside the bounds of the root of the render tree, Size(320.0, 640.0).
+The finder corresponds to this RenderBox: RenderClipRect#26ffb relayoutBoundary=up11
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#1581d(_ReusableRenderView#714f7), HitTestEntry<HitTestTarget>#7e60e(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2077:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1537:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2388:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2351:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///workspace/Barrio_Cero/test/presentation_test.dart:483:7)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1059:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+00:57 +158: /workspace/Barrio_Cero/test/session_controller_test.dart: loads switch slot and world together and recover valid backup
+00:57 +159: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 360.0 with enlarged text
+00:57 +160: /workspace/Barrio_Cero/test/session_controller_test.dart: rejection does not persist and replay does not double-charge
+00:57 +161: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 412.0 with enlarged text
+00:58 +161: /workspace/Barrio_Cero/test/presentation_test.dart: Active navigation and sheets at 412.0 with enlarged text
+00:58 +162: /workspace/Barrio_Cero/test/session_controller_test.dart: package import commits registry before exposing it and never changes active pins
+00:58 +163: /workspace/Barrio_Cero/test/presentation_test.dart: Tap real local building and person without changing simulation
+00:58 +164: /workspace/Barrio_Cero/test/session_controller_test.dart: history rejects stale revisions and foreign sessions; failed writes preserve last commit
+00:59 +164: /workspace/Barrio_Cero/test/session_controller_test.dart: history rejects stale revisions and foreign sessions; failed writes preserve last commit
+01:00 +164: /workspace/Barrio_Cero/test/session_controller_test.dart: history rejects stale revisions and foreign sessions; failed writes preserve last commit
+01:00 +165: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+01:01 +165: /workspace/Barrio_Cero/test/presentation_test.dart: Legacy game upgrade is reachable, optional and preserves a rules backup
+01:01 +166: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+01:01 +167: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+01:01 +168: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+01:02 +168: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+01:02 +169: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+01:02 +170: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+01:02 +171: /workspace/Barrio_Cero/test/session_controller_test.dart: settings and advances are confirmed together; previous branch is recoverable
+01:02 +171: /workspace/Barrio_Cero/test/session_controller_test.dart: legacy conversion requires consent and preserves exact original
+01:02 +172: /workspace/Barrio_Cero/test/session_controller_test.dart: legacy conversion requires consent and preserves exact original
+01:02 +173: /workspace/Barrio_Cero/test/session_controller_test.dart: legacy conversion requires consent and preserves exact original
+01:02 +173: /workspace/Barrio_Cero/test/session_controller_test.dart: Legacy prototype resolves its exact archived core after a catalog update
+01:03 +173: /workspace/Barrio_Cero/test/session_controller_test.dart: Legacy prototype resolves its exact archived core after a catalog update
+01:03 +174: /workspace/Barrio_Cero/test/session_controller_test.dart: Legacy prototype resolves its exact archived core after a catalog update
+01:03 +175: /workspace/Barrio_Cero/test/social_test.dart: Tutela destaca un menor existente, conserva su edad y no inventa ascendencia
+01:03 +176: /workspace/Barrio_Cero/test/social_test.dart: Tutela destaca un menor existente, conserva su edad y no inventa ascendencia
+01:03 +177: /workspace/Barrio_Cero/test/session_controller_test.dart: worker cancellation does not acknowledge pending batch and final batch waits for ack
+01:03 +178: /workspace/Barrio_Cero/test/session_controller_test.dart: worker cancellation does not acknowledge pending batch and final batch waits for ack
+01:03 +179: /workspace/Barrio_Cero/test/session_controller_test.dart: worker cancellation does not acknowledge pending batch and final batch waits for ack
+01:03 +180: /workspace/Barrio_Cero/test/social_test.dart: Current residents actually meet over months; saving does not change the sequence
+01:04 +180: /workspace/Barrio_Cero/test/social_test.dart: Current residents actually meet over months; saving does not change the sequence
+01:04 +181: /workspace/Barrio_Cero/test/social_test.dart: Current residents actually meet over months; saving does not change the sequence
+01:04 +182: /workspace/Barrio_Cero/test/social_test.dart: Current residents actually meet over months; saving does not change the sequence
+01:04 +183: /workspace/Barrio_Cero/test/social_test.dart: Current residents actually meet over months; saving does not change the sequence
+01:04 +184: /workspace/Barrio_Cero/test/social_test.dart: Current residents actually meet over months; saving does not change the sequence
+01:05 +184: /workspace/Barrio_Cero/test/social_test.dart: Current residents actually meet over months; saving does not change the sequence
+01:05 +185: /workspace/Barrio_Cero/test/work_transport_test.dart: Construction pauses without adults and resumes using real work
+01:05 +186: /workspace/Barrio_Cero/test/social_test.dart: The engine records household losses once, even on its founding day
+01:05 +187: /workspace/Barrio_Cero/test/social_test.dart: The engine records household losses once, even on its founding day
+01:05 +188: /workspace/Barrio_Cero/test/social_test.dart: The engine records household losses once, even on its founding day
+01:05 +188: /workspace/Barrio_Cero/test/work_transport_test.dart: Cancellation refunds unused recorded material once and frees work
+01:05 +189: /workspace/Barrio_Cero/test/work_transport_test.dart: Cancellation refunds unused recorded material once and frees work
+01:05 +190: /workspace/Barrio_Cero/test/work_transport_test.dart: Cancellation refunds unused recorded material once and frees work
+01:05 +190: /workspace/Barrio_Cero/test/work_transport_test.dart: Expedition staffing delays both exploration and construction without double assignment
+01:05 +191: /workspace/Barrio_Cero/test/work_transport_test.dart: Expedition staffing delays both exploration and construction without double assignment
+01:05 +191: /workspace/Barrio_Cero/test/work_transport_test.dart: Caravan traverses outward and return legs with conserved cargo
+01:05 +192: /workspace/Barrio_Cero/test/work_transport_test.dart: Caravan traverses outward and return legs with conserved cargo
+01:05 +192: /workspace/Barrio_Cero/test/work_transport_test.dart: Cut route retains its cargo, and a return order does not teleport it
+01:05 +193: /workspace/Barrio_Cero/test/work_transport_test.dart: Cut route retains its cargo, and a return order does not teleport it
+01:05 +193: /workspace/Barrio_Cero/test/work_transport_test.dart: Route crew shortages stop movement and save/resume keeps return cargo
+01:06 +193: /workspace/Barrio_Cero/test/work_transport_test.dart: Route crew shortages stop movement and save/resume keeps return cargo
+01:06 +194: /workspace/Barrio_Cero/test/work_transport_test.dart: Route crew shortages stop movement and save/resume keeps return cargo
+01:06 +195: /workspace/Barrio_Cero/test/world_entities_test.dart: Capital relocation retains government, stocks and identities through save
+01:06 +196: /workspace/Barrio_Cero/test/world_zoom_test.dart: The focal point keeps its planet coordinates across all levels of detail
+01:07 +196: /workspace/Barrio_Cero/test/world_zoom_test.dart: The focal point keeps its planet coordinates across all levels of detail
+01:07 +197: /workspace/Barrio_Cero/test/world_zoom_test.dart: The focal point keeps its planet coordinates across all levels of detail
+01:07 +198: /workspace/Barrio_Cero/test/world_entities_test.dart: Losing capital keeps the society and its surviving city and culture
+01:07 +199: /workspace/Barrio_Cero/test/world_entities_test.dart: Losing capital keeps the society and its surviving city and culture
+01:07 +200: /workspace/Barrio_Cero/test/world_entities_test.dart: Losing capital keeps the society and its surviving city and culture
+01:07 +200: /workspace/Barrio_Cero/test/world_zoom_test.dart: Panning reaches a second city and picks it in the same coordinate frame
+01:07 +201: /workspace/Barrio_Cero/test/world_entities_test.dart: Corrupt ownership and duplicate city actors rejected
+01:07 +202: /workspace/Barrio_Cero/test/world_zoom_test.dart: 32 valid settlements render, reuse caches and cull hidden detail without changing the world
+01:07 +203: /workspace/Barrio_Cero/test/world_zoom_test.dart: 32 valid settlements render, reuse caches and cull hidden detail without changing the world
+01:07 +204: /workspace/Barrio_Cero/test/world_zoom_test.dart: 32 valid settlements render, reuse caches and cull hidden detail without changing the world
+01:07 +205: /workspace/Barrio_Cero/test/world_zoom_test.dart: 32 valid settlements render, reuse caches and cull hidden detail without changing the world
+01:07 +205: loading /workspace/Barrio_Cero/test/settlement_activity_test.dart
+01:07 +205: /workspace/Barrio_Cero/test/settlement_activity_test.dart: Activity accounts for all real labor without changing the world
+01:08 +205: /workspace/Barrio_Cero/test/settlement_activity_test.dart: Activity accounts for all real labor without changing the world
+01:08 +206: /workspace/Barrio_Cero/test/follow_target_test.dart: Restoring a target before layout updates the visible level after resize
+01:08 +207: /workspace/Barrio_Cero/test/follow_target_test.dart: Restoring a target before layout updates the visible level after resize
+01:08 +208: /workspace/Barrio_Cero/test/follow_target_test.dart: Restoring a target before layout updates the visible level after resize
+01:08 +209: /workspace/Barrio_Cero/test/follow_target_test.dart: Restoring a target before layout updates the visible level after resize
+01:08 +210: /workspace/Barrio_Cero/test/follow_target_test.dart: Restoring a target before layout updates the visible level after resize
+01:08 +210: /workspace/Barrio_Cero/test/follow_target_test.dart: Following survives relocation and reload without acquiring authority
+01:08 +211: /workspace/Barrio_Cero/test/atlas_presentation_test.dart: Atlas navigation keeps the map dominant and every view observational
+01:08 +212: /workspace/Barrio_Cero/test/atlas_presentation_test.dart: Atlas navigation keeps the map dominant and every view observational
+01:09 +212: /workspace/Barrio_Cero/test/atlas_presentation_test.dart: Atlas navigation keeps the map dominant and every view observational
+01:10 +212: /workspace/Barrio_Cero/test/atlas_presentation_test.dart: Atlas navigation keeps the map dominant and every view observational
+01:10 +213: /workspace/Barrio_Cero/test/atlas_presentation_test.dart: Atlas navigation keeps the map dominant and every view observational
+01:11 +213: /workspace/Barrio_Cero/test/atlas_presentation_test.dart: Atlas navigation keeps the map dominant and every view observational
+01:11 +214: /workspace/Barrio_Cero/test/history_slice_test.dart: Different time budgets and checkpoint copies keep the same world
+01:12 +214: /workspace/Barrio_Cero/test/history_slice_test.dart: Different time budgets and checkpoint copies keep the same world
+01:12 +215: /workspace/Barrio_Cero/test/history_slice_test.dart: Different time budgets and checkpoint copies keep the same world
+01:12 +215: /workspace/Barrio_Cero/test/history_slice_test.dart: Cancel is received between quanta and keeps a complete daily state
+01:12 +216: /workspace/Barrio_Cero/test/history_slice_test.dart: Cancel is received between quanta and keeps a complete daily state
+01:12 +216: /workspace/Barrio_Cero/test/history_slice_test.dart: Crisis and invalid budgets stop without silently skipping history
+01:12 +217: /workspace/Barrio_Cero/test/history_slice_test.dart: Crisis and invalid budgets stop without silently skipping history
+01:12 +217: loading /workspace/Barrio_Cero/test/planet_geography_test.dart
+01:12 +217: /workspace/Barrio_Cero/test/planet_geography_test.dart: Compact settlement layout preserves all 196 non-overlapping plots
+01:12 +218: /workspace/Barrio_Cero/test/planet_geography_test.dart: Compact settlement layout preserves all 196 non-overlapping plots
+01:12 +218: /workspace/Barrio_Cero/test/planet_geography_test.dart: Legacy recipe remains byte-equivalent to the 0.17 source vectors
+01:12 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Legacy recipe remains byte-equivalent to the 0.17 source vectors
+01:12 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:13 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:14 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:15 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:16 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:17 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:18 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:19 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:20 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:21 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:22 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:23 +219: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:23 +220: /workspace/Barrio_Cero/test/planet_geography_test.dart: Continents have ocean margins and six viable, connected societies for both origins
+01:23 +220: /workspace/Barrio_Cero/test/planet_geography_test.dart: New geography retains daily equivalence with a saved autonomous year
+01:24 +220: /workspace/Barrio_Cero/test/planet_geography_test.dart: New geography retains daily equivalence with a saved autonomous year
+01:24 +221: /workspace/Barrio_Cero/test/planet_geography_test.dart: New geography retains daily equivalence with a saved autonomous year
+01:24 +221: All tests passed!

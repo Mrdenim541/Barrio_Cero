@@ -69,6 +69,21 @@ void main() {
         greaterThan(780 * .42),
       );
       await capture('01-host-planet');
+      await t.tap(find.text('PLANETA'));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 350));
+      await t.tap(find.text('Acercarse al asentamiento'));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 350));
+      expect(find.text('ASENTAMIENTO'), findsOneWidget);
+      expect(screen.world.canonical(), before);
+      await t.tap(find.text('ASENTAMIENTO'));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 350));
+      await t.tap(find.text('Ver planeta completo'));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 350));
+      expect(find.text('PLANETA'), findsOneWidget);
       await t.tap(find.text('Ver región'));
       await t.pump();
       expect(find.text('REGIÓN'), findsOneWidget);

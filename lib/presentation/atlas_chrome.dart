@@ -72,22 +72,27 @@ class _AtlasFrame extends CustomPainter {
 
 class AtlasViewLabel extends StatelessWidget {
   final String mode;
-  const AtlasViewLabel(this.mode, {super.key});
+  final VoidCallback? onTap;
+  const AtlasViewLabel(this.mode, {super.key, this.onTap});
   @override
-  Widget build(BuildContext context) => IgnorePointer(
-    child: AtlasPanel(
-      accented: true,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-      child: Text(
-        mode == 'Mundo' ? 'PLANETA' : mode.toUpperCase(),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(
-          fontFamily: 'serif',
-          color: Color(0xfff0ddb0),
-          fontSize: 14,
-          letterSpacing: 1.4,
-          fontWeight: FontWeight.w700,
+  Widget build(BuildContext context) => Tooltip(
+    message: 'Cambiar escala',
+    child: InkWell(
+      onTap: onTap,
+      child: AtlasPanel(
+        accented: true,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+        child: Text(
+          mode == 'Mundo' ? 'PLANETA' : mode.toUpperCase(),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontFamily: 'serif',
+            color: Color(0xfff0ddb0),
+            fontSize: 14,
+            letterSpacing: 1.4,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
     ),

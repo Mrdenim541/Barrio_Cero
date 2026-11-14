@@ -1,13 +1,15 @@
 # BARRIO CERO: ERAS
 
 
-## APK de prueba 0.18
+## APK de prueba 0.19 en ZIP
 
-[Descargar para Android](https://raw.githubusercontent.com/Mrdenim541/Barrio_Cero/downloads/android-test-0.18.0/Barrio-Cero-Eras-0.18.0.apk) · [Notas y capturas reales](https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.18.0-test)
+[Descargar ZIP para Android · 23,5 MB](https://raw.githubusercontent.com/Mrdenim541/Barrio_Cero/downloads/android-test-0.19.0/Barrio-Cero-Eras-0.19.0.zip) · [Notas y capturas reales](https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.19.0-test)
 
-Android 7 o posterior. Nuevos continentes, texturas, edificios e interfaz del atlas. Crea un mundo nuevo para ver los continentes; las partidas anteriores conservan su mapa y posiciones. El mismo certificado permite instalar como actualización.
+Extrae el ZIP y abre el APK que contiene. Android 7 o posterior; el mismo certificado permite actualizar conservando las partidas. Descarga un 74 % menor que el APK anterior gracias a compilación release y compresión, conservando ARM32, ARM64 y x86_64.
 
-Es una versión de desarrollo. [Evidencia y alcance](docs/validation/atlas/README.md); las eras, especies y demás pendientes se mantienen en el plan.
+Mantiene el atlas original y añade producción visible, progreso de obras/formación, caravanas con carga, selector contextual de escala y noticias que localizan su región. Toca el nombre de una comunidad y Ver actividad para consultar su jornada. Crea otro mundo para los continentes nuevos; tus mapas anteriores no se regeneran.
+
+Es una versión de desarrollo. [Evidencia y alcance](docs/validation/activity/README.md); las eras, especies, tareas personales completas y demás pendientes siguen en el plan.
 
 Juego individual para Android, escrito en Flutter/Dart con Flame y una simulación local reproducible. No requiere cuentas, servidor, anuncios ni claves de API para jugar. La especificación completa se conserva en [PROJECT_SPEC.md](PROJECT_SPEC.md); el estado verificable de la entrega está en [STATUS.md](STATUS.md).
 

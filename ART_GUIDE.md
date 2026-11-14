@@ -1,5 +1,7 @@
 # Dirección de arte · Barrio Cero: Eras
 
+En 0.19 se conserva este atlas. Herramientas y carretas pixeladas se dibujan desde producción/rutas confirmadas. Las herramientas pulsan brevemente tras una jornada nueva y respetan movimiento reducido; no representan un habitante adicional. Las asignaciones ambiguas entre edificios se mantienen agregadas. El mapa conserva pocos controles; el rótulo de vista abre las escalas.
+
 ## Presentación vigente 0.18 — atlas del planeta
 
 La prioridad solicitada por el usuario es trasladar las láminas aprobadas al juego ejecutable. La nueva producción conserva pixel art, verde oscuro, tierra, tejados cálidos, agua azul y marcos dorados. `tool/pixel_landscape.py` define los nuevos edificios y paisaje; `tool/generate_art.py` los integra reproduciblemente en los atlas existentes. La paleta nombrada histórica permanece en el manifiesto; los tonos nuevos están definidos en el módulo de paisaje.

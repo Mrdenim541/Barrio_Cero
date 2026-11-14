@@ -18,6 +18,8 @@ import 'community_brief.dart';
 import 'community_ribbon.dart';
 import 'follow_target.dart';
 import 'atlas_chrome.dart';
+import 'settlement_activity.dart';
+import 'activity_sheet.dart';
 
 class BarrioApp extends StatelessWidget {
   const BarrioApp({super.key});
@@ -125,6 +127,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   Future<void> commitQueue = Future.value();
   Future<void> get saveQueue => session.idle;
   late final Future<void> initialization;
+  Future<void> viewRestoration = Future.value();
   String note = '';
   bool _noticeVisible = false;
   Timer? _noticeTimer;
@@ -212,7 +215,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       protagonist = null;
       following = false;
       final token = ++_followToken;
-      unawaited(_restoreProtagonist(token, generation, slot));
+      viewRestoration = _restoreProtagonist(token, generation, slot);
     } else if (following) {
       final person = tracked;
       if (person == null || !person.alive) {
@@ -1071,7 +1074,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                           ),
                         ),
                         Positioned(left:10,top:10,right:100,
-                          child: Align(alignment:Alignment.topLeft,child:AtlasViewLabel(game.mode))),
+                          child: Align(alignment:Alignment.topLeft,child:AtlasViewLabel(game.mode,onTap:_scaleOptions))),
                         Positioned(
                           right: 4,
                           top: 4,
@@ -1227,6 +1230,41 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       icon: Icon(icon, size: 20),
     ),
   );
+  void _scaleOptions() => _sheet('Explorar el planeta', [
+    ListTile(
+      leading: const Icon(Icons.public),
+      title: const Text('Ver planeta completo'),
+      onTap: () {
+        Navigator.pop(context);
+        _navigate(1);
+      },
+    ),
+    ListTile(
+      leading: const Icon(Icons.map_outlined),
+      title: const Text('Explorar esta región'),
+      onTap: () {
+        Navigator.pop(context);
+        _pauseFollowing();
+        setState(() {
+          section = 1;
+          game.focusRegion(selected);
+        });
+      },
+    ),
+    if (selected != null)
+      ListTile(
+        leading: const Icon(Icons.holiday_village_outlined),
+        title: const Text('Acercarse al asentamiento'),
+        onTap: () {
+          Navigator.pop(context);
+          _pauseFollowing();
+          setState(() {
+            section = 1;
+            game.focusSettlement(selected!);
+          });
+        },
+      ),
+  ]);
   void _mapOptions() => _sheet('Leer el mundo', [
     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       _mapButton(Icons.remove, 'Alejar', () {
@@ -1305,6 +1343,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     final own = s['id'] == controlled;
     final alive = s['extinct'] != true && number(s['population']) > 0;
     final brief = CommunityBrief.read(state, s, _catalog);
+    final activity = SettlementActivity.fromWorld(state,s);
     final leader = (s['people'] as List? ?? []).where((dynamic p) =>
         p['id'] == s['leaderId'] && p['diedDay'] == null).firstOrNull;
     final travelling = ((state['migrations'] as List?) ?? []).any((j) =>
@@ -1312,6 +1351,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         (j['from'] == s['id'] || j['to'] == s['id']));
     return SingleChildScrollView(primary: false, child: CommunityRibbon(
       name: '${s['name']}', leader: leader?['name']?.toString() ?? '',
+      activity: activity.hasWork ? activity.summary : null,
       population: brief.population, housing: brief.housing,
       food: number(resources['food']), water: number(resources['water']),
       foodLow: brief.foodLow, waterLow: brief.waterLow,
@@ -1567,6 +1607,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               if (id != null) {
                 selected = id;
                 _navigate(1);
+                game.focusRegion(id);
               }
             },
           );
@@ -1658,6 +1699,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       Text(definition.description, style: const TextStyle(fontSize: 18)),
       const SizedBox(height: 12),
       Text('Edificio terminado · ${s['name']}'),
+      for(final work in SettlementActivity.fromWorld(state,s).sites.where((w)=>w.siteId==hit.id))
+        Padding(padding:const EdgeInsets.symmetric(vertical:8),child:Text('${SettlementActivity.labor(work.laborMillis)} jornadas en la última producción confirmada.',style:const TextStyle(color:gold))),
       Text(
         'Hay ${(s['built'] as Map? ?? {})[definition.id] ?? 0} en la comunidad.',
       ),
@@ -1711,6 +1754,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     final built = s['built'] as Map? ?? {};
     final tech = s['tech'] as List? ?? [];
     _sheet('${s['name']}', [
+      FilledButton.icon(onPressed:(){Navigator.pop(context);_activityDetails(s);},
+        icon:const Icon(Icons.handyman_outlined),label:const Text('Ver actividad')),
       Text(
         '${number(s['population'])} habitantes · Salud ${number(s['health'])}% · Ánimo ${number(s['morale'])}%',
       ),
@@ -1809,6 +1854,18 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         ),
     ]);
   }
+
+  void _activityDetails(Map<String, dynamic> s) => _sheet(
+    'Actividad de ${s['name']}',
+    activitySheet(
+      SettlementActivity.fromWorld(state, s),
+      buildingName: _buildingName,
+      resourceName: _label,
+      date: date,
+      courseName: (id) =>
+          courses.where((c) => c.id == id).firstOrNull?.name ?? id,
+    ),
+  );
 
   String _label(String key) =>
       {

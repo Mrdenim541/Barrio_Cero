@@ -20,6 +20,8 @@ parser.add_argument("--out", required=True, type=Path)
 parser.add_argument("--tag", required=True)
 parser.add_argument("--expected-settlements", type=int, default=32)
 parser.add_argument("--renderer", choices=["default", "skia", "software"], default="default")
+parser.add_argument("--root-access", action="store_true", help="Userdebug emulator only: test non-debuggable release, preserving app ownership")
+parser.add_argument("--activity-smoke", action="store_true", help="Inspect committed production and scale controls without changing the world")
 parser.add_argument("--follow-smoke", action="store_true",
                     help="Check final package installation, follow persistence and reopening without repeating all camera profiles")
 parser.add_argument("--skip-frame-metrics", action="store_true",
@@ -41,13 +43,23 @@ def adb(*cmd):
     return subprocess.check_output(["adb", "-s", "emulator-5554", *cmd], timeout=120)
 
 
+def app_path(path):
+    return f"/data/user/0/{pkg}/{path}" if path.startswith("app_flutter") else path
+
+
 def run(*cmd):
+    if args.root_access:
+        return adb("shell", *[app_path(s) for s in cmd])
     return adb("shell", "run-as", pkg, *cmd)
 
 
+def read_app(path):
+    return adb("exec-out", "cat", app_path(path)) if args.root_access else adb("exec-out", "run-as", pkg, "cat", path)
+
+
 def exists(path):
-    return subprocess.run(["adb", "-s", "emulator-5554", "shell", "run-as", pkg,
-                           "ls", "-d", path], capture_output=True, timeout=30).returncode == 0
+    command = ["ls", "-d", app_path(path)] if args.root_access else ["run-as", pkg, "ls", "-d", path]
+    return subprocess.run(["adb", "-s", "emulator-5554", "shell", *command], capture_output=True, timeout=30).returncode == 0
 
 
 def stop():
@@ -67,13 +79,13 @@ def inventory():
     rows = {}
     for name in run("ls", "-1", folder).decode().splitlines():
         assert re.fullmatch(r"[a-zA-Z0-9_.-]+", name)
-        data = adb("exec-out", "run-as", pkg, "cat", folder + "/" + name)
+        data = read_app(folder + "/" + name)
         rows[name] = hashlib.sha256(data).hexdigest()
     return rows
 
 
 def checkpoint():
-    return adb("exec-out", "run-as", pkg, "cat", folder + "/world_0.json")
+    return read_app(folder + "/world_0.json")
 
 
 def hierarchy():
@@ -162,9 +174,15 @@ try:
         "hardware": adb("shell", "getprop", "ro.hardware").decode().strip(),
         "api": adb("shell", "getprop", "ro.build.version.sdk").decode().strip(),
         "model": adb("shell", "getprop", "ro.product.model").decode().strip(),
+        "airplaneMode": adb("shell", "settings", "get", "global", "airplane_mode_on").decode().strip(),
+        "wifiOn": adb("shell", "settings", "get", "global", "wifi_on").decode().strip(),
+        "mobileData": adb("shell", "settings", "get", "global", "mobile_data").decode().strip(),
         "referencePhoneAcceptance": False,
     }
     stop()
+    if args.root_access:
+        assert adb("shell", "id", "-u").strip() == b"0", "Run adb root on the userdebug emulator first"
+        owner = adb("shell", "stat", "-c", "%u:%g", f"/data/user/0/{pkg}").decode().strip()
     assert not exists(before) and not exists(after), "Refusing to replace retained data"
     original = inventory()
     (args.out / "original-inventory.json").write_text(json.dumps(original, indent=2) + "\n")
@@ -174,6 +192,10 @@ try:
     run("mkdir", folder)
     adb("push", str(args.checkpoint), "/data/local/tmp/barrio-planet-fixture.json")
     run("cp", "/data/local/tmp/barrio-planet-fixture.json", folder + "/world_0.json")
+    if args.root_access:
+        run("chown", "-R", owner, folder)
+        run("chmod", "700", folder)
+        run("restorecon", "-RF", folder)
     baseline = args.checkpoint.read_bytes()
     assert checkpoint() == baseline
     w = json.loads(baseline)["payload"]["world"]
@@ -185,6 +207,18 @@ try:
     tap("Continuar historia")
     result["worldProfile"] = profile("Mundo", minimum_towns=args.expected_settlements)
     capture("01-planet-settlements.png")
+    if args.activity_smoke:
+        tap("PLANETA")
+        tap("Acercarse al asentamiento")
+        profile("Asentamiento")
+        capture("02-city-work-signals.png")
+        tap(w["societies"][0]["name"])
+        tap("Ver actividad")
+        assert any("Jornada confirmada" in text(n) for n in hierarchy())
+        result["committedActivityVisible"] = True
+        capture("03-confirmed-production.png")
+        adb("shell", "input", "keyevent", "4")
+        tap("Mundo")
     if not args.follow_smoke:
         tap("Ver región")
         result["regionProfile"] = profile("Región")
@@ -205,7 +239,7 @@ try:
     tap("Seguir")
     deadline = time.monotonic() + 5
     while True:
-        preference = json.loads(adb("exec-out", "run-as", pkg, "cat", folder + "/view_0.json"))
+        preference = json.loads(read_app(folder + "/view_0.json"))
         if preference.get("active") is True or time.monotonic() >= deadline:
             break
         time.sleep(.1)

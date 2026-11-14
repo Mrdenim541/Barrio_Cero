@@ -1,0 +1,2 @@
+PASS: all 106 original + 68 extension requirements grouped, with owners and acyclic dependencies
+Execution coverage only; implementation and gameplay acceptance remain in the original registries.

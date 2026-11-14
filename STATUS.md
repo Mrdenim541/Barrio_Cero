@@ -1,5 +1,11 @@
 # Estado de BARRIO CERO: ERAS
 
+## Entrega 0.19 — actividad visible y ZIP reducido
+
+Continúa el atlas original con señales de producción confirmada, progreso de obras/formación y caravanas con carga visible. El rótulo de escala permite saltar entre planeta, región y asentamiento dentro de la cámara continua; una noticia localiza su región. La ficha muestra una línea de actividad y abre el detalle solo a petición. [Alcance y límites](docs/design/ACTIVITY_RELEASE_019.md).
+
+No cambian reglas 11, contenido ni guardados. M3 pasa a en curso: la contabilidad productiva ya puede observarse, pero siguen pendientes las tareas personales y los recorridos locales completos. La integración aprueba análisis, 221 pruebas y compilación release. El paquete final se instaló y ejecutó offline en API29: escalas, actividad, seguimiento y reapertura exacta; todos los originales fueron restaurados por hash. El ZIP universal pesa 23,5 MB, un 74 % menos que la descarga anterior. [Evidencia y límites](docs/validation/activity/README.md); no acredita rendimiento físico ni aceptación completa del juego.
+
 ## Entrega gráfica 0.18 — lista para pruebas
 
 Se priorizaron las láminas aprobadas: atlas de construcciones renovado, 24 texturas de suelo y ocho elementos de paisaje, costas/continentes para mundos nuevos, aldeas compactas y una interfaz verde/dorada con nombres contextuales. Seguir · Mundo · Historia conserva autonomía y guardados. [Alcance](docs/design/ATLAS_RELEASE_018.md).

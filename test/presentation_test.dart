@@ -479,6 +479,9 @@ void main() {
       await tester.ensureVisible(find.byTooltip('Comunidad'));
       await tester.tap(find.byTooltip('Comunidad'));
       await tester.pump(const Duration(milliseconds: 500));
+      expect(find.text('Ver actividad'), findsOneWidget);
+      await tester.scrollUntilVisible(find.text('Habitantes destacados'),120,
+          scrollable: find.byType(Scrollable).last);
       expect(find.text('Habitantes destacados'), findsOneWidget);
       expect(find.textContaining('bornDay'), findsNothing);
       expect(tester.takeException(), isNull);

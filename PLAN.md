@@ -1,5 +1,7 @@
 # Ejecución del rediseño aprobado: BARRIO CERO: ERAS
 
+Avance 0.19: presentar trabajo confirmado, obras/formación, caravanas y escalas contextuales; distribuir APK release en ZIP. M3 en curso, sin cerrar tareas personales ni recorridos locales. Ver [alcance](docs/design/ACTIVITY_RELEASE_019.md) y evidencia de `docs/validation/activity/`.
+
 ## Prioridad actual del usuario — presentación 0.18
 
 El usuario solicita priorizar gráficos, texturas e interfaz conforme a las láminas y entregar un APK descargable en GitHub. Esta entrega conserva los hitos M0–M11 y las obligaciones pendientes. Incluye atlas originales renovados, paisaje por bioma, interfaz verde/dorada, geografía versionada para mundos nuevos y aldeas compactas. Las partidas existentes conservan su terreno, coordenadas y reglas. M2 avanza parcialmente en geografía; mundo 2, checkpoint 4 y su migración integral siguen pendientes. La publicación autorizada corresponde al código y APK de prueba en GitHub, sin publicar el entorno.

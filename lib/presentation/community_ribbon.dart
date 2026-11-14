@@ -5,6 +5,7 @@ import 'atlas_chrome.dart';
 /// The always-visible controls. Explanations and full quantities open on demand.
 class CommunityRibbon extends StatelessWidget {
   final String name, leader, action;
+  final String? activity;
   final int population, housing, food, water;
   final bool foodLow, waterLow, enabled, travellers;
   final VoidCallback onDetails, onFood, onWater, onHousing, onAction;
@@ -28,6 +29,7 @@ class CommunityRibbon extends StatelessWidget {
     required this.onHousing,
     required this.onAction,
     this.onMore,
+    this.activity,
   });
 
   static String _count(int n) => n < 1000 ? '$n' : '${n ~/ 1000}mil';
@@ -46,7 +48,7 @@ class CommunityRibbon extends StatelessWidget {
       child: Semantics(
         label: '$name: $value',
         button: true,
-          onTap: onTap,
+        onTap: onTap,
         excludeSemantics: true,
         child: TextButton(
           style: TextButton.styleFrom(
@@ -101,9 +103,10 @@ class CommunityRibbon extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            leader.isEmpty
-                                ? '$population habitantes'
-                                : 'Lidera $leader',
+                            activity ??
+                                (leader.isEmpty
+                                    ? '$population habitantes'
+                                    : 'Lidera $leader'),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(color: earth, fontSize: 11),

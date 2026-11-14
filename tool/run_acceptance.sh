@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser(description='Validation by scope; no profile de
 parser.add_argument('--profile', choices=['quick', 'integration', 'release'], default='quick')
 parser.add_argument('--tests', nargs='+', default=[], help='Focused test files for the quick profile')
 parser.add_argument('--dry-run', action='store_true', help='List commands without executing checks or recording passes')
+parser.add_argument('--android-mode', choices=['profile', 'release'], default='profile')
 args = parser.parse_args()
 if args.tests and args.profile != 'quick':
     parser.error('--tests is only used with --profile quick; other profiles run the full Flutter suite')
@@ -64,7 +65,7 @@ available = [
  ('flutter_tests', [flutter, 'test'], None if flutter_ready else 'Flutter Dart SDK is unavailable'),
  ('benchmark', [dart or 'dart', 'run', 'tool/benchmark.dart'], None if dart else 'Dart SDK is unavailable'),
  ('mature-benchmark', [dart or 'dart', 'run', 'tool/sustained_benchmark.dart'], None if dart else 'Dart SDK is unavailable'),
- ('android_build', [flutter, 'build', 'apk', '--profile'], None if flutter_ready else 'Flutter Dart SDK is unavailable'),
+ ('android_build', [flutter, 'build', 'apk', '--' + args.android_mode], None if flutter_ready else 'Flutter Dart SDK is unavailable'),
 ]
 static_ids = {'requirements', 'redesign', 'execution-coverage', 'planet-traceability', 'catalog-source', 'content', 'analyze'}
 selected = static_ids | ({'flutter_tests', 'android_build'} if args.profile == 'integration' else set())

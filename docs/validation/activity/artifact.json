@@ -1,0 +1,26 @@
+{
+  "version": "0.19.0",
+  "apk": "Barrio-Cero-Eras-0.19.0.apk",
+  "apkBytes": 52553481,
+  "apkSha256": "39df65fad71d6f14d7defe7ba19ea6dcc6b0c9f821c1afb1106417f72d059da5",
+  "zip": "Barrio-Cero-Eras-0.19.0.zip",
+  "zipBytes": 23535622,
+  "zipSha256": "67dac5fada17c484b1cd955407220a2bfea076c9eee554e21e9a84a50e1de4f8",
+  "zipCrcPassed": true,
+  "innerApkMatches": true,
+  "buildMode": "release",
+  "versionCode": 20,
+  "minimumAndroidApi": 24,
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "signing": "Same debug/test certificate as public 0.15/0.18; not store release signing",
+  "certificateSha256": "a2af4f88940eebcfdc98e87f26ea7473043c4e7dbca6508c13e9cd5ea5b21ff8",
+  "oldDownloadBytes": 89869607,
+  "reductionPercent": 73.8,
+  "compiledSourcesFile": "compiled-sources.json",
+  "rulesVersion": 11,
+  "fullGameAcceptance": false
+}

@@ -78,7 +78,7 @@ void main() {
         screen = t.state(find.byType(ErasScreen));
         await screen.initialization;
         await screen.session.loadSlot(0);
-        await screen.viewStore.read('view_0');
+        await screen.viewRestoration;
       });
       await animate(t);
       expect(screen.game.followedIndividualId, person.id);

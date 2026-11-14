@@ -9,6 +9,7 @@ import 'art_assets.dart';
 import 'planet_camera.dart';
 import 'planet_terrain.dart';
 import 'settlement_scene.dart';
+import 'settlement_activity.dart';
 
 const earth = Color(0xffcaba91);
 const ink = Color(0xff103239);
@@ -23,6 +24,8 @@ class WorldGame extends FlameGame {
   Map<String, dynamic> data = {};
   List<Map<String, dynamic>> _societies = [];
   final Map<String, SettlementScene> _scenes = {};
+  final Map<String, Map<String, SiteWork>> _siteWork = {};
+  double _workPulseUntil = 0;
   String? selected, localSelected;
   String? followedIndividualId;
   String _mode = 'Mundo';
@@ -158,6 +161,9 @@ class WorldGame extends FlameGame {
   }
 
   void present(Map<String, dynamic> snapshot, {required Object? generation}) {
+    if (_generation == generation && data['day'] != snapshot['day']) {
+      _workPulseUntil = _visualTime + 1.4;
+    }
     final sites = <String>{
       for (final s in snapshot['societies'] as List? ?? [])
         for (final b in s['sites'] as List? ?? []) '${s['id']}:${b['id']}',
@@ -182,8 +188,13 @@ class WorldGame extends FlameGame {
         .map((s) => Map<String, dynamic>.from(s as Map))
         .toList();
     _scenes.clear();
+    _siteWork.clear();
     for (final s in societies) {
       _scenes[s['id']] = SettlementScene(s);
+      final activity = SettlementActivity.fromWorld(snapshot, s);
+      _siteWork[s['id']] = {
+        for (final work in activity.sites) work.siteId: work,
+      };
     }
     terrainCache.sync(snapshot);
     final id = followedIndividualId;
@@ -451,7 +462,14 @@ class WorldGame extends FlameGame {
   }
 
   void _drawJourneys(Canvas c, Rect visible) {
-    void draw(List<dynamic> cells, int progress, bool blocked, Color color) {
+    void draw(
+      List<dynamic> cells,
+      int progress,
+      bool blocked,
+      Color color, {
+      bool caravan = false,
+      bool loaded = false,
+    }) {
       if (cells.isEmpty || progress < 0 || progress >= cells.length) return;
       final path = Path();
       for (var i = 0; i < cells.length; i++) {
@@ -485,6 +503,36 @@ class WorldGame extends FlameGame {
             number(cells[progress]) ~/ extent + .5,
           );
       if (cell >= 0 && visible.inflate(.1).contains(p)) {
+        if (caravan && planetCamera.pixelsPerMicrocell >= .25) {
+          final u = math.min(.025, 1 / unit);
+          c.save();
+          c.translate(p.dx, p.dy);
+          c.scale(u);
+          final paint = Paint()..isAntiAlias = false;
+          c.drawRect(const Rect.fromLTWH(-8, -5, 16, 9), paint..color = ink);
+          c.drawRect(
+            const Rect.fromLTWH(-7, -4, 14, 7),
+            paint..color = const Color(0xffb9874f),
+          );
+          c.drawRect(const Rect.fromLTWH(-6, -2, 12, 2), paint..color = gold);
+          if (loaded) {
+            c.drawRect(
+              const Rect.fromLTWH(-4, -9, 9, 6),
+              paint..color = const Color(0xffd9bd7d),
+            );
+          }
+          for (final x in [-6.0, 5.0]) {
+            c.drawRect(Rect.fromLTWH(x, 3, 3, 4), paint..color = ink);
+          }
+          if (blocked) {
+            c.drawRect(
+              const Rect.fromLTWH(-1, -12, 2, 5),
+              paint..color = const Color(0xffed9277),
+            );
+          }
+          c.restore();
+          return;
+        }
         c.drawRect(
           Rect.fromCenter(
             center: p,
@@ -502,6 +550,11 @@ class WorldGame extends FlameGame {
         number(r['progress']),
         r['blocked'] == true,
         gold,
+        caravan: true,
+        loaded:
+            number(r['foodMillis']) > 0 ||
+            number(r['metalMillis']) > 0 ||
+            (r['transportRules'] != 2 && number(r['cargo']) > 0),
       );
     }
     for (final r in data['migrations'] as List? ?? []) {
@@ -614,6 +667,8 @@ class WorldGame extends FlameGame {
               ..strokeWidth = math.min(.003, 2 / unit),
           );
         }
+        final work = _siteWork[s['id']]?[e.id];
+        if (work != null && density >= 8) _workSign(c, rect, work);
       } else if (density >= 8) {
         lastPeopleDrawn++;
         final p = e.entity;
@@ -671,6 +726,39 @@ class WorldGame extends FlameGame {
         );
       }
     }
+  }
+
+  /// A collective labor signal, not a second named inhabitant or a new job.
+  void _workSign(Canvas c, Rect rect, SiteWork work) {
+    final u = math.min(.003, 1 / unit),
+        pulse = reduceMotion || _visualTime > _workPulseUntil
+            ? 0.0
+            : math.sin(phase * 14) * 1.5;
+    c.save();
+    c.translate(rect.right - 2 * u, rect.top + 2 * u);
+    c.scale(u);
+    final paint = Paint()..isAntiAlias = false;
+    c.drawRect(
+      const Rect.fromLTWH(-7, -7, 14, 14),
+      paint..color = ink.withValues(alpha: .94),
+    );
+    c.drawRect(
+      const Rect.fromLTWH(-6, 5, 12, 2),
+      paint..color = const Color(0xff34594e),
+    );
+    c.drawRect(
+      Rect.fromLTWH(-6, 5, 12 * work.laborMillis / 2000, 2),
+      paint..color = moss,
+    );
+    c.drawLine(
+      Offset(-3, 2 + pulse),
+      Offset(3, -4 + pulse),
+      paint
+        ..color = gold
+        ..strokeWidth = 2,
+    );
+    c.drawRect(Rect.fromLTWH(0, -5 + pulse, 6, 3), paint..color = earth);
+    c.restore();
   }
 
   void _drawLabels(Canvas c, double density) {

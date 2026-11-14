@@ -1,0 +1,20 @@
+{
+  "firstIntegration": {
+    "passed": false,
+    "failedChecks": [
+      "flutter_tests"
+    ],
+    "failures": [
+      "Protagonist test awaited a second independent preference read instead of restoration completion",
+      "320px enlarged-text test assumed residents heading remained above the scroll fold"
+    ],
+    "corrections": [
+      "Expose and await viewRestoration completion",
+      "Scroll the details sheet to the residents heading; retain activity access check"
+    ]
+  },
+  "focusedUiHarness": {
+    "initialFailure": "pumpAndSettle cannot finish an ongoing Flame frame loop",
+    "correction": "Advance explicit animation frames; camera and canonical-world assertions unchanged"
+  }
+}
