@@ -1,0 +1,13 @@
+/workspace/Barrio_Cero/build/validation/labor-native-checkpoint.json: 1 file pushed, 0 skipped. 354.0 MB/s (727700 bytes in 0.002s)
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Tap: MENÚ
+Tap: Actualizar reglas de la partida
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Copiar y actualizar
+Tap: + Día
+Tap: Comunidad
+Tap: Ver trabajo y producción
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+{"version": "0.11.0+12", "rules": 10, "mode": "profile", "device": "API29 software emulator; not reference-phone performance", "scenario": "Declared rules9 shortage: eight adults, four paid routes, functioning well, zero stored water", "installationOutput": "Performing Streamed Install\nSuccess\n", "conversion": {"populationInventoriesRoutesAndSocialStatePreserved": true, "originalRules9BytesBackedUp": true, "prngPreserved": true}, "rationProtection": {"day": 1, "waterNeed": 0.7, "waterUsed": 0.7, "health": 100, "pausedCaravans": 3, "cargoConserved": true, "committedTransportWorkers": 8, "productiveWorkerDays": 6.0, "allocatedWorkerDays": 6.0}, "forceStopReopenPreservesRationsAndCargo": true, "originalDataRestoredExactly": true}

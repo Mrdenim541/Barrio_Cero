@@ -27,6 +27,8 @@ Cada hito requiere pruebas pertinentes ejecutadas, resultados conservados, docum
 
 Iteración 0.10: 166 pruebas, análisis limpio, ambos siglos equivalentes y migración básica comprobada en Android. La generación conserva terreno y conecta las aperturas. Los resultados largos de reglas 9 se registran en `docs/validation/migration/results.json` cuando concluyen; la matriz aprobada de reglas 8 sigue identificada como tal. El próximo defecto reproducido es la prioridad excesiva de caravanas existentes sobre el agua: debe corregirse conservando carga, trayecto y trabajo, sin introducir suministros de emergencia gratuitos. R6 conserva todas sus obligaciones restantes.
 
+Iteración 0.11: se corrigió ese defecto con raciones protegidas y regreso autónomo físico. 170 pruebas, análisis limpio, APK comprobado en Android y siglos equivalentes de ambos orígenes. Los escenarios completos de 32 y la matriz larga de reglas 10 conservan su estado individual en `docs/validation/labor/results.json`; no se aprueban por estar lanzados. Próxima integración material de R6: residencia en tránsito y provisiones reales, llegada única y respuesta a cortes de ruta; después, territorio e instituciones. La dirección visual, especies, eras y el resto del alcance siguen pendientes de sus pruebas.
+
 ## Revisión visual pendiente en R1
 
 El usuario reconoce todavía el prototipo rechazado en las capturas del APK 0.2.0. Mantener R1 parcial aunque las pruebas técnicas aprueben. La siguiente integración debe producir una mejora visible de la escena local y la interacción, contrastada con las láminas objetivo existentes y con estado real; las dependencias de cuadrícula, ocupación y trabajo corresponden a R2–R4. No dar por entregada la dirección artística por cambiar navegación y textos.

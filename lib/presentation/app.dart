@@ -2259,7 +2259,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                 scrollable:true,
                 title: const Text('Actualizar reglas de esta partida'),
                 content: Text(state['populationState']!=null
-                  ? 'Se conservará una copia exacta del archivo original, con sus reglas. El nuevo reparto de trabajo prioriza alimento y agua. Se mantendrán los grupos, cumpleaños, culturas, hogares y vínculos existentes. La producción nueva se calculará al avanzar el próximo día. Las invitaciones migratorias exigirán un origen con necesidad, paso seguro y capacidad para cuidar a quienes permanecen.'
+                  ? 'Se conservará una copia exacta del archivo original, con sus reglas. El nuevo reparto de trabajo prioriza alimento y agua. Se mantendrán los grupos, cumpleaños, culturas, hogares y vínculos existentes. La producción nueva se calculará al avanzar el próximo día. Las invitaciones migratorias exigirán un origen con necesidad, paso seguro y capacidad para cuidar a quienes permanecen. Si escasean las raciones, habrá trabajo reservado para alimento y agua; los viajes y otras tareas pueden esperar.'
                   : 'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. Las edades de la población común se estimarán; se conservan las fechas conocidas y no se inventarán parentescos. Puedes continuar con las reglas antiguas.',
                 ),
                 actions: [

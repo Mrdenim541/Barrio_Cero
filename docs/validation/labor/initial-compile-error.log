@@ -1,0 +1,91 @@
+Resolving dependencies...
+Downloading packages...
+  characters 1.4.0 (1.4.1 available)
+  clock 1.1.2 (1.1.3 available)
+  crypto 3.0.6 (3.0.8 available)
+  flame 1.32.0 (1.38.2 available)
+  flutter_lints 5.0.0 (6.0.0 available)
+  lints 5.1.1 (6.1.0 available)
+  matcher 0.12.17 (0.12.20 available)
+  material_color_utilities 0.11.1 (0.13.1 available)
+  meta 1.16.0 (1.19.0 available)
+  package_config 2.2.0 (3.0.0 available)
+  path_provider 2.1.5 (2.1.6 available)
+  path_provider_foundation 2.5.1 (2.6.0 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  platform 3.1.6 (3.2.0 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.6 (0.7.15 available)
+  vector_math 2.2.0 (2.4.4 available)
+Got dependencies!
+18 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /workspace/Barrio_Cero/test/labor_priority_test.dart
+lib/simulation/engine.dart:898:52: Error: The argument type 'num' can't be assigned to the parameter type 'int'.
+   final selected=candidates.take(math.max(0,excess-closing)).toList();
+                                                   ^
+00:00 +0 -1: loading /workspace/Barrio_Cero/test/labor_priority_test.dart [E]
+  Failed to load "/workspace/Barrio_Cero/test/labor_priority_test.dart":
+  Compilation failed for testPath=/workspace/Barrio_Cero/test/labor_priority_test.dart: lib/simulation/engine.dart:898:52: Error: The argument type 'num' can't be assigned to the parameter type 'int'.
+     final selected=candidates.take(math.max(0,excess-closing)).toList();
+                                                     ^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 910:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+lib/simulation/engine.dart:898:52: Error: The argument type 'num' can't be assigned to the parameter type 'int'.
+   final selected=candidates.take(math.max(0,excess-closing)).toList();
+                                                   ^
+00:00 +0 -2: loading /workspace/Barrio_Cero/test/work_transport_test.dart [E]
+  Failed to load "/workspace/Barrio_Cero/test/work_transport_test.dart":
+  Compilation failed for testPath=/workspace/Barrio_Cero/test/work_transport_test.dart: lib/simulation/engine.dart:898:52: Error: The argument type 'num' can't be assigned to the parameter type 'int'.
+     final selected=candidates.take(math.max(0,excess-closing)).toList();
+                                                     ^
+  .
+00:00 +0 -2: loading /workspace/Barrio_Cero/test/labor_priority_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 910:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+lib/simulation/engine.dart:898:52: Error: The argument type 'num' can't be assigned to the parameter type 'int'.
+   final selected=candidates.take(math.max(0,excess-closing)).toList();
+                                                   ^
+00:00 +0 -3: loading /workspace/Barrio_Cero/test/economy_allocation_test.dart [E]
+  Failed to load "/workspace/Barrio_Cero/test/economy_allocation_test.dart":
+  Compilation failed for testPath=/workspace/Barrio_Cero/test/economy_allocation_test.dart: lib/simulation/engine.dart:898:52: Error: The argument type 'num' can't be assigned to the parameter type 'int'.
+     final selected=candidates.take(math.max(0,excess-closing)).toList();
+                                                     ^
+  .
+00:00 +0 -3: Some tests failed.

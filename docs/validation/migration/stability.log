@@ -1,0 +1,6 @@
+PARTIAL RUN: group filter "full-content 30 seeds"; not full acceptance
+RUN full-content 30 seeds x 200 years and two millennia
+{"seed":1,"strategy":"food","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":4,"peakHistory":2400,"milliseconds":97256,"peakRssBytes":51851264}
+{"seed":2,"strategy":"science","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":10,"peakHistory":2396,"milliseconds":312080,"peakRssBytes":75579392}
+{"seed":3,"strategy":"trade","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":8,"peakHistory":2400,"milliseconds":417324,"peakRssBytes":75579392}
+{"seed":4,"strategy":"defense","intensity":"normal","extraordinary":true,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":7,"peakHistory":2400,"milliseconds":41399,"peakRssBytes":75579392}

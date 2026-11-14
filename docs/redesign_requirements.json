@@ -116,6 +116,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
           "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        },
+        {
+          "path": "docs/validation/labor/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
+          "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
         }
       ]
     },
@@ -178,6 +185,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
           "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        },
+        {
+          "path": "docs/validation/labor/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
+          "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
         }
       ]
     },
@@ -235,6 +249,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
           "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        },
+        {
+          "path": "docs/validation/labor/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
+          "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
         }
       ]
     },
@@ -318,6 +339,20 @@
           "result": "failed",
           "command": "captured rules7 AOT tool/benchmark.dart; maps64/96",
           "scope": "El escenario de apertura perdió comunidades: mínimos 15 y 9. No acredita carga sostenida ni rendimiento físico."
+        },
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "frozen rules9 mature32-v1 benchmark, daily population sampling for 36000 days, maps64/96",
+          "scope": "Both mature workloads retain 32 living settlements and at least1792 residents without runtime aid. Linux simulation workload only; reference phone FPS/latency/PSS remain unmeasured. Opening64 fails."
+        },
+        {
+          "path": "docs/validation/labor/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
+          "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
         }
       ]
     },
@@ -2083,6 +2118,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
           "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        },
+        {
+          "path": "docs/validation/labor/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
+          "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
         }
       ]
     },
@@ -2108,6 +2150,13 @@
           "result": "passed",
           "command": "flutter test; Android upgrade/union/capital/restore",
           "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        },
+        {
+          "path": "docs/validation/labor/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
+          "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
         }
       ]
     },
@@ -2365,6 +2414,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
           "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        },
+        {
+          "path": "docs/validation/labor/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
+          "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
         }
       ]
     },
@@ -2475,14 +2531,22 @@
         "S16-R06"
       ],
       "requirement": "Rendimiento profile con 32 asentamientos sostenidos.",
-      "state": "pending",
+      "state": "partial",
       "owner": "integration",
       "acceptance": [
         "Mapas 64/96 y catálogo completo mantienen la carga poblada medida.",
         "En referencia Android 10+ y 4 GB: ≥30 FPS, respuesta ≤200 ms, cancelación ≤1 s y memoria <512 MiB.",
         "Registrar versiones, tiempos, memoria y tamaño; medir cien años sin promesa de instantaneidad."
       ],
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/migration/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "frozen rules9 mature32-v1 benchmark, daily population sampling for 36000 days, maps64/96",
+          "scope": "Both mature workloads retain 32 living settlements and at least1792 residents without runtime aid. Linux simulation workload only; reference phone FPS/latency/PSS remain unmeasured. Opening64 fails."
+        }
+      ]
     },
     {
       "id": "BC2-VAL-09",

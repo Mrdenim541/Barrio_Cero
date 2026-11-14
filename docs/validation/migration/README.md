@@ -24,6 +24,12 @@ El escenario Android declara una enfermedad inicial en una comunidad naturalment
 
 Las cargas de 32 conservan los programas y umbrales anteriores. La ubicación de los seis asentamientos iniciales cambia en las nuevas partidas por la corrección de generación; se comparan las mismas recetas de prueba, no estados iniciales idénticos. Los tiempos y RSS de Linux no acreditan FPS ni memoria del teléfono de referencia.
 
+La carga madura sostuvo 32 comunidades y al menos 1.792 habitantes durante los 36.000 días en ambos tamaños. La apertura normal pasó en 96×96 y falló en 64×64: bajó a 31 comunidades durante parte del siglo, aunque terminó con 34. No se cuentan los días posteriores como reparación retroactiva del fallo. El seguimiento encontró la primera pérdida en Puesto 28, día 3.300: diez puestos de transporte para diez adultos impedían operar el pozo. Esa corrección pertenece a las reglas 10 y debe repetir las cargas.
+
+La matriz larga de reglas 9 se interrumpió al ser sustituida por las reglas 10. Conserva los casos terminados y se clasifica incompleta; no acredita treinta semillas ni milenios para esta versión. La matriz completa aprobada de reglas 8 conserva su propia versión en `../operating/`.
+
+La repetición Android aprobó consulta, recepción, coste y reapertura. Conserva el fallo inicial de acceso por Más acciones y la repetición mediante Historia. Todos los hashes de las partidas originales coinciden después de ambas sesiones.
+
 ## Pendientes conservados
 
 Migración con origen/tránsito/destino, territorio y ocupación, instituciones, conflicto político persistente, genealogía biológica y herencia, esquema final del mundo, equinos, seis eras funcionales, catálogo ampliado, director completamente instanciado, bloques históricos e intercambio ZIP, arte completo, primeras diez decisiones y aceptación de rendimiento Android. Ningún hito completo se cierra por esta integración.

@@ -1,5 +1,9 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.11 — reglas 10
+
+170 pruebas y análisis limpio; raciones productivas protegidas frente a compromisos antiguos, caravanas en espera con carga y retorno autónomo físico. Se conservan los fallos y repeticiones. Android comprobó conversión de reglas 9 sin pérdida, ración completa de agua, cierre/reapertura y restauración de originales. Ambos orígenes repitieron siglos equivalentes; apertura 64×64 sostuvo al menos 32 durante el siglo. Las otras cargas y la matriz larga se registran por caso cuando concluyen. No se acredita rendimiento del teléfono físico ni finalización del juego. [Evidencia](validation/labor/README.md).
+
 ## Actualización 0.10 — reglas 9
 
 166 pruebas y análisis limpio; ambos orígenes alcanzaron siglos idénticos con catálogo real. Aperturas conectadas sin alterar el terreno, prioridad de decisiones pendientes, respuesta autónoma diaria a necesidades graves e invitaciones migratorias con origen, razones, adultos comunes y cuidado restante comprobados. Android profile API29 confirmó cinco adultos trasladados, veinte alimentos pagados, consulta sin efectos y reapertura exacta; originales restaurados por hash. El primer intento de navegación nativa falló y se conserva. R6 sigue parcial: la migración aún es inmediata. El diagnóstico de apertura con 32 encontró reservas de transporte que ocupan todos los adultos; la carga larga y el rendimiento físico tienen aceptación separada. [Evidencia](validation/migration/README.md).

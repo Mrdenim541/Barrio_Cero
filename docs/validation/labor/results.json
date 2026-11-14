@@ -1,0 +1,167 @@
+{
+  "recordedAt": "2026-11-14T05:30:37.102025+00:00",
+  "version": "0.11.0+12",
+  "rulesVersion": 10,
+  "tests": {
+    "passed": true,
+    "count": 170
+  },
+  "analysis": "clean",
+  "regression": {
+    "before": "zero water consumed with a working well and all adults reserved in routes",
+    "after": "full daily rations with real labor; queued physical returns and cargo retained",
+    "scope": "rules9 unchanged until explicit conversion"
+  },
+  "native": {
+    "version": "0.11.0+12",
+    "rules": 10,
+    "mode": "profile",
+    "device": "API29 software emulator; not reference-phone performance",
+    "scenario": "Declared rules9 shortage: eight adults, four paid routes, functioning well, zero stored water",
+    "installationOutput": "Performing Streamed Install\nSuccess\n",
+    "conversion": {
+      "populationInventoriesRoutesAndSocialStatePreserved": true,
+      "originalRules9BytesBackedUp": true,
+      "prngPreserved": true
+    },
+    "rationProtection": {
+      "day": 1,
+      "waterNeed": 0.7,
+      "waterUsed": 0.7,
+      "health": 100,
+      "pausedCaravans": 3,
+      "cargoConserved": true,
+      "committedTransportWorkers": 8,
+      "productiveWorkerDays": 6.0,
+      "allocatedWorkerDays": 6.0
+    },
+    "forceStopReopenPreservesRationsAndCargo": true,
+    "originalDataRestoredExactly": true
+  },
+  "temporal": {
+    "prehistory": {
+      "check": "temporal_equivalence",
+      "origin": "prehistory",
+      "seed": 17,
+      "days": 36000,
+      "catalogEvents": 166,
+      "retainedChronicleEntries": 2123,
+      "totalRecordedEvents": 10522,
+      "passed": true
+    },
+    "reconstruction": {
+      "check": "temporal_equivalence",
+      "origin": "reconstruction",
+      "seed": 17,
+      "days": 36000,
+      "catalogEvents": 166,
+      "retainedChronicleEntries": 2038,
+      "totalRecordedEvents": 19237,
+      "passed": true
+    }
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.11.0-profile.apk",
+    "sha256": "f25e1e8106fce0d8d73d713468d4f17886d026519e936d02c2e4b297b70f77f1",
+    "compiled": true,
+    "installedAndExecuted": true
+  },
+  "sustained32": {
+    "state": "in_progress",
+    "opening": [
+      {
+        "platform": "linux",
+        "osVersion": "Linux 6.18.57 #1 SMP Tue Oct 20 21:56:04 UTC 2026",
+        "processors": 5,
+        "dart": "3.9.2 (stable) (Wed Aug 27 03:49:40 2025 -0700) on \"linux_x64\"",
+        "map": 64,
+        "seed": 73,
+        "initialSettlements": 32,
+        "minimumLivingSettlements": 32,
+        "requestedDays": 36000,
+        "simulatedDays": 36000,
+        "terminal": "target_reached",
+        "daysWithAtLeast32LivingSettlements": 36000,
+        "sustained32SettlementScenario": true,
+        "populationSampleIntervalDays": 1,
+        "milliseconds": 551899,
+        "slowestYearMicroseconds": 9480852,
+        "rssBytes": 50671616,
+        "peakProcessRssBytes": 75419648,
+        "saveBytes": 2113202,
+        "livingSettlements": 34,
+        "historyEntries": 2157,
+        "pending": 2,
+        "measuresFps": false
+      }
+    ],
+    "mature": [
+      {
+        "fixture": "mature32-v1",
+        "normalOpeningBalanceTest": false,
+        "injectionsDuringRun": false,
+        "rules": 10,
+        "map": 64,
+        "seed": 73,
+        "initialSettlements": 32,
+        "initialPopulation": 1792,
+        "initialRoutes": 30,
+        "tradePolicy": "one paid starting route per origin, no autonomous new routes",
+        "technologyPrerequisitesClosed": true,
+        "minimumLivingSettlements": 32,
+        "minimumPopulation": 1792,
+        "requestedDays": 36000,
+        "actualDays": 36000,
+        "daysWith32Settlements": 36000,
+        "passedSustainedLoad": true,
+        "milliseconds": 482239,
+        "peakRssBytes": 73629696,
+        "initialSaveBytes": 729290,
+        "finalSaveBytes": 2071554,
+        "referencePhonePerformance": false,
+        "measuresFps": false
+      }
+    ],
+    "referencePhonePerformance": false,
+    "openingState": "in_progress",
+    "openingAccepted": false,
+    "matureState": "in_progress",
+    "matureAccepted": false
+  },
+  "stability": {
+    "state": "in_progress",
+    "completedScenarios": [
+      {
+        "seed": 1,
+        "strategy": "food",
+        "intensity": "normal",
+        "extraordinary": false,
+        "requestedDays": 72000,
+        "actualDays": 72000,
+        "terminal": "target_reached",
+        "annualChecks": 200,
+        "peakPending": 4,
+        "peakHistory": 2400,
+        "milliseconds": 61444,
+        "peakRssBytes": 51871744
+      },
+      {
+        "seed": 2,
+        "strategy": "science",
+        "intensity": "normal",
+        "extraordinary": true,
+        "requestedDays": 72000,
+        "actualDays": 72000,
+        "terminal": "target_reached",
+        "annualChecks": 200,
+        "peakPending": 8,
+        "peakHistory": 2392,
+        "milliseconds": 559099,
+        "peakRssBytes": 75087872
+      }
+    ],
+    "fullMatrixPassed": false,
+    "activeMillenniaVerified": false
+  },
+  "milestones": "R2/R4/R6/R12 remain partial. No full-game completion claimed."
+}

@@ -1,0 +1,74 @@
+exec(open('/tmp/barrio_native_smoke.py').read().split('results={}')[0])
+import time
+out=root/'docs/validation/labor';out.mkdir(exist_ok=True)
+pkg='com.barriocero.eras';folder='app_flutter/barrio_cero';before='app_flutter/native_before_11';after='app_flutter/native_after_11'
+def run(*args):return adb('shell','run-as',pkg,*args)
+def exists(path):return subprocess.run(['adb','shell','run-as',pkg,'ls','-d',path],capture_output=True,timeout=40).returncode==0
+def stop():
+ adb('shell','am','force-stop',pkg)
+ deadline=time.monotonic()+30
+ while subprocess.run(['adb','shell','pidof',pkg],capture_output=True,timeout=10).stdout.strip():
+  if time.monotonic()>deadline:raise RuntimeError('Application did not stop')
+  time.sleep(.2)
+def inventory():
+ result={}
+ for name in run('ls','-1',folder).decode().splitlines():
+  if not re.fullmatch(r'[A-Za-z0-9_.-]+',name):raise RuntimeError('Unexpected filename')
+  raw=adb('exec-out','run-as',pkg,'cat',folder+'/'+name);result[name]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+ return result
+def rawworld():return adb('exec-out','run-as',pkg,'cat',folder+'/world_0.json')
+def world():return json.loads(rawworld())['payload']['world']
+def coherent(w):
+ p=w['populationState'];assert p['day']==w['day'];counts={}
+ for c in p['cohorts']:
+  band=0 if (w['day']-c['bornDay'])//360<16 else 1 if (w['day']-c['bornDay'])//360<65 else 2
+  counts.setdefault(c['settlement'],[0,0,0])[band]+=c['count']
+ for s in w['societies']:
+  assert counts.get(s['id'],[0,0,0])==[s['children'],s['adults'],s['elders']]
+  for person in s['people']:
+   if person['diedDay'] is None:
+    c=next(c for c in p['cohorts'] if c['id']==p['members'][person['id']]);assert c['settlement']==s['id'] and c['bornDay']==person['bornDay']
+def tap_visible(label):
+ for attempt in range(5):
+  try:tap(label);return
+  except RuntimeError as e:
+   if 'No control' not in str(e) or attempt==4:raise
+   adb('shell','input','swipe','282','542','282','288','350')
+
+results={'version':'0.11.0+12','rules':10,'mode':'profile','device':'API29 software emulator; not reference-phone performance','scenario':'Declared rules9 shortage: eight adults, four paid routes, functioning well, zero stored water'};moved=False
+try:
+ stop()
+ if exists(before) or exists(after):raise RuntimeError('Prior labor fixture exists; refusing overwrite')
+ fixture=(root/'build/validation/labor-native-checkpoint.json').read_bytes();old=json.loads(fixture)['payload']['world'];assert old['rulesVersion']==9
+ original=inventory();(out/'native-original-inventory.json').write_text(json.dumps(original,indent=2)+'\n')
+ results['installationOutput']=adb('install','-r',str(root/'build/deliverables/barrio-cero-eras-0.11.0-profile.apk')).decode()
+ run('mv',folder,before);moved=True;run('mkdir',folder)
+ adb('push',str(root/'build/validation/labor-native-checkpoint.json'),'/data/local/tmp/barrio-labor-fixture.json');run('cp','/data/local/tmp/barrio-labor-fixture.json',folder+'/world_0.json');assert rawworld()==fixture
+ adb('shell','am','start','-n',pkg+'/.MainActivity');tap('Continuar historia');dump();assert rawworld()==fixture
+ tap('MENÚ');tap_visible('Actualizar reglas de la partida');capture('01-protected-labor-preview.png');assert rawworld()==fixture
+ tap_visible('Copiar y actualizar');dump();w=world();coherent(w)
+ assert w['rulesVersion']==10 and w['day']==old['day'] and w['rng']==old['rng']
+ assert w['populationState']==old['populationState'] and w['socialState']==old['socialState']
+ assert w['routes']==old['routes'] and w['societies']==old['societies']
+ sourceHash=hashlib.sha256(fixture).hexdigest();assert adb('exec-out','run-as',pkg,'cat',folder+'/rules_0_'+sourceHash+'.json')==fixture
+ results['conversion']={'populationInventoriesRoutesAndSocialStatePreserved':True,'originalRules9BytesBackedUp':True,'prngPreserved':True}
+ tap('+ Día');dump();committed=rawworld();w=world();coherent(w);s=w['societies'][0];record=s['lastProduction'];flow=record['flows']
+ assert w['day']==1 and record['waterUsed']==record['waterNeed']==700
+ assert s['health']==100 and s['transportWorkers']==8
+ paused=[r for r in w['routes'] if r['crewAssigned']==0];assert paused and all(r['blocked'] and r['cargo']==12 and r['progress']==0 for r in paused)
+ assert sum(flow['allocations'].values())<=flow['availableLabor']<=8000-sum(r['crewAssigned'] for r in w['routes'] if r['from']=='s0')*1000
+ results['rationProtection']={'day':1,'waterNeed':.7,'waterUsed':.7,'health':100,'pausedCaravans':len(paused),'cargoConserved':True,'committedTransportWorkers':8,'productiveWorkerDays':flow['availableLabor']/1000,'allocatedWorkerDays':sum(flow['allocations'].values())/1000}
+ tap('Comunidad');tap_visible('Ver trabajo y producción');capture('02-well-operates-with-caravans-paused.png');assert rawworld()==committed
+ stop();adb('shell','am','start','-n',pkg+'/.MainActivity');tap('Continuar historia');capture('03-reopened.png');assert rawworld()==committed;coherent(world());results['forceStopReopenPreservesRationsAndCargo']=True
+except Exception as e:
+ results['error']=repr(e);print(repr(e),flush=True)
+finally:
+ if moved:
+  stop()
+  if exists(after):raise RuntimeError('Refusing to overwrite labor fixture')
+  if exists(folder):run('mv',folder,after)
+  if exists(folder):raise RuntimeError('Restoration destination still present')
+  run('mv',before,folder);results['originalDataRestoredExactly']=inventory()==original
+  if not results['originalDataRestoredExactly']:raise RuntimeError('Original save integrity mismatch')
+ (out/'native-result.json').write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n');print(json.dumps(results,ensure_ascii=False),flush=True)
+if 'error' in results:raise SystemExit(1)

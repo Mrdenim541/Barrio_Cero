@@ -1,0 +1,72 @@
+"""Collect already-running tests; never implement or approve unexecuted work."""
+import datetime
+import json
+import pathlib
+import shutil
+import time
+
+root = pathlib.Path('/workspace/Barrio_Cero')
+out = root / 'docs/validation/labor'
+jobs = {
+    'opening': (103933, 'labor-opening-benchmark.log', 'rules10-opening-benchmark'),
+    'mature': (103965, 'labor-mature-benchmark.log', 'rules10-mature-benchmark'),
+    'stability': (103954, 'labor-stability.log', 'rules10-simulation-check'),
+}
+
+def rows(text):
+    found = []
+    for line in text.splitlines():
+        if not line.startswith('{'):
+            continue
+        try:
+            found.append(json.loads(line))
+        except json.JSONDecodeError:
+            pass  # A concurrent write has not finished its last line yet.
+    return found
+
+def alive(pid, name):
+    try:
+        return name.encode() in pathlib.Path(f'/proc/{pid}/cmdline').read_bytes()
+    except FileNotFoundError:
+        return False
+
+deadline = time.monotonic() + 4 * 3600
+while True:
+    report = json.loads((out / 'results.json').read_text())
+    complete = True
+    for name, (pid, source, executable) in jobs.items():
+        path = root / 'build/validation' / source
+        text = path.read_text()
+        records = rows(text)
+        running = alive(pid, executable)
+        shutil.copyfile(path, out / source.removeprefix('labor-'))
+        if name in ('opening', 'mature'):
+            key = 'sustained32'
+            report[key][name] = records
+            done = len(records) == 2
+            report[key][name + 'State'] = 'complete' if done else 'in_progress' if running else 'incomplete'
+            flag = 'sustained32SettlementScenario' if name == 'opening' else 'passedSustainedLoad'
+            report[key][name + 'Accepted'] = done and all(r[flag] for r in records)
+            complete = complete and not running
+        else:
+            passed = len(records) == 32 and 'PASS full-content 30 seeds' in text
+            report['stability'] = {
+                'state': 'complete' if passed else 'in_progress' if running else 'incomplete',
+                'completedScenarios': records,
+                'fullMatrixPassed': passed,
+                'activeMillenniaVerified': passed and all(
+                    r['actualDays'] == 360000 and r['terminal'] == 'target_reached'
+                    for r in records if r['requestedDays'] == 360000
+                ),
+            }
+            complete = complete and not running
+    cases = report['sustained32']
+    cases['state'] = 'complete' if all(cases.get(k + 'State') == 'complete' for k in ('opening', 'mature')) else 'in_progress'
+    report['recordedAt'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    temp = out / 'results.collecting.json'
+    temp.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+    temp.replace(out / 'results.json')
+    if complete or time.monotonic() >= deadline:
+        print(json.dumps({'collectorFinished': True, 'allJobsFinished': complete, 'stability': report['stability']['state'], 'sustained32': cases['state']}), flush=True)
+        break
+    time.sleep(30)

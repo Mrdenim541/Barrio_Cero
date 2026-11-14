@@ -135,7 +135,7 @@ class TradeRoute {
  factory TradeRoute.fromJson(Map<String,dynamic> j){final rules=j['transportRules']??1;if(![1,2].contains(rules))throw const FormatException('Reglas de transporte desconocidas');if(rules==2&&(j['foodMillis'] is! int||j['foodMillis']!=Quantity.fromNumber(j['cargo']).millis||j['metalMillis'] is! int||j['returning'] is! bool||j['closing'] is! bool||j['crewAssigned'] is! int))throw const FormatException('Carga de transporte inválida');return TradeRoute(j['id'],j['from'],j['to'],List<int>.from(j['path']),cargo:(j['cargo'] as num).toDouble(),progress:j['progress'],blocked:j['blocked'],transportRules:rules,metalMillis:j['metalMillis']??0,returning:j['returning']??false,closing:j['closing']??false,crewAssigned:j['crewAssigned']??0);}
 }
 class WorldState {
- static const currentRules=9;
+ static const currentRules=10;
  SocialState? socialState;
  Map<String,SocialResident> get socialResidents=>{for(final s in societies)for(final p in s.people)p.id:SocialResident(p.id,s.id,p.bornDay,p.diedDay)};
  PopulationLedger? populationState;
@@ -196,7 +196,7 @@ class WorldState {
  Society get controlled=>society(controlledId)??societies.first;
  String get date=>'Año ${day~/360+1} · mes ${(day%360)~/30+1} · día ${day%30+1}';
  Map<String,dynamic> toJson()=>{'schema':1,if(socialState!=null)'socialState':socialState!.toJson(),if(rulesVersion>=5)'origin':origin,if(populationState!=null)'populationState':populationState!.toJson(),if(catalog!=null)'catalog':catalog!.toJson(),if(entities!=null)'entities':entities!.toJson(),if(ruleChanges.isNotEmpty)'ruleChanges':ruleChanges,if(rulesVersion>1)'rulesVersion':rulesVersion,if(rulesVersion>1)'randomAlgorithm':RandomState.algorithm,'seed':seed,'size':size,'day':day,'serial':serial,'intensity':intensity,'extraordinary':extraordinary,'rng':random.state,'controlledId':controlledId,'tiles':tiles.map((t)=>t.toJson()).toList(),'societies':societies.map((s)=>s.toJson()).toList(),'chronicle':chronicle.map((h)=>h.toJson()).toList(),'pending':pending.map((e)=>e.toJson()).toList(),'routes':routes.map((r)=>r.toJson()).toList(),'annualSnapshots':annualSnapshots,'contentVersions':contentVersions,'contentHistory':contentHistory,'commandReceipts':commandReceipts};
- factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5,6,7,8,9].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));if(j['populationState']!=null)w.populationState=PopulationLedger.fromJson(Map<String,dynamic>.from(j['populationState']));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));if(j['socialState']!=null)w.socialState=SocialState.fromJson(Map<String,dynamic>.from(j['socialState']));w.validate();return w;}
+ factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5,6,7,8,9,10].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));if(j['populationState']!=null)w.populationState=PopulationLedger.fromJson(Map<String,dynamic>.from(j['populationState']));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));if(j['socialState']!=null)w.socialState=SocialState.fromJson(Map<String,dynamic>.from(j['socialState']));w.validate();return w;}
  void validate(){
  if((rulesVersion>=7)!=(socialState!=null))throw const FormatException('Registro personal sin su versión de reglas');
  socialState?.validate(day,socialResidents,societies.map((s)=>s.id).toSet());
@@ -206,9 +206,9 @@ class WorldState {
  if(!['prehistory','reconstruction'].contains(origin)||(rulesVersion<5&&origin!='reconstruction'))throw const FormatException('Origen o versión incompatibles');
  if((rulesVersion>=4)!=(catalog!=null))throw const FormatException('Catálogo y versión de reglas incompatibles');
  final buildings=buildingDefinitions;final technologies=technologyDefinitions;
- for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5,6,7,8,9].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
+ for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5,6,7,8,9,10].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
  entities?.validate(identityRecords);
- if(![1,2,3,4,5,6,7,8,9].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
+ if(![1,2,3,4,5,6,7,8,9,10].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
  if(size!=64&&size!=96)throw const FormatException('Tamaño de mundo inválido');
  if(day<0||serial<0||tiles.length!=size*size)throw const FormatException('Calendario o terreno inválido');
  if(societies.isEmpty||societies.length>100)throw const FormatException('Número de sociedades inválido');
@@ -853,10 +853,10 @@ class Simulation {
  void _tick(){if(world.populationState!=null){_populationDay();}else{world.day++;}final actors=List<Society>.from(world.societies);final worked=<String,int>{};final dailyAdults={for(final s in actors)s.id:s.adults};
  if(world.rulesVersion>=3){
    actors.sort((a,b)=>a.id.compareTo(b.id));
-   if(world.rulesVersion>=9){for(final s in actors){_urgentAutonomy(s);}}
+   if(world.rulesVersion>=9){for(final s in actors){if(world.rulesVersion>=10)_trimAutonomousTransport(s);_urgentAutonomy(s);}}
    for(final s in actors){
-     if(!s.alive)continue;var available=s.adults,used=0;
-     final routes=world.routes.where((r)=>r.from==s.id&&r.transportRules==2).toList()..sort((a,b)=>a.id.compareTo(b.id));
+     if(!s.alive)continue;var available=math.max(0,s.adults-(world.rulesVersion>=10?_essentialWorkers(s):0)),used=0;
+     final routes=world.routes.where((r)=>r.from==s.id&&r.transportRules==2).toList()..sort((a,b){if(world.rulesVersion>=10){final priority=(a.closing?0:1).compareTo(b.closing?0:1);if(priority!=0)return priority;final distance=a.progress.compareTo(b.progress);if(a.closing&&distance!=0)return distance;}return a.id.compareTo(b.id);});
      for(final r in routes){r.crewAssigned=available>=2?2:0;available-=r.crewAssigned;used+=r.crewAssigned;}
      final expeditions=world.pending.where((e)=>e.type=='discovery'&&e.societyId==s.id).toList()..sort((a,b)=>a.id.compareTo(b.id));
      for(final e in expeditions){e.data=Map<String,dynamic>.from(e.data);final remaining=(e.data['remainingWork'] as int? ?? math.max(0,e.day-world.day+1)*4);final assigned=math.min(4,math.min(available,remaining));available-=assigned;used+=assigned;e.data['remainingWork']=remaining-assigned;e.data['assigned']=assigned;e.data['paused']=remaining>0&&assigned==0;e.day=remaining-assigned==0?world.day:world.day+(assigned==0?1:((remaining-assigned)/assigned).ceil());}
@@ -880,6 +880,25 @@ class Simulation {
    final target=_autonomousVitalBuilding(s);if(target==null||s.projects.any((p)=>p.building==target))return;
    command('build',societyId:s.id,target:target);
  }
+ /// Reserve only work that can actually produce scarce daily rations. Missing
+ /// infrastructure must not lock every adult out of building the needed well.
+ int _essentialWorkers(Society s){
+   if(s.resources['food']!>=s.population*.045*14&&s.resources['water']!>=s.population*.035*14)return 0;
+   final plan=_production(s,s.adults,essentialOnly:true);
+   return math.min(s.adults,(plan.laborUsed+999)~/1000);
+ }
+ void _trimAutonomousTransport(Society s){
+   if(!s.alive||(s.id==world.controlledId&&!delegateDecisions))return;
+   final care=_essentialWorkers(s);if(care==0)return;
+   final routes=world.routes.where((r)=>r.from==s.id&&r.transportRules==2).toList();
+   final excess=routes.length-math.max<int>(0,(s.adults-care)~/2);
+   if(excess<=0)return;
+   final closing=routes.where((r)=>r.closing).length;
+   final candidates=routes.where((r)=>!r.closing).toList()..sort((a,b){final home=a.progress.compareTo(b.progress);return home!=0?home:a.id.compareTo(b.id);});
+   final selected=candidates.take(math.max(0,excess-closing)).toList();
+   for(final route in selected){command('close_route',societyId:s.id,target:route.id);}
+   if(selected.isNotEmpty)record(s,'Se reorganiza el transporte','${selected.length} caravanas reciben orden de regreso para sostener alimento y agua. Las cargas que están en camino regresarán por su trayecto.','trabajo');
+ }
  String? _autonomousVitalBuilding(Society s){
    final plan=_production(s,s.workers),reserve=_reserveGoals(s,s.population);
    final minimum={'food':s.population*45+_exportDemand(s),'water':s.population*35};
@@ -892,7 +911,7 @@ class Simulation {
    if(foodNeed&&waterNeed){final foodDays=s.resources['food']!/math.max(.001,minimum['food']!/1000),waterDays=s.resources['water']!/math.max(.001,minimum['water']!/1000);return waterDays<foodDays?water:food;}
    return foodNeed?food:waterNeed?water:null;
  }
- DailyProduction _production(Society s,int available,{int? population}){
+ DailyProduction _production(Society s,int available,{int? population,bool essentialOnly=false}){
    var efficiency=s.health/100;
    efficiency*=s.leaderTrait=='pragmatic'?1.25:1;
    efficiency*=s.supports('cybernetics')?1.2:1;efficiency*=s.supports('automation')?1.5:1;
@@ -917,8 +936,8 @@ class Simulation {
    final pop=population??s.population;
    return planProduction(stocks:_resourcesMillis(s),producers:capacities,workers:math.max(0,available),
      minimumYield:{'food':pop*45+export,'water':pop*35},
-     reserveStocks:_reserveGoals(s,pop),
-     otherTargets:{'wood':(200+pop)*1000,'stone':(100+pop)*1000,'tools':math.max(20000,pop*500),'knowledge':math.max(120000,pop*2000),'medicine':math.max(20000,pop*500),'textiles':math.max(20000,pop*500),'energy':60000,'fuel':60000,'crystal':20000},educated:s.supports('education'));
+     reserveStocks:essentialOnly?{}:_reserveGoals(s,pop),
+     otherTargets:essentialOnly?{}:{'wood':(200+pop)*1000,'stone':(100+pop)*1000,'tools':math.max(20000,pop*500),'knowledge':math.max(120000,pop*2000),'medicine':math.max(20000,pop*500),'textiles':math.max(20000,pop*500),'energy':60000,'fuel':60000,'crystal':20000},educated:s.supports('education'));
  }
  bool _canOpenAutonomousRoute(Society s){
    if(world.rulesVersion<8)return true;

@@ -2,13 +2,21 @@
 
 ## Rediseño actual — R0 registrado; R1–R6 parciales
 
+## Integración 0.11 — protección del trabajo de subsistencia
+
+170 pruebas, análisis limpio y APK profile 0.11 compilado, instalado y ejecutado en API29. Cuando escasean raciones, el trabajo realmente productivo para alimento y agua tiene prioridad sobre otros compromisos. Las caravanas conservan posición y carga mientras esperan. La autonomía puede ordenar retornos físicos para liberar compromisos; no se proporcionan recursos gratuitos. Las reglas anteriores se conservan hasta conversión explícita.
+
+Android convirtió una regresión de reglas 9 conservando todos sus datos, avanzó un día y comprobó agua completa, salud 100, tres caravanas en espera con carga, consulta y reapertura exactas. Las partidas originales se restauraron por hash. Ambos orígenes repitieron cien años equivalentes con el catálogo completo. La apertura 64×64 ya sostuvo al menos 32 comunidades durante todo el siglo; los demás casos largos se registran al terminar, sin extrapolar aprobaciones. [Evidencia y estado de las baterías](docs/validation/labor/results.json).
+
+El juego sigue incompleto. Los pendientes de R3–R13 y de la especificación original no se reducen al corregir esta regresión. La prioridad siguiente de R6 es migración con población y provisiones en tránsito, seguida de territorio e instituciones persistentes. El rendimiento de referencia necesita medición en un teléfono o laboratorio equivalente.
+
 ## Integración 0.10 — acceso y migración con origen real
 
 166 pruebas, análisis limpio y APK profile compilado, instalado y ejecutado en API29. Las invitaciones requieren necesidad, adultos comunes, capacidad de cuidado y acceso real; no vacían la primera ciudad sana por identificador. La autonomía puede iniciar una obra de agua urgente desde el primer día con costes y trabajo normales. Las nuevas aperturas conectan las seis comunidades sin modificar terreno; sesenta mundos lo comprueban. Las partidas existentes conservan posición y reglas hasta conversión explícita.
 
 Android comprobó consulta inmutable, traslado de cinco adultos sin crear población, pago de veinte alimentos, reapertura exacta y restauración de todos los originales. El primer guion falló al navegar por Más acciones; el segundo usó Historia y aprobó. Ambos orígenes repitieron cien años equivalentes con el catálogo completo. Las 307 opciones aprobaron en fixtures de efectos, no como recorridos completos de arcos. [Evidencia y pendientes](docs/validation/migration/README.md).
 
-La batería larga de reglas 9 y las cargas de 32 continúan separadas de esas aprobaciones. El diagnóstico de apertura ya encontró una nueva causa: el transporte puede reservar todos los adultos y dejar sin trabajo a los pozos. R6 y R12 siguen parciales; falta corregir el reparto ante ese compromiso antiguo, el tránsito migratorio y el resto de la ampliación. Los resultados de treinta semillas y dos milenios activos de reglas 8 son válidos para aquella versión y no acreditan automáticamente la actual.
+La carga madura de reglas 9 sostuvo 32 comunidades durante cien años en mapas 64 y 96. La apertura normal pasó en 96 y bajó temporalmente a 31 en 64: sigue fallando ese caso. El diagnóstico encontró reservas de transporte que ocupan todos los adultos y dejan sin trabajo a los pozos. R6 y R12 siguen parciales. La matriz larga de reglas 9 se conservó incompleta al pasar a comprobar la corrección en reglas 10. Los resultados completos de treinta semillas y dos milenios activos de reglas 8 son válidos para aquella versión y no acreditan automáticamente la actual.
 
 Se conservaron los 106 requisitos originales y se añadieron 68 requisitos de la ampliación aprobada. La versión intermedia 0.2.0 incorpora Barrio/Mundo/Historia, fichas legibles, consulta y confirmación de costes, SessionController y confirmación durable de todos los lotes históricos.
 
