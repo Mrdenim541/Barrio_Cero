@@ -7,6 +7,7 @@ from pathlib import Path
 import json
 import random
 from PIL import Image, ImageDraw
+from pixel_landscape import building, landscape
 
 OUT = Path(__file__).resolve().parents[1] / 'assets' / 'art'
 OUT.mkdir(parents=True, exist_ok=True)
@@ -103,175 +104,6 @@ for role in range(len(ROLES)):
         for frame in range(4): characters.paste(person(role,name,frame),(frame*32,(role*8+action)*48))
 characters.save(OUT/'characters.png')
 
-def building(kind):
-    im=Image.new('RGBA',(64,64));d=ImageDraw.Draw(im)
-    d.ellipse((3,48,61,61),fill=(25,28,30,65))
-    def b(xy,c,o=None):box(d,xy,c,o)
-    def l(xy,c,w=1):line(d,xy,c,w)
-    if kind=='shelter':
-        d.polygon([(5,53),(19,17),(35,8),(59,53)],fill=P['earth'],outline=P['ink'])
-        d.polygon([(19,17),(35,8),(38,51),(8,51)],fill=P['sand'],outline=P['ink'])
-        d.polygon([(28,52),(36,29),(44,52)],fill=P['ink'])
-        for x,y in [(17,28),(13,40),(41,23),(48,39)]:l([(x,y),(x+4,y+3)],'hair',2)
-        l([(34,8),(31,57)],'hair',2);l([(20,14),(58,56)],'hair',2)
-    elif kind=='foraging_camp':
-        for x,y in [(8,29),(24,23),(41,32)]:
-            d.ellipse((x,y,x+16,y+18),fill=P['leaf'],outline=P['ink'])
-            for dx,dy in [(3,5),(10,4),(7,12)]:b((x+dx,y+dy,x+dx+2,y+dy+2),'red')
-        b((13,48,32,57),'earth','ink');l([(15,51),(30,51)],'sand',2)
-        b((39,47,52,57),'sand','ink')
-    elif kind=='water_collect':
-        d.ellipse((4,33,59,57),fill=P['water'],outline=P['ink'])
-        for x,y in [(7,32),(20,29),(38,31),(49,41),(18,53)]:b((x,y,x+10,y+6),'stone','ink')
-        for x in [22,34,45]:l([(x,38),(x+6,38)],'sky')
-        b((42,44,52,56),'earth','ink');l([(43,43),(50,43)],'sand',2)
-    elif kind=='surface_stone':
-        for x,y in [(9,35),(25,28),(42,37),(20,47)]:
-            d.polygon([(x,y+12),(x+3,y),(x+13,y-3),(x+17,y+10)],fill=P['stone'],outline=P['ink'])
-            l([(x+5,y+2),(x+12,y)],'pale',2)
-        b((44,49,57,56),'earth','ink')
-    elif kind=='knapping_shed':
-        b((9,30,15,54),'hair','ink');b((47,30,53,54),'hair','ink')
-        d.polygon([(6,30),(20,13),(48,16),(58,31)],fill=P['sand'],outline=P['ink'])
-        b((16,42,48,49),'earth','ink');b((22,36,34,42),'stone','ink')
-        d.polygon([(38,38),(45,32),(42,43)],fill=P['pale'],outline=P['ink'])
-        l([(26,34),(33,27)],'hair',3)
-    elif kind=='oral_circle':
-        for x,y in [(8,39),(18,51),(39,51),(48,36),(28,27)]:
-            b((x,y,x+10,y+5),'stone','ink')
-        l([(24,46),(39,36)],'hair',3);l([(25,37),(39,46)],'hair',3)
-        d.polygon([(27,42),(28,25),(33,30),(36,18),(41,38),(36,45)],fill=P['rust'],outline=P['ink'])
-        d.polygon([(31,40),(34,29),(38,40)],fill=P['gold'])
-    elif kind=='fiber_weave':
-        b((11,21,16,55),'hair','ink');b((46,21,51,55),'hair','ink');b((11,20,51,25),'earth','ink')
-        for x in range(19,45,4):l([(x,25),(x+2,47)],'sand',2)
-        b((20,37,45,49),'earth','ink')
-        for y in [39,43,47]:l([(21,y),(44,y)],'cream')
-        d.ellipse((4,47,17,58),fill=P['leaf'],outline=P['ink'])
-    elif kind=='quarry':
-        d.polygon([(5,49),(15,24),(45,21),(59,48),(48,56),(14,56)],fill=P['stone'],outline=P['ink'])
-        for y in (31,39,47):l([(13,y),(49,y)],'shadow',2)
-        for x,y in ((10,47),(41,41),(28,30)):b((x,y,x+10,y+6),'pale','ink')
-        l([(31,17),(22,38)],'hair',3);l([(22,19),(39,26)],'stone',3)
-    elif kind=='mine':
-        d.polygon([(3,54),(13,26),(31,11),(50,23),(61,54)],fill=P['shadow'],outline=P['ink'])
-        b((20,30,45,54),'hair','ink');b((25,34,40,54),'ink')
-        l([(27,54),(22,62)],'stone',2);l([(37,54),(42,62)],'stone',2)
-        for y in (56,59):l([(23,y),(40,y)],'earth',2)
-        b((18,35,21,54),'earth');b((43,35,46,54),'earth')
-    elif kind=='sawmill':
-        b((8,23,13,50),'hair','ink');b((50,23,55,50),'hair','ink')
-        d.polygon([(4,25),(18,13),(48,13),(60,25)],fill=P['rust'],outline=P['ink'])
-        for y in (35,43,51):
-            b((9,y,52,y+6),'hair','ink');l([(15,y+2),(50,y+2)],'earth')
-            d.ellipse((8,y,16,y+6),fill=P['sand'],outline=P['ink'])
-        l([(48,28),(40,47)],'stone',2);b((44,26,53,30),'stone','ink')
-    elif kind=='loom':
-        # Open timber frame, visible warp threads and a dyed hanging cloth.
-        b((8,15,13,56),'hair','ink');b((49,15,54,56),'hair','ink')
-        b((7,14,55,19),'earth','ink');b((9,48,53,53),'earth','ink')
-        for x in range(16,48,4):l([(x,20),(x,47)],'cream')
-        b((15,31,48,45),'blue','ink')
-        for y in (33,38,43):l([(17,y),(46,y)],'sky')
-        b((4,37,12,41),'gold','ink');b((27,49,37,58),'rust','ink')
-    elif kind=='granary':
-        # Round raised silo, visibly different from a dwelling or store room.
-        b((15,19,49,50),'sand','ink');d.ellipse((15,11,49,27),fill=P['earth'],outline=P['ink'])
-        d.polygon([(12,17),(32,4),(52,17)],fill=P['rust'],outline=P['ink'])
-        for y in (29,39,48):l([(16,y),(48,y)],'hair',2)
-        b((18,50,22,58),'hair','ink');b((43,50,47,58),'hair','ink')
-        b((30,33,39,47),'earth','ink');b((33,36,36,44),'ink')
-        for x in (5,53):
-            d.ellipse((x,43,x+8,56),fill=P['sand'],outline=P['ink']);l([(x+2,46),(x+6,46)],'hair')
-    elif kind=='recycler':
-        # Sorting gantry, hopper and output bins, with three material colors.
-        b((8,21,15,54),'stone','ink');b((45,21,52,54),'stone','ink')
-        b((7,19,53,24),'shadow','ink')
-        d.polygon([(19,25),(43,25),(37,41),(25,41)],fill=P['teal'],outline=P['ink'])
-        b((26,41,36,48),'shadow','ink')
-        b((3,47,23,57),'earth','ink');b((26,49,44,58),'blue','ink');b((47,47,60,57),'stone','ink')
-        for x,y,c in [(6,43,'rust'),(12,45,'pale'),(51,44,'stone'),(32,46,'gold')]:b((x,y,x+5,y+5),c,'ink')
-    elif kind=='habitat':
-        # Sealed stepped community habitat, green biosphere roof and airlocks.
-        b((5,29,59,55),'pale','ink');b((11,20,53,32),'stone','ink');b((18,12,46,22),'leaf','ink')
-        for x in (9,20,40,51):b((x,35,x+6,44),'darkBlue','ink');b((x+1,36,x+4,39),'sky')
-        b((27,39,36,55),'teal','ink');b((29,42,34,50),'sky','ink')
-        for x in (23,30,37):l([(x,14),(x,19)],'grass',2)
-        b((3,52,61,57),'stone','ink');b((51,13,56,28),'blue','ink')
-    elif kind=='generator':
-        b((8,31,55,53),'blue','ink');b((12,27,49,31),'stone','ink')
-        b((44,8,51,30),'shadow','ink');b((42,7,53,10),'stone','ink')
-        for x in (14,19,24):l([(x,36),(x,47)],'ink',2)
-        b((33,35,48,46),'shadow','ink');d.polygon([(40,35),(37,41),(41,41),(38,47),(45,40),(41,40),(44,35)],fill=P['gold'])
-    elif kind in ('farm','greenhouse'):
-        b((5,29,58,55),'soil','ink')
-        for y in (33,40,47):
-            l([(8,y+3),(55,y+3)],'earth',2)
-            for x in range(10,56,8):
-                b((x,y,x+2,y+4),'leaf');b((x-2,y,x+4,y+1),'grass')
-        if kind=='greenhouse':
-            d.polygon([(6,28),(18,14),(48,14),(58,28)], fill=P['sky'],outline=P['ink'])
-            b((6,28,58,43),'water','ink')
-            for x in (8,20,32,44,56):l([(x,28),(x,43)],'pale',2)
-            l([(18,14),(20,28)],'pale',2);l([(32,14),(32,28)],'pale',2)
-    elif kind in ('well','reservoir'):
-        b((10,34,53,54),'stone','ink');b((15,36,48,48),'deep','ink');b((19,39,44,46),'water')
-        if kind=='well':
-            b((14,16,17,41),'hair','ink');b((47,16,50,41),'hair','ink')
-            d.polygon([(8,18),(32,7),(57,18)],fill=P['rust'],outline=P['ink'])
-            l([(32,18),(32,41)],'sand');b((27,40,37,47),'earth','ink')
-        else:
-            b((6,23,13,52),'stone','ink');b((50,23,57,52),'stone','ink');l([(15,25),(48,25)],'pale',3)
-    elif kind=='solar':
-        for y in (17,34):
-            b((7,y,57,y+14),'darkBlue','ink')
-            for x in range(9,57,9):l([(x,y+1),(x,y+12)],'sky')
-            l([(8,y+7),(56,y+7)],'blue')
-        b((10,49,13,57),'stone');b((51,49,54,57),'stone')
-    elif kind=='wall':
-        b((5,20,59,53),'stone','ink')
-        for x in range(5,60,12):b((x,15,x+6,22),'stone','ink')
-        for y in (28,39,49):l([(6,y),(58,y)],'shadow')
-        for x in (17,39):l([(x,21),(x,28),(x+8,28),(x+8,39),(x,39),(x,49)],'shadow')
-    else:
-        tall=kind in ('watchtower','observatory')
-        top=15 if tall else 27
-        b((11,top,53,54),'stone','ink'); b((15,top+3,50,51),'earth' if kind in ('house','storehouse','market') else 'pale')
-        d.polygon([(7,top+1),(30,top-14),(57,top+1)],fill=P['rust'] if kind not in ('laboratory','observatory','clinic') else P['blue'],outline=P['ink'])
-        l([(11,top-1),(31,top-11),(51,top-1)],'sand')
-        b((27,39,37,54),'hair','ink');b((29,41,35,53),'deep');b((34,46,35,47),'gold')
-        for x in (17,43):
-            b((x,top+6,x+7,top+13),'ink');b((x+1,top+7,x+5,top+10),'sky')
-        l([(12,52),(52,52)],'shadow',2)
-        if kind=='workshop':
-            b((42,6,50,22),'stone','ink');b((7,41,20,49),'hair','ink');b((10,37,14,42),'stone')
-        elif kind=='storehouse':
-            for x,y in ((5,47),(44,45),(50,51)):
-                b((x,y,x+9,y+9),'earth','ink');l([(x+1,y+1),(x+8,y+8)],'sand')
-        elif kind=='clinic':b((26,25,37,36),'cream','ink');b((30,26,33,35),'red');b((27,29,36,32),'red')
-        elif kind=='school':
-            b((7,32,25,43),'deep','hair');l([(10,35),(20,35)],'cream');l([(10,39),(22,39)],'cream')
-        elif kind=='watchtower':
-            b((7,15,57,22),'hair','ink');b((16,24,20,54),'hair','ink');b((44,24,48,54),'hair','ink')
-            l([(19,27),(45,52)],'earth',2);l([(19,52),(45,27)],'earth',2)
-        elif kind=='laboratory':
-            b((6,37,20,50),'blue','ink');b((8,34,18,37),'stone','ink');b((44,31,56,46),'teal','ink')
-            l([(47,31),(47,23),(52,23)],'pale',2)
-        elif kind=='market':
-            b((5,29,59,35),'cream','ink')
-            for x in range(6,59,12):b((x,30,x+5,35),'red')
-            b((7,40,56,45),'earth','ink');b((8,46,10,55),'hair');b((53,46,55,55),'hair')
-            for x in range(12,54,8):b((x,37,x+4,40),'gold' if x%3 else 'leaf')
-        elif kind=='foundry':
-            b((43,3,52,27),'shadow','ink');b((20,33,42,49),'ink');b((24,36,38,48),'red');b((27,40,35,48),'gold')
-        elif kind in ('library','archive'):
-            b((15,30,24,47),'hair','ink');b((43,30,52,47),'hair','ink')
-            for x in (16,19,22,44,47,50):b((x,32,x+1,38),'blue' if x%2 else 'red');b((x,41,x+1,46),'sand')
-        elif kind=='observatory':
-            d.ellipse((13,1,51,27),fill=P['blue'],outline=P['ink']);b((12,20,52,27),'stone','ink')
-            d.polygon([(30,17),(45,5),(51,9),(36,22)],fill=P['pale'],outline=P['ink'])
-    return im
-
 buildings=Image.new('RGBA',(6*64,((len(BUILDINGS)+5)//6)*64))
 for i,name in enumerate(BUILDINGS): buildings.paste(building(name),((i%6)*64,(i//6)*64))
 buildings.save(OUT/'buildings.png')
@@ -334,9 +166,12 @@ for i,name in enumerate(ICONS):
     icons.paste(im,(i*16,0))
 icons.save(OUT/'icons.png')
 
+landscape_image, landscape_ids = landscape()
+landscape_image.save(OUT/'landscape.png')
+
 # Runtime companions preserve exactly the artwork, with premultiplied RGBA.
 # This bypasses platform PNG decompression and makes the upload deterministic.
-for image_name in ('characters', 'buildings', 'terrain'):
+for image_name in ('characters', 'buildings', 'terrain', 'landscape'):
     source = Image.open(OUT / f'{image_name}.png').convert('RGBA')
     pixels = bytearray(source.tobytes())
     for offset in range(0, len(pixels), 4):
@@ -345,12 +180,13 @@ for image_name in ('characters', 'buildings', 'terrain'):
             pixels[offset + channel] = (pixels[offset + channel] * alpha + 127) // 255
     (OUT / f'{image_name}.rgba').write_bytes(pixels)
 
-manifest={'version':1,'license':'Original project artwork; see ART_GUIDE.md','palette':P,
+manifest={'version':2,'license':'Original project artwork; see ART_GUIDE.md','palette':P,
  'characters':{'file':'characters.png','tileWidth':32,'tileHeight':48,'columns':4,'roles':ROLES,'actions':ACTIONS,'rowFormula':'roleIndex * 8 + actionIndex','frameSeconds':0.18},
  'buildings':{'file':'buildings.png','tileWidth':64,'tileHeight':64,'columns':6,'ids':BUILDINGS},
  'terrain':{'file':'terrain.png','tileWidth':32,'tileHeight':32,'columns':6,'ids':BIOMES},
+ 'landscape':{'file':'landscape.png','tileWidth':64,'tileHeight':64,'columns':8,'ids':landscape_ids},
  'icons':{'file':'icons.png','tileWidth':16,'tileHeight':16,'columns':len(ICONS),'ids':ICONS}}
-for image_name in ('characters', 'buildings', 'terrain'):
+for image_name in ('characters', 'buildings', 'terrain', 'landscape'):
     size = Image.open(OUT / f'{image_name}.png').size
     manifest[image_name].update(pixelDataFile=f'{image_name}.rgba', pixelFormat='premultipliedRGBA8888', pixelWidth=size[0], pixelHeight=size[1])
 (OUT/'atlas.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
@@ -372,4 +208,4 @@ for density,size in [('mdpi',48),('hdpi',72),('xhdpi',96),('xxhdpi',144),('xxxhd
     directory=OUT.parents[1]/'android'/'app'/'src'/'main'/'res'/('mipmap-'+density)
     directory.mkdir(parents=True,exist_ok=True)
     launcher.resize((size,size),Image.Resampling.NEAREST).convert('RGB').save(directory/'ic_launcher.png')
-print('Generated characters, buildings, terrain, icons, atlas and production contact sheet.')
+print('Generated original characters, detailed buildings, landscape, terrain, icons and manifests.')

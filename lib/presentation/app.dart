@@ -17,6 +17,7 @@ import 'settlement_scene.dart';
 import 'community_brief.dart';
 import 'community_ribbon.dart';
 import 'follow_target.dart';
+import 'atlas_chrome.dart';
 
 class BarrioApp extends StatelessWidget {
   const BarrioApp({super.key});
@@ -33,17 +34,35 @@ class BarrioApp extends StatelessWidget {
         surface: ink,
       ),
       scaffoldBackgroundColor: ink,
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: const Color(0xff103239),
+        indicatorColor: const Color(0xff2c6267),
+        indicatorShape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(3)),
+          side: BorderSide(color: Color(0xff82aaa0))),
+        iconTheme: WidgetStateProperty.resolveWith((states) => IconThemeData(
+          color: states.contains(WidgetState.selected) ? gold : earth, size:23)),
+        labelTextStyle: WidgetStateProperty.resolveWith((states) => TextStyle(
+          color: states.contains(WidgetState.selected) ? const Color(0xfff6e9c7) : earth,
+          fontWeight:FontWeight.w600,fontSize:12)),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(backgroundColor:Color(0xff123b43)),
+      dialogTheme: const DialogThemeData(backgroundColor:Color(0xff123b43)),
       fontFamily: 'sans-serif',
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size(48, 48),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          backgroundColor: gold,
+          foregroundColor: const Color(0xff332c20),
+          textStyle: const TextStyle(fontWeight:FontWeight.w800,fontSize:14),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3),
+            side:const BorderSide(color:Color(0xffffdda0))),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(48, 48),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
         ),
       ),
       inputDecorationTheme: const InputDecorationTheme(
@@ -978,7 +997,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   Widget _world() => Column(
     children: [
-      Padding(
+      AtlasPanel(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           children: [
@@ -1051,6 +1070,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                             )),
                           ),
                         ),
+                        Positioned(left:10,top:10,right:100,
+                          child: Align(alignment:Alignment.topLeft,child:AtlasViewLabel(game.mode))),
                         Positioned(
                           right: 4,
                           top: 4,
@@ -1076,7 +1097,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                           Positioned(
                             left: 8,
                             bottom: 4,
-                            child: Container(
+                            child: AtlasPanel(
+                              padding:EdgeInsets.zero,
                               color: ink.withValues(alpha: .95),
                               child: Wrap(
                                 children: [
@@ -1135,8 +1157,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             ],
           ),
         ),
-      Container(
-        color: const Color(0xff253235),
+      AtlasPanel(
+        padding:const EdgeInsets.symmetric(horizontal:6),
         child: Row(
           children: [
             Expanded(

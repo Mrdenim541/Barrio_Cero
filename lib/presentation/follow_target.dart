@@ -8,7 +8,8 @@ class FollowTarget {
   const FollowTarget(this.worldKey, this.individualId, this.bornDay);
 
   static String keyFor(Map<String, dynamic> world) =>
-      '${world['seed']}:${world['size']}:${world['origin'] ?? 'reconstruction'}';
+      '${world['seed']}:${world['size']}:${world['origin'] ?? 'reconstruction'}'
+      '${world['geographyVersion'] == 2 ? ':g2' : ''}';
 
   factory FollowTarget.person(
     Map<String, dynamic> world,

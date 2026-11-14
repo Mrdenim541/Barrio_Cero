@@ -1,5 +1,15 @@
 # Dirección de arte · Barrio Cero: Eras
 
+## Presentación vigente 0.18 — atlas del planeta
+
+La prioridad solicitada por el usuario es trasladar las láminas aprobadas al juego ejecutable. La nueva producción conserva pixel art, verde oscuro, tierra, tejados cálidos, agua azul y marcos dorados. `tool/pixel_landscape.py` define los nuevos edificios y paisaje; `tool/generate_art.py` los integra reproduciblemente en los atlas existentes. La paleta nombrada histórica permanece en el manifiesto; los tonos nuevos están definidos en el módulo de paisaje.
+
+Los 25 edificios existentes conservan identificadores y funciones: refugios y puestos ancestrales, viviendas, cultivos, pozo, oficios e infraestructura. `landscape.png/.rgba` añade 24 texturas de suelo —seis biomas, cuatro variantes— y ocho elementos: roble, pino, roca, pico, juncos, arbusto, flores y ruinas. Árboles y vegetación representan el bioma; las columnas arruinadas requieren la marca real del terreno. Los claros rodean parcelas existentes. No se generan recursos ni decisiones mediante el dibujo.
+
+La cámara conserva su espacio común. El paisaje usa bloques y cachés acotadas; las parcelas despejan vegetación y los nombres de edificios aparecen por selección. El marco de vista, las fichas, los controles y Seguir · Mundo · Historia comparten el estilo del atlas. Las fuentes del sistema mantienen legibilidad y ampliación de texto. La pantalla inicial Android utiliza el mismo fondo y el icono original.
+
+Los mundos nuevos utilizan geografía 2 y plano local 3, más compacto y con las mismas huellas de 2×2. Los planos 1/2 y el terreno de partidas existentes se conservan. Esta entrega gráfica no representa la finalización de eras, especies, trabajos locales, violencia o transformaciones todavía pendientes del modelo.
+
 Arte original generado para este proyecto; no incluye recortes ni personajes de la imagen de referencia. La referencia guía las proporciones compactas, cabezas grandes, contorno oscuro, herramientas reconocibles y colores tierra con acentos azules. No se usan emojis, fotografías, suavizado ni modelos 3D.
 
 ## Producción reproducible

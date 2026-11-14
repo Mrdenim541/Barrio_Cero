@@ -1,0 +1,33 @@
+{
+  "scope": "normal starting scenarios, no user orders or hidden rewards",
+  "scenarios": [
+    {
+      "origin": "prehistory",
+      "seed": 73,
+      "size": 96,
+      "geographyVersion": 2,
+      "initialSites": 42,
+      "yearSites": 70,
+      "initialPopulation": 144,
+      "yearPopulation": 134,
+      "firstBiome": 1,
+      "finalDay": 360,
+      "playerCommands": 0,
+      "runtimeInjections": false
+    },
+    {
+      "origin": "reconstruction",
+      "seed": 73,
+      "size": 96,
+      "geographyVersion": 2,
+      "initialSites": 42,
+      "yearSites": 61,
+      "initialPopulation": 336,
+      "yearPopulation": 341,
+      "firstBiome": 1,
+      "finalDay": 360,
+      "playerCommands": 0,
+      "runtimeInjections": false
+    }
+  ]
+}

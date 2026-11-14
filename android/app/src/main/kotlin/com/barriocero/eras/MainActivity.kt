@@ -37,12 +37,15 @@ class MainActivity : FlutterActivity() {
     private var destroyed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // The API29 software emulator hangs before its first Vulkan frame.
-        // Keep physical devices and explicit renderer diagnostics unchanged.
+        // API29 ranchu can hang while rebuilding its emulated GPU context.
+        // CPU raster bypasses that path; physical phones keep their GPU.
         if (Build.VERSION.SDK_INT <= 29 &&
             Build.HARDWARE in setOf("ranchu", "goldfish") &&
             !intent.hasExtra("enable-impeller")) {
             intent.putExtra("enable-impeller", false)
+            if (!intent.hasExtra("enable-software-rendering")) {
+                intent.putExtra("enable-software-rendering", true)
+            }
         }
         super.onCreate(savedInstanceState)
     }

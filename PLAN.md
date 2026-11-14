@@ -1,5 +1,9 @@
 # Ejecución del rediseño aprobado: BARRIO CERO: ERAS
 
+## Prioridad actual del usuario — presentación 0.18
+
+El usuario solicita priorizar gráficos, texturas e interfaz conforme a las láminas y entregar un APK descargable en GitHub. Esta entrega conserva los hitos M0–M11 y las obligaciones pendientes. Incluye atlas originales renovados, paisaje por bioma, interfaz verde/dorada, geografía versionada para mundos nuevos y aldeas compactas. Las partidas existentes conservan su terreno, coordenadas y reglas. M2 avanza parcialmente en geografía; mundo 2, checkpoint 4 y su migración integral siguen pendientes. La publicación autorizada corresponde al código y APK de prueba en GitHub, sin publicar el entorno.
+
 ## Plan vigente M0–M11
 
 Ampliación posterior: [PLAYER_FOCUS.md](docs/PLAYER_FOCUS.md) reemplaza el acceso Barrio por Seguir y añade protagonista humano/no humano, seguimiento persistente y estados Normal/Sin envejecimiento/Inmortalidad total. La cámara es presentación; los modos de vida son reglas del mundo que requieren integración demográfica, persistencia y pruebas. Las láminas visuales se mantienen como objetivo con ese cambio de navegación.

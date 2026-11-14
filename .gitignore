@@ -9,3 +9,6 @@ android/key.properties
 *.jks
 *.keystore
 coverage/
+
+__pycache__/
+*.py[cod]

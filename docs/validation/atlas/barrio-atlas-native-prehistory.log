@@ -1,0 +1,22 @@
+build/validation/atlas-scenarios/prehistory-initial.json: 1 file pushed, 0 skipped. 141.5 MB/s (1029245 bytes in 0.007s)
+Tap: Continuar historia
+Tap: Ver región
+Tap: Seguir
+Tap: Ver todo el asentamiento
+Tap: Centrar comunidad
+Tap: Seguir
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+ERROR: null root node returned by UiTestAutomationBridge.
+RuntimeError('No fresh UI hierarchy')
+{"scope": "Continuous camera and declared settlement fixture; not phone acceptance", "apkSha256": "2604271570bca9e7da2dc837d15231bd68acf194e8150bfae281aa9844793275", "requestedRenderer": "default", "followSmokeOnly": false, "device": {"serial": "emulator-5554", "hardware": "ranchu", "api": "29", "model": "Android SDK built for x86_64", "referencePhoneAcceptance": false}, "installation": "Performing Streamed Install\nSuccess\n", "fixture": {"size": 96, "settlements": 6, "normalOpening": true, "day": 0, "runtimeInjections": false}, "launchOutput": "Starting: Intent { cmp=com.barriocero.eras/.MainActivity }\nStatus: timeout\nLaunchState: UNKNOWN (-1)\nActivity: com.barriocero.eras/.MainActivity\nWaitTime: 12375\nComplete\n", "worldProfile": {"sceneProfile": "planet-camera-v1", "map": 96, "lod": "Mundo", "zoom": 1.0, "frames": 61, "renderedFramesPerSecond": 6.4938157228266284, "buildP90Micros": 36972, "rasterP90Micros": 106401, "visibleSettlements": 6, "visibleSites": 0, "visiblePeople": 0, "terrainBlocks": 1, "pictureCacheBytes": 846960, "scope": "profile whole-UI frames; host/device identity supplied by harness"}, "regionProfile": {"sceneProfile": "planet-camera-v1", "map": 96, "lod": "Región", "zoom": 4.0, "frames": 62, "renderedFramesPerSecond": 5.83672740626742, "buildP90Micros": 23837, "rasterP90Micros": 88334, "visibleSettlements": 1, "visibleSites": 0, "visiblePeople": 0, "terrainBlocks": 17, "pictureCacheBytes": 17833600, "scope": "profile whole-UI frames; host/device identity supplied by harness"}, "cityProfile": {"sceneProfile": "planet-camera-v1", "map": 96, "lod": "Asentamiento", "zoom": 193.4262857142857, "frames": 60, "renderedFramesPerSecond": 10.36063982394639, "buildP90Micros": 31625, "rasterP90Micros": 111143, "visibleSettlements": 1, "visibleSites": 7, "visiblePeople": 3, "terrainBlocks": 2, "pictureCacheBytes": 22033816, "scope": "profile whole-UI frames; host/device identity supplied by harness"}, "outsideCityProfile": {"sceneProfile": "planet-camera-v1", "map": 96, "lod": "Asentamiento", "zoom": 193.4262857142857, "frames": 63, "renderedFramesPerSecond": 19.065372394386294, "buildP90Micros": 19520, "rasterP90Micros": 50303, "visibleSettlements": 0, "visibleSites": 0, "visiblePeople": 0, "terrainBlocks": 3, "pictureCacheBytes": 34635416, "scope": "profile whole-UI frames; host/device identity supplied by harness"}, "recenteredProfile": {"sceneProfile": "planet-camera-v1", "map": 96, "lod": "Asentamiento", "zoom": 193.4262857142857, "frames": 62, "renderedFramesPerSecond": 14.610351505896116, "buildP90Micros": 31358, "rasterP90Micros": 75034, "visibleSettlements": 1, "visibleSites": 7, "visiblePeople": 3, "terrainBlocks": 2, "pictureCacheBytes": 34635416, "scope": "profile whole-UI frames; host/device identity supplied by harness"}, "cameraPreservesExactCheckpoint": true, "protagonistPreference": {"version": 1, "worldKey": "73:96:prehistory:g2", "individualId": "p0a", "bornDay": -10080, "active": true}, "error": "RuntimeError('No fresh UI hierarchy')", "originalSavesRestoredExactly": true, "passed": false}

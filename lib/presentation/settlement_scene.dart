@@ -55,7 +55,7 @@ class SettlementScene {
       : entities
             .map((e) => e.bounds)
             .reduce((a, b) => a.expandToInclude(b))
-            .inflate(64);
+            .inflate(32);
   double scale(Size viewport, double zoom) =>
       math.min(
         viewport.width / math.max(320, bounds.width),

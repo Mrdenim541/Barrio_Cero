@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-11-14T16:47:20.789081+00:00",
+  "version": "0.18.0+19",
+  "rules": 11,
+  "apk": "build/deliverables/Barrio-Cero-Eras-0.18.0-gpu-diagnostic.apk",
+  "apkSha256": "2604271570bca9e7da2dc837d15231bd68acf194e8150bfae281aa9844793275",
+  "bytes": 70504125,
+  "integrationSourceTreeSha256": "e59f7aff7c91681b64064e474469eec464b168f3e14c0ec5a18e54b4fdee460d",
+  "scope": "Compiled profile APK; installation and behavior are separate native records",
+  "fullGameAcceptance": false
+}

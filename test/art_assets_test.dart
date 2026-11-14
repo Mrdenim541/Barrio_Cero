@@ -22,7 +22,7 @@ void main() {
       File('assets/art/atlas.json').readAsStringSync(),
     );
     final sizes = {
-      for (final key in ['characters', 'buildings', 'terrain'])
+      for (final key in ['characters', 'buildings', 'terrain', 'landscape'])
         key: [
           manifest[key]['pixelWidth'] as int,
           manifest[key]['pixelHeight'] as int,

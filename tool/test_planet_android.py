@@ -18,9 +18,12 @@ parser.add_argument("--apk", required=True, type=Path)
 parser.add_argument("--checkpoint", required=True, type=Path)
 parser.add_argument("--out", required=True, type=Path)
 parser.add_argument("--tag", required=True)
-parser.add_argument("--renderer", choices=["default", "skia"], default="default")
+parser.add_argument("--expected-settlements", type=int, default=32)
+parser.add_argument("--renderer", choices=["default", "skia", "software"], default="default")
 parser.add_argument("--follow-smoke", action="store_true",
                     help="Check final package installation, follow persistence and reopening without repeating all camera profiles")
+parser.add_argument("--skip-frame-metrics", action="store_true",
+                    help="Functional UI/recovery only; no FPS or rendered-count approval")
 args = parser.parse_args()
 assert re.fullmatch(r"[a-z0-9_]+", args.tag)
 args.out.mkdir(parents=True, exist_ok=False)
@@ -28,9 +31,10 @@ pkg = "com.barriocero.eras"
 folder = "app_flutter/barrio_cero"
 before = f"app_flutter/native_before_{args.tag}"
 after = f"app_flutter/native_after_{args.tag}"
-result = {"scope": "Continuous camera and 32-settlement profile fixture; not phone acceptance",
+result = {"scope": "UI and exact checkpoint recovery only; no frame performance or rendered-count acceptance" if args.skip_frame_metrics else "Continuous camera and declared settlement fixture; not phone acceptance",
           "apkSha256": hashlib.sha256(args.apk.read_bytes()).hexdigest(),
-          "requestedRenderer": args.renderer, "followSmokeOnly": args.follow_smoke}
+          "requestedRenderer": args.renderer, "followSmokeOnly": args.follow_smoke,
+          "frameMetricsRequested": not args.skip_frame_metrics}
 
 
 def adb(*cmd):
@@ -52,8 +56,10 @@ def stop():
 
 def launch():
     cmd = ["shell", "am", "start", "-W", "-n", pkg + "/.MainActivity"]
-    if args.renderer == "skia":
+    if args.renderer in {"skia", "software"}:
         cmd.extend(["--ez", "enable-impeller", "false"])
+    if args.renderer == "software":
+        cmd.extend(["--ez", "enable-software-rendering", "true"])
     return adb(*cmd).decode()
 
 
@@ -106,6 +112,18 @@ profile_count = 0
 
 def profile(lod, minimum_towns=None, minimum_sites=None, maximum_towns=None):
     global profile_count
+    if args.skip_frame_metrics:
+        label = "PLANETA" if lod == "Mundo" else lod.upper()
+        deadline = time.monotonic() + 30
+        while True:
+            labels = [text(n) for n in hierarchy()]
+            if any("No se pudo abrir la vista" in value for value in labels):
+                raise RuntimeError("Map asset loading failed")
+            if any(label in value for value in labels) and not any("Preparando vista" in value for value in labels):
+                return {"lod": lod, "verified": "UI label and captured scene", "frameMetrics": "not requested", "renderedCountsVerified": False}
+            if time.monotonic() >= deadline:
+                raise RuntimeError("Expected loaded UI view: " + label)
+            time.sleep(.2)
     profile_count += 1
     adb("logcat", "-c")
     deadline = time.monotonic() + 120
@@ -131,6 +149,8 @@ def profile(lod, minimum_towns=None, minimum_sites=None, maximum_towns=None):
 
 def capture(name):
     (args.out / name).write_bytes(adb("exec-out", "screencap", "-p"))
+    if args.skip_frame_metrics:
+        return
     memory = adb("shell", "dumpsys", "meminfo", pkg).decode(errors="replace")
     (args.out / (name + ".meminfo.txt")).write_text(memory)
 
@@ -157,14 +177,14 @@ try:
     baseline = args.checkpoint.read_bytes()
     assert checkpoint() == baseline
     w = json.loads(baseline)["payload"]["world"]
-    assert len(w["societies"]) == 32 and w["controlledId"] is None
-    result["fixture"] = {"size": w["size"], "settlements": 32, "normalOpening": False,
+    assert len(w["societies"]) == args.expected_settlements and w["controlledId"] is None
+    result["fixture"] = {"size": w["size"], "settlements": args.expected_settlements, "normalOpening": args.expected_settlements == 6 and w["day"] == 0,
                          "day": w["day"], "runtimeInjections": False}
     adb("logcat", "-c")
     result["launchOutput"] = launch()
     tap("Continuar historia")
-    result["worldProfile"] = profile("Mundo", minimum_towns=32)
-    capture("01-planet-32-settlements.png")
+    result["worldProfile"] = profile("Mundo", minimum_towns=args.expected_settlements)
+    capture("01-planet-settlements.png")
     if not args.follow_smoke:
         tap("Ver región")
         result["regionProfile"] = profile("Región")
@@ -201,7 +221,7 @@ try:
     result["protagonistRestored"] = True
     capture("06-reopened-protagonist.png")
     tap("Mundo")
-    profile("Mundo", minimum_towns=32)
+    profile("Mundo", minimum_towns=args.expected_settlements)
     capture("07-reopened-planet.png")
     assert checkpoint() == baseline
     result["reopenExact"] = True

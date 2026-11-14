@@ -1,5 +1,14 @@
 # BARRIO CERO: ERAS
 
+
+## APK de prueba 0.18
+
+[Descargar para Android](https://github.com/Mrdenim541/Barrio_Cero/releases/download/v0.18.0-test/Barrio-Cero-Eras-0.18.0.apk) · [Notas y capturas reales](https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.18.0-test)
+
+Android 7 o posterior. Nuevos continentes, texturas, edificios e interfaz del atlas. Crea un mundo nuevo para ver los continentes; las partidas anteriores conservan su mapa y posiciones. El mismo certificado permite instalar como actualización.
+
+Es una versión de desarrollo. [Evidencia y alcance](docs/validation/atlas/README.md); las eras, especies y demás pendientes se mantienen en el plan.
+
 Juego individual para Android, escrito en Flutter/Dart con Flame y una simulación local reproducible. No requiere cuentas, servidor, anuncios ni claves de API para jugar. La especificación completa se conserva en [PROJECT_SPEC.md](PROJECT_SPEC.md); el estado verificable de la entrega está en [STATUS.md](STATUS.md).
 
 ## Entorno y compilación

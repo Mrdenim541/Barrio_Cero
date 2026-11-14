@@ -1,0 +1,24 @@
+{
+  "recordedAt": "2026-11-14T16:45:27.885589+00:00",
+  "command": "python3 tool/generate_art.py",
+  "identical": true,
+  "files": {
+    "assets/art/atlas.json": "9f9d6794bb61321dd78622aafbc7fa45c294abb5e24c9fde4af69d975e928fb3",
+    "assets/art/buildings.png": "402e3a7918725ae5319a8b1132e627edc0f5c5b8feb5c6a225fcea0ef86facec",
+    "assets/art/buildings.rgba": "9d14014d5bd95d3e4b824fc5790053db3696238b1989f9dd71e30974dbb5830a",
+    "assets/art/characters.png": "019862ae4687d05fb4c59a05f105d653aae67111bb36613cfed86de123c371c2",
+    "assets/art/characters.rgba": "a02419180658e958200ff46a322a24fbc6acfd0f0f0168196773dcd8c2049e1e",
+    "assets/art/contact_sheet.png": "d9bc35e51e99942c9ed83af55f9cfd055ed6cf9ccdcda0f133f964726c09828f",
+    "assets/art/icons.png": "9e4caa088117503c99395c996bdd634eb6cdb1ea71f1487b142eda997a8aae37",
+    "assets/art/terrain.png": "1e80828c2605a95ca0f4eef7ca75d3ee6a6a5a413016bf55aafd6420610ce778",
+    "assets/art/terrain.rgba": "9da98c6e237f48c3f5e599b4930459ba19ee7685f47706f6abec68d4e6f9ed20",
+    "assets/art/landscape.rgba": "0d4a9add6536fe03439bbb069b6139428f53543b32116064771792e08f1844e9",
+    "assets/art/landscape.png": "1077dd1557a3452d62577525b0e075b4ca0b4d798d3d7a0fc600dfdc03c277cd",
+    "android/app/src/main/res/mipmap-hdpi/ic_launcher.png": "f111ba5fad2890ed93e30e557e07eb4fa7cef0bb787c6d55cb170af6bfd225ed",
+    "android/app/src/main/res/mipmap-mdpi/ic_launcher.png": "3cd32d2264acf0960fee0be8287e711ce22156e0e5c7a665d471930ba477d5c5",
+    "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png": "d35c6f80d7f9875c3a4ef14618129629a962789e93fe09bde6fb45d46ab81a64",
+    "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png": "7d78293d15e587f6895c6a44ba65c0224f73bbae2e9302f06ca7b1df3c8c06e4",
+    "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png": "179e0ddf3f3c28c3f3cc4579bbc5b219f7c7278dfd7f31fc70f04c7aa506b064"
+  },
+  "scope": "Reproducible original art; not Android execution"
+}

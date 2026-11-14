@@ -10,10 +10,10 @@ import 'planet_camera.dart';
 import 'planet_terrain.dart';
 import 'settlement_scene.dart';
 
-const earth = Color(0xffbda576);
-const ink = Color(0xff1d282b);
-const gold = Color(0xffe7bb70);
-const moss = Color(0xff91a86c);
+const earth = Color(0xffcaba91);
+const ink = Color(0xff103239);
+const gold = Color(0xffefc375);
+const moss = Color(0xffa6bf83);
 
 /// Cities and their entities share a regional coordinate frame. LOD changes
 /// representation only; there is no selected-city scene or camera reset.
@@ -191,10 +191,11 @@ class WorldGame extends FlameGame {
   }
 
   @override
-  Color backgroundColor() => const Color(0xff283d40);
+  Color backgroundColor() => const Color(0xff174554);
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
+    final previousMode = _mode;
     planetCamera.resize(Size(size.x, size.y));
     final followed = followedIndividualId;
     if (followed != null) {
@@ -207,6 +208,14 @@ class WorldGame extends FlameGame {
         settlementBounds(societies.firstWhere((s) => s['id'] == id)),
       );
       _mode = 'Asentamiento';
+    }
+    if (_mode != previousMode) {
+      // A restored target may arrive before the viewport. Update Flutter's
+      // view label after layout, never with setState during game resize.
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => onViewChanged?.call(),
+      );
+      WidgetsBinding.instance.ensureVisualUpdate();
     }
   }
 
@@ -229,6 +238,10 @@ class WorldGame extends FlameGame {
     );
     people = await load(peopleLayout!);
     buildings = await load(buildingLayout!);
+    final scenery = AtlasLayout.fromJson(
+      Map<String, dynamic>.from(manifest['landscape']),
+    );
+    terrainCache.attachLandscape(await load(scenery), scenery);
   }
 
   @override
@@ -368,11 +381,50 @@ class WorldGame extends FlameGame {
       if (density < 2) {
         final mark = Rect.fromCenter(
           center: bounds.center,
-          width: math.max(bounds.width, 7 / unit),
-          height: math.max(bounds.height, 7 / unit),
+          width: math.max(bounds.width, 18 / unit),
+          height: math.max(bounds.height, 18 / unit),
         );
-        canvas.drawRect(mark.inflate(1 / unit), Paint()..color = ink);
-        canvas.drawRect(mark, Paint()..color = _societyColor(s));
+        final buildingId =
+            ((s['sites'] as List? ?? [])
+                        .where(
+                          (site) => [
+                            'house',
+                            'shelter',
+                            'habitat',
+                          ].contains(site['building']),
+                        )
+                        .firstOrNull?['building'] ??
+                    (s['sites'] as List? ?? []).firstOrNull?['building'])
+                ?.toString();
+        final source = buildingId == null
+            ? null
+            : buildingLayout?.frame(buildingId);
+        canvas.drawRect(
+          mark.inflate(2 / unit),
+          Paint()..color = ink.withValues(alpha: .65),
+        );
+        if (source != null && buildings != null) {
+          canvas.drawImageRect(
+            buildings!,
+            source,
+            mark.inflate(3 / unit),
+            Paint()..filterQuality = FilterQuality.none,
+          );
+        } else {
+          canvas.drawRect(
+            mark.deflate(2 / unit),
+            Paint()..color = _societyColor(s),
+          );
+        }
+        canvas.drawRect(
+          Rect.fromLTWH(
+            mark.left,
+            mark.bottom + 2 / unit,
+            mark.width,
+            2 / unit,
+          ),
+          Paint()..color = _societyColor(s),
+        );
         if (s['id'] == selected) {
           canvas.drawRect(
             mark.inflate(3 / unit),
@@ -396,13 +448,6 @@ class WorldGame extends FlameGame {
     canvas.restore();
     _drawLabels(canvas, density);
     if (mini) _mini(canvas);
-    _text(
-      canvas,
-      '${mode.toUpperCase()} · ${filter == 'Territorios' ? 'Comunidades' : filter}',
-      const Offset(12, 12),
-      color: earth,
-      fontSize: 10,
-    );
   }
 
   void _drawJourneys(Canvas c, Rect visible) {
@@ -501,8 +546,46 @@ class WorldGame extends FlameGame {
       if (!visible.overlaps(rect.inflate(1 / 32))) continue;
       if (e.kind == 'site') {
         lastSitesDrawn++;
-        paint.color = const Color(0xffa79b7c);
-        c.drawRect(rect.inflate(3 / 1024), paint);
+        // Worn ground decorates a confirmed plot; it is not a transport route.
+        paint.color = const Color(0xffb8a678);
+        final ground = rect.inflate(9 / 1024);
+        final pad = Path()
+          ..moveTo(ground.left + ground.width * .18, ground.top)
+          ..lineTo(
+            ground.right - ground.width * .12,
+            ground.top + ground.height * .06,
+          )
+          ..lineTo(ground.right, ground.top + ground.height * .28)
+          ..lineTo(
+            ground.right - ground.width * .05,
+            ground.bottom - ground.height * .16,
+          )
+          ..lineTo(ground.right - ground.width * .23, ground.bottom)
+          ..lineTo(
+            ground.left + ground.width * .12,
+            ground.bottom - ground.height * .04,
+          )
+          ..lineTo(ground.left, ground.bottom - ground.height * .3)
+          ..lineTo(
+            ground.left + ground.width * .04,
+            ground.top + ground.height * .16,
+          )
+          ..close();
+        c.drawPath(pad, paint);
+        for (var n = 0; n < 8; n++) {
+          paint.color = n.isEven
+              ? const Color(0xffc6b584)
+              : const Color(0xffa9956d);
+          c.drawRect(
+            Rect.fromLTWH(
+              ground.left + (n * 13 % 72) / 1024,
+              ground.top + (n * 23 % 72) / 1024,
+              3 / 1024,
+              1 / 1024,
+            ),
+            paint,
+          );
+        }
         paint.color = const Color(0x55000000);
         c.drawOval(
           Rect.fromLTWH(rect.left + .006, rect.bottom - .006, rect.width, .016),
@@ -634,7 +717,13 @@ class WorldGame extends FlameGame {
       if (!planetCamera.visibleWorld.overlaps(settlementBounds(s))) continue;
       for (final e in _scenes[s['id']]!.entities) {
         if (e.kind == 'person' && density < 12) continue;
-        if (e.kind == 'site' && e.id != localSelected && density < 20) continue;
+        if (e.kind == 'site' && e.id != localSelected) continue;
+        if (e.kind == 'person' &&
+            e.id != followedIndividualId &&
+            e.id != localSelected &&
+            density < 20) {
+          continue;
+        }
         final rect = entityWorldBounds(s['id'].toString(), e);
         final text = e.kind == 'person'
             ? '${e.entity['name']}'
@@ -684,27 +773,5 @@ class WorldGame extends FlameGame {
         ..strokeWidth = 1 / scale,
     );
     c.restore();
-  }
-
-  void _text(
-    Canvas c,
-    String text,
-    Offset p, {
-    Color color = gold,
-    double fontSize = 12,
-  }) {
-    final tp = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: FontWeight.w700,
-          shadows: const [Shadow(color: ink, blurRadius: 3)],
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout(maxWidth: 400);
-    tp.paint(c, p);
   }
 }

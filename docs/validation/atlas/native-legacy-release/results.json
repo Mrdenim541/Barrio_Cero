@@ -1,0 +1,47 @@
+{
+  "scope": "UI and exact checkpoint recovery only; no frame performance or rendered-count acceptance",
+  "apkSha256": "b7016a3deeb94339350b7dc6cb2acca80aa2a47704be596556d06ef72ad95368",
+  "requestedRenderer": "default",
+  "followSmokeOnly": true,
+  "frameMetricsRequested": false,
+  "device": {
+    "serial": "emulator-5554",
+    "hardware": "ranchu",
+    "api": "29",
+    "model": "Android SDK built for x86_64",
+    "referencePhoneAcceptance": false
+  },
+  "installation": "Performing Streamed Install\nSuccess\n",
+  "fixture": {
+    "size": 96,
+    "settlements": 32,
+    "normalOpening": false,
+    "day": 0,
+    "runtimeInjections": false
+  },
+  "launchOutput": "Starting: Intent { cmp=com.barriocero.eras/.MainActivity }\nStatus: ok\nLaunchState: COLD\nActivity: com.barriocero.eras/.MainActivity\nTotalTime: 7570\nWaitTime: 7598\nComplete\n",
+  "worldProfile": {
+    "lod": "Mundo",
+    "verified": "UI label and captured scene",
+    "frameMetrics": "not requested",
+    "renderedCountsVerified": false
+  },
+  "cameraPreservesExactCheckpoint": true,
+  "protagonistPreference": {
+    "version": 1,
+    "worldKey": "73:96:reconstruction",
+    "individualId": "p0a",
+    "bornDay": -10080,
+    "active": true
+  },
+  "reopenedFollowProfile": {
+    "lod": "Asentamiento",
+    "verified": "UI label and captured scene",
+    "frameMetrics": "not requested",
+    "renderedCountsVerified": false
+  },
+  "protagonistRestored": true,
+  "reopenExact": true,
+  "originalSavesRestoredExactly": true,
+  "passed": true
+}

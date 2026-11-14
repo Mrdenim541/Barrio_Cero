@@ -250,6 +250,7 @@ class SessionController {
         intensity: intensity,
         extraordinary: extraordinary,
         origin:origin,
+        geographyVersion:2,
       );
     if (autonomous) generated.controlledId = null;
     final candidate = Checkpoint.create(

@@ -12,7 +12,7 @@
   "milestoneStates": {
     "M0": "verified",
     "M1": "verified",
-    "M2": "pending",
+    "M2": "in_progress",
     "M3": "pending",
     "M4": "pending",
     "M5": "pending",
@@ -4377,5 +4377,19 @@
       "Alternative species/fauna and biological life modes are not implemented by the camera."
     ]
   },
-  "evidenceIndex": "docs/validation/planet/README.md"
+  "evidenceIndex": "docs/validation/planet/README.md",
+  "visualPriority": {
+    "request": "Prioritize approved graphics, textures and UI; publish a test APK on GitHub.",
+    "version": "0.18.0+19",
+    "design": "docs/design/ATLAS_RELEASE_018.md",
+    "scope": "Visual delivery and new-world geography; not full game acceptance.",
+    "status": "verified_visual_test_delivery",
+    "evidenceIndex": "docs/validation/atlas/README.md",
+    "nativeEvidence": [
+      "docs/validation/atlas/native-prehistory-release/results.json",
+      "docs/validation/atlas/native-legacy-release/results.json"
+    ],
+    "release": "https://github.com/Mrdenim541/Barrio_Cero/releases/tag/v0.18.0-test",
+    "remainingScope": "M2–M11 and physical performance acceptance remain open."
+  }
 }

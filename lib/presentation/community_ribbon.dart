@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'world_game.dart' show earth, gold, ink, moss;
+import 'atlas_chrome.dart';
 
 /// The always-visible controls. Explanations and full quantities open on demand.
 class CommunityRibbon extends StatelessWidget {
@@ -67,12 +68,9 @@ class CommunityRibbon extends StatelessWidget {
   );
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => AtlasPanel(
     padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-    decoration: const BoxDecoration(
-      color: ink,
-      border: Border(top: BorderSide(color: Color(0xff47514b))),
-    ),
+    color: ink,
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -99,6 +97,7 @@ class CommunityRibbon extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'serif',
                             ),
                           ),
                           Text(

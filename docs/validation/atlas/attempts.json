@@ -1,0 +1,25 @@
+{
+  "scope": "Development attempts retained separately from successful final validation",
+  "attempts": [
+    {
+      "log": "/tmp/barrio-atlas-preview-corrected.log",
+      "status": "failed",
+      "reason": "Test expected Ana in the prehistoric origin, whose first resident is Ama."
+    },
+    {
+      "results": "build/acceptance/20261114T163850.798268Z/results.json",
+      "status": "incomplete",
+      "reason": "New capture harness awaited fake-zone file I/O; helper corrected before the complete approved integration."
+    },
+    {
+      "results": "native-prehistory/results.json",
+      "status": "failed",
+      "reason": "Emulated GPU warm startup; CPU path tested and then scoped to affected emulators."
+    },
+    {
+      "results": "native-legacy-final/results.json",
+      "status": "failed",
+      "reason": "Local camera recovered but Flutter view label stayed Planeta; post-layout update and a regression test added."
+    }
+  ]
+}

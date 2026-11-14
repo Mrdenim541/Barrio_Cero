@@ -1,5 +1,13 @@
 # Estado de BARRIO CERO: ERAS
 
+## Entrega gráfica 0.18 — lista para pruebas
+
+Se priorizaron las láminas aprobadas: atlas de construcciones renovado, 24 texturas de suelo y ocho elementos de paisaje, costas/continentes para mundos nuevos, aldeas compactas y una interfaz verde/dorada con nombres contextuales. Seguir · Mundo · Historia conserva autonomía y guardados. [Alcance](docs/design/ATLAS_RELEASE_018.md).
+
+La integración aprobó 216 pruebas y análisis limpio. Ocho pruebas focalizadas aprobaron los ajustes posteriores de recorte, compatibilidad del emulador y sincronización del rótulo tras cargar al protagonista. El APK final fue compilado, firmado, instalado y reabierto en API29 con una apertura nueva y con el checkpoint anterior de 32 asentamientos. Se recuperaron protagonista y mundo exactos; todos los originales se restauraron por hash. Los fallos de candidatos previos y su corrección se conservan en [la evidencia](docs/validation/atlas/README.md).
+
+La firma coincide con el APK 0.15 que ya se distribuyó; API mínima 24. Los mundos nuevos tienen geografía 2 y plano 3, y las partidas anteriores conservan celdas, posiciones y reglas. M2 avanza en geografía; mundo 2/checkpoint 4 y el resto de M2–M11 siguen pendientes. Las pruebas finales de interfaz/recuperación no acreditan rendimiento físico ni estabilidad secular. Eras, especies alternativas, modos de vida, instituciones y narrativa ampliadas continúan abiertos.
+
 ## Plan del planeta — M0 y M1 funcionales comprobados (0.17)
 
 El plan vigente está en [PLANET_PLAN](docs/PLANET_PLAN.md) y conserva los 174 IDs en [la matriz](docs/planet_requirements.json). M0 comprobó 0.16 en Android API29: un año autónomo, intervención sin recursos gratuitos, salto cancelado al día 630 con objetivo 36.390 y reapertura exacta. Se restauraron los guardados originales. [Resultado](docs/validation/planet/m0-native-retry/results.json).

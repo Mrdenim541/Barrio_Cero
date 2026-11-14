@@ -9,6 +9,30 @@ import 'package:barrio_cero_eras/simulation/engine.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  testWidgets(
+    'Restoring a target before layout updates the visible level after resize',
+    (t) async {
+      final w = WorldState.generate(seed: 73, size: 96);
+      var notifications = 0;
+      final game = WorldGame((_) {}, onViewChanged: () => notifications++);
+      addTearDown(game.terrainCache.clear);
+      game.present(w.toJson(), generation: 1);
+      expect(game.followIndividual(w.societies.first.people.first.id), isTrue);
+      expect(game.mode, 'Mundo');
+      game.onGameResize(Vector2(320, 330));
+      expect(game.mode, 'Asentamiento');
+      expect(
+        notifications,
+        0,
+        reason: 'Flutter must not rebuild during layout',
+      );
+      await t.pump();
+      expect(notifications, 1);
+      expect(game.followedIndividualId, w.societies.first.people.first.id);
+      expect(game.data, w.toJson());
+    },
+  );
+
   test(
     'Following survives relocation and reload without acquiring authority',
     () {
