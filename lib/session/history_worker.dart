@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:isolate';
 
 import '../simulation/engine.dart';
+import 'history_slice.dart';
 
 /// Each batch, including the final one, waits for durable confirmation. Cancel
 /// requests stop at a daily boundary; they never acknowledge an unwritten batch.
@@ -28,18 +29,20 @@ void historyWorker(Map<String, dynamic> args) async {
     final target = args['target'] as int;
     final stop = args['stop'] as bool;
     while (world.day < target && !cancel) {
-      final before = world.day;
-      final days = (target - before).clamp(0, 30).toInt();
-      sim.advance(
-        AdvanceRequest(
-          days: days,
-          stopOnCrisis: stop,
-          delegateDecisions: !stop,
-        ),
+      final slice = await advanceHistorySlice(
+        sim,
+        targetDay: target,
+        stopOnCrisis: stop,
+        isCancelled: () => cancel,
       );
-      final done = world.day >= target || world.day < before + days;
+      final done = slice.done || slice.cancelled;
       confirmation = Completer<void>();
-      send.send({'world': world.toJson(), 'done': done, 'target': target});
+      send.send({
+        'world': world.toJson(),
+        'done': done,
+        'target': target,
+        if (slice.cancelled) 'cancelled': true,
+      });
       await confirmation.future;
       if (done) return;
       await Future<void>.delayed(Duration.zero);

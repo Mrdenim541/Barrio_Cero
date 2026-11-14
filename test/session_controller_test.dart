@@ -337,7 +337,7 @@ void main() {
         'port': port.sendPort,
         'world': world.world.toJson(),
         'content': world.content,
-        'target': 360,
+        'target': 36000,
         'stop': false,
       }, onExit: exits.sendPort);
       try {

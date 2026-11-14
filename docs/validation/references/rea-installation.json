@@ -1,0 +1,13 @@
+{
+  "name": "rea-agents",
+  "version": "6.9.0",
+  "license": "MIT",
+  "nodeVersion": "v24.22.1",
+  "cli": "/workspace/toolchains/rea/node_modules/rea-agents/scripts/rea.mjs",
+  "isolatedInstall": true,
+  "mcpRegistered": false,
+  "optionalDependenciesInstalled": false,
+  "installScriptsExecuted": false,
+  "lockSha256": "9c2dc7dc8997ca46b1f4f81e5c475d92eee7862c8768ca1e05696e6f8f691ee9",
+  "inspectedRepositoryCommit": "8296d81cd4028caca3295426628caefde8e9fbf5"
+}

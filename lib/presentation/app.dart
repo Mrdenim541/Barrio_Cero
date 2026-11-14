@@ -11,6 +11,7 @@ import 'storage.dart';
 import '../platform/document_exchange.dart';
 import '../session/session_controller.dart';
 import '../session/history_worker.dart';
+import '../session/history_slice.dart';
 import 'world_game.dart';
 import 'settlement_scene.dart';
 import 'community_brief.dart';
@@ -613,18 +614,18 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         final candidate = WorldState.fromJson(lease.snapshot.world);
         final sim = Simulation(candidate)
           ..registerContent(lease.snapshot.content);
-        final days = (lease.target - candidate.day).clamp(0, 30).toInt();
-        final advanced = sim.advanceDays(
-          days,
+        final slice = await advanceHistorySlice(
+          sim,
+          targetDay: lease.target,
           stopOnCrisis: lease.snapshot.stopCrisis,
-          delegateDecisions: !lease.snapshot.stopCrisis,
+          isCancelled: () => webCancel,
         );
-        final done = candidate.day >= lease.target || advanced < days;
         historyLease = await session.commitHistoryBatch(
           lease,
           candidate.toJson(),
-          done: done,
+          done: slice.done || slice.cancelled,
         );
+        if (slice.done || slice.cancelled) break;
         await Future<void>.delayed(const Duration(milliseconds: 1));
       }
       await _endJump(report: true, cancelled: webCancel);

@@ -1,5 +1,7 @@
 # Referencias y primera sesión de BARRIO CERO: ERAS
 
+La revisión ampliada tras probar 0.15 está en [REFERENCE_GAMES_AUDIT.md](REFERENCE_GAMES_AUDIT.md): 34 candidatos, profundidad de inspección explícita, fuentes abiertas verificadas y primer cambio de avance histórico. Esta selección conserva WorldBox/RimWorld/BitLife como referencias principales; no integra automáticamente todas las mecánicas listadas.
+
 Dirección vigente aclarada posteriormente por el usuario: [planeta autónomo](WORLD_AUTONOMY.md). WorldBox pasa a determinar el ciclo principal de observación e intervención opcional; RimWorld aporta necesidades, personajes y consecuencias, y BitLife acontecimientos personales. Seleccionar o intervenir no debe detener el gobierno propio de una sociedad. Los recorridos de gestión de este documento se conservan como caminos opcionales, no como condiciones de evolución del mundo.
 
 13 de noviembre de 2026. Dirección de diseño tras probar el APK y señalar el usuario que hay demasiadas opciones confusas. Dirección aprobada ampliada en [REDESIGN_SPEC.md](REDESIGN_SPEC.md); este documento no afirma que sus funciones ya estén implementadas. Conserva PROJECT_SPEC.md, especialmente sus apartados 6–8 y 17–19. R1 mejora primero el escenario actual; el origen prehistórico solo se ofrecerá con economía funcional en R4.

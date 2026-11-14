@@ -10,6 +10,8 @@ Decisiones aceptadas: prehistoria como origen predeterminado; reconstrucción co
 
 ## Flujo activo: seis entregas completas
 
+La revisión tras 0.15 amplía la selección a [34 referencias](docs/REFERENCE_GAMES_AUDIT.md), con cinco proyectos examinados en fuentes y un paquete inventariado mediante REA. Primer cambio 0.16: separar cálculo histórico y frecuencia de confirmación, manteniendo resultados y recuperación. La cámara continua por bloques, la expansión territorial visible y las actividades confirmadas siguen siendo criterios de E1/E2/E5; no se sustituyen por aumentar el zoom ni por esta optimización. La migración de motor permanece pendiente de una demostración comparativa, no decidida por instalar una herramienta de análisis.
+
 Esta organización responde a la petición de reducir fragmentación y gasto de validación. Sustituye el orden de microversiones, conservando todos los criterios R0–R13 y los 174 requisitos. El mapa completo está en [execution_batches.json](docs/execution_batches.json): cada requisito tiene una entrega responsable y sus dependencias. Ningún estado de cumplimiento cambia por reagruparlo.
 
 | Entrega | Pendientes que integra | Resultado revisable |

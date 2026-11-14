@@ -1,0 +1,191 @@
+[
+  {
+    "full_name": "godotengine/godot",
+    "html_url": "https://github.com/godotengine/godot",
+    "description": "Godot Engine – Multi-platform 2D and 3D game engine",
+    "default_branch": "master",
+    "pushed_at": "2026-11-13T15:58:34Z",
+    "license": {
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit",
+      "node_id": "MDc6TGljZW5zZTEz"
+    },
+    "head": "960f4db5be16e2f1f7b46f9db7c824c2e0af1035"
+  },
+  {
+    "full_name": "godotengine/godot-demo-projects",
+    "html_url": "https://github.com/godotengine/godot-demo-projects",
+    "description": "Demonstration and Template Projects",
+    "default_branch": "master",
+    "pushed_at": "2026-10-08T09:33:27Z",
+    "license": {
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit",
+      "node_id": "MDc6TGljZW5zZTEz"
+    },
+    "head": "b761b4cd5718a7118f2c95eb55f181d0a5f004f1"
+  },
+  {
+    "full_name": "Anuken/Mindustry",
+    "html_url": "https://github.com/Anuken/Mindustry",
+    "description": "The automation tower defense RTS",
+    "default_branch": "master",
+    "pushed_at": "2026-11-04T20:39:10Z",
+    "license": {
+      "key": "gpl-3.0",
+      "name": "GNU General Public License v3.0",
+      "spdx_id": "GPL-3.0",
+      "url": "https://api.github.com/licenses/gpl-3.0",
+      "node_id": "MDc6TGljZW5zZTk="
+    },
+    "head": "1a22b880576d2f8f97550280f76bfdd0d0069543"
+  },
+  {
+    "full_name": "yairm210/Unciv",
+    "html_url": "https://github.com/yairm210/Unciv",
+    "description": "Open-source Android/Desktop remake of Civ V",
+    "default_branch": "master",
+    "pushed_at": "2026-11-13T10:05:31Z",
+    "license": {
+      "key": "mpl-2.0",
+      "name": "Mozilla Public License 2.0",
+      "spdx_id": "MPL-2.0",
+      "url": "https://api.github.com/licenses/mpl-2.0",
+      "node_id": "MDc6TGljZW5zZTE0"
+    },
+    "head": "90175e1ff22b107a59964e9df4de682754aa524e"
+  },
+  {
+    "full_name": "widelands/widelands",
+    "html_url": "https://github.com/widelands/widelands",
+    "description": "Widelands is a free, open source real-time strategy game with singleplayer campaigns and a multiplayer mode. The game was inspired by Settlers II™ (© Bluebyte) but has significantly more variety and depth to it.",
+    "default_branch": "master",
+    "pushed_at": "2026-11-05T23:39:05Z",
+    "license": {
+      "key": "gpl-2.0",
+      "name": "GNU General Public License v2.0",
+      "spdx_id": "GPL-2.0",
+      "url": "https://api.github.com/licenses/gpl-2.0",
+      "node_id": "MDc6TGljZW5zZTg="
+    },
+    "head": "29753773d9c130e2a6a835ee6a14ad2bf317371d"
+  },
+  {
+    "full_name": "freeciv/freeciv",
+    "html_url": "https://github.com/freeciv/freeciv",
+    "description": "Freeciv is a Free and Open Source empire-building strategy game inspired by the history of human civilization. Upstream repository for the standalone Freeciv client and server. Report bugs and submit patches at https://redmine.freeciv.org/projects/freeciv",
+    "default_branch": "main",
+    "pushed_at": "2026-11-14T08:13:21Z",
+    "license": {
+      "key": "gpl-2.0",
+      "name": "GNU General Public License v2.0",
+      "spdx_id": "GPL-2.0",
+      "url": "https://api.github.com/licenses/gpl-2.0",
+      "node_id": "MDc6TGljZW5zZTg="
+    },
+    "head": "3efab1385e792dd367e955aee538bafd5ccadd05"
+  },
+  {
+    "full_name": "FreeCol/freecol",
+    "html_url": "https://github.com/FreeCol/freecol",
+    "description": "FreeCol: FreeCol is a turn-based strategy game based on the old game Colonization, and similar to Civilization. The objective of the game is to create an independent nation.",
+    "default_branch": "sf-auto-merge",
+    "pushed_at": "2026-11-12T12:05:04Z",
+    "license": {
+      "key": "gpl-2.0",
+      "name": "GNU General Public License v2.0",
+      "spdx_id": "GPL-2.0",
+      "url": "https://api.github.com/licenses/gpl-2.0",
+      "node_id": "MDc6TGljZW5zZTg="
+    },
+    "head": "0c8898880ec3ee891fd83c8d0522489d69fa797f"
+  },
+  {
+    "full_name": "OpenTTD/OpenTTD",
+    "html_url": "https://github.com/OpenTTD/OpenTTD",
+    "description": "OpenTTD is an open source simulation game based upon Transport Tycoon Deluxe",
+    "default_branch": "master",
+    "pushed_at": "2026-11-14T11:41:49Z",
+    "license": {
+      "key": "other",
+      "name": "Other",
+      "spdx_id": "NOASSERTION",
+      "url": null,
+      "node_id": "MDc6TGljZW5zZTA="
+    },
+    "head": "b0f3b046c0f732a22f4eeeeaea326a64278572e9"
+  },
+  {
+    "full_name": "Revolutionary-Games/Thrive",
+    "html_url": "https://github.com/Revolutionary-Games/Thrive",
+    "description": "The main repository for the development of the evolution game Thrive. ",
+    "default_branch": "master",
+    "pushed_at": "2026-11-14T10:36:51Z",
+    "license": {
+      "key": "other",
+      "name": "Other",
+      "spdx_id": "NOASSERTION",
+      "url": null,
+      "node_id": "MDc6TGljZW5zZTA="
+    },
+    "head": "109c77fe437313c5029cefbdc7afba240f64d912"
+  },
+  {
+    "full_name": "cataclysmbn/Cataclysm-BN",
+    "html_url": "https://github.com/cataclysmbn/Cataclysm-BN",
+    "description": "Cataclysm: Bright Nights: A fork/variant of Cataclysm:DDA by CleverRaven with a mod registry at https://mods.cataclysmbn.org/",
+    "default_branch": "main",
+    "pushed_at": "2026-11-14T10:35:41Z",
+    "license": {
+      "key": "other",
+      "name": "Other",
+      "spdx_id": "NOASSERTION",
+      "url": null,
+      "node_id": "MDc6TGljZW5zZTA="
+    },
+    "head": "e54e8830ee2fc13b4c6efc330a7babf31f6d13b1"
+  },
+  {
+    "full_name": "CleverRaven/Cataclysm-DDA",
+    "html_url": "https://github.com/CleverRaven/Cataclysm-DDA",
+    "description": "Cataclysm - Dark Days Ahead. A turn-based survival game set in a post-apocalyptic world.",
+    "default_branch": "master",
+    "pushed_at": "2026-11-14T07:49:32Z",
+    "license": {
+      "key": "other",
+      "name": "Other",
+      "spdx_id": "NOASSERTION",
+      "url": null,
+      "node_id": "MDc6TGljZW5zZTA="
+    },
+    "head": "7136388ca55f1917de99c74a31ff5955d719a50d"
+  },
+  {
+    "full_name": "freeorion/freeorion",
+    "html_url": "https://github.com/freeorion/freeorion",
+    "description": "Source code repository of the FreeOrion project.",
+    "default_branch": "master",
+    "pushed_at": "2026-11-14T06:02:28Z",
+    "license": null,
+    "head": "342258eedf03fcb59766030073683c476ce2d20d"
+  },
+  {
+    "full_name": "morluto/rea",
+    "html_url": "https://github.com/morluto/rea",
+    "description": "Reverse engineer anything with agents, from app behavior down to native binaries.",
+    "default_branch": "main",
+    "pushed_at": "2026-11-14T14:25:05Z",
+    "license": {
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit",
+      "node_id": "MDc6TGljZW5zZTEz"
+    },
+    "head": "f8fc5be3648947151ed9dbfb7d1b77c1ab1ad22d"
+  }
+]

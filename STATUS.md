@@ -1,5 +1,13 @@
 # Estado de BARRIO CERO: ERAS
 
+## Referencias ampliadas y avance histórico 0.16 en integración
+
+REA 6.9.0 instalado por CLI aislado en `/workspace/toolchains/rea`, sin registrar MCP ni publicar configuración. El paquete oficial Mindustry v160.7 se inventarió estáticamente; se inspeccionaron fuentes de Mindustry, Unciv, Widelands, Freeciv y OpenTTD. El [catálogo de 34 referencias](docs/REFERENCE_GAMES_AUDIT.md) distingue fuentes inspeccionadas, metadatos comprobados y candidatos de diseño sin ejecución directa. No se incorporaron recursos ni código de terceros al juego.
+
+El primer cambio agrupa el avance histórico con presupuesto de cálculo y confirmación duradera por lote, compartido entre Android y web. Conserva reglas diarias, PRNG, cancelación, crisis y objetivo recuperable. La comparación AOT local de diez años con archivos temporales confirmó estado completo idéntico: 120→10 guardados, 102.459.424→8.665.333 bytes escritos y 20.054→3.525 ms. Es una sola comparación secuencial del host; no acredita velocidad del teléfono ni un siglo completo. La nueva granularidad puede repetir hasta un año de cálculo sin confirmar después de un cierre abrupto; nunca publica ese cálculo como guardado.
+
+Las comprobaciones de esta integración y sus límites están en [evidencia de referencias](docs/validation/references/). Cámara territorial continua, tareas locales reales, instituciones, eras, especies y aceptación completa siguen pendientes. Esta mejora y la instalación de REA no completan el juego ni cambian la dirección acordada.
+
 ## Integración 0.15 — observar e intervenir sin dirigir
 
 Los mundos nuevos empiezan autónomos y la pantalla inicial muestra el mundo. Las comunidades construyen, investigan y resuelven acontecimientos sin esperar órdenes. Intervenir utiliza sus recursos y reservas y conserva el gobierno autónomo después. Las partidas manuales se cargan intactas y pueden cambiar mediante Dejar actuar al mundo, que entrega también sus decisiones pendientes a los consejos. No se cambian reglas físicas ni esquema de guardado.

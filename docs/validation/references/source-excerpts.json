@@ -1,0 +1,39 @@
+[
+  {
+    "repository": "widelands/widelands",
+    "path": "src/logic/game.cc",
+    "head": "29753773d9c130e2a6a835ee6a14ad2bf317371d",
+    "sha256": "d102876a3c19be8c8d80e90e714f392cb4a0df904a0b32a7db8c6da094bc794e",
+    "local": "/workspace/references/source-excerpts/widelands/widelands/src/logic/game.cc",
+    "url": "https://github.com/widelands/widelands/blob/29753773d9c130e2a6a835ee6a14ad2bf317371d/src/logic/game.cc"
+  },
+  {
+    "repository": "widelands/widelands",
+    "path": "src/logic/cmd_queue.cc",
+    "error": "gh: Not Found (HTTP 404)"
+  },
+  {
+    "repository": "freeciv/freeciv",
+    "path": "common/player.h",
+    "head": "3efab1385e792dd367e955aee538bafd5ccadd05",
+    "sha256": "c94f140ddee2729549a2aea10d44328a39fc75f7b34a89decba15a01d760f3e8",
+    "local": "/workspace/references/source-excerpts/freeciv/freeciv/common/player.h",
+    "url": "https://github.com/freeciv/freeciv/blob/3efab1385e792dd367e955aee538bafd5ccadd05/common/player.h"
+  },
+  {
+    "repository": "freeciv/freeciv",
+    "path": "common/city.h",
+    "head": "3efab1385e792dd367e955aee538bafd5ccadd05",
+    "sha256": "5caa132e6737471661cf7afb66802b25faab05de3bbd67f337ae16cc92bc0c10",
+    "local": "/workspace/references/source-excerpts/freeciv/freeciv/common/city.h",
+    "url": "https://github.com/freeciv/freeciv/blob/3efab1385e792dd367e955aee538bafd5ccadd05/common/city.h"
+  },
+  {
+    "repository": "OpenTTD/OpenTTD",
+    "path": "src/openttd.cpp",
+    "head": "b0f3b046c0f732a22f4eeeeaea326a64278572e9",
+    "sha256": "2ce1d5454ca7f6f8c2078499198597605338b5ad3575d48d46543144bde35c7f",
+    "local": "/workspace/references/source-excerpts/OpenTTD/OpenTTD/src/openttd.cpp",
+    "url": "https://github.com/OpenTTD/OpenTTD/blob/b0f3b046c0f732a22f4eeeeaea326a64278572e9/src/openttd.cpp"
+  }
+]

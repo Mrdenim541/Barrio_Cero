@@ -1,0 +1,7 @@
+{
+  "path": "build/validation/reference-analysis/mindustry-artifact.evidence.json",
+  "bytes": 12606417,
+  "sha256": "a5d9381885c2e88aae7acaea5d43946abb5bb8eba8d61b936ba83d3bee028e69",
+  "includedInGit": false,
+  "reason": "Complete 12 MiB REA evidence retained locally; compact report tracked with immutable artifact identity."
+}

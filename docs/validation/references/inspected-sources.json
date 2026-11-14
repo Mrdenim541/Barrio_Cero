@@ -1,0 +1,94 @@
+[
+  {
+    "repository": "Anuken/Mindustry",
+    "commit": "1a22b880576d2f8f97550280f76bfdd0d0069543",
+    "file": "core/src/mindustry/core/Renderer.java",
+    "sha256": "130fc5d6d0ba38867cac94319d067bca284ec8aade54a924fadb4b4b6e0ae49a",
+    "url": "https://github.com/Anuken/Mindustry/blob/1a22b880576d2f8f97550280f76bfdd0d0069543/core/src/mindustry/core/Renderer.java",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "Anuken/Mindustry",
+    "commit": "1a22b880576d2f8f97550280f76bfdd0d0069543",
+    "file": "core/src/mindustry/core/Logic.java",
+    "sha256": "e4025ea53ba96334a54f218b5d93bc6ffaf53e86d9e9f9d38af1665038108972",
+    "url": "https://github.com/Anuken/Mindustry/blob/1a22b880576d2f8f97550280f76bfdd0d0069543/core/src/mindustry/core/Logic.java",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "Anuken/Mindustry",
+    "commit": "1a22b880576d2f8f97550280f76bfdd0d0069543",
+    "file": "core/src/mindustry/graphics/FloorRenderer.java",
+    "sha256": "81b7ca75c36a67e66b253d57501bad578042a5f23660d95448df7a81f73f806b",
+    "url": "https://github.com/Anuken/Mindustry/blob/1a22b880576d2f8f97550280f76bfdd0d0069543/core/src/mindustry/graphics/FloorRenderer.java",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "yairm210/Unciv",
+    "commit": "90175e1ff22b107a59964e9df4de682754aa524e",
+    "file": "core/src/com/unciv/logic/GameInfo.kt",
+    "sha256": "edc54e8724ba19f4fad4b6dc6b02edddaea78eea331aaf313584a9b5505a0520",
+    "url": "https://github.com/yairm210/Unciv/blob/90175e1ff22b107a59964e9df4de682754aa524e/core/src/com/unciv/logic/GameInfo.kt",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "yairm210/Unciv",
+    "commit": "90175e1ff22b107a59964e9df4de682754aa524e",
+    "file": "core/src/com/unciv/logic/civilization/managers/TurnManager.kt",
+    "sha256": "50d20d413130bd668adf59d68e9c361d8b00ed2286a74a0819de37a54f9ded3e",
+    "url": "https://github.com/yairm210/Unciv/blob/90175e1ff22b107a59964e9df4de682754aa524e/core/src/com/unciv/logic/civilization/managers/TurnManager.kt",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "yairm210/Unciv",
+    "commit": "90175e1ff22b107a59964e9df4de682754aa524e",
+    "file": "core/src/com/unciv/logic/automation/civilization/NextTurnAutomation.kt",
+    "sha256": "c410adcb0d55c679f6057d49cc1d7f4e6d1076ee0bb0183dbbac5d98194315f6",
+    "url": "https://github.com/yairm210/Unciv/blob/90175e1ff22b107a59964e9df4de682754aa524e/core/src/com/unciv/logic/automation/civilization/NextTurnAutomation.kt",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "yairm210/Unciv",
+    "commit": "90175e1ff22b107a59964e9df4de682754aa524e",
+    "file": "core/src/com/unciv/ui/screens/worldscreen/worldmap/WorldMapHolder.kt",
+    "sha256": "bfdcacb200d22dae03c71bc3d23cdceae44e73fae469ab442c6c737d2adbae23",
+    "url": "https://github.com/yairm210/Unciv/blob/90175e1ff22b107a59964e9df4de682754aa524e/core/src/com/unciv/ui/screens/worldscreen/worldmap/WorldMapHolder.kt",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "widelands/widelands",
+    "path": "src/logic/game.cc",
+    "head": "29753773d9c130e2a6a835ee6a14ad2bf317371d",
+    "sha256": "d102876a3c19be8c8d80e90e714f392cb4a0df904a0b32a7db8c6da094bc794e",
+    "local": "/workspace/references/source-excerpts/widelands/widelands/src/logic/game.cc",
+    "url": "https://github.com/widelands/widelands/blob/29753773d9c130e2a6a835ee6a14ad2bf317371d/src/logic/game.cc",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "freeciv/freeciv",
+    "path": "common/player.h",
+    "head": "3efab1385e792dd367e955aee538bafd5ccadd05",
+    "sha256": "c94f140ddee2729549a2aea10d44328a39fc75f7b34a89decba15a01d760f3e8",
+    "local": "/workspace/references/source-excerpts/freeciv/freeciv/common/player.h",
+    "url": "https://github.com/freeciv/freeciv/blob/3efab1385e792dd367e955aee538bafd5ccadd05/common/player.h",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "freeciv/freeciv",
+    "path": "common/city.h",
+    "head": "3efab1385e792dd367e955aee538bafd5ccadd05",
+    "sha256": "5caa132e6737471661cf7afb66802b25faab05de3bbd67f337ae16cc92bc0c10",
+    "local": "/workspace/references/source-excerpts/freeciv/freeciv/common/city.h",
+    "url": "https://github.com/freeciv/freeciv/blob/3efab1385e792dd367e955aee538bafd5ccadd05/common/city.h",
+    "evidenceType": "source inspection; no runtime execution"
+  },
+  {
+    "repository": "OpenTTD/OpenTTD",
+    "path": "src/openttd.cpp",
+    "head": "b0f3b046c0f732a22f4eeeeaea326a64278572e9",
+    "sha256": "2ce1d5454ca7f6f8c2078499198597605338b5ad3575d48d46543144bde35c7f",
+    "local": "/workspace/references/source-excerpts/OpenTTD/OpenTTD/src/openttd.cpp",
+    "url": "https://github.com/OpenTTD/OpenTTD/blob/b0f3b046c0f732a22f4eeeeaea326a64278572e9/src/openttd.cpp",
+    "evidenceType": "source inspection; no runtime execution"
+  }
+]
