@@ -69,9 +69,9 @@ void main() {
     w.validate();
   });
 
-  test('Immigration moves actual residents and preserves source culture', () {
+  test('Rules10 immigration preserves actual residents and source culture', () {
     final w = WorldState.generate(size: 64);
-    w.society('s1')!.health=30;fixturePath(w,'s1','s0');
+    w.rulesVersion=10;w.society('s1')!.health=30;fixturePath(w,'s1','s0');
     final sim = Simulation(w)..registerContent(event(4));
     final total = w.populationState!.total;
     final culture = w.entities!.cityFor('s1')!.cultureId;

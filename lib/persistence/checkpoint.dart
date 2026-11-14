@@ -290,6 +290,7 @@ class Checkpoint {
     final identities=WorldEntities.fromJson(Map<String,dynamic>.from(raw['entities']));
     raw['populationState']??=WorldState.estimatePopulation(previous.world.day,(raw['societies'] as List).cast<Map<String,dynamic>>(),identities).toJson();
     raw['socialState']??=SocialState().toJson();
+    if(WorldState.currentRules>=11)raw['migrations']??=[];
     raw['rulesVersion'] = WorldState.currentRules;
     raw['randomAlgorithm'] = RandomState.algorithm;
     final candidate = WorldState.fromJson(raw);

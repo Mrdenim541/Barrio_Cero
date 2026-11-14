@@ -2,6 +2,16 @@
 
 ## Rediseño actual — R0 registrado; R1–R6 parciales
 
+## Integración 0.12 — población y provisiones en tránsito
+
+187 pruebas y análisis limpio. Los adultos comunes salen de una población real, reservan provisiones pagadas y recorren una celda diaria. Se cuentan fuera de las ciudades mientras viajan; las llegadas reservan vivienda. Cortes, desvíos, espera, regreso, privación y llegada única conservan población y materiales. La ficha muestra posición, provisiones y estado; el mapa localiza el grupo. Las partidas anteriores mantienen sus reglas y no se inventan viajes para traslados ya terminados.
+
+Se corrigió un fallo de orden diario detectado por los siglos largos: los viajeros deben actualizarse después de la economía y antes de la narrativa mensual. Se conserva la variante fallida y su regresión. Ambos orígenes aprobaron cien años equivalentes con el catálogo real; también pasó el reinicio del trabajador desde un checkpoint en tránsito.
+
+El APK final 0.12 profile se compiló, instaló y ejecutó en API29. Android comprobó coste completo, cinco viajeros fuera de las ciudades, cierre/reapertura en el segundo día, llegada única en el sexto, entrega del remanente y nueva reapertura. Las partidas originales se restauraron exactamente. Las cargas de apertura y maduras sostuvieron 32 comunidades durante un siglo en mapas 64 y 96. La matriz larga de reglas 11 sigue en curso y no acredita todavía las treinta semillas ni los milenios. [Evidencia y límites](docs/validation/transit/results.json).
+
+R6 sigue parcial. Faltan viajes de familias y personajes destacados, colonización en tránsito, territorio, instituciones y conflictos políticos completos. El resto de los hitos y la revisión visual siguen pendientes; esta integración no completa el juego.
+
 ## Integración 0.11 — protección del trabajo de subsistencia
 
 170 pruebas, análisis limpio y APK profile 0.11 compilado, instalado y ejecutado en API29. Cuando escasean raciones, el trabajo realmente productivo para alimento y agua tiene prioridad sobre otros compromisos. Las caravanas conservan posición y carga mientras esperan. La autonomía puede ordenar retornos físicos para liberar compromisos; no se proporcionan recursos gratuitos. Las reglas anteriores se conservan hasta conversión explícita.

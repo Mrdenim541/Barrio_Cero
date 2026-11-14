@@ -1,0 +1,34 @@
+{
+  "version": "0.12.0+13",
+  "rules": 11,
+  "mode": "profile",
+  "device": "API29 software emulator; not reference-phone performance",
+  "scenario": "Declared initial illness and pending invitation; naturally connected six-cell journey, no runtime aid",
+  "installationOutput": "Performing Streamed Install\nSuccess\n",
+  "previewPreservesCheckpoint": true,
+  "departure": {
+    "residents": 5,
+    "source": "s1",
+    "destination": "s0",
+    "cityPopulationNotPrematurelyIncreased": true,
+    "globalPopulationConserved": true,
+    "foodPaid": 24.5,
+    "waterPaid": 3.5,
+    "initialJourneyFood": 4.5,
+    "initialJourneyWater": 3.5
+  },
+  "midflightForceStopReopenExact": true,
+  "arrival": {
+    "day": 6,
+    "residentsArrivedOnce": 5,
+    "globalPopulationConserved": true,
+    "foodConsumed": 1.35,
+    "waterConsumed": 1.05,
+    "foodDelivered": 3.15,
+    "waterDelivered": 2.45,
+    "suppliesBalanced": true
+  },
+  "arrivalForceStopReopenExact": true,
+  "originalDataRestoredExactly": true,
+  "apkSha256": "d75ef2263766e19cad3bbbe025c87023049fb33b0d17280a953e05604e6b06f8"
+}

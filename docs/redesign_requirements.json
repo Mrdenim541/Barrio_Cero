@@ -123,6 +123,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
           "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -161,6 +168,13 @@
           "result": "passed",
           "command": "flutter test --no-pub; flutter analyze --no-pub; compiled AOT century group per origin",
           "scope": "139 pruebas; población, bajas, cultura, sucesión y formación con reservas; cien años equivalentes por origen. No acredita hogares, parentesco, tránsito migrante ni el hito completo."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -224,6 +238,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
           "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -256,6 +277,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
           "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -306,7 +334,15 @@
         "R9"
       ],
       "state": "pending",
-      "evidence": []
+      "evidence": [
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
+        }
+      ]
     },
     {
       "id": "R11",
@@ -353,6 +389,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
           "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -1587,6 +1630,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules9 century runners; profile API29 migration scenario",
           "scope": "166 tests; both origins reach identical centuries; native five adult transfer with real source, payment and reopening. Full R6, migration-in-transit and long rules9 suites remain pending."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -2278,6 +2328,13 @@
           "result": "passed",
           "command": "flutter test; Android upgrade/union/capital/restore",
           "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -2304,6 +2361,13 @@
           "result": "passed",
           "command": "flutter test; Android upgrade/union/capital/restore",
           "scope": "Inventarios enteros, restos demográficos, copia de reglas y pertenencia política múltiple; no completa todas las obligaciones de R2/R3."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },
@@ -2421,6 +2485,13 @@
           "result": "passed",
           "command": "flutter test; frozen rules10 century runners; profile API29 conversion and water/cargo regression",
           "scope": "170 tests, both century equivalence scenarios and native ration/cargo/reopen checks. Long stability and remaining32 cases recorded separately; no reference-phone performance acceptance."
+        },
+        {
+          "path": "docs/validation/transit/results.json",
+          "kind": "behavioral",
+          "result": "passed",
+          "command": "flutter test; frozen corrected rules11 century runners; profile API29 transit/force-stop/reopen scenario",
+          "scope": "187 tests; both origins century-equivalent; actual five-resident journey, paid provisions, midflight and final reopen. Full R6, expanded catalog and reference-phone performance remain pending."
         }
       ]
     },

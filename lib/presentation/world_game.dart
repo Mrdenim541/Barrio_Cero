@@ -199,6 +199,17 @@ class WorldGame extends FlameGame {
         Paint()..color = gold,
       );
     }
+    for(final raw in data['migrations'] as List? ?? []){
+      if(!['outbound','returning'].contains(raw['status']))continue;
+      final cells=List<int>.from(raw['path']),cursor=number(raw['progress']);
+      if(cells.isEmpty||cursor<0||cursor>=cells.length)continue;
+      final route=Path();
+      for(var i=cursor;i<cells.length;i++){final cell=cells[i],p=Offset(cell%extent+.5,cell~/extent+.5);if(i==cursor){route.moveTo(p.dx,p.dy);}else{route.lineTo(p.dx,p.dy);}}
+      canvas.drawPath(route,Paint()..color=const Color(0xff68b8b1)..style=PaintingStyle.stroke..strokeWidth=.2..isAntiAlias=false);
+      final cell=cells[cursor],x=cell%extent+.5,y=cell~/extent+.5;
+      canvas.drawRect(Rect.fromCenter(center:Offset(x,y),width:2,height:2),Paint()..color=ink);
+      canvas.drawRect(Rect.fromCenter(center:Offset(x,y),width:1.3,height:1.3),Paint()..color=raw['blocked']==true?const Color(0xffbb715d):const Color(0xff68b8b1));
+    }
     final colorsSoc = [
       const Color(0xffeac27b),
       const Color(0xff8cb3b0),

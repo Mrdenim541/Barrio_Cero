@@ -125,7 +125,7 @@ void main() {
 
   test('Legacy rules use frozen tables and retain exact serialization', () {
     final raw = WorldState.generate(size: 64).toJson();
-    raw['rulesVersion'] = 3;
+    raw['rulesVersion'] = 3;raw.remove('migrations');
     raw.remove('catalog');raw.remove('populationState');raw.remove('socialState');
     final w = WorldState.fromJson(raw);
     final before = w.canonical();

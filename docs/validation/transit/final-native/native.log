@@ -1,0 +1,22 @@
+/workspace/Barrio_Cero/build/validation/transit-native-checkpoint.json: 1 file pushed, 0 skipped. 23.5 MB/s (732672 bytes in 0.030s)
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Tap: Historia
+Tap: Consultar decisiones de tu comunidad
+Tap: Organizar la respuesta
+Tap: Confirmar orden
+Tap: Barrio
+Tap: + Día
+Tap: + Día
+Tap: Ver habitantes en camino
+Tap: Localizar en el mundo
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Tap: + Día
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: + Día
+Tap: + Día
+Tap: + Día
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+{"version": "0.12.0+13", "rules": 11, "mode": "profile", "device": "API29 software emulator; not reference-phone performance", "scenario": "Declared initial illness and pending invitation; naturally connected six-cell journey, no runtime aid", "installationOutput": "Performing Streamed Install\nSuccess\n", "previewPreservesCheckpoint": true, "departure": {"residents": 5, "source": "s1", "destination": "s0", "cityPopulationNotPrematurelyIncreased": true, "globalPopulationConserved": true, "foodPaid": 24.5, "waterPaid": 3.5, "initialJourneyFood": 4.5, "initialJourneyWater": 3.5}, "midflightForceStopReopenExact": true, "arrival": {"day": 6, "residentsArrivedOnce": 5, "globalPopulationConserved": true, "foodConsumed": 1.35, "waterConsumed": 1.05, "foodDelivered": 3.15, "waterDelivered": 2.45, "suppliesBalanced": true}, "arrivalForceStopReopenExact": true, "originalDataRestoredExactly": true}

@@ -1,5 +1,9 @@
 # Auditoría de implementación en curso
 
+## Actualización 0.12 — reglas 11
+
+187 pruebas y análisis limpio. Los grupos de adultos comunes tienen residencia en tránsito, provisiones pagadas, posición diaria, desvíos, espera, regreso, bajas y entrega única. El coste total se consulta antes de confirmar. Se preservan fechas/culturas, plazas comprometidas, balance de viaje y reglas antiguas. Los dos siglos equivalentes y el trabajador con checkpoint en tránsito aprobaron. Android final comprobó salida, coste, cierre en camino, llegada y reapertura; originales restaurados por hash. La primera variante falló la validación mensual anterior al paso de viajeros y se conserva como fallo, junto con su corrección reproducida. [Resultados y variantes](validation/transit/results.json). Territorio, instituciones, familias/colonización en tránsito y demás obligaciones de R6 siguen pendientes.
+
 ## Actualización 0.11 — reglas 10
 
 170 pruebas y análisis limpio; raciones productivas protegidas frente a compromisos antiguos, caravanas en espera con carga y retorno autónomo físico. Se conservan los fallos y repeticiones. Android comprobó conversión de reglas 9 sin pérdida, ración completa de agua, cierre/reapertura y restauración de originales. Ambos orígenes repitieron siglos equivalentes; apertura 64×64 sostuvo al menos 32 durante el siglo. Las otras cargas y la matriz larga se registran por caso cuando concluyen. No se acredita rendimiento del teléfono físico ni finalización del juego. [Evidencia](validation/labor/README.md).

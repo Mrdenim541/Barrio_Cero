@@ -1,0 +1,12 @@
+Unhandled exception:
+FormatException: Viaje activo ya resuelto
+#0      MigrationJourney.validate (package:barrio_cero_eras/simulation/v2/migration.dart:136)
+#1      WorldState.assertPopulation (package:barrio_cero_eras/simulation/engine.dart:190)
+#2      WorldState.validate (package:barrio_cero_eras/simulation/engine.dart:213)
+#3      ContentSimulation.resolveContentEvent (package:barrio_cero_eras/simulation/engine.dart:1204)
+#4      ContentSimulation._directContent (package:barrio_cero_eras/simulation/engine.dart:1194)
+#5      Simulation._tick (package:barrio_cero_eras/simulation/engine.dart:953)
+#6      Simulation.advanceDays (package:barrio_cero_eras/simulation/engine.dart:730)
+#7      main (file:///workspace/Barrio_Cero/tool/benchmark.dart:61)
+#8      _delayEntrypointInvocation.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:314)
+#9      _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193)

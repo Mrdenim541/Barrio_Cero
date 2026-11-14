@@ -1,0 +1,6 @@
+{
+  "runtimeSourcesMatchCompiledVariant": true,
+  "addedAfterBinaryFreeze": "Historical worker checkpoint/restart test only; product code and runner unchanged",
+  "testSourceSha256": "41a828c6a38ce4feca542e1c21040f02feb527851b582ee86944217a77010361",
+  "fullSuitePassed": 187
+}

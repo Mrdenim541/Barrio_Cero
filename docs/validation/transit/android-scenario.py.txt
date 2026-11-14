@@ -1,0 +1,120 @@
+import subprocess,xml.etree.ElementTree as ET,re,json,hashlib,pathlib
+root=pathlib.Path.cwd();tmp=root/'build/validation/transit-android-harness';tmp.mkdir(parents=True,exist_ok=True)
+def adb(*args):return subprocess.check_output(['adb',*args],timeout=120)
+def dump():
+ for attempt in range(4):
+  result=adb('shell','uiautomator','dump','/sdcard/barrio-window.xml')
+  if b'dumped to:' not in result:continue
+  data=adb('exec-out','cat','/sdcard/barrio-window.xml')
+  (tmp/'window.xml').write_bytes(data)
+  return list(ET.fromstring(data).iter('node'))
+ raise RuntimeError('Android UI automation could not obtain a fresh hierarchy')
+def tap(label):
+ nodes=dump()
+ for n in nodes:
+  text=n.get('text') or n.get('content-desc') or ''
+  if text==label or text.startswith(label+'\n'):
+   x1,y1,x2,y2=map(int,re.findall(r'\d+',n.get('bounds')))
+   adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));print('Tap: '+label,flush=True);return
+ raise RuntimeError('No control '+label+'; visible '+str([(n.get('text') or n.get('content-desc')) for n in nodes if n.get('text') or n.get('content-desc')]))
+def capture(name):
+ dump();(out/name).write_bytes(adb('exec-out','screencap','-p'))
+def saved(name):
+ raw=adb('exec-out','run-as','com.barriocero.eras','cat','app_flutter/barrio_cero/world_0.json')
+ (tmp/name).write_bytes(raw);return json.loads(raw)
+import time
+out=root/'docs/validation/transit/final-native';out.mkdir(exist_ok=True)
+pkg='com.barriocero.eras';folder='app_flutter/barrio_cero';before='app_flutter/native_before_12_r2';after='app_flutter/native_after_12_r2'
+def run(*args):return adb('shell','run-as',pkg,*args)
+def exists(path):return subprocess.run(['adb','shell','run-as',pkg,'ls','-d',path],capture_output=True,timeout=40).returncode==0
+def stop():
+ adb('shell','am','force-stop',pkg)
+ deadline=time.monotonic()+30
+ while subprocess.run(['adb','shell','pidof',pkg],capture_output=True,timeout=10).stdout.strip():
+  if time.monotonic()>deadline:raise RuntimeError('Application did not stop')
+  time.sleep(.2)
+def inventory():
+ result={}
+ for name in run('ls','-1',folder).decode().splitlines():
+  if not re.fullmatch(r'[A-Za-z0-9_.-]+',name):raise RuntimeError('Unexpected filename')
+  raw=adb('exec-out','run-as',pkg,'cat',folder+'/'+name);result[name]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+ return result
+def rawworld():return adb('exec-out','run-as',pkg,'cat',folder+'/world_0.json')
+def world():return json.loads(rawworld())['payload']['world']
+def coherent(w):
+ p=w['populationState'];assert p['day']==w['day'];counts={}
+ for c in p['cohorts']:
+  band=0 if (w['day']-c['bornDay'])//360<16 else 1 if (w['day']-c['bornDay'])//360<65 else 2
+  counts.setdefault(c['settlement'],[0,0,0])[band]+=c['count']
+ for s in w['societies']:
+  assert counts.get(s['id'],[0,0,0])==[s['children'],s['adults'],s['elders']]
+  for person in s['people']:
+   if person['diedDay'] is None:
+    c=next(c for c in p['cohorts'] if c['id']==p['members'][person['id']]);assert c['settlement']==s['id'] and c['bornDay']==person['bornDay']
+
+def tap_visible(label):
+ for attempt in range(5):
+  try:tap(label);return
+  except RuntimeError as e:
+   if 'No control' not in str(e) or attempt==4:raise
+   adb('shell','input','swipe','282','542','282','288','350')
+
+def trip(w):return w['migrations'][0]
+def total(w):return sum(c['count'] for c in w['populationState']['cohorts'])
+import os
+runTag=os.environ.get('BARRIO_NATIVE_RUN_TAG','')
+if not re.fullmatch(r'[a-zA-Z0-9_]{1,40}',runTag):raise RuntimeError('Set a fresh BARRIO_NATIVE_RUN_TAG before running this harness')
+out=root/'build/validation/native-runs'/runTag
+out.mkdir(parents=True,exist_ok=False)
+before='app_flutter/native_before_'+runTag;after='app_flutter/native_after_'+runTag
+results={'version':'0.12.0+13','rules':11,'mode':'profile','device':'API29 software emulator; not reference-phone performance','scenario':'Declared initial illness and pending invitation; naturally connected six-cell journey, no runtime aid'};moved=False
+try:
+ stop()
+ if exists(before) or exists(after):raise RuntimeError('Prior transit fixture exists; refusing overwrite')
+ fixture=(root/'build/validation/transit-native-checkpoint.json').read_bytes();old=json.loads(fixture)['payload']['world'];assert old['rulesVersion']==11
+ metadata=json.loads((root/'build/validation/transit-scenario.log').read_text());source=metadata['initialCondition']['source'];destination=old['controlledId']
+ original=inventory();(out/'native-original-inventory.json').write_text(json.dumps(original,indent=2)+'\n')
+ results['installationOutput']=adb('install','-r',str(root/'build/deliverables/barrio-cero-eras-0.12.0-profile.apk')).decode()
+ run('mv',folder,before);moved=True;run('mkdir',folder)
+ adb('push',str(root/'build/validation/transit-native-checkpoint.json'),'/data/local/tmp/barrio-transit-fixture.json');run('cp','/data/local/tmp/barrio-transit-fixture.json',folder+'/world_0.json');assert rawworld()==fixture
+ adb('shell','am','start','-n',pkg+'/.MainActivity');tap('Continuar historia');dump();assert rawworld()==fixture
+ tap('Historia');tap_visible('Consultar decisiones de tu comunidad');tap_visible('Organizar la respuesta');capture('01-full-cost-and-duration.png');assert rawworld()==fixture
+ results['previewPreservesCheckpoint']=True
+ tap_visible('Confirmar orden');dump();w=world();coherent(w);j=trip(w);towns={s['id']:s for s in w['societies']};prior={s['id']:s for s in old['societies']}
+ assert j['status']=='outbound' and j['departed']==5 and j['plannedDistance']==6 and j['progress']==0
+ assert towns[source]['population']==prior[source]['population']-5 and towns[destination]['population']==prior[destination]['population']
+ assert total(w)==total(old) and w['rng']==old['rng'] and w['day']==0
+ assert towns[destination]['resourceMillis']['food']==prior[destination]['resourceMillis']['food']-24500
+ assert towns[destination]['resourceMillis']['water']==prior[destination]['resourceMillis']['water']-3500
+ assert sum(c['count'] for c in w['populationState']['cohorts'] if c['settlement']=='transit:'+j['id'])==5
+ results['departure']={'residents':5,'source':source,'destination':destination,'cityPopulationNotPrematurelyIncreased':True,'globalPopulationConserved':True,'foodPaid':24.5,'waterPaid':3.5,'initialJourneyFood':4.5,'initialJourneyWater':3.5}
+ tap('Barrio');tap('+ Día');dump();tap('+ Día');dump();mid=rawworld();w=world();coherent(w);j=trip(w)
+ assert w['day']==2 and j['progress']==2 and j['status']=='outbound' and total(w)==total(old)
+ assert j['consumed']=={'food':450,'water':350}
+ tap_visible('Ver habitantes en camino');capture('02-real-midflight-position-and-supplies.png');assert rawworld()==mid
+ tap_visible('Localizar en el mundo');capture('03-real-group-on-world-map.png');assert rawworld()==mid
+ stop();adb('shell','am','start','-n',pkg+'/.MainActivity');tap('Continuar historia');dump();assert rawworld()==mid;results['midflightForceStopReopenExact']=True
+ for day in range(3,7):
+  tap('+ Día');dump();w=world();coherent(w);assert w['day']==day
+  assert total(w)==total(old)
+ complete=rawworld();w=world();j=trip(w);towns={s['id']:s for s in w['societies']}
+ assert j['status']=='arrived' and j['arrived']==5 and j['deaths']==0 and j['resolvedDay']==6
+ assert towns[destination]['population']==prior[destination]['population']+5 and towns[source]['population']==prior[source]['population']-5
+ assert j['consumed']=={'food':1350,'water':1050} and j['delivered']=={'food':3150,'water':2450}
+ assert all(j['initial'][r]==j['carried'][r]+j['consumed'][r]+j['delivered'][r]+j['lost'][r] for r in ['food','water'])
+ results['arrival']={'day':6,'residentsArrivedOnce':5,'globalPopulationConserved':True,'foodConsumed':1.35,'waterConsumed':1.05,'foodDelivered':3.15,'waterDelivered':2.45,'suppliesBalanced':True}
+ capture('04-real-arrival.png')
+ stop();adb('shell','am','start','-n',pkg+'/.MainActivity');tap('Continuar historia');capture('05-reopened-after-arrival.png');assert rawworld()==complete;results['arrivalForceStopReopenExact']=True
+except Exception as e:
+ results['error']=repr(e);print(repr(e),flush=True)
+finally:
+ if moved:
+  stop()
+  if exists(after):raise RuntimeError('Refusing to overwrite retained transit fixture')
+  if exists(folder):run('mv',folder,after)
+  if exists(folder):raise RuntimeError('Restoration destination still present')
+  run('mv',before,folder);results['originalDataRestoredExactly']=inventory()==original
+  if not results['originalDataRestoredExactly']:raise RuntimeError('Original save integrity mismatch')
+ (out/'native-result.json').write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n');print(json.dumps(results,ensure_ascii=False),flush=True)
+if 'error' in results:raise SystemExit(1)
+

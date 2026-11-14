@@ -19,7 +19,7 @@ void main(){
     sim.advanceDays(1);final next=DailyProduction.fromJson(Map<String,dynamic>.from(w.controlled.lastProduction!['flows']));expect(next.availableLabor,16000);w.validate();
   });
   test('Existing rules7 worlds retain their previous labor semantics',(){
-    WorldState legacy(bool houses){final raw=WorldState.generate(size:64).toJson();raw['rulesVersion']=7;final w=WorldState.fromJson(raw),s=w.controlled;s.built={'farm':2,'well':1,if(houses)'house':100};s.sites=[];s.ensureSites();s.health=100;s.resources['food']=100;s.resources['water']=100;return w;}
+    WorldState legacy(bool houses){final raw=WorldState.generate(size:64).toJson();raw['rulesVersion']=7;raw.remove('migrations');final w=WorldState.fromJson(raw),s=w.controlled;s.built={'farm':2,'well':1,if(houses)'house':100};s.sites=[];s.ensureSites();s.health=100;s.resources['food']=100;s.resources['water']=100;return w;}
     final a=legacy(false),b=legacy(true);Simulation(a).advanceDays(1);Simulation(b).advanceDays(1);
     expect(a.controlled.resources['food'],isNot(b.controlled.resources['food']));expect(a.controlled.lastProduction,isNull);expect(b.controlled.lastProduction,isNull);
   });

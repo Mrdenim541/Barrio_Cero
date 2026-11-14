@@ -1,0 +1,5 @@
+{
+  "version": "0.12.0+13",
+  "apkSha256": "9db26516f66e5f8a8d3b4aefe08f6f8408a615016af6789d33c63b2b833f9c0d",
+  "scope": "First APK and AOT variant; 185 short tests passed, century and long runners expose premature daily validation. Superseded, not final acceptance."
+}

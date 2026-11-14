@@ -2,12 +2,13 @@ import '../tool/fixtures.dart';
 import 'dart:io';
 import 'package:flame/game.dart';
 import 'package:barrio_cero_eras/presentation/settlement_scene.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Simulation;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:barrio_cero_eras/presentation/app.dart';
 import 'package:barrio_cero_eras/persistence/checkpoint.dart';
-import 'package:barrio_cero_eras/simulation/engine.dart' show WorldState, ScheduledEvent;
+import 'package:barrio_cero_eras/content/content_pack.dart';
+import 'package:barrio_cero_eras/simulation/engine.dart' show WorldState, ScheduledEvent, Simulation, Command;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -159,6 +160,26 @@ void main() {
     expect(checkpoint.world.controlled.population,56);
     await tester.runAsync(() async {await screen.session.loadSlot(0);});await tester.pump();
     expect(screen.world.canonical(),checkpoint.world.canonical());expect(tester.takeException(),isNull);
+    await tester.pumpWidget(const SizedBox.shrink());await tester.pump(const Duration(milliseconds:50));
+  });
+
+  testWidgets('In-flight residents and supplies remain inspectable at 320 with enlarged text', (tester) async {
+    tester.view.physicalSize=const Size(320,640);tester.view.devicePixelRatio=1;
+    tester.platformDispatcher.textScaleFactorTestValue=1.3;
+    addTearDown(tester.view.resetPhysicalSize);addTearDown(tester.view.resetDevicePixelRatio);addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final world=WorldState.generate(seed:17,size:64);world.society('s1')!.health=30;
+    final core=File('assets/content/core.json').readAsStringSync();
+    final sim=Simulation(world)..registerContent(ContentPack.parse(core).data);
+    final result=sim.submit(Command(id:'fixture-trip',action:'resolve_event',actorId:'s0',issuedDay:0,target:'refugee_letter',choice:'accept'));
+    expect(result.ok,isTrue,reason:result.message);
+    final source=Checkpoint.create(world:world,coreSource:core).encode();
+    late dynamic screen;
+    await tester.runAsync(() async {await tester.pumpWidget(const BarrioApp());screen=tester.state(find.byType(ErasScreen));await screen.initialization;await screen.session.importCheckpoint(source);});
+    await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    final before=screen.world.canonical();
+    await tester.tap(find.text('Ver habitantes en camino'));await tester.pump();await tester.pump(const Duration(milliseconds:500));
+    expect(find.textContaining('5 habitantes en tránsito'),findsOneWidget);expect(find.textContaining('Provisiones restantes'),findsOneWidget);
+    expect(screen.world.canonical(),before);expect(tester.takeException(),isNull);
     await tester.pumpWidget(const SizedBox.shrink());await tester.pump(const Duration(milliseconds:50));
   });
 

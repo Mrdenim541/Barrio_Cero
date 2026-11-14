@@ -1,0 +1,18 @@
+PARTIAL RUN: group filter "full-content 30 seeds"; not full acceptance
+RUN full-content 30 seeds x 200 years and two millennia
+{"seed":1,"strategy":"food","intensity":"normal","extraordinary":false,"requestedDays":72000,"actualDays":72000,"terminal":"target_reached","annualChecks":200,"peakPending":6,"peakHistory":2400,"milliseconds":50355,"peakRssBytes":52621312}
+Unhandled exception:
+FormatException: Viaje activo ya resuelto
+#0      MigrationJourney.validate (package:barrio_cero_eras/simulation/v2/migration.dart:136)
+#1      WorldState.assertPopulation (package:barrio_cero_eras/simulation/engine.dart:190)
+#2      WorldState.validate (package:barrio_cero_eras/simulation/engine.dart:213)
+#3      ContentSimulation.resolveContentEvent (package:barrio_cero_eras/simulation/engine.dart:1204)
+#4      ContentSimulation._directContent (package:barrio_cero_eras/simulation/engine.dart:1194)
+#5      Simulation._tick (package:barrio_cero_eras/simulation/engine.dart:953)
+#6      Simulation.advanceDays (package:barrio_cero_eras/simulation/engine.dart:730)
+#7      runLong (file:///workspace/Barrio_Cero/tool/simulation_check.dart:175)
+#8      main.<anonymous closure> (file:///workspace/Barrio_Cero/tool/simulation_check.dart:106)
+#9      main.test (file:///workspace/Barrio_Cero/tool/simulation_check.dart:17)
+#10     main (file:///workspace/Barrio_Cero/tool/simulation_check.dart:96)
+#11     _delayEntrypointInvocation.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:312)
+#12     _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193)

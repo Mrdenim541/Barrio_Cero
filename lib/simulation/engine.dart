@@ -2,6 +2,8 @@ import 'v2/learning.dart';
 import 'v2/social.dart';
 import 'v2/operating_plan.dart';
 import 'v2/opening_placement.dart';
+import 'v2/migration.dart';
+export 'v2/migration.dart';
 export 'v2/operating_plan.dart';
 export 'v2/learning.dart';
 export 'v2/social.dart';
@@ -135,7 +137,7 @@ class TradeRoute {
  factory TradeRoute.fromJson(Map<String,dynamic> j){final rules=j['transportRules']??1;if(![1,2].contains(rules))throw const FormatException('Reglas de transporte desconocidas');if(rules==2&&(j['foodMillis'] is! int||j['foodMillis']!=Quantity.fromNumber(j['cargo']).millis||j['metalMillis'] is! int||j['returning'] is! bool||j['closing'] is! bool||j['crewAssigned'] is! int))throw const FormatException('Carga de transporte inválida');return TradeRoute(j['id'],j['from'],j['to'],List<int>.from(j['path']),cargo:(j['cargo'] as num).toDouble(),progress:j['progress'],blocked:j['blocked'],transportRules:rules,metalMillis:j['metalMillis']??0,returning:j['returning']??false,closing:j['closing']??false,crewAssigned:j['crewAssigned']??0);}
 }
 class WorldState {
- static const currentRules=10;
+ static const currentRules=11;
  SocialState? socialState;
  Map<String,SocialResident> get socialResidents=>{for(final s in societies)for(final p in s.people)p.id:SocialResident(p.id,s.id,p.bornDay,p.diedDay)};
  PopulationLedger? populationState;
@@ -147,10 +149,13 @@ class WorldState {
  int rulesVersion=1;
  int seed,size,day=0,serial=0; String intensity; bool extraordinary; RandomState random; String? controlledId='s0';
  WorldEntities? entities;
+ List<MigrationJourney> migrations=[];
+ int get populationInTransit=>migrations.where((j)=>j.active).fold<int>(0,(n,j)=>n+j.survivors);
+ int incomingResidents(String actor)=>migrations.where((j)=>j.active&&j.goal==actor).fold<int>(0,(n,j)=>n+j.survivors);
  List<Map<String,dynamic>> ruleChanges=[];
  List<Tile> tiles=[]; List<Society> societies=[]; List<HistoryEntry> chronicle=[]; List<ScheduledEvent> pending=[]; List<TradeRoute> routes=[];
  Map<String,Map<String,dynamic>> commandReceipts={};
- Map<String,int> contentHistory={}; Map<String,Map<String,num>> annualSnapshots={}; Map<String,String> contentVersions={'core':'2.1.0'}; bool get extinct=>societies.every((s)=>!s.alive);
+ Map<String,int> contentHistory={}; Map<String,Map<String,num>> annualSnapshots={}; Map<String,String> contentVersions={'core':'2.1.0'}; bool get extinct=>societies.every((s)=>!s.alive)&&populationInTransit==0;
  WorldState._(this.seed,this.size,this.intensity,this.extraordinary):random=RandomState(seed);
  factory WorldState.generate({int seed=42,int size=96,String intensity='normal',bool extraordinary=true,bool fixedMaterials=true,String origin='reconstruction'}) {
  final w=WorldState._(seed,size,intensity,extraordinary);w.rulesVersion=fixedMaterials?currentRules:1;if(fixedMaterials)w.catalog=RuleCatalog.fromJson(baseCatalogData);w.origin=fixedMaterials?origin:'reconstruction';final scenario=fixedMaterials?StartingScenario.fromJson(Map<String,dynamic>.from(baseScenarioData.firstWhere((s)=>s['id']==origin,orElse:()=>throw const FormatException('Origen desconocido'))),w.catalog!):null;final r=w.random;
@@ -180,7 +185,11 @@ class WorldState {
    for(final s in societies){final n=ledger.totals(s.id);if(n.children!=s.children||n.adults!=s.adults||n.elders!=s.elders)throw const FormatException('Población agregada distinta de sus grupos');}
    if(!deep)return;
    ledger.validate();final actors=societies.map((s)=>s.id).toSet();
-   for(final c in ledger.cohorts){if(!actors.contains(c.settlement)||!entities!.cultures.containsKey(c.culture))throw const FormatException('Grupo sin asentamiento o cultura');}
+   if(migrations.length>10000||rulesVersion<11&&migrations.isNotEmpty)throw const FormatException('Capacidad o versión de viajes inválida');
+   final journeyIds=<String>{};
+   for(final j in migrations){j.validate(day,size);if(!journeyIds.add(j.id)||!actors.contains(j.from)||!actors.contains(j.to)||j.active&&ledger.totals(j.residence).total!=j.survivors||!j.active&&ledger.totals(j.residence).total!=0)throw const FormatException('Viaje sin población o destino válido');final target=society(j.active?j.goal:j.resolvedSettlement??j.to)!;if(j.status!='lost'&&!j.blocked&&j.path.last!=target.y*size+target.x)throw const FormatException('Ruta hacia otro destino');if(j.blocked&&(j.path.length!=1||j.progress!=0))throw const FormatException('Viaje detenido sin posición inequívoca');}
+   final transit=migrations.where((j)=>j.active).map((j)=>j.residence).toSet();
+   for(final c in ledger.cohorts){if((!actors.contains(c.settlement)&&!transit.contains(c.settlement))||!entities!.cultures.containsKey(c.culture))throw const FormatException('Grupo sin asentamiento o cultura');}
    if(ledger.birthCredits.keys.any((s)=>!actors.contains(s))||ledger.birthCredits.values.any((c)=>c.keys.any((id)=>!entities!.cultures.containsKey(id))))throw const FormatException('Natalidad sin asentamiento');
    final alive=<String>{};
    for(final s in societies){for(final p in s.people.where((p)=>p.alive)){
@@ -195,8 +204,8 @@ class WorldState {
  Society? society(String? id){for(final s in societies){if(s.id==id)return s;}return null;}
  Society get controlled=>society(controlledId)??societies.first;
  String get date=>'Año ${day~/360+1} · mes ${(day%360)~/30+1} · día ${day%30+1}';
- Map<String,dynamic> toJson()=>{'schema':1,if(socialState!=null)'socialState':socialState!.toJson(),if(rulesVersion>=5)'origin':origin,if(populationState!=null)'populationState':populationState!.toJson(),if(catalog!=null)'catalog':catalog!.toJson(),if(entities!=null)'entities':entities!.toJson(),if(ruleChanges.isNotEmpty)'ruleChanges':ruleChanges,if(rulesVersion>1)'rulesVersion':rulesVersion,if(rulesVersion>1)'randomAlgorithm':RandomState.algorithm,'seed':seed,'size':size,'day':day,'serial':serial,'intensity':intensity,'extraordinary':extraordinary,'rng':random.state,'controlledId':controlledId,'tiles':tiles.map((t)=>t.toJson()).toList(),'societies':societies.map((s)=>s.toJson()).toList(),'chronicle':chronicle.map((h)=>h.toJson()).toList(),'pending':pending.map((e)=>e.toJson()).toList(),'routes':routes.map((r)=>r.toJson()).toList(),'annualSnapshots':annualSnapshots,'contentVersions':contentVersions,'contentHistory':contentHistory,'commandReceipts':commandReceipts};
- factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5,6,7,8,9,10].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));if(j['populationState']!=null)w.populationState=PopulationLedger.fromJson(Map<String,dynamic>.from(j['populationState']));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));if(j['socialState']!=null)w.socialState=SocialState.fromJson(Map<String,dynamic>.from(j['socialState']));w.validate();return w;}
+ Map<String,dynamic> toJson()=>{'schema':1,if(rulesVersion>=11)'migrations':migrations.map((j)=>j.toJson()).toList(),if(socialState!=null)'socialState':socialState!.toJson(),if(rulesVersion>=5)'origin':origin,if(populationState!=null)'populationState':populationState!.toJson(),if(catalog!=null)'catalog':catalog!.toJson(),if(entities!=null)'entities':entities!.toJson(),if(ruleChanges.isNotEmpty)'ruleChanges':ruleChanges,if(rulesVersion>1)'rulesVersion':rulesVersion,if(rulesVersion>1)'randomAlgorithm':RandomState.algorithm,'seed':seed,'size':size,'day':day,'serial':serial,'intensity':intensity,'extraordinary':extraordinary,'rng':random.state,'controlledId':controlledId,'tiles':tiles.map((t)=>t.toJson()).toList(),'societies':societies.map((s)=>s.toJson()).toList(),'chronicle':chronicle.map((h)=>h.toJson()).toList(),'pending':pending.map((e)=>e.toJson()).toList(),'routes':routes.map((r)=>r.toJson()).toList(),'annualSnapshots':annualSnapshots,'contentVersions':contentVersions,'contentHistory':contentHistory,'commandReceipts':commandReceipts};
+ factory WorldState.fromJson(Map<String,dynamic> j){if(j.containsKey('rulesVersion')&&(![2,3,4,5,6,7,8,9,10,11].contains(j['rulesVersion'])||j['randomAlgorithm']!=RandomState.algorithm))throw const FormatException('Versión de reglas o azar no compatible');if(j['schema']!=1)throw FormatException('Esquema incompatible');final w=WorldState._(j['seed'],j['size'],j['intensity'],j['extraordinary']);w.rulesVersion=j['rulesVersion']??1;if(w.rulesVersion>=11){if(j['migrations'] is! List)throw const FormatException('Falta registro de viajes');w.migrations=(j['migrations'] as List).map((e)=>MigrationJourney.fromJson(Map<String,dynamic>.from(e))).toList();}else if(j.containsKey('migrations')){throw const FormatException('Viajes sin versión compatible');}w.origin=j['origin']??'reconstruction';if(j['catalog']!=null)w.catalog=RuleCatalog.fromJson(Map<String,dynamic>.from(j['catalog']));w.day=j['day'];w.serial=j['serial'];w.random.state=j['rng'];w.controlledId=j['controlledId'];w.tiles=(j['tiles'] as List).map((e)=>Tile.fromJson(Map<String,dynamic>.from(e))).toList();w.societies=(j['societies'] as List).map((e)=>Society.fromJson(Map<String,dynamic>.from(e))).toList();w.chronicle=(j['chronicle'] as List).map((e)=>HistoryEntry.fromJson(Map<String,dynamic>.from(e))).toList();w.pending=(j['pending'] as List).map((e)=>ScheduledEvent.fromJson(Map<String,dynamic>.from(e))).toList();w.routes=(j['routes'] as List).map((e)=>TradeRoute.fromJson(Map<String,dynamic>.from(e))).toList();w.annualSnapshots=(j['annualSnapshots'] as Map).map((k,v)=>MapEntry(k as String,Map<String,num>.from(v)));w.contentVersions=Map<String,String>.from(j['contentVersions']);w.contentHistory=Map<String,int>.from(j['contentHistory']??{});w.commandReceipts=(j['commandReceipts'] as Map? ?? {}).map((k,v)=>MapEntry(k as String,Map<String,dynamic>.from(v as Map)));if(j['populationState']!=null)w.populationState=PopulationLedger.fromJson(Map<String,dynamic>.from(j['populationState']));w.ruleChanges=(j['ruleChanges'] as List? ?? []).map((r)=>Map<String,dynamic>.from(r as Map)).toList();if(j['entities']!=null)w.entities=WorldEntities.fromJson(Map<String,dynamic>.from(j['entities']));if(j['socialState']!=null)w.socialState=SocialState.fromJson(Map<String,dynamic>.from(j['socialState']));w.validate();return w;}
  void validate(){
  if((rulesVersion>=7)!=(socialState!=null))throw const FormatException('Registro personal sin su versión de reglas');
  socialState?.validate(day,socialResidents,societies.map((s)=>s.id).toSet());
@@ -206,9 +215,9 @@ class WorldState {
  if(!['prehistory','reconstruction'].contains(origin)||(rulesVersion<5&&origin!='reconstruction'))throw const FormatException('Origen o versión incompatibles');
  if((rulesVersion>=4)!=(catalog!=null))throw const FormatException('Catálogo y versión de reglas incompatibles');
  final buildings=buildingDefinitions;final technologies=technologyDefinitions;
- for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5,6,7,8,9,10].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
+ for(final change in ruleChanges){if(change['day'] is! int||change['day']<0||change['day']>day||![2,3,4,5,6,7,8,9,10,11].contains(change['to'])||change['sourceSha256'] is! String||!RegExp(r'^[a-f0-9]{64}$').hasMatch(change['sourceSha256']))throw const FormatException('Historial de reglas inválido');}
  entities?.validate(identityRecords);
- if(![1,2,3,4,5,6,7,8,9,10].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
+ if(![1,2,3,4,5,6,7,8,9,10,11].contains(rulesVersion)||random.state<0||random.state>0x7fffffff)throw const FormatException('Reglas o estado de azar inválidos');
  if(size!=64&&size!=96)throw const FormatException('Tamaño de mundo inválido');
  if(day<0||serial<0||tiles.length!=size*size)throw const FormatException('Calendario o terreno inválido');
  if(societies.isEmpty||societies.length>100)throw const FormatException('Número de sociedades inválido');
@@ -269,7 +278,7 @@ class WorldState {
  /// Commits an already validated candidate without changing the WorldState identity.
  /// References to nested entities must be reacquired after a successful submit.
  void _adopt(WorldState value) {
-  socialState=value.socialState;populationState=value.populationState;origin=value.origin;catalog=value.catalog;rulesVersion=value.rulesVersion;ruleChanges=value.ruleChanges;entities=value.entities;seed=value.seed;size=value.size;day=value.day;serial=value.serial;
+  migrations=value.migrations;socialState=value.socialState;populationState=value.populationState;origin=value.origin;catalog=value.catalog;rulesVersion=value.rulesVersion;ruleChanges=value.ruleChanges;entities=value.entities;seed=value.seed;size=value.size;day=value.day;serial=value.serial;
   intensity=value.intensity;extraordinary=value.extraordinary;random=value.random;
   controlledId=value.controlledId;tiles=value.tiles;societies=value.societies;
   chronicle=value.chronicle;pending=value.pending;routes=value.routes;
@@ -294,7 +303,8 @@ class Command {
 }
 class MigrationOffer {
  final String source,destination,reason;final int count,distance,pressure;
- const MigrationOffer(this.source,this.destination,this.count,this.distance,this.pressure,this.reason);
+ final List<int> path;final Map<String,int> supplies;
+ MigrationOffer(this.source,this.destination,this.count,this.distance,this.pressure,this.reason,{List<int> path=const [],Map<String,int> supplies=const {}}):path=List.unmodifiable(path),supplies=Map.unmodifiable(supplies);
 }
 class CommandResult {
  final bool ok,replayed;
@@ -485,6 +495,21 @@ class Simulation {
      if(world.rulesVersion>=9&&society!=null&&result.ok){var count=0;for(final effect in (option['effects'] as List? ?? [])){if(effect['type']=='population'&&effect['value'] is num&&(effect['value'] as num)>0)count+=(effect['value'] as num).toInt();}if(count>0){final offer=previewMigration(society.id,count);if(offer!=null)outcome+=' Grupo previsto: $count adultos de ${world.society(offer.source)!.name}. Motivo: ${offer.reason}.';}}
     }
     duration=0;
+    if(world.rulesVersion>=11&&evaluated.candidate!=null){
+      final candidate=evaluated.candidate!;
+      final ids=world.migrations.map((j)=>j.id).toSet();
+      final launched=candidate.migrations.where((j)=>!ids.contains(j.id)&&j.to==request.actorId).toList();
+      if(launched.isNotEmpty){
+        costs={};
+        for(final raw in (candidate.commandReceipts[request.id]?['materials'] as List? ?? [])){
+          if(raw['society']!=request.actorId)continue;
+          final ledger=MaterialLedger.fromJson(Map<String,dynamic>.from(raw['ledger']));
+          for(final r in resourceIds){final paid=-ledger.balance('source:opening',r)-ledger.balance('inventory',r);if(paid>0)costs[r]=(costs[r]??0)+paid/1000;}
+        }
+        final j=launched.first;duration=j.plannedDistance;
+        outcome+=' El grupo viajará ${j.plannedDistance} días por el camino actual y solo se incorporará al llegar. El coste total incluye alimentos y agua para el trayecto y catorce días de contingencia.';
+      }
+    }
     break;
    case 'policy':
     duration=0;outcome='Actualiza las prioridades que seguirá el gobierno.';
@@ -502,7 +527,7 @@ class Simulation {
  }
 
  String _id(String prefix){var id='$prefix${world.serial++}';if(world.populationState!=null){while(prefix=='s'&&world.society(id)!=null||prefix=='p'&&world.societies.any((s)=>s.people.any((p)=>p.id==id))){id='$prefix${world.serial++}';}}return id;}
- HistoryEntry record(Society s,String title,String text,String category,{String? cause}){final h=HistoryEntry(_id('h'),world.day,title,text,category,s.id,s.x,s.y,cause:cause);world.chronicle.add(h);if(world.chronicle.length>2400){final referenced={...world.chronicle.map((e)=>e.cause),...world.pending.map((e)=>e.cause),for(final actor in world.societies)for(final lesson in actor.lessons)lesson.cause};int removed=0;world.chronicle.removeWhere((entry){if(removed<400&&!referenced.contains(entry.id)&&entry.id!=h.id){removed++;return true;}return false;});}onHistory?.call(h);return h;}
+ HistoryEntry record(Society s,String title,String text,String category,{String? cause}){final h=HistoryEntry(_id('h'),world.day,title,text,category,s.id,s.x,s.y,cause:cause);world.chronicle.add(h);if(world.chronicle.length>2400){final referenced={...world.chronicle.map((e)=>e.cause),...world.pending.map((e)=>e.cause),...world.migrations.where((j)=>j.active).map((j)=>j.cause),for(final actor in world.societies)for(final lesson in actor.lessons)lesson.cause};int removed=0;world.chronicle.removeWhere((entry){if(removed<400&&!referenced.contains(entry.id)&&entry.id!=h.id){removed++;return true;}return false;});}onHistory?.call(h);return h;}
  bool _pay(Society s,Map<String,double> cost,{String destination='sink:committed',Map<String,String> allocations=const {}}){
  if(s.materialRules==2){
    final amounts=<String,int>{};
@@ -690,7 +715,8 @@ class Simulation {
  if(action=='trade'||action=='diplomacy'){final other=world.society(target);if(other==null||other.id==s.id||!other.alive)return const CommandResult(false,'Destino inválido.');if(action=='diplomacy'){if(world.entities?.sameSociety(s.id,other.id)==true)return const CommandResult(false,'Los asentamientos ya pertenecen a la misma sociedad.');if(!_pay(s,{'food':10}))return const CommandResult(false,'Faltan víveres para la delegación.');s.relations[other.id]=math.min(100,(s.relations[other.id]??0)+(s.leaderTrait=='conciliatory'?30:s.leaderTrait=='guarded'?10:20));other.relations[s.id]=math.min(100,(other.relations[s.id]??0)+15);record(s,'Una mesa compartida','El pacto con ${other.name} mejora la confianza.','diplomacia');return const CommandResult(true,'Relaciones mejoradas.');}return _openRoute(s,other);}
  return const CommandResult(false,'Orden desconocida.');
  }
- List<int> findPath(Society a,Society b){final size=world.size,start=a.y*size+a.x,end=b.y*size+b.x;final queue=<int>[start];final prev=<int,int>{start:-1};int head=0;while(head<queue.length){final p=queue[head++];if(p==end)break;final x=p%size,y=p~/size;for(final q in [if(x>0)p-1,if(x<size-1)p+1,if(y>0)p-size,if(y<size-1)p+size]){if(!prev.containsKey(q)&&world.tiles[q].passable&&world.tiles[q].damage<0.9){prev[q]=p;queue.add(q);}}}if(!prev.containsKey(end))return [];final path=<int>[];for(int p=end;p!=-1;p=prev[p]!) {
+ List<int> findPath(Society a,Society b)=>_findPathCells(a.y*world.size+a.x,b.y*world.size+b.x);
+ List<int> _findPathCells(int start,int end){final size=world.size;final queue=<int>[start];final prev=<int,int>{start:-1};int head=0;while(head<queue.length){final p=queue[head++];if(p==end)break;final x=p%size,y=p~/size;for(final q in [if(x>0)p-1,if(x<size-1)p+1,if(y>0)p-size,if(y<size-1)p+size]){if(!prev.containsKey(q)&&world.tiles[q].passable&&world.tiles[q].damage<0.9){prev[q]=p;queue.add(q);}}}if(!prev.containsKey(end))return [];final path=<int>[];for(int p=end;p!=-1;p=prev[p]!) {
    path.add(p);
  }return path.reversed.toList();}
  CommandResult _openRoute(Society s,Society other){if(world.routes.any((r)=>(r.from==s.id&&r.to==other.id)||(r.from==other.id&&r.to==s.id)))return const CommandResult(false,'La ruta ya existe.');if((s.relations[other.id]??0)<-20)return const CommandResult(false,'La hostilidad impide comerciar.');final path=findPath(s,other);if(path.isEmpty)return const CommandResult(false,'No existe un paso terrestre seguro.');if(world.rulesVersion>=3&&s.workers<2)return const CommandResult(false,'La ruta necesita dos trabajadores disponibles.');if(!_pay(s,{'food':12,'textiles':5},allocations:world.rulesVersion>=3?{'food':'escrow:route:r${world.serial}','textiles':'sink:transport_gear'}:const {}))return const CommandResult(false,'Falta carga para la caravana.');world.routes.add(TradeRoute(_id('r'),s.id,other.id,path,transportRules:world.rulesVersion>=3?2:1));if(world.rulesVersion>=3)s.transportWorkers+=2;record(s,'Caravana hacia ${other.name}','Transporta 12 alimentos por ${path.length} celdas transitables.','comercio');return const CommandResult(true,'Ruta terrestre establecida.');}
@@ -731,11 +757,13 @@ class Simulation {
    world.entities?.reconcile(world.identityRecords);
  }
  MigrationOffer? previewMigration(String destination,int count)=>_migrationOffer(world.society(destination),count);
- MigrationOffer? _migrationOffer(Society? to,int count){
-   if(to==null||count<1||count>100000||!to.alive||to.policy.diplomacy=='isolate'||to.housing<to.population+count||to.health<40||to.resources['food']!<(to.population+count)*.045*14||to.resources['water']!<(to.population+count)*.035*14)return null;
+ MigrationOffer? _migrationOffer(Society? to,int count,{Map<String,int> relationChanges=const {}}){
+   final incoming=world.rulesVersion>=11&&to!=null?world.incomingResidents(to.id):0;
+   if(to==null||count<1||count>100000||!to.alive||to.policy.diplomacy=='isolate'||to.housing<to.population+incoming+count||to.health<40||to.resources['food']!<(to.population+incoming+count)*.045*14||to.resources['water']!<(to.population+incoming+count)*.035*14||world.rulesVersion>=11&&world.migrations.length>=10000)return null;
    final options=<MigrationOffer>[];
    for(final from in world.societies){
-     if(!from.alive||from.id==to.id||from.policy.diplomacy=='isolate'||(from.relations[to.id]??0)< -35)continue;
+     if(!from.alive||from.id==to.id||from.policy.diplomacy=='isolate'||(from.relations[to.id]??0)+(relationChanges[from.id]??0)< -35)continue;
+     if(world.rulesVersion>=11&&(to.relations[from.id]??0)< -35)continue;
      final eligible=world.populationState!.availableToMove(from.id,1,minimumAge:18,commonOnly:true);
      if(count>math.max(1,eligible~/4)||eligible<count||from.workers-count<4)continue;
      final reasons=<String>[];var pressure=0;
@@ -751,13 +779,16 @@ class Simulation {
      int cover(DailyProduction p,int population){final food=math.max(0,p.closing['food']!-p.opening['food']!),water=math.max(0,p.closing['water']!-p.opening['water']!);return math.min(food*1000000~/math.max(1,population*45),water*1000000~/math.max(1,population*35));}
      if(!before.sustainsNeeds&&cover(after,from.population-count)<cover(before,from.population))continue;
      final path=findPath(from,to);if(path.isEmpty)continue;
-     options.add(MigrationOffer(from.id,to.id,count,path.length-1,pressure,reasons.join(', ')));
+     final distance=world.rulesVersion>=11?math.max(1,path.length-1):path.length-1;
+     final supplies=world.rulesVersion>=11?MigrationJourney.provisions(count,distance):<String,int>{};
+     if(world.rulesVersion>=11&&(to.resources['food']!*1000<supplies['food']!+(to.population+incoming+count)*45*14||to.resources['water']!*1000<supplies['water']!+(to.population+incoming+count)*35*14))continue;
+     options.add(MigrationOffer(from.id,to.id,count,distance,pressure,reasons.join(', '),path:path,supplies:supplies));
    }
    options.sort((a,b){var order=b.pressure.compareTo(a.pressure);if(order==0)order=a.distance.compareTo(b.distance);return order==0?a.source.compareTo(b.source):order;});return options.firstOrNull;
  }
  bool _migrationEventContext(Society s,Map event){
    if(world.rulesVersion<9||event['trigger']=='scheduled')return true;
-   final counts=<int>[];for(final option in (event['options'] as List? ?? [])){for(final effect in (option['effects'] as List? ?? [])){if(effect['type']=='population'&&effect['value'] is num&&(effect['value'] as num)>0)counts.add((effect['value'] as num).toInt());}}
+   final counts=<int>[];for(final option in (event['options'] as List? ?? [])){var group=0;for(final effect in (option['effects'] as List? ?? [])){if(effect['type']=='population'&&effect['value'] is num&&(effect['value'] as num)>0){if(world.rulesVersion>=11){group+=(effect['value'] as num).toInt();}else{counts.add((effect['value'] as num).toInt());}}}if(group>0)counts.add(group);}
    if(counts.isEmpty)return true;
    return _migrationOffer(s,counts.reduce(math.min))!=null;
  }
@@ -774,17 +805,72 @@ class Simulation {
      if(e['type']=='health'&&value is num)projected.health=(projected.health+value).clamp(0,100).toDouble();
      if(e['type']=='technology'&&e['technology'] is String)projected.tech.add(e['technology']);
    }
-   if(projected.housing<projected.population+count)return 'Falta vivienda para recibir al grupo completo.';
+   if(projected.housing<projected.population+count+(world.rulesVersion>=11?world.incomingResidents(s.id):0))return 'Falta vivienda para recibir al grupo completo y las llegadas comprometidas.';
    if(projected.policy.diplomacy=='isolate')return 'Las fronteras están cerradas por las prioridades del gobierno.';
-   if(_migrationOffer(projected,count)==null)return 'No hay una comunidad con motivos de salida, paso seguro y personal suficiente para enviar ese grupo.';
+   final changes=<String,int>{};
+   if(world.rulesVersion>=11){for(final e in effects){if(e['type']=='relation'&&e['value'] is num){for(final other in world.societies.where((o)=>o.id!=s.id&&(e['target']==null||e['target']==o.id))){final amount=(e['value'] as num).toInt(),original=other.relations[s.id]??0;changes[other.id]=(original+(changes[other.id]??0)+amount).clamp(-100,100).toInt()-original;projected.relations[other.id]=((projected.relations[other.id]??0)+amount).clamp(-100,100).toInt();}}}}
+   if(_migrationOffer(projected,count,relationChanges:changes)==null)return 'No hay un grupo con salida segura, personal y provisiones suficientes para viajar y sostener la recepción.';
    return null;
  }
  int _receiveMigrants(Society to,int count,{String? cause}){
    final offer=_migrationOffer(to,count);if(offer==null){record(to,'La invitación no reúne condiciones','No se trasladan habitantes: faltan motivos de salida, acceso o capacidad de cuidado.','migración',cause:cause);return 0;}
    final from=world.society(offer.source)!;
+   if(world.rulesVersion>=11){
+     final id=_id('migration');
+     if(!_pay(to,{for(final e in offer.supplies.entries)e.key:e.value/1000},destination:'escrow:$id'))throw StateError('La reserva de viaje cambió después de comprobarla');
+     final journey=MigrationJourney(id:id,from:from.id,to:to.id,departedDay:world.day,departed:count,path:offer.path,supplies:offer.supplies,cause:cause);
+     world.populationState!.transfer(from.id,journey.residence,count,1,world.random.nextInt,commonOnly:true,minimumAge:18);
+     world.migrations.add(journey);world.syncPopulation();
+     record(from,'Residentes parten hacia ${to.name}','$count adultos viajan por ${offer.reason}. Sus edades y culturas continúan en el grupo en tránsito.','migración',cause:cause);
+     record(to,'Se prepara la recepción de ${from.name}','$count residentes aún están en camino. Se reservan ${offer.supplies['food']!/1000} alimentos y ${offer.supplies['water']!/1000} agua para el trayecto y catorce días de contingencia.','migración',cause:cause);return count;
+   }
    final actual=_transferResidents(from,to,count,1,cause:cause,commonOnly:true,minimumAge:18);
    record(from,'Residentes parten hacia ${to.name}','$actual adultos comunes salen por ${offer.reason}. Se mantienen el cuidado y las identidades de quienes permanecen.','migración',cause:cause);
    record(to,'Llegan residentes de ${from.name}','$actual adultos cambian de residencia conservando edad, cultura y población total.','migración',cause:cause);return actual;
+ }
+ void _migrationTick(){
+   final ledger=world.populationState!;
+   final active=world.migrations.where((j)=>j.active).toList()..sort((a,b)=>a.id.compareTo(b.id));
+   if(active.isEmpty)return;
+   for(final j in active){
+     if(j.lastDay==world.day)continue; // Departure follows that day's meals.
+     final residents=ledger.totals(j.residence).total;
+     final natural=j.survivors-residents;
+     if(natural<0)throw StateError('Población añadida a un viaje sin transferencia');
+     j.deaths+=natural;
+     final origin=world.society(j.from)!;
+     if(residents==0){j.lastDay=world.day;j.finish(world.day);record(origin,'Un viaje queda sin supervivientes','El grupo en tránsito se extingue; las provisiones restantes se registran como pérdida.','migración',cause:j.cause);continue;}
+     final losses=j.consumeDay(world.day,residents);
+     if(losses>0){ledger.remove(j.residence,losses,world.random.nextInt);record(origin,'Pérdidas durante el viaje','$losses residentes mueren tras treinta días consecutivos sin raciones completas. La baja pertenece al grupo en tránsito.','migración',cause:j.cause);}
+     if(j.survivors==0){j.finish(world.day);continue;}
+     final destination=world.society(j.to)!;
+     if(j.status=='outbound'&&(!destination.alive||destination.policy.diplomacy=='isolate'||destination.health<40||(destination.relations[j.from]??0)< -35||destination.housing<destination.population+world.incomingResidents(destination.id))){
+       j.status='returning';j.blocked=false;
+       record(origin,'El grupo busca regresar','El destino ya no admite la recepción. Los residentes intentan volver por un camino seguro, con sus provisiones restantes.','migración',cause:j.cause);
+     }
+     final goal=world.society(j.goal)!;final end=goal.y*world.size+goal.x;
+     if(j.path.last!=end||j.path.skip(j.progress+1).any((i)=>!world.tiles[i].passable||world.tiles[i].damage>=.9)){
+       final route=_findPathCells(j.cell,end);
+       if(route.isEmpty){
+         if(!j.blocked)record(origin,'El viaje se detiene','El grupo permanece en su celda: no hay paso seguro hacia ${goal.name}. Sigue consumiendo sus propias provisiones.','migración',cause:j.cause);
+         final current=j.cell;j.path=[current];j.progress=0;j.blocked=true;continue;
+       }
+       j.path=route;j.progress=0;
+     }
+     j.blocked=false;
+     if(j.progress<j.path.length-1)j.progress++;
+     if(j.progress!=j.path.length-1)continue;
+     // Transfers retain every birth date and culture, including an age-band
+     // change during travel. These journeys only carry common residents.
+     final count=j.survivors;
+     for(var band=0;band<3;band++){final n=ledger.totals(j.residence).at(band);if(n>0)ledger.transfer(j.residence,goal.id,n,band,world.random.nextInt,commonOnly:true);}
+     final accepted={for(final e in j.carried.entries)e.key:math.min(e.value,math.max(0,100000000000-Quantity.fromNumber(goal.resources[e.key]!).millis))};
+     for(final e in accepted.entries){goal.resources[e.key]=goal.resources[e.key]!+e.value/1000;}
+     final returned=j.status=='returning';j.finish(world.day,settlement:goal.id,acceptedSupplies:accepted);
+     goal.extinct=false;world.syncPopulation();_ensureLeadership(goal);
+     record(goal,returned?'Regresan residentes':'Llega el grupo de ${origin.name}','$count residentes completan su trayecto. Se incorporan una sola vez, conservan edades y culturas y entregan las provisiones restantes.','migración',cause:j.cause);
+   }
+   world.syncPopulation();world.entities?.reconcile(world.identityRecords);
  }
  int _transferResidents(Society from,Society to,int count,int band,{String? cause,bool commonOnly=false,int minimumAge=0}){
    if(count<=0)return 0;
@@ -817,7 +903,7 @@ class Simulation {
      final credits=ledger.birthCredits.putIfAbsent(s.id,()=>{}),due=<String,int>{};
      for(final culture in (parents.keys.toList()..sort())){final total=(credits[culture]??0)+parents[culture]!*rate;credits[culture]=total%1000000;if(total>=1000000)due[culture]=total~/1000000;}
      final intended=due.values.fold<int>(0,(n,v)=>n+v);
-     final births=[intended,s.housing-s.population,(s.resources['food']!/2).floor(),s.resources['water']!.floor()].reduce(math.min);
+     final births=[intended,s.housing-s.population-(world.rulesVersion>=11?world.incomingResidents(s.id):0),(s.resources['food']!/2).floor(),s.resources['water']!.floor()].reduce(math.min);
      if(births>0&&_pay(s,{'food':births*2.0,'water':births.toDouble()},destination:'sink:birth_care')){
        final allocated=<String,int>{};var remaining=intended;
        for(var i=0;i<births;i++){
@@ -864,9 +950,9 @@ class Simulation {
    }
    final travel=List<TradeRoute>.from(world.routes)..sort((a,b)=>a.id.compareTo(b.id));for(final r in travel){_routeTick(r);}
  }
- for(final s in actors){if(!s.alive)continue;_economy(s,laborAvailable:world.rulesVersion>=3?math.max(0,(world.populationState==null?s.adults:math.min(s.adults,dailyAdults[s.id]??0))-(worked[s.id]??0)):null);if(world.rulesVersion<3)_projects(s);if(world.day%30==0){_monthly(s);_directContent(s);}if(world.day%360==0)_yearly(s);}final due=world.pending.where((e)=>e.day<=world.day).toList()..sort((a,b){final c=a.day.compareTo(b.day);return c==0?a.id.compareTo(b.id):c;});for(final e in due){world.pending.remove(e);final s=world.society(e.societyId);if(s!=null&&e.type=='discovery')s.expeditionWorkers=0;if(s==null||!s.alive)continue;_resolve(s,e);}if(world.rulesVersion<3){for(final r in List<TradeRoute>.from(world.routes)) {
+ for(final s in actors){if(!s.alive)continue;_economy(s,laborAvailable:world.rulesVersion>=3?math.max(0,(world.populationState==null?s.adults:math.min(s.adults,dailyAdults[s.id]??0))-(worked[s.id]??0)):null);if(world.rulesVersion<3)_projects(s);if(world.rulesVersion<11){if(world.day%30==0){_monthly(s);_directContent(s);}if(world.day%360==0)_yearly(s);}}if(world.rulesVersion>=11){_migrationTick();if(world.day%30==0){for(final s in actors.where((s)=>s.alive)){_monthly(s);_directContent(s);}}if(world.day%360==0){for(final s in actors.where((s)=>s.alive)){_yearly(s);}}}final due=world.pending.where((e)=>e.day<=world.day).toList()..sort((a,b){final c=a.day.compareTo(b.day);return c==0?a.id.compareTo(b.id):c;});for(final e in due){world.pending.remove(e);final s=world.society(e.societyId);if(s!=null&&e.type=='discovery')s.expeditionWorkers=0;if(s==null||!s.alive)continue;_resolve(s,e);}if(world.rulesVersion<3){for(final r in List<TradeRoute>.from(world.routes)) {
    _routeTick(r);
- }}world.assertPopulation(deep:false);world.entities?.reconcile(world.identityRecords);if(world.day%360==0){world.annualSnapshots['${world.day}']={'population':world.societies.fold<int>(0,(int p,s)=>p+s.population),'settlements':world.societies.where((s)=>s.alive).length,'technologies':world.societies.fold<int>(0,(int p,s)=>p+s.tech.length),'damage':world.societies.fold<double>(0.0,(double p,s)=>p+s.environment)};if(world.annualSnapshots.length>1000)world.annualSnapshots.remove(world.annualSnapshots.keys.first);}}
+ }}world.assertPopulation(deep:false);world.entities?.reconcile(world.identityRecords);if(world.day%360==0){world.annualSnapshots['${world.day}']={'population':world.populationState?.total??world.societies.fold<int>(0,(int p,s)=>p+s.population),'settlements':world.societies.where((s)=>s.alive).length,'technologies':world.societies.fold<int>(0,(int p,s)=>p+s.tech.length),'damage':world.societies.fold<double>(0.0,(double p,s)=>p+s.environment)};if(world.annualSnapshots.length>1000)world.annualSnapshots.remove(world.annualSnapshots.keys.first);}}
  int _exportDemand(Society s){
    var total=0;for(final r in world.routes.where((r)=>r.from==s.id&&r.transportRules==2&&!r.closing)){total+=((s.supports('trade')||s.leaderTrait=='generous'?16000:12000)/math.max(1,(r.path.length-1)*2)).ceil();}return total;
  }
@@ -1113,7 +1199,7 @@ extension ContentSimulation on Simulation {
  if(!scheduled&&queued.isEmpty&&!eligibleEvents(s.id).any((x)=>x['id']==eventId))return const CommandResult(false,'Las condiciones ya no se cumplen.');if(!_conditions(s,Map<String,dynamic>.from(e['conditions']??{})))return const CommandResult(false,'Consecuencia cancelada: el contexto cambió.');if(!_migrationEventContext(s,e))return const CommandResult(false,'No hay un grupo real con condiciones de salida para este acontecimiento.');
  final options=(e['options'] as List).where((o)=>o['id']==optionId);if(options.isEmpty)return const CommandResult(false,'Opción desconocida.');final o=Map<String,dynamic>.from(options.first);final costs=(o['costs']??o['cost']??{}) as Map;final paid=<String,double>{};for(final entry in costs.entries){paid[_resource(entry.key.toString())]=(entry.value as num).toDouble();}final migrationIssue=_migrationOptionIssue(s,o);if(migrationIssue!=null)return CommandResult(false,migrationIssue);if(!_pay(s,paid))return const CommandResult(false,'Recursos insuficientes para esta decisión.');
  if(eventId=='facility_found'){s.facilityChoice=optionId;s.flags.add('facility_committed');}world.pending.removeWhere((p)=>queued.contains(p));world.contentHistory['${s.id}:$eventId']=world.day;final h=record(s,e['title'], '${e['body']} ${delegated?'El consejo resolvió:':'Decisión:'} ${o['label']}',e['category'],cause:cause??(world.rulesVersion>=5?queued.firstOrNull?.cause:null));
- for(final raw in (o['effects']??[]) as List){final effect=Map<String,dynamic>.from(raw);_applyContentEffect(s,effect,h.id);}
+ var arriving=0;for(final raw in (o['effects']??[]) as List){final effect=Map<String,dynamic>.from(raw);if(world.rulesVersion>=11&&effect['type']=='population'&&effect['value'] is num&&(effect['value'] as num)>0){arriving+=(effect['value'] as num).toInt();}else{_applyContentEffect(s,effect,h.id);}}if(arriving>0)_receiveMigrants(s,arriving,cause:h.id);
  for(final raw in (o['followUps']??[]) as List){final f=Map<String,dynamic>.from(raw);final probability=(f['probability']??1) as num;if(world.random.nextDouble()<probability){world.pending.add(ScheduledEvent(_id('e'),'content',s.id,world.day+math.max(1,(f['delayDays'] as num).toInt()),cause:h.id,data:{'eventId':f['eventId']}));}}
  world.validate();return CommandResult(true,'${e['title']}: ${o['label']}');
  }

@@ -579,8 +579,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
 
   void _jumpReport(bool cancelled) {
     final before = jumpBefore ?? {};
-    int pop(Map<String, dynamic> d) => (d['societies'] as List? ?? [])
-        .fold<int>(0, (n, s) => n + number(s['population']));
+    int pop(Map<String, dynamic> d) => d['populationState'] is Map
+        ? ((d['populationState']['cohorts'] as List?)??[]).fold<int>(0,(n,c)=>n+number(c['count']))
+        : (d['societies'] as List? ?? []).fold<int>(0, (n, s) => n + number(s['population']));
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
@@ -1024,6 +1025,10 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ),
   );
   void _mapOptions() => _sheet('Leer el mundo', [
+    if(state['migrations'] is List)ListTile(
+      title:const Text('Viajes de población'),
+      subtitle:const Text('Residentes, rutas y provisiones en tránsito'),
+      onTap:(){Navigator.pop(context);_journeys();}),
     ListTile(
       title: const Text('Rutas y caravanas'),
       onTap: () {
@@ -1088,6 +1093,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     final own = s['id'] == controlled;
     final projects = s['projects'] as List? ?? [];
     final alive = s['extinct'] != true && number(s['population']) > 0;
+    final travelling=((state['migrations'] as List?)??[]).any((j)=>['outbound','returning'].contains(j['status'])&&(j['from']==s['id']||j['to']==s['id']));
     final leader = (s['people'] as List? ?? [])
         .where((dynamic p) => p['id'] == s['leaderId'] && p['diedDay'] == null)
         .firstOrNull;
@@ -1139,7 +1145,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             style: const TextStyle(color: earth, fontSize: 12),
           ),
           const SizedBox(height: 4),
-          Text(
+          if(travelling)TextButton(onPressed:_journeys,child:const Text('Ver habitantes en camino'))
+          else Text(
               projects.isNotEmpty &&
                       (projects.first['work'] as Map?)?['paused'] == true
                   ? 'Obra detenida: faltan trabajadores disponibles.'
@@ -1217,6 +1224,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     (((state['entities'] as Map?)?['cultures'] as List?)??[])
       .where((c)=>c['id']==id).firstOrNull?['name']?.toString()??'Sin registro';
   void _communityActions() => _sheet('Dirigir la comunidad', [
+    if(state['migrations'] is List)ListTile(
+      title:const Text('Viajes de población'),subtitle:const Text('Ver el recorrido y las provisiones de cada grupo'),
+      onTap:(){Navigator.pop(context);_journeys();}),
     ListTile(
       title: const Text('Investigar'),
       subtitle: const Text('Conocimientos disponibles y requisitos'),
@@ -2066,6 +2076,29 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
       );
     }),
   ]);
+  void _journeys({bool history=false,int page=0}) {
+    final current=world;if(current==null)return;
+    final all=current.migrations.reversed.where((j)=>history?!j.active:j.active).toList();
+    final entries=all.skip(page*20).take(20).toList();
+    String name(String id)=>societies.where((s)=>s['id']==id).firstOrNull?['name']?.toString()??id;
+    String amount(int n)=>(n/1000).toStringAsFixed(3).replaceFirst(RegExp(r'\.?0+$'),'');
+    _sheet('Viajes de población',[
+      Text('${current.populationInTransit} habitantes en tránsito. Se cuentan fuera de las ciudades hasta que lleguen.'),
+      TextButton(onPressed:(){Navigator.pop(context);_journeys(history:!history);},child:Text(history?'Ver viajes en curso':'Ver viajes concluidos')),
+      if(entries.isEmpty)Text(history?'Aún no hay viajes concluidos.':'No hay habitantes viajando en este momento.'),
+      for(final j in entries)Card(child:Padding(padding:const EdgeInsets.all(12),child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+        Text('${j.survivors} residentes · ${name(j.from)} → ${name(j.to)}',style:const TextStyle(color:gold,fontSize:17)),
+        Text(j.active?(j.blocked?'Detenidos: no existe paso seguro. Consumen sus propias provisiones.':j.status=='returning'?'De regreso al origen':'En camino al destino'):j.status=='arrived'?'Llegaron al destino':j.status=='returned'?'Regresaron al origen':'El grupo quedó sin supervivientes'),
+        Text('Celda ${j.cell%number(state['size'])}, ${j.cell~/number(state['size'])} · Salida: ${date(j.departedDay)}'),
+        if(j.active&&!j.blocked)Text('${j.path.length-1-j.progress} pasos del recorrido actual. Los cortes pueden cambiar la duración.'),
+        Text('Provisiones restantes: alimento ${amount(j.carried['food']!)} · agua ${amount(j.carried['water']!)}'),
+        if(!j.active)Text('${j.arrived} llegadas · ${j.deaths} bajas · ${date(j.resolvedDay!)}'),
+        if(j.active)TextButton(onPressed:(){Navigator.pop(context);setState((){section=1;game.mode='Mundo';game.zoom=3;game.pan=Offset((game.extent/2-j.cell%game.extent-.5)*game.unit,(game.extent/2-j.cell~/game.extent-.5)*game.unit);});},child:const Text('Localizar en el mundo')),
+      ]))),
+      if(page>0)TextButton(onPressed:(){Navigator.pop(context);_journeys(history:history,page:page-1);},child:const Text('Página anterior')),
+      if((page+1)*20<all.length)TextButton(onPressed:(){Navigator.pop(context);_journeys(history:history,page:page+1);},child:const Text('Página siguiente')),
+    ]);
+  }
   void _routes() => _sheet('Rutas y caravanas', [
     if ((state['routes'] as List? ?? []).isEmpty)
       const Text('Aún no hay rutas. Negocia y abre comercio desde Diplomacia.'),
@@ -2259,7 +2292,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
                 scrollable:true,
                 title: const Text('Actualizar reglas de esta partida'),
                 content: Text(state['populationState']!=null
-                  ? 'Se conservará una copia exacta del archivo original, con sus reglas. El nuevo reparto de trabajo prioriza alimento y agua. Se mantendrán los grupos, cumpleaños, culturas, hogares y vínculos existentes. La producción nueva se calculará al avanzar el próximo día. Las invitaciones migratorias exigirán un origen con necesidad, paso seguro y capacidad para cuidar a quienes permanecen. Si escasean las raciones, habrá trabajo reservado para alimento y agua; los viajes y otras tareas pueden esperar.'
+                  ? 'Se conservará una copia exacta del archivo original, con sus reglas, grupos, cumpleaños, culturas, hogares y vínculos. Las nuevas migraciones reservarán provisiones y recorrerán un camino: sus residentes estarán en tránsito hasta llegar. No se inventarán viajes para traslados ya terminados. La producción protege alimento y agua cuando escasean las raciones; los viajes y otras tareas pueden esperar.'
                   : 'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. Las edades de la población común se estimarán; se conservan las fechas conocidas y no se inventarán parentescos. Puedes continuar con las reglas antiguas.',
                 ),
                 actions: [

@@ -55,9 +55,10 @@ void main() {
     },
   );
   test(
-    'A real crisis permits common adults to move without taking leaders or creating residents',
+    'Rules10 invites common adults without taking leaders or creating residents',
     () {
       final w = WorldState.generate(size: 64);
+      w.rulesVersion = 10;
       w.society('s1')!.health = 30;
       fixturePath(w, 's1', 's0');
       final engine = Simulation(w)..registerContent(content());
@@ -124,7 +125,7 @@ void main() {
     'Rules8 checkpoints retain previous invitation semantics until explicit conversion',
     () {
       final raw = WorldState.generate(size: 64).toJson();
-      raw['rulesVersion'] = 8;
+      raw['rulesVersion'] = 8;raw.remove('migrations');
       final w = WorldState.fromJson(raw);
       final engine = Simulation(w)..registerContent(content());
       final result = engine.submit(arrival(w, 'legacy'));

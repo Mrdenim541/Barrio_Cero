@@ -1,0 +1,232 @@
+{
+  "recordedAt": "2026-11-14T10:21:03.507487+00:00",
+  "version": "0.12.0+13",
+  "rulesVersion": 11,
+  "variant": "corrected daily phase order",
+  "tests": {
+    "passed": true,
+    "count": 187
+  },
+  "analysis": "clean",
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.12.0-profile.apk",
+    "sha256": "d75ef2263766e19cad3bbbe025c87023049fb33b0d17280a953e05604e6b06f8",
+    "compiled": true,
+    "installedAndExecuted": true
+  },
+  "native": {
+    "state": "passed",
+    "version": "0.12.0+13",
+    "rules": 11,
+    "mode": "profile",
+    "device": "API29 software emulator; not reference-phone performance",
+    "scenario": "Declared initial illness and pending invitation; naturally connected six-cell journey, no runtime aid",
+    "installationOutput": "Performing Streamed Install\nSuccess\n",
+    "previewPreservesCheckpoint": true,
+    "departure": {
+      "residents": 5,
+      "source": "s1",
+      "destination": "s0",
+      "cityPopulationNotPrematurelyIncreased": true,
+      "globalPopulationConserved": true,
+      "foodPaid": 24.5,
+      "waterPaid": 3.5,
+      "initialJourneyFood": 4.5,
+      "initialJourneyWater": 3.5
+    },
+    "midflightForceStopReopenExact": true,
+    "arrival": {
+      "day": 6,
+      "residentsArrivedOnce": 5,
+      "globalPopulationConserved": true,
+      "foodConsumed": 1.35,
+      "waterConsumed": 1.05,
+      "foodDelivered": 3.15,
+      "waterDelivered": 2.45,
+      "suppliesBalanced": true
+    },
+    "arrivalForceStopReopenExact": true,
+    "originalDataRestoredExactly": true,
+    "apkSha256": "d75ef2263766e19cad3bbbe025c87023049fb33b0d17280a953e05604e6b06f8"
+  },
+  "initialVariant": {
+    "rejectedByLongTests": true,
+    "scope": "185 short tests and first native run; not final variant acceptance"
+  },
+  "temporal": {
+    "prehistory": {
+      "check": "temporal_equivalence",
+      "origin": "prehistory",
+      "seed": 17,
+      "days": 36000,
+      "catalogEvents": 166,
+      "retainedChronicleEntries": 2062,
+      "totalRecordedEvents": 10461,
+      "passed": true
+    },
+    "reconstruction": {
+      "check": "temporal_equivalence",
+      "origin": "reconstruction",
+      "seed": 17,
+      "days": 36000,
+      "catalogEvents": 166,
+      "retainedChronicleEntries": 2104,
+      "totalRecordedEvents": 20503,
+      "passed": true
+    }
+  },
+  "catalogOptionEffects": {
+    "passed": true,
+    "events": 166,
+    "options": 307,
+    "scope": "isolated options, not complete narrative chains"
+  },
+  "sustained32": {
+    "state": "complete",
+    "opening": [
+      {
+        "platform": "linux",
+        "osVersion": "Linux 6.18.57 #1 SMP Tue Oct 20 21:56:04 UTC 2026",
+        "processors": 5,
+        "dart": "3.9.2 (stable) (Wed Aug 27 03:49:40 2025 -0700) on \"linux_x64\"",
+        "map": 64,
+        "seed": 73,
+        "initialSettlements": 32,
+        "minimumLivingSettlements": 32,
+        "requestedDays": 36000,
+        "simulatedDays": 36000,
+        "terminal": "target_reached",
+        "daysWithAtLeast32LivingSettlements": 36000,
+        "sustained32SettlementScenario": true,
+        "populationSampleIntervalDays": 1,
+        "milliseconds": 661055,
+        "slowestYearMicroseconds": 14690561,
+        "rssBytes": 50315264,
+        "peakProcessRssBytes": 75001856,
+        "saveBytes": 2370864,
+        "livingSettlements": 37,
+        "historyEntries": 2354,
+        "pending": 2,
+        "measuresFps": false
+      },
+      {
+        "platform": "linux",
+        "osVersion": "Linux 6.18.57 #1 SMP Tue Oct 20 21:56:04 UTC 2026",
+        "processors": 5,
+        "dart": "3.9.2 (stable) (Wed Aug 27 03:49:40 2025 -0700) on \"linux_x64\"",
+        "map": 96,
+        "seed": 73,
+        "initialSettlements": 32,
+        "minimumLivingSettlements": 32,
+        "requestedDays": 36000,
+        "simulatedDays": 36000,
+        "terminal": "target_reached",
+        "daysWithAtLeast32LivingSettlements": 36000,
+        "sustained32SettlementScenario": true,
+        "populationSampleIntervalDays": 1,
+        "milliseconds": 508253,
+        "slowestYearMicroseconds": 7785848,
+        "rssBytes": 51216384,
+        "peakProcessRssBytes": 75001856,
+        "saveBytes": 2670040,
+        "livingSettlements": 37,
+        "historyEntries": 2313,
+        "pending": 2,
+        "measuresFps": false
+      }
+    ],
+    "mature": [
+      {
+        "fixture": "mature32-v1",
+        "normalOpeningBalanceTest": false,
+        "injectionsDuringRun": false,
+        "rules": 11,
+        "map": 64,
+        "seed": 73,
+        "initialSettlements": 32,
+        "initialPopulation": 1792,
+        "initialRoutes": 30,
+        "tradePolicy": "one paid starting route per origin, no autonomous new routes",
+        "technologyPrerequisitesClosed": true,
+        "minimumLivingSettlements": 32,
+        "minimumPopulation": 1792,
+        "requestedDays": 36000,
+        "actualDays": 36000,
+        "daysWith32Settlements": 36000,
+        "passedSustainedLoad": true,
+        "milliseconds": 580932,
+        "peakRssBytes": 73539584,
+        "initialSaveBytes": 729306,
+        "finalSaveBytes": 2062704,
+        "referencePhonePerformance": false,
+        "measuresFps": false
+      },
+      {
+        "fixture": "mature32-v1",
+        "normalOpeningBalanceTest": false,
+        "injectionsDuringRun": false,
+        "rules": 11,
+        "map": 96,
+        "seed": 73,
+        "initialSettlements": 32,
+        "initialPopulation": 1792,
+        "initialRoutes": 29,
+        "tradePolicy": "one paid starting route per origin, no autonomous new routes",
+        "technologyPrerequisitesClosed": true,
+        "minimumLivingSettlements": 32,
+        "minimumPopulation": 1792,
+        "requestedDays": 36000,
+        "actualDays": 36000,
+        "daysWith32Settlements": 36000,
+        "passedSustainedLoad": true,
+        "milliseconds": 406231,
+        "peakRssBytes": 73539584,
+        "initialSaveBytes": 1062481,
+        "finalSaveBytes": 2357058,
+        "referencePhonePerformance": false,
+        "measuresFps": false
+      }
+    ],
+    "referencePhonePerformance": false,
+    "openingState": "complete",
+    "openingAccepted": true,
+    "matureState": "complete",
+    "matureAccepted": true
+  },
+  "stability": {
+    "state": "in_progress",
+    "completedScenarios": [
+      {
+        "seed": 1,
+        "strategy": "food",
+        "intensity": "normal",
+        "extraordinary": false,
+        "requestedDays": 72000,
+        "actualDays": 72000,
+        "terminal": "target_reached",
+        "annualChecks": 200,
+        "peakPending": 6,
+        "peakHistory": 2400,
+        "milliseconds": 65721,
+        "peakRssBytes": 52727808
+      },
+      {
+        "seed": 2,
+        "strategy": "science",
+        "intensity": "normal",
+        "extraordinary": true,
+        "requestedDays": 72000,
+        "actualDays": 72000,
+        "terminal": "target_reached",
+        "annualChecks": 200,
+        "peakPending": 10,
+        "peakHistory": 2399,
+        "milliseconds": 474310,
+        "peakRssBytes": 75530240
+      }
+    ],
+    "fullMatrixPassed": false,
+    "activeMillenniaVerified": false
+  },
+  "scope": "Real common-adult journeys; R6 remains partial, no territorial or institutional completion claimed"
+}
