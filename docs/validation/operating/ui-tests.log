@@ -1,0 +1,13 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/presentation_test.dart
+00:00 +0: Start screen and world configuration remain usable at 320.0
+00:01 +1: Start screen and world configuration remain usable at 360.0
+00:01 +2: Start screen and world configuration remain usable at 412.0
+00:01 +3: Default opening creates and saves a real prehistoric community
+00:05 +4: Learning previews, commits and reopens at 320 with enlarged text
+00:06 +5: Create, order, advance and reload a committed world at 320x640
+00:11 +6: Active navigation and sheets at 320.0 with enlarged text
+00:11 +7: Active navigation and sheets at 360.0 with enlarged text
+00:12 +8: Active navigation and sheets at 412.0 with enlarged text
+00:12 +9: Tap real local building and person without changing simulation
+00:13 +10: Legacy game upgrade is reachable, optional and preserves a rules backup
+00:14 +11: All tests passed!

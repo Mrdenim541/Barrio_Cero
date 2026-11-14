@@ -28,3 +28,7 @@ No hay todavía genealogía biológica conocida, nacimientos individualizados de
 El procesamiento social tiene reglas versionadas en el núcleo; su integración con el director y el contenido declarativo general sigue pendiente de R8. El resto del catálogo conserva las limitaciones documentadas sobre participantes y textos iniciales. Los recuerdos familiares se serializan completos, pero faltan los bloques históricos e intercambio por streaming de R10.
 
 No se presenta esta iteración como aceptación de treinta semillas para todas las reglas nuevas, milenios activos, 32 asentamientos sostenidos o rendimiento de un teléfono físico. Cada batería conserva su propia versión y resultado.
+
+## Diagnóstico de carga madura
+
+También falló el escenario maduro declarado: quedó en mínimos de 21/20 comunidades en mapas 64/96, pese a conservar al menos 1.792 habitantes totales. No hubo inyecciones durante la ejecución; se fijaron reservas iniciales, tecnologías con prerrequisitos completos y rutas iniciales pagadas. Se conserva el programa exacto compilado en `mature-benchmark-source.dart.txt` (la versión de trabajo solo recibió correcciones de llaves del linter). No se rebaja el mínimo exigido de 32 ni se acredita rendimiento físico. La corrección posterior del reparto de trabajo debe volver a probar estos mismos escenarios.

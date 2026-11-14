@@ -1,0 +1,200 @@
+[
+  {
+    "id": "h127",
+    "day": 60,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "4 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "bench20",
+    "x": 44,
+    "y": 39,
+    "cause": "h124"
+  },
+  {
+    "id": "h175",
+    "day": 60,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "5 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "s1",
+    "x": 34,
+    "y": 16,
+    "cause": "h172"
+  },
+  {
+    "id": "h191",
+    "day": 60,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "4 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "s5",
+    "x": 49,
+    "y": 45,
+    "cause": "h188"
+  },
+  {
+    "id": "h194",
+    "day": 80,
+    "title": "Viviendas terminado",
+    "text": "El edificio ya produce y ocupa su lugar en Puesto 10.",
+    "category": "construcción",
+    "societyId": "bench10",
+    "x": 54,
+    "y": 19,
+    "cause": null
+  },
+  {
+    "id": "h280",
+    "day": 90,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "4 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "s2",
+    "x": 49,
+    "y": 16,
+    "cause": "h277"
+  },
+  {
+    "id": "h295",
+    "day": 120,
+    "title": "Escuela terminado",
+    "text": "El edificio ya produce y ocupa su lugar en Puesto 10.",
+    "category": "construcción",
+    "societyId": "bench10",
+    "x": 54,
+    "y": 19,
+    "cause": null
+  },
+  {
+    "id": "h316",
+    "day": 120,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "5 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "bench17",
+    "x": 47,
+    "y": 33,
+    "cause": "h313"
+  },
+  {
+    "id": "h328",
+    "day": 120,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "5 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "bench20",
+    "x": 44,
+    "y": 39,
+    "cause": "h325"
+  },
+  {
+    "id": "h667",
+    "day": 230,
+    "title": "Cantera terminado",
+    "text": "El edificio ya produce y ocupa su lugar en Puesto 10.",
+    "category": "construcción",
+    "societyId": "bench10",
+    "x": 54,
+    "y": 19,
+    "cause": null
+  },
+  {
+    "id": "h686",
+    "day": 240,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "5 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "bench16",
+    "x": 48,
+    "y": 31,
+    "cause": "h683"
+  },
+  {
+    "id": "h699",
+    "day": 240,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "4 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "bench23",
+    "x": 41,
+    "y": 45,
+    "cause": "h696"
+  },
+  {
+    "id": "h731",
+    "day": 240,
+    "title": "Llegan residentes de Puesto 10",
+    "text": "5 adultos cambian de residencia conservando identidad, edad y cultura.",
+    "category": "migración",
+    "societyId": "s4",
+    "x": 31,
+    "y": 45,
+    "cause": "h728"
+  },
+  {
+    "id": "h1271",
+    "day": 450,
+    "title": "Llegan refugiados",
+    "text": "2 adultos de Puesto 10 se incorporan sin duplicar población.",
+    "category": "migración",
+    "societyId": "s0",
+    "x": 16,
+    "y": 16,
+    "cause": null
+  },
+  {
+    "id": "h1519",
+    "day": 540,
+    "title": "Caravana hacia Puesto 10",
+    "text": "Transporta 12 alimentos por 19 celdas transitables.",
+    "category": "comercio",
+    "societyId": "bench16",
+    "x": 48,
+    "y": 31,
+    "cause": null
+  },
+  {
+    "id": "h1536",
+    "day": 540,
+    "title": "Caravana hacia Puesto 10",
+    "text": "Transporta 12 alimentos por 40 celdas transitables.",
+    "category": "comercio",
+    "societyId": "bench23",
+    "x": 41,
+    "y": 45,
+    "cause": null
+  },
+  {
+    "id": "h1583",
+    "day": 540,
+    "title": "Caravana hacia Puesto 10",
+    "text": "Transporta 12 alimentos por 68 celdas transitables.",
+    "category": "comercio",
+    "societyId": "s3",
+    "x": 13,
+    "y": 45,
+    "cause": null
+  },
+  {
+    "id": "h1993",
+    "day": 720,
+    "title": "Caravana hacia Puesto 10",
+    "text": "Transporta 12 alimentos por 37 celdas transitables.",
+    "category": "comercio",
+    "societyId": "bench22",
+    "x": 42,
+    "y": 43,
+    "cause": null
+  },
+  {
+    "id": "h2602",
+    "day": 900,
+    "title": "Caravana hacia Puesto 10",
+    "text": "Transporta 12 alimentos por 58 celdas transitables.",
+    "category": "comercio",
+    "societyId": "bench29",
+    "x": 35,
+    "y": 57,
+    "cause": null
+  }
+]

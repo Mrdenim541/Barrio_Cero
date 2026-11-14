@@ -55,6 +55,7 @@ void main() {
     s.ensureSites();
     s.health = 100;
     s.resources['food'] = 100;
+    s.policy.reserve=100000; // Isolate declared maximum yield from reserve-driven work allocation.
     world.tiles[s.y * world.size + s.x] = Tile(s.x, s.y, 0, 2);
     sim.advanceDays(1);
     expect(s.resources['food'], closeTo(107.83, .001));
@@ -115,6 +116,7 @@ void main() {
     s.sites.clear();
     s.ensureSites();
     s.resources['food'] = 100;
+    s.policy.reserve=100000; // Isolate declared maximum yield from reserve-driven work allocation.
     s.health = 100;
     w.tiles[s.y * w.size + s.x] = Tile(s.x, s.y, 0, 2);
     (Simulation(w)..registerContent(checkpoint.content)).advanceDays(1);

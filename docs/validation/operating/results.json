@@ -1,0 +1,69 @@
+{
+  "recordedAt": "2026-11-14T03:29:02.732865+00:00",
+  "version": "0.9.0+10",
+  "rulesVersion": 8,
+  "tests": {
+    "passed": true,
+    "count": 155
+  },
+  "analysis": "clean",
+  "uiRegression": {
+    "passed": true,
+    "count": 11
+  },
+  "native": {
+    "version": "0.9.0+10",
+    "rules": 8,
+    "mode": "profile",
+    "device": "API29 software emulator",
+    "scenario": "Actual rules7 household/care checkpoint retained from the previous native test",
+    "installationOutput": "Performing Streamed Install\nSuccess\n",
+    "conversion": {
+      "day": 120,
+      "populationAndSocialStatePreserved": true,
+      "prngPreserved": true,
+      "originalRules7BytesBackedUp": true
+    },
+    "production": {
+      "day": 121,
+      "availableWorkerDays": 16.0,
+      "allocatedWorkerDays": 16.0,
+      "balancedResources": true,
+      "foodConsumed": 1.08,
+      "waterConsumed": 0.84
+    },
+    "inspectionPreservesCheckpoint": true,
+    "forceStopReopenPreservesJobsPopulationAndFamily": true,
+    "originalDataRestoredExactly": true
+  },
+  "temporal": {
+    "execution": "frozen AOT, catalog166, seed17, four paths each origin",
+    "reconstruction": {
+      "days": 36000,
+      "causalEntries": 13379,
+      "passed": true
+    },
+    "prehistory": {
+      "days": 36000,
+      "causalEntries": 5254,
+      "passed": true
+    }
+  },
+  "apk": {
+    "path": "build/deliverables/barrio-cero-eras-0.9.0-profile.apk",
+    "sha256": "669af42c673228bf6db7cfd1a871310b57fa15a1d67741266f614dc1ac5d39a9",
+    "compiled": true,
+    "installedAndExecuted": true
+  },
+  "sustained32": {
+    "accepted": false,
+    "openingMinimum64": 12,
+    "openingMinimum96": 15,
+    "matureMinimum64": 14,
+    "matureMinimum96": 14,
+    "followUp": "Observe first population loss to distinguish migration concentration from production shortage; do not loosen workload criteria"
+  },
+  "stability": "Rules8 matrix in progress separately; not claimed passed",
+  "globalMaterialConservation": "partial; validated production phase and meals, other world flows remain separate",
+  "milestones": "R2/R4/R5/R12 partial; does not complete the game"
+}

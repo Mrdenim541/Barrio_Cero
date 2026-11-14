@@ -1,0 +1,7 @@
+{
+  "sourcePath": "docs/validation/social/mature-benchmark-source.dart.txt",
+  "sourceSha256": "e7e370292f49afe55a334f4bbf96d8ced15240654cdc8d78a1d48a7e4005a2b1",
+  "binaryPath": "build/validation/rules7-sustained-benchmark",
+  "binarySha256": "765c5c992b7547909969c89539530fa2eaa697b19f0ede223cf865b178ca87fa",
+  "dependenciesManifest": "docs/validation/social/inputs.json"
+}

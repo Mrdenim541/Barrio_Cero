@@ -10,6 +10,12 @@ La línea base de 39 pruebas pasó antes de modificarla. La batería integrada p
 
 Próxima prioridad dentro del rediseño: una escena local legible con escala útil, composición del asentamiento e interacción contextual vinculadas al estado real; contrastarla con `docs/design/world-and-settlement-target.png` mediante capturas ejecutadas. Los caminos, puestos de trabajo, recorridos y edificios nuevos que requieran modelo local se integrarán con R2–R4; no se dibujarán como simulación funcional sin sus reglas. R2 está iniciado; R3–R13 y el alcance original continúan sujetos a sus criterios pendientes.
 
+## Integración 0.9 — trabajo productivo real
+
+155 pruebas, análisis limpio y once regresiones de interfaz. El trabajo cubre necesidades, insumos y reservas con jornadas compartidas; construir viviendas ya no penaliza por sí solo toda la producción. Hay un informe legible de jornadas, entradas y raciones. Se conservaron reglas anteriores y copia opcional. Ambos orígenes aprobaron cien años equivalentes. Android convirtió una partida real con hogar/tutela y comprobó el día productivo, consulta y reapertura sin pérdida de datos. [Evidencia](docs/validation/operating/README.md).
+
+La carga sostenida de 32 sigue fallando. El seguimiento encontró otra causa: acontecimientos de inmigración vacían los adultos de la primera comunidad por identificador, aunque esté sana. Puesto 10 quedó con dos adultos, doce menores y seis mayores antes de colapsar. El siguiente bloque corrige selección y viabilidad de las salidas; no rebaja el mínimo de 32 ni declara terminado rendimiento. La matriz de reglas 8 sigue registrada por separado.
+
 ## Integración 0.8 — hogares y vínculos personales
 
 Los residentes desarrollan amistad, confianza, rivalidad y afecto mediante contacto mensual. Las peticiones de convivencia tienen participantes y vencimiento. Financiar un hogar consume provisiones y mantiene el número de habitantes; no impone un romance. La tutela destaca un menor de su grupo real sin añadir población ni atribuir ascendencia biológica desconocida. Las bajas y traslados conservan miembros anteriores y recuerdos. El menor se representa a menor escala y conserva su identidad al crecer.

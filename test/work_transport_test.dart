@@ -47,7 +47,11 @@ void main() {
     expect(w.controlled.built['farm'], 3);
     expect(w.controlled.resources['wood'], 80);
     sim.advanceDays(1);
-    expect(w.controlled.resources['wood'], 80.06);
+    // Rations and gathering now share the same four worker-days.
+    expect(w.controlled.resources['wood'],greaterThan(80));
+    final flow=DailyProduction.fromJson(Map<String,dynamic>.from(w.controlled.lastProduction!['flows']));
+    expect(flow.availableLabor,4000);expect(flow.laborUsed,lessThanOrEqualTo(4000));
+    expect(flow.produced['food'],greaterThan(0));expect(flow.produced['water'],greaterThan(0));
   });
   test('Cancellation refunds unused recorded material once and frees work', () {
     final w = WorldState.generate(size: 64);

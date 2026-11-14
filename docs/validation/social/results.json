@@ -68,7 +68,15 @@
     "map96Minimum": 9,
     "referencePhonePerformance": false
   },
-  "mature32Benchmark": "running separately; unaccepted until results verified",
+  "mature32Benchmark": {
+    "accepted": false,
+    "fixture": "mature32-v1; explicit opening stocks and paid starting routes, no runtime injection",
+    "map64Minimum": 21,
+    "map96Minimum": 20,
+    "minimumTotalPopulation": 1792,
+    "scope": "Linux AOT diagnostic only; does not maintain32 or certify phone performance",
+    "log": "docs/validation/social/mature32-benchmark.log"
+  },
   "stability30Seeds": "not yet repeated for rules7; completed rules6 evidence is separate",
   "milestoneR5": "partial",
   "limitations": [

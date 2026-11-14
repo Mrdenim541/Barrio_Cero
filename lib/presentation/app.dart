@@ -1446,6 +1446,25 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
     ]);
   }
 
+  void _productionDetails(Map<String,dynamic> s){
+    final raw=s['lastProduction'];if(raw is! Map)return;
+    final flow=DailyProduction.fromJson(Map<String,dynamic>.from(raw['flows']));
+    String quantity(int amount)=>(amount/1000).toStringAsFixed(3).replaceFirst(RegExp(r'\.?0+$'),'');
+    _sheet('Trabajo y producción',[
+      Text(date(number(raw['day'])),style:const TextStyle(color:gold)),
+      Text('${quantity(flow.laborUsed)} de ${quantity(flow.availableLabor)} jornadas disponibles para producción. Obras, formación y viajes ya tienen su personal reservado.'),
+      const SizedBox(height:12),
+      for(final e in flow.allocations.entries)ListTile(title:Text(e.key=='work:gather_wood'?'Recoger madera':_buildingName(e.key)),subtitle:Text('${quantity(e.value)} jornadas de trabajo')),
+      const Text('Alimentos y agua',style:TextStyle(color:gold)),
+      Text('Alimento consumido: ${quantity(number(raw['foodUsed']))} de ${quantity(number(raw['foodNeed']))} necesario.'),
+      Text('Agua consumida: ${quantity(number(raw['waterUsed']))} de ${quantity(number(raw['waterNeed']))} necesaria.'),
+      const SizedBox(height:12),const Text('Producción local',style:TextStyle(color:gold)),
+      for(final e in flow.produced.entries)ListTile(title:Text(_label(e.key)),subtitle:Text('Producido ${quantity(e.value)} · Insumos utilizados ${quantity(flow.consumed[e.key]??0)}${(flow.wasted[e.key]??0)>0?' · Excedente perdido ${quantity(flow.wasted[e.key]!)}':''}')),
+      for(final e in flow.consumed.entries.where((e)=>!flow.produced.containsKey(e.key)))ListTile(title:Text(_label(e.key)),subtitle:Text('Insumos utilizados ${quantity(e.value)}')),
+      const Text('El comercio y las decisiones también pueden cambiar las reservas; sus consecuencias aparecen en Historia.'),
+    ]);
+  }
+
   void _details(Map<String, dynamic> s) {
     final people = (s['people'] as List? ?? []).where(
       (dynamic p) => p['diedDay'] == null,
@@ -1469,6 +1488,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
             : 'Su gobierno decide de forma autónoma.',
         style: const TextStyle(color: moss),
       ),
+      if(s['lastProduction']!=null)TextButton(onPressed:(){Navigator.pop(context);_productionDetails(s);},child:const Text('Ver trabajo y producción')),
       const SizedBox(height: 18),
       const Text(
         'Habitantes destacados',
@@ -2225,6 +2245,8 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _upgradeRules() async {
+    timer?.cancel();timer=null;
+    if(mounted)setState((){});
     try {
       final result = await session.upgradeRules(
         confirm: () async =>
@@ -2232,8 +2254,9 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
               context: context,
               builder: (context) => AlertDialog(
                 title: const Text('Actualizar reglas de esta partida'),
-                content: const Text(
-                  'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. Las edades de la población común se estimarán; se conservan las fechas conocidas y no se inventarán parentescos. Puedes continuar con las reglas antiguas.',
+                content: Text(state['populationState']!=null
+                  ? 'Se conservará una copia exacta del archivo original, con sus reglas. El nuevo reparto de trabajo prioriza alimento y agua. Se mantendrán los grupos, cumpleaños, culturas, hogares y vínculos existentes. La producción nueva se calculará al avanzar el próximo día.'
+                  : 'Se conservará una copia exacta del archivo original. Las reservas se expresarán en milésimas y se separarán las sociedades de sus asentamientos. Reservas y cargas se redondearán a milésimas. Obras y caravanas pueden detenerse si falta personal. Las edades de la población común se estimarán; se conservan las fechas conocidas y no se inventarán parentescos. Puedes continuar con las reglas antiguas.',
                 ),
                 actions: [
                   TextButton(
@@ -2281,7 +2304,7 @@ class _ErasScreenState extends State<ErasScreen> with WidgetsBindingObserver {
         ListTile(
           title: const Text('Actualizar reglas de la partida'),
           subtitle: const Text(
-            'Conservar copia y habilitar sociedades y materiales nuevos',
+            'Conservar copia y revisar las nuevas reglas de trabajo y población',
           ),
           onTap: () {
             Navigator.pop(context);

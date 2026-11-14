@@ -1,0 +1,12 @@
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+Tap: MENÚ
+Tap: Actualizar reglas de la partida
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Copiar y actualizar
+Tap: + Día
+Tap: Comunidad
+Tap: Ver trabajo y producción
+ERROR: null root node returned by UiTestAutomationBridge.
+Tap: Continuar historia
+{"version": "0.9.0+10", "rules": 8, "mode": "profile", "device": "API29 software emulator", "scenario": "Actual rules7 household/care checkpoint retained from the previous native test", "installationOutput": "Performing Streamed Install\nSuccess\n", "conversion": {"day": 120, "populationAndSocialStatePreserved": true, "prngPreserved": true, "originalRules7BytesBackedUp": true}, "production": {"day": 121, "availableWorkerDays": 16.0, "allocatedWorkerDays": 16.0, "balancedResources": true, "foodConsumed": 1.08, "waterConsumed": 0.84}, "inspectionPreservesCheckpoint": true, "forceStopReopenPreservesJobsPopulationAndFamily": true, "originalDataRestoredExactly": true}

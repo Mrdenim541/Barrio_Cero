@@ -1,0 +1,11 @@
+00:00 +0: loading /workspace/Barrio_Cero/test/economy_allocation_test.dart
+00:00 +0: Housing does not silently take labor from food and water production
+00:00 +0 -1: Housing does not silently take labor from food and water production [E]
+  Expected: <98.21>
+    Actual: <101.44>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/economy_allocation_test.dart 10:5              main.<fn>
+  
+00:00 +0 -1: Some tests failed.

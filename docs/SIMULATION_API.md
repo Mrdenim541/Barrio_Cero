@@ -51,3 +51,10 @@ La conversión mediante `Checkpoint.upgradeRules` no modifica el original: conse
 `home` recibe el ID de petición en `target` y `support` o `decline` en `choice`. Solo opera sobre una petición vigente de la comunidad controlada. Apoyar consume 4 maderas y 6 alimentos; la relación romántica no se establece por orden del jugador. `foster` recibe el ID del adulto que asume el cuidado; destaca a un menor existente y documenta tutela, sin atribuir parentesco biológico. Consume 2 alimentos y 1 agua. Las identidades, cumpleaños y población total se conservan.
 
 Las residencias históricas se mantienen tras muerte o traslado. La validación permite haber fundado un hogar antes de morir durante el mismo día; un fallecido no puede confirmar una orden nueva. Peticiones aceptadas sin hogar, participantes duplicados, secuencias reutilizadas o romances sin acuerdo de adultos se rechazan. Las instituciones políticas, genealogía biológica e herencias materiales todavía requieren implementación; no se deducen de estos registros.
+
+
+## Reglas 8: plan productivo
+
+`planProduction` es una consulta pura con capacidades productivas, inventarios enteros y presupuesto laboral. `DailyProduction` comprueba balance de insumos, producción, pérdidas y cierre, además de que no se gasten jornadas duplicadas. Viviendas sin rendimiento no participan en el reparto. El motor confirma el plan y registra el consumo alimentario en `Society.lastProduction`; ese registro describe la fase local y no pretende reemplazar el libro completo de transferencias del mundo.
+
+Las reglas 1–7 conservan su ejecutor. Actualizar no inventa trabajo histórico: el primer informe aparece al avanzar el día siguiente. La apertura y los costes siguen procediendo del contenido exacto fijado al mundo. El problema migratorio de selección del primer origen se mantiene identificado en la evidencia de 0.9 y no se considera resuelto por cambiar la producción.
